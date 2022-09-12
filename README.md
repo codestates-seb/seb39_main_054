@@ -1,5 +1,5 @@
-## 🚀 pre-project-SEB39-054
-codestates Pre-Project 54조  
+## ANBD (아나바다)
+집에 있는 레저용품 공유하자!
   
 ## 팀원 소개
 | Frontend  | Github  |  Backend  |  Github  | 

@@ -58,7 +58,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String jwtToken = JWT.create()
                 .withSubject("PreProject54Team")
-                .withExpiresAt(new Date(System.currentTimeMillis() + (1000 * 60 * 10))) // 10분
+                .withExpiresAt(new Date(System.currentTimeMillis() + (1000 * 60 * 600))) // 600분
                 .withClaim("id", principalDetails.getMember().getMemberId())
                 .withClaim("nickname", principalDetails.getMember().getNickname())
                 .withClaim("memberName",principalDetails.getMember().getMemberName())

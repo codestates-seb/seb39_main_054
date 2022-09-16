@@ -8,6 +8,9 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  :root{
+  }
+
   body{
     height: 100%;
     width: 100%;

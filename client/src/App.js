@@ -2,16 +2,17 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import GlobalStyle from "./assets/styles/GlobalStyle";
+import Main from "./pages/main/Main";
 
 const App = () => {
   return (
     <>
-      <ThemeProvider>
+      {/* <ThemeProvider> */}
         <GlobalStyle />
         <Router>
           <Routes>
             {/* 메인 */}
-            <Route path="/"></Route>
+            <Route path="/" element={<Main></Main>}></Route>
             <Route path="/share/list"></Route>
             <Route path="/share/detail:id"></Route>
             <Route path="/share/post"></Route>
@@ -31,7 +32,7 @@ const App = () => {
             <Route path="/chat/detail:id"></Route>
           </Routes>
         </Router>
-      </ThemeProvider>
+      {/* </ThemeProvider> */}
     </>
   );
 };

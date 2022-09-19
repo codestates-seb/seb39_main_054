@@ -1,5 +1,6 @@
 package com.codestates.member.dto;
 
+import com.codestates.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,5 +15,7 @@ public class MemberPatchDto {
     private String nickname;
 
     private String password;
+
+    private Member.MemberStatus memberStatus;
 
 }

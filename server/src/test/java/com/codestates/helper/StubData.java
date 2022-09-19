@@ -22,7 +22,7 @@ public class StubData {
     static {
         stubRequestBody = new HashMap<>();
         stubRequestBody.put(HttpMethod.POST, new MemberPostDto("team54","abcd1234!@", "아이언맨"));
-        stubRequestBody.put(HttpMethod.PATCH, new MemberPatchDto(1L, "토르", "1234abcd#"));
+        stubRequestBody.put(HttpMethod.PATCH, new MemberPatchDto(1L, "아이언맨", "1234abcd#", Member.MemberStatus.MEMBER_ACTIVE));
     }
 
     public static class MockMember {

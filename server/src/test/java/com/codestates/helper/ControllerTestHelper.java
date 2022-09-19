@@ -34,6 +34,11 @@ public interface ControllerTestHelper<T> {
                 .content(content);
     }
 
+    default RequestBuilder getRequestBuilder(String url, long resourceId) {
+        return get(url, resourceId)
+                .accept(MediaType.APPLICATION_JSON);
+    }
+
     default RequestBuilder getRequestBuilder(String url, MultiValueMap<String, String> queryParams) {
         return get(url)
                 .params(queryParams)

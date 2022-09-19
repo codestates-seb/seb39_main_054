@@ -4,6 +4,7 @@ import { ThemeProvider } from "styled-components";
 import GlobalStyle from "./assets/styles/GlobalStyle";
 import { darkTheme, lightTheme } from "./assets/styles/Theme";
 import Main from "./pages/main/Main";
+import ShareDetail  from "./pages/share/shareDetail/ShareDetail";
 
 const App = () => {
     // 테마 변경 (lightTheme, darkTheme)
@@ -26,7 +27,7 @@ const App = () => {
             {/* 메인 */}
             <Route path="/" element={<Main></Main>}></Route>
             <Route path="/share/list"></Route>
-            <Route path="/share/detail:id"></Route>
+            <Route path="/share/detail:id" element={<ShareDetail />}></Route>
             <Route path="/share/post"></Route>
             <Route path="/share/edit"></Route>
             <Route path="/login"></Route>

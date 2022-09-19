@@ -6,6 +6,8 @@ const colors = {
   stateRed: "#FF4646",
   black: "#000000",
   white: "#FFFFFF",
+
+  modalBg: "#4F4F4F",
 };
 
 export const lightTheme = {

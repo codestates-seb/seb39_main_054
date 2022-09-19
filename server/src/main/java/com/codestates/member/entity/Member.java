@@ -1,13 +1,14 @@
 package com.codestates.member.entity;
 
 import com.codestates.audit.Auditable;
+import com.codestates.favorite.entity.Favorite;
+import com.codestates.product.entity.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -64,4 +65,33 @@ public class Member extends Auditable {
             this.status = status;
         }
     }
+
+    /**
+     * 재진님에게 알려줘야함.
+     */
+    @OneToMany (mappedBy = "member")
+    private List<Product> productList = new ArrayList<>();
+
+
+    /**
+     * 재진님에게 알려줘야함.
+     */
+    @OneToMany (mappedBy = "member")
+    private List<Favorite> favoriteList = new ArrayList<>();
+
+
+    public void addProduct(Product product) {
+        this.productList.add(product);
+        if (product.getMember() != this) {
+            product.addMember(this);
+        }
+    }
+
+    public void addFavorite(Favorite favorite) {
+        this.favoriteList.add(favorite);
+        if (favorite.getMember() != this) {
+            favorite.addMember(this);
+        }
+    }
+
 }

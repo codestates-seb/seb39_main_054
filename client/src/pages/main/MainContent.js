@@ -1,12 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import ShareCard from "../../components/cards/ShareCard";
+import { useMediaQuery } from "react-responsive";
 
 const MainContent = () => {
+  const [width, setWidth] = useState("71.25rem");
+  const row4 = useMediaQuery({ minWidth: 1141 });
+  const row3 = useMediaQuery({ maxWidth: 1140, minWidth: 861 });
+  const row2 = useMediaQuery({ maxWidth: 860, minWidth: 787 });
+  // const isMobile = useMediaQuery({ maxWidth: 786 });
+
+  useEffect(() => {
+    row4 && setWidth("71.25rem");
+    row3 && setWidth("53.5rem");
+    row2 && setWidth("36rem");
+  }, [row4, row3, row2]);
+
   return (
     <Container>
-      <Content>
+      <Content width={width}>
         <div className="title">최근 게시물</div>
-        <CardContent>카드</CardContent>
+        <CardContent>
+          <ShareCard></ShareCard>
+          <ShareCard></ShareCard>
+          <ShareCard></ShareCard>
+          <ShareCard></ShareCard>
+          <ShareCard></ShareCard>
+          <ShareCard></ShareCard>
+          <ShareCard></ShareCard>
+          <ShareCard></ShareCard>
+        </CardContent>
       </Content>
     </Container>
   );
@@ -19,7 +42,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100vw;
+  width: 100%;
 `;
 
 const Content = styled.div`
@@ -27,8 +50,8 @@ const Content = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 71.25rem;
-  margin: 4.5rem 0;
+  margin: 4.5rem auto;
+  width: ${(props) => props.width};
 
   .title {
     font-size: 1.625rem;
@@ -37,4 +60,7 @@ const Content = styled.div`
   }
 `;
 
-const CardContent = styled.div``;
+const CardContent = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;

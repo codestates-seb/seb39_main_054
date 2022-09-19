@@ -18,6 +18,8 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     font-family: "NotoSansKR-Regular";
+    background-color: ${props => props.theme.bgColor};
+    color: ${props => props.theme.textColor};
   }
 
   a{

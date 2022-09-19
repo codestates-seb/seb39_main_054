@@ -14,7 +14,7 @@ const Nav = ({ isTheme, setIsTheme }) => {
   const isMobile = useMediaQuery({ maxWidth: 786 });
 
   // 로그인 테스트
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
 
   // 닉네임 클릭 드롭다운
   const [openDropDown, setOpenDropDown] = useState({

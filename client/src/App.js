@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import GlobalStyle from "./assets/styles/GlobalStyle";
 import { darkTheme, lightTheme } from "./assets/styles/Theme";
+import Nav from "./components/nav/Nav";
 import Main from "./pages/main/Main";
 
 const App = () => {
@@ -21,6 +22,7 @@ const App = () => {
     <>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
+        <Nav isTheme={isTheme} setIsTheme={setIsTheme}/>
         <Router>
           <Routes>
             {/* 메인 */}

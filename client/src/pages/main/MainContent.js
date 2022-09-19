@@ -4,7 +4,9 @@ import ShareCard from "../../components/cards/ShareCard";
 import { useMediaQuery } from "react-responsive";
 
 const MainContent = () => {
+  // 반응형으로 틀의 크기잡기
   const [width, setWidth] = useState("71.25rem");
+  // 반응형 별 카드 갯수
   const row4 = useMediaQuery({ minWidth: 1141 });
   const row3 = useMediaQuery({ maxWidth: 1140, minWidth: 861 });
   const row2 = useMediaQuery({ maxWidth: 860, minWidth: 787 });

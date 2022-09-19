@@ -1,43 +1,51 @@
 const colors = {
-  gray1: "#333333",
-  gray2: "#4F4F4F",
-  gray3: "#828282",
-  gray4: "#BDBDBD",
-  gray5: "#E0E0E0",
-  gray6: "#F2F2F2",
+  primary: "#62BF53",
+  lightGreen: "#1FD203",
   stateGreen: "#4AFF2C",
   stateBlue: "#0094FF",
   stateRed: "#FF4646",
+  black: "#000000",
+  white: "#FFFFFF",
 };
 
 export const lightTheme = {
-  colors: {
-    // 변하는 부분
-    primary: "#62BF53",
-    bgColor: "#FFFFFF",
-    textColor: "#000000",
-    lightGreen: "#1FD203",
-    black: "#000000",
-    white: "#FFFFFF",
-    placholder: "#828282",
+  // 변하는 부분
+  bgColor: "#FFFFFF",
+  textColor: "#000000",
 
-    // 변하지 않는 부분
-    ...colors,
-  },
+  gray1: "#333333",
+  gray6: "#F2F2F2",
+
+  gray2: "#4F4F4F",
+  gray5: "#E0E0E0",
+
+  gray3: "#828282",
+  gray4: "#BDBDBD",
+
+  dropDown: "#FFFFFF",
+  validation: "#FF0000",
+
+  // 변하지 않는 부분
+  ...colors,
 };
 
 export const darkTheme = {
-  colors: {
-    primary: "#62BF53",
-    bgColor: "#2F2F2F",
-    textColor: "#FFFFFF",
-    lightGreen: "#1FD203",
-    black: "#000000",
-    white: "#FFFFFF",
-    placholder: "#ffffff",
+  bgColor: "#2F2F2F",
+  textColor: "#ececec",
 
-    ...colors,
-  },
+  gray1: "#F2F2F2",
+  gray6: "#333333",
+
+  gray2: "#E0E0E0",
+  gray5: "#4F4F4F",
+
+  gray3: "#BDBDBD",
+  gray4: "#828282",
+
+  dropDown: "#4F4F4F",
+  validation: "#FF4F4F",
+
+  ...colors,
 };
 
 export const theme = {

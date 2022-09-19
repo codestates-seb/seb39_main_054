@@ -1,17 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import GlobalStyle from "./assets/styles/GlobalStyle";
+import { darkTheme, lightTheme } from "./assets/styles/Theme";
+import Main from "./pages/main/Main";
 
 const App = () => {
+    // 테마 변경 (lightTheme, darkTheme)
+    const [isTheme, setIsTheme] = useState("light");
+    const theme = isTheme === "light" ? lightTheme : darkTheme;
+
+    useEffect(() => {
+      if(localStorage.getItem("theme") === "light"){
+        setIsTheme("light")
+      }else{
+        setIsTheme("dark")
+      }
+    }, []);
   return (
     <>
-      <ThemeProvider>
+      <ThemeProvider theme={theme}>
         <GlobalStyle />
         <Router>
           <Routes>
             {/* 메인 */}
-            <Route path="/"></Route>
+            <Route path="/" element={<Main></Main>}></Route>
             <Route path="/share/list"></Route>
             <Route path="/share/detail:id"></Route>
             <Route path="/share/post"></Route>

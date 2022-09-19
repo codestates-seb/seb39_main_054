@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import logo from "../../assets/img/logo/ANBD-2.png";
 import logoW from "../../assets/img/logo/ANBD-2-w.png";
@@ -6,10 +6,20 @@ import { ReactComponent as Sun } from "../../assets/img/icon/sun.svg";
 import { ReactComponent as Moon } from "../../assets/img/icon/moon.svg";
 import { ReactComponent as Bars } from "../../assets/img/icon/bars.svg";
 import { useMediaQuery } from "react-responsive";
+import { Link } from "react-router-dom";
+import NavDropdown from "../dropdowns/NavDropdown";
 
 const Nav = ({ isTheme, setIsTheme }) => {
+  // 화면 크기 (반응형 구현)
   const isMobile = useMediaQuery({ maxWidth: 786 });
 
+  // 로그인 테스트
+  const [isLogin, setIsLogin] = useState(true);
+
+  // 닉네임 클릭 드롭다운
+  const [openDropDown, setOpenDropDown] = useState({class:"up", height:"0px", display:"none"});
+
+  // 테마 변경 함수
   const toggleTheme = () => {
     if (isTheme === "light") {
       setIsTheme("dark");
@@ -19,32 +29,61 @@ const Nav = ({ isTheme, setIsTheme }) => {
       localStorage.setItem("theme", "light");
     }
   };
+
+  // 닉네임 버튼 클릭 (드롭다운)
+  const toggleNickName = () => {
+    if(openDropDown.class === "up"){
+      setOpenDropDown({class:"down", height:"250px", display:"flex"})
+    }else{
+      setOpenDropDown({class:"up", height:"0px", display:"none"})
+    }
+  }
   return (
     <NavContainer>
       <NavContent>
         <NavLeft>
-          <img src={isTheme === "light" ? logo : logoW} alt="ANBD Logo" />
+          <Link to="/">
+            <img src={isTheme === "light" ? logo : logoW} alt="ANBD Logo" />
+          </Link>
           {!isMobile && (
             <>
-              <div>공유장터</div>
-              <div>레저용품 판매점</div>
+              <Link to="/share/list">
+                <div>공유장터</div>
+              </Link>
+              <Link to="/shop/list">
+                <div>레저용품 판매점</div>
+              </Link>
             </>
           )}
         </NavLeft>
         <NavRight>
           {isTheme === "light" ? (
-            <Sun witdth="2.5rem" height="2.5rem" onClick={toggleTheme}></Sun>
+            <Sun onClick={toggleTheme}></Sun>
           ) : (
-            <Moon witdth="2.5rem" height="2.5rem" onClick={toggleTheme}></Moon>
+            <Moon onClick={toggleTheme}></Moon>
           )}
           {!isMobile ? (
             <>
-              <div>로그인</div>
-              <div>회원가입</div>
+              {!isLogin ? (
+                <>
+                  {" "}
+                  <Link to="/login">
+                    <div>로그인</div>
+                  </Link>
+                  <Link to="/signup">
+                    <div>회원가입</div>
+                  </Link>
+                </>
+              ) : (
+                <div>
+                  <div className="profile" onClick={toggleNickName}>닉네임</div>
+                  <NavDropdown openDropDown={openDropDown}></NavDropdown>
+                </div>
+              )}
             </>
           ) : (
             <div className="bars">
-              <Bars witdth="2rem" height="2rem"></Bars>
+              <Bars></Bars>
             </div>
           )}
         </NavRight>
@@ -64,6 +103,7 @@ const NavContainer = styled.div`
   border-bottom: 1px solid #62bf53;
   font-size: 1.125rem;
   font-family: "NotoSansKR-Bold";
+  background-color: ${(props) => props.theme.bgColor};
 `;
 
 const NavContent = styled.div`
@@ -94,7 +134,10 @@ const NavRight = styled.div`
   display: flex;
   align-items: center;
   svg {
+    margin-right: 0.5rem;
     cursor: pointer;
+    width: 2.5rem;
+    height: 2.5rem;
   }
 
   div {
@@ -103,9 +146,16 @@ const NavRight = styled.div`
     cursor: pointer;
   }
 
-  .bars{
-    svg{
-      fill: ${props => props.theme.textColor};
+  .profile {
+    text-align: right;
+    width: 5.5rem;
+  }
+
+  .bars {
+    svg {
+      width: 2rem;
+      height: 2rem;
+      fill: ${(props) => props.theme.textColor};
     }
   }
 `;

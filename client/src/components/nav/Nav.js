@@ -14,10 +14,14 @@ const Nav = ({ isTheme, setIsTheme }) => {
   const isMobile = useMediaQuery({ maxWidth: 786 });
 
   // 로그인 테스트
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
 
   // 닉네임 클릭 드롭다운
-  const [openDropDown, setOpenDropDown] = useState({class:"up", height:"0px", display:"none"});
+  const [openDropDown, setOpenDropDown] = useState({
+    class: "up",
+    height: "0px",
+    display: "none"
+  });
 
   // 테마 변경 함수
   const toggleTheme = () => {
@@ -32,12 +36,12 @@ const Nav = ({ isTheme, setIsTheme }) => {
 
   // 닉네임 버튼 클릭 (드롭다운)
   const toggleNickName = () => {
-    if(openDropDown.class === "up"){
-      setOpenDropDown({class:"down", height:"250px", display:"flex"})
-    }else{
-      setOpenDropDown({class:"up", height:"0px", display:"none"})
+    if (openDropDown.class === "up") {
+      setOpenDropDown({ class: "down", height: "250px", display: "flex" });
+    } else {
+      setOpenDropDown({ class: "up", height: "0px", display: "none" });
     }
-  }
+  };
   return (
     <NavContainer>
       <NavContent>
@@ -76,7 +80,9 @@ const Nav = ({ isTheme, setIsTheme }) => {
                 </>
               ) : (
                 <div>
-                  <div className="profile" onClick={toggleNickName}>닉네임</div>
+                  <div className="profile" onClick={toggleNickName}>
+                    닉네임
+                  </div>
                   <NavDropdown openDropDown={openDropDown}></NavDropdown>
                 </div>
               )}

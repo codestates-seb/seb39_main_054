@@ -49,7 +49,6 @@ const LoginBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* font-size: 0.8rem; */
   transition: all 0.5s;
 
   h1 {
@@ -97,6 +96,11 @@ const Form = styled.div`
 `;
 
 const Divider = styled.p`
+  width: 100%;
+  text-align: center;
+  border-bottom: 0.1875rem solid ${(props) => props.theme.primary};
+  line-height: 0.1rem;
+  margin: 2rem 0;
   span {
     font-size: 1rem;
   }

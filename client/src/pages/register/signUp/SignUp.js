@@ -12,25 +12,25 @@ const SignUp = () => {
             <label>아이디</label>
             <Input
               mb="3.125rem"
-              type="email"
+              type="text"
               placeholder="아이디를 입력해주세요"
             ></Input>
             <label>비밀번호</label>
             <Input
               mb="3.125rem"
-              type="email"
+              type="password"
               placeholder="비밀번호를 입력해주세요"
             ></Input>
             <label>비밀번호 확인</label>
             <Input
               mb="3.125rem"
-              type="email"
+              type="password"
               placeholder="비밀번호를 다시 한번 입력해주세요"
             ></Input>
             <label>닉네임</label>
             <Input
               mb="2rem"
-              type="email"
+              type="text"
               placeholder="닉네임을 입력해주세요"
             ></Input>
             <button>로그인</button>
@@ -94,7 +94,7 @@ const Input = styled.input`
   height: 3.75rem;
   background-color: ${(props) => props.theme.bgColor};
   color: ${(props) => props.theme.textColor};
-  border: 0.0625rem solid ${(props) => props.theme.gray4};
+  border: 0.08rem solid ${(props) => props.theme.gray4};
   border-radius: 0.625rem;
   font-size: 1.25rem;
   padding-left: 1.25rem;
@@ -105,6 +105,7 @@ const Input = styled.input`
     color: ${(props) => props.theme.gray4};
   }
   &:focus {
+    border: 0.09rem solid;
     border-color: ${(props) => props.theme.primary};
     outline: none;
   }

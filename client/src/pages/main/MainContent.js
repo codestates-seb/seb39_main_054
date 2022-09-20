@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import ShareCard from "../../components/cards/ShareCard";
 import { useMediaQuery } from "react-responsive";
 import axios from "axios";
+import ShareCardContent from "../../components/cards/ShareCardContent";
 
 const MainContent = () => {
   // 반응형으로 틀의 크기잡기
@@ -13,7 +13,7 @@ const MainContent = () => {
   const row2 = useMediaQuery({ maxWidth: 860, minWidth: 787 });
   // const isMobile = useMediaQuery({ maxWidth: 786 });
 
-  // 데이터 
+  // 데이터
   const [data, setData] = useState(null);
 
   // 데이터 받기
@@ -38,17 +38,7 @@ const MainContent = () => {
     <Container>
       <Content width={width}>
         <div className="title">최근 게시물</div>
-        <CardContent>
-          {data !== null && data.map((el) => (
-            <ShareCard
-              id={el.productId}
-              title={el.title}
-              content={el.description}
-              status={el.status}
-              image01={el.image01}
-            />
-          )).slice(0,8)}
-        </CardContent>
+        <ShareCardContent data={data} number={8}></ShareCardContent>
       </Content>
     </Container>
   );
@@ -77,9 +67,4 @@ const Content = styled.div`
     font-family: "NotoSansKR-Medium";
     margin-bottom: 4.5rem;
   }
-`;
-
-const CardContent = styled.div`
-  display: flex;
-  flex-wrap: wrap;
 `;

@@ -47,7 +47,7 @@ const MainContent = () => {
               status={el.status}
               image01={el.image01}
             />
-          ))}
+          )).slice(0,8)}
         </CardContent>
       </Content>
     </Container>

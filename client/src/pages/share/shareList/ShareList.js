@@ -6,7 +6,7 @@ import Category from "../../../components/category/Category";
 import ShareCardContent from "../../../components/cards/ShareCardContent";
 
 const ShareList = () => {
-  // 반응형 훅으로 만들기
+  // 반응형 훅, 리덕스?로 만들기
   // 반응형으로 틀의 크기잡기
   const [width, setWidth] = useState("71.25rem");
   // 반응형 별 카드 갯수

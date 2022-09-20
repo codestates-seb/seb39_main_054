@@ -6,6 +6,7 @@ import { darkTheme, lightTheme } from "./assets/styles/Theme";
 import Footer from "./components/footer/Footer";
 import Nav from "./components/nav/Nav";
 import Main from "./pages/main/Main";
+import ShareDetail  from "./pages/share/shareDetail/ShareDetail";
 import Login from "./pages/register/login/Login";
 import ShareList from "./pages/share/shareList/ShareList";
 
@@ -35,7 +36,7 @@ const App = () => {
                 path="/share/list"
                 element={<ShareList></ShareList>}
               ></Route>
-              <Route path="/share/detail:id"></Route>
+              <Route path="/share/detail:id" element={<ShareDetail />}></Route>
               <Route path="/share/post"></Route>
               <Route path="/share/edit"></Route>
               <Route path="/login" element={<Login></Login>}></Route>

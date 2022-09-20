@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
 import GlobalStyle from "./assets/styles/GlobalStyle";
 import { darkTheme, lightTheme } from "./assets/styles/Theme";
+import Footer from "./components/footer/Footer";
 import Nav from "./components/nav/Nav";
 import Main from "./pages/main/Main";
 import ShareDetail  from "./pages/share/shareDetail/ShareDetail";
@@ -52,6 +53,7 @@ const App = () => {
               {/* id: 상대방 id query &myid = =dsadsa &otherid*/}
               <Route path="/chat/detail:id"></Route>
             </Routes>
+            <Footer/>
           </Router>
         </AppContainer>
       </ThemeProvider>

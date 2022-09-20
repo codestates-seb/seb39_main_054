@@ -41,6 +41,7 @@ const Ul = styled.ul`
   animation-name: ${props => props.class};
   animation-duration: 1s;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 5px;
+  z-index: 100;
 
   li {
     padding: 17.5px 0;

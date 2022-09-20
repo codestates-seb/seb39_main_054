@@ -57,8 +57,8 @@ const Content = styled.div`
   font-size: 15px;
   width: 210px;
   margin: 10px 0;
-  height: 2rem;
-  line-height: 1rem;
+  height: 2.5rem;
+  line-height: 1.25rem;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;

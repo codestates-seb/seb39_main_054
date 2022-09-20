@@ -11,14 +11,22 @@ const Login = () => {
 
   return (
     <>
-      <LoginBox>
+      <LoginContainer>
         <h1>ANBD</h1>
-        <Container>
+        <LoginContent>
           <Form>
             <label>아이디</label>
-            <input type="email" placeholder="아이디를 입력해주세요"></input>
+            <Input
+              mb="4.625rem"
+              type="email"
+              placeholder="아이디를 입력해주세요"
+            ></Input>
             <label>비밀번호</label>
-            <input type="email" placeholder="비밀번호를 입력해주세요"></input>
+            <Input
+              mb="3.5rem"
+              type="email"
+              placeholder="비밀번호를 입력해주세요"
+            ></Input>
             <button>로그인</button>
           </Form>
           <Divider>
@@ -26,41 +34,39 @@ const Login = () => {
           </Divider>
           <Social>
             <KakaoButton>
-              <LogoImage src={logo_kakao}></LogoImage>
+              <LogoImage width="2.1rem" src={logo_kakao}></LogoImage>
             </KakaoButton>
             <GoogleButton>
-              <LogoImage src={logo_google}></LogoImage>
+              <LogoImage width="2rem" src={logo_google}></LogoImage>
             </GoogleButton>
             <NaverButton>
-              <LogoImage src={logo_naver}></LogoImage>
+              <LogoImage width="2.7rem" src={logo_naver}></LogoImage>
             </NaverButton>
           </Social>
-        </Container>
-      </LoginBox>
+        </LoginContent>
+      </LoginContainer>
     </>
   );
 };
 export default Login;
 
-const LoginBox = styled.div`
-  background-color: ${(props) => props.theme.white};
-  color: ${(props) => props.theme.black};
+const LoginContainer = styled.div`
+  background-color: ${(props) => props.theme.bgColor};
+  color: ${(props) => props.theme.textColor};
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* font-size: 0.8rem; */
-  transition: all 0.5s;
 
   h1 {
     text-align: center;
     margin: 8.125rem 0 3.4375rem 0;
     font-size: 2.9375rem;
-    font-weight: bold;
+    font-family: "NotoSansKR-Bold";
   }
 `;
 
-const Container = styled.div`
+const LoginContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -68,21 +74,14 @@ const Container = styled.div`
   padding: 0 1.5625rem;
   width: 31.25rem;
   height: 40.625rem;
-  margin: auto;
-  box-shadow: 0 0 10px gray;
+  margin: 0 auto 8.875rem auto;
+  /* box-shadow: 0 0 10px gray; */
 `;
 
 const Form = styled.div`
   label {
     font-size: 1.5rem;
-  }
-  input {
-    width: 28.125rem;
-    height: 3.75rem;
-    border: 0.0625rem solid ${(props) => props.theme.gray4};
-    border-radius: 0.625rem;
-    font-size: 1.25rem;
-    padding-left: 1.25rem;
+    padding: 0 0 0 0.625rem;
   }
 
   button {
@@ -91,14 +90,45 @@ const Form = styled.div`
     color: ${(props) => props.theme.white};
     width: 28.125rem;
     height: 3.75rem;
-    border: 0.0625rem solid ${(props) => props.theme.gray4};
     border-radius: 0.625rem;
+    :hover {
+      filter: drop-shadow(0rem 0.25rem 0.25rem ${(props) => props.theme.gray5});
+    }
+  }
+`;
+
+const Input = styled.input`
+  width: 28.125rem;
+  height: 3.75rem;
+  background-color: ${(props) => props.theme.bgColor};
+  color: ${(props) => props.theme.textColor};
+  border: 0.0625rem solid ${(props) => props.theme.gray4};
+  border-radius: 0.625rem;
+  font-size: 1.25rem;
+  padding-left: 1.25rem;
+  margin-top: 0.6875rem;
+  margin-bottom: ${(props) => props.mb};
+  ::placeholder,
+  ::-webkit-input-placeholder {
+    color: ${(props) => props.theme.gray4};
+  }
+  &:focus {
+    border-color: ${(props) => props.theme.primary};
+    outline: none;
   }
 `;
 
 const Divider = styled.p`
+  width: 100%;
+  text-align: center;
+  border-bottom: 0.1875rem solid ${(props) => props.theme.primary};
+  line-height: 0.1rem;
+  margin: 4.6875rem 0;
+
   span {
     font-size: 1rem;
+    padding: 0 1.5rem;
+    background-color: ${(props) => props.theme.bgColor};
   }
 `;
 
@@ -134,5 +164,5 @@ const NaverButton = styled(SocialButton)`
 `;
 
 const LogoImage = styled.img`
-  width: 1.5rem;
+  width: ${(props) => props.width};
 `;

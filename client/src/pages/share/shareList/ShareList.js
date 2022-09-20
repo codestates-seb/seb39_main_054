@@ -65,7 +65,7 @@ const Content = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 4.5rem auto;
+  margin: 1.5rem auto;
   width: ${(props) => props.width};
 
   .title {

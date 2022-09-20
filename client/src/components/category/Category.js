@@ -1,9 +1,8 @@
-import React from 'react'
+import React from "react";
+import { ReactComponent as Fish } from "../../assets/img/icon/category/fish.svg";
 
 const Category = () => {
-  return (
-    <div>Category</div>
-  )
-}
+  return <div><Fish width="49px" heigth="79px"></Fish></div>;
+};
 
-export default Category
+export default Category;

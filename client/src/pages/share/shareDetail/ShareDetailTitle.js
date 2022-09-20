@@ -16,7 +16,7 @@ const ShareDetailTitle = ({ Detail }) =>{
         <Div className="mediumFont">{Detail.statename}</Div>
       </Div>
       <Div className="flexbox">
-        <SvgStyled/>
+        <HeartSvg/>
         <Div className="mediumFont">{Detail.heart}</Div>
       </Div>
       </Div>
@@ -72,11 +72,11 @@ border-radius: 50%;
 background-color: ${(props) => props.theme.stateGreen} ;
 
 `
-const SvgStyled = styled(Heart)`
+const HeartSvg = styled(Heart)`
 fill:  ${(props) => props.theme.bgColor};
 stroke: ${(props) => props.theme.gray4};
 stroke-width:3rem;
-width: 1.75rem;
-height: 1.8rem;
+width: 30px;
+height: 28px;
 `
 

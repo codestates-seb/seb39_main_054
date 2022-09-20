@@ -1,27 +1,27 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as Heart } from "../../assets/img/icon/heart.svg";
 
-const ShareCard = () => {
+const ShareCard = ({ id, title, content, status, image01 }) => {
   return (
-    <Container>
-      <Img></Img>
-      <Title>텐트 대여합니다</Title>
-      <Content>
-        텐트 대여합니다. 상태는 어쩌구저쩌구 블라블라블라블라 텐트 대여합니다.
-        상태는 어쩌구저쩌구 블라블라블라블라텐트 대여합니다. 상태는 어쩌구저쩌구
-        블라블라블라블라
-      </Content>
-      <div className="share-status">
-        <ShareState>
-          <div className="circle"></div>대여가능
-        </ShareState>
-        <Favorite>
-          <Heart />
-          13
-        </Favorite>
-      </div>
-    </Container>
+    <Link to={`/share/detail/${id}`}>
+      <Container>
+        <Img src={image01}></Img>
+        <Title>{title}</Title>
+        <Content>{content}</Content>
+        <div className="share-status">
+          <ShareState>
+            <div className="circle"></div>
+            {status}
+          </ShareState>
+          <Favorite>
+            <Heart />
+            13
+          </Favorite>
+        </div>
+      </Container>
+    </Link>
   );
 };
 
@@ -39,7 +39,7 @@ const Container = styled.div`
   }
 `;
 
-const Img = styled.div`
+const Img = styled.img`
   background-color: #222222;
   width: 210px;
   height: 210px;

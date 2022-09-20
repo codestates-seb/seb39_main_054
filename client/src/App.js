@@ -6,6 +6,7 @@ import { darkTheme, lightTheme } from "./assets/styles/Theme";
 import Nav from "./components/nav/Nav";
 import Main from "./pages/main/Main";
 import Login from "./pages/register/login/Login";
+import SignUp from "./pages/register/signUp/SignUp";
 import ShareList from "./pages/share/shareList/ShareList";
 
 const App = () => {
@@ -38,7 +39,7 @@ const App = () => {
               <Route path="/share/post"></Route>
               <Route path="/share/edit"></Route>
               <Route path="/login" element={<Login></Login>}></Route>
-              <Route path="/signup"></Route>
+              <Route path="/signup" element={<SignUp></SignUp>}></Route>
               <Route path="/mypage/favorite"></Route>
               <Route path="/mypage/mypost"></Route>
               <Route path="/mypage/edit"></Route>

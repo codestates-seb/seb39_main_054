@@ -11,7 +11,7 @@ const ShareCardContent = ({data, number}) => {
         title={el.title}
         content={el.description}
         status={el.status}
-        image01={el.image01}
+        image01={el.image.image01}
       />
     )).slice(0, number)}
   </CardContent>

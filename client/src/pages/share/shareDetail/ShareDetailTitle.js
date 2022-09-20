@@ -32,6 +32,7 @@ const Div = styled.div`
 .flexboxContainer{
   display: flex;
   justify-content: space-between;
+  margin: 2rem 0rem;
 }
 .profile{
   display: flex;

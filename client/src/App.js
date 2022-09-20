@@ -3,8 +3,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
 import GlobalStyle from "./assets/styles/GlobalStyle";
 import { darkTheme, lightTheme } from "./assets/styles/Theme";
+import Footer from "./components/footer/Footer";
 import Nav from "./components/nav/Nav";
 import Main from "./pages/main/Main";
+import ShareDetail  from "./pages/share/shareDetail/ShareDetail";
 import Login from "./pages/register/login/Login";
 import SignUp from "./pages/register/signUp/SignUp";
 import ShareList from "./pages/share/shareList/ShareList";
@@ -35,7 +37,7 @@ const App = () => {
                 path="/share/list"
                 element={<ShareList></ShareList>}
               ></Route>
-              <Route path="/share/detail:id"></Route>
+              <Route path="/share/detail:id" element={<ShareDetail />}></Route>
               <Route path="/share/post"></Route>
               <Route path="/share/edit"></Route>
               <Route path="/login" element={<Login></Login>}></Route>
@@ -52,6 +54,7 @@ const App = () => {
               {/* id: 상대방 id query &myid = =dsadsa &otherid*/}
               <Route path="/chat/detail:id"></Route>
             </Routes>
+            <Footer/>
           </Router>
         </AppContainer>
       </ThemeProvider>

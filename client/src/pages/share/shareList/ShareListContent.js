@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import axios from "axios";
 import styled from 'styled-components';
-import Category from "../../../components/category/Category";
 import ShareCardContent from "../../../components/cards/ShareCardContent";
 
 const ShareListContent = () => {
@@ -37,11 +36,6 @@ const ShareListContent = () => {
   }, []);
   return (
     <Content width={width}>
-    <div>
-      <Category></Category>
-      <div>search</div>
-      <div>공유상태</div>
-    </div>
     <ShareCardContent data={data} number={16}></ShareCardContent>
   </Content>
   )

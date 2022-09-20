@@ -1,19 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 import Category from "../../../components/category/Category";
-import ShareListContent from "./ShareListContent";
-import ShareListFilter from "./ShareListFilter";
+import Search from "../../../components/search/Search";
 
-const ShareList = () => {
+const ShareListFilter = () => {
   return (
     <Container>
-      <ShareListFilter></ShareListFilter>
-      <ShareListContent></ShareListContent>
+      <Category></Category>
+      <Search>search</Search>
+      <div>공유상태</div>
     </Container>
   );
 };
 
-export default ShareList;
+export default ShareListFilter;
 
 const Container = styled.div`
   display: flex;

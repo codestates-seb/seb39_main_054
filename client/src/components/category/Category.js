@@ -43,7 +43,7 @@ const Container = styled.div`
   justify-content: center;
   width: 55.3125rem;
   height: 8.125rem;
-  margin-bottom: 2rem;
+  margin: 2rem 0;
 
   svg {
     width: 60px;

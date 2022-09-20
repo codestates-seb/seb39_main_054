@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { ReactComponent as Category0 } from "../../assets/img/icon/category/all.svg";
-import { ReactComponent as Category1 } from "../../assets/img/icon/category/camp.svg";
-import { ReactComponent as Category2 } from "../../assets/img/icon/category/fish.svg";
-import { ReactComponent as Category3 } from "../../assets/img/icon/category/mount.svg";
-import { ReactComponent as Category4 } from "../../assets/img/icon/category/sports.svg";
-import { ReactComponent as Category5 } from "../../assets/img/icon/category/layer-group.svg";
+import { ReactComponent as Category0 } from "../../../assets/img/icon/category/all.svg";
+import { ReactComponent as Category1 } from "../../../assets/img/icon/category/camp.svg";
+import { ReactComponent as Category2 } from "../../../assets/img/icon/category/fish.svg";
+import { ReactComponent as Category3 } from "../../../assets/img/icon/category/mount.svg";
+import { ReactComponent as Category4 } from "../../../assets/img/icon/category/sports.svg";
+import { ReactComponent as Category5 } from "../../../assets/img/icon/category/layer-group.svg";
 
 const Category = () => {
   const [current, setCurrent] = useState(0);

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { ReactComponent as Glass } from "../../assets/img/icon/magnifying-glass.svg";
+import { ReactComponent as Glass } from "../../../assets/img/icon/magnifying-glass.svg";
 
 const Search = () => {
   return (
@@ -21,6 +21,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  margin: 1rem 0;
   div{
     display: flex;
     justify-content: center;
@@ -33,6 +34,7 @@ const Container = styled.div`
     width: 22px;
     height: 22px;
     fill: ${(props) => props.theme.textColor};
+    cursor: pointer;
   }
 `;
 

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import axios from "axios";
-import styled from 'styled-components';
+import styled from "styled-components";
 import ShareCardContent from "../../../components/cards/ShareCardContent";
 
 const ShareListContent = () => {
-    // 반응형 훅, 리덕스?로 만들기
+  // 반응형 훅, 리덕스?로 만들기
   // 반응형으로 틀의 크기잡기
   const [width, setWidth] = useState("71.25rem");
   // 반응형 별 카드 갯수
@@ -36,12 +36,12 @@ const ShareListContent = () => {
   }, []);
   return (
     <Content width={width}>
-    <ShareCardContent data={data} number={16}></ShareCardContent>
-  </Content>
-  )
-}
+      <ShareCardContent data={data} number={16}></ShareCardContent>
+    </Content>
+  );
+};
 
-export default ShareListContent
+export default ShareListContent;
 
 const Content = styled.div`
   display: flex;

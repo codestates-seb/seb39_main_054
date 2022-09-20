@@ -37,7 +37,7 @@ const App = () => {
                 path="/share/list"
                 element={<ShareList></ShareList>}
               ></Route>
-              <Route path="/share/detail:id" element={<ShareDetail />}></Route>
+              <Route path="/share/detail/:id" element={<ShareDetail />}></Route>
               <Route path="/share/post"></Route>
               <Route path="/share/edit"></Route>
               <Route path="/login" element={<Login></Login>}></Route>
@@ -46,13 +46,13 @@ const App = () => {
               <Route path="/mypage/mypost"></Route>
               <Route path="/mypage/edit"></Route>
               <Route path="/shop/list"></Route>
-              <Route path="/shop/detail:id"></Route>
+              <Route path="/shop/detail/:id"></Route>
               <Route path="/shop/post"></Route>
               <Route path="/shop/edit"></Route>
               {/* id: 로그인 유저 */}
-              <Route path="/chat/list:id"></Route>
+              <Route path="/chat/list/:id"></Route>
               {/* id: 상대방 id query &myid = =dsadsa &otherid*/}
-              <Route path="/chat/detail:id"></Route>
+              <Route path="/chat/detail/:id"></Route>
             </Routes>
             <Footer/>
           </Router>

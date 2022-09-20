@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import Category from "../../../components/category/Category";
 import ShareListContent from "./ShareListContent";
 import ShareListFilter from "./ShareListFilter";
 

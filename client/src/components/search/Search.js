@@ -5,7 +5,10 @@ import { ReactComponent as Glass } from "../../assets/img/icon/magnifying-glass.
 const Search = () => {
   return (
     <Container>
-      <Input placeholder="물품을 검색해보세요"></Input>
+      <div>
+        <Input placeholder="물품을 검색해보세요" />
+        <Glass />
+      </div>
     </Container>
   );
 };
@@ -18,6 +21,19 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  svg {
+    position: relative;
+    right: 3rem;
+    width: 22px;
+    height: 22px;
+    fill: ${(props) => props.theme.textColor};
+  }
 `;
 
 const Input = styled.input`
@@ -28,8 +44,10 @@ const Input = styled.input`
   border: 0;
   font-size: 18px;
   font-family: "NotoSansKR-Medium";
-  text-indent: 2rem;
+  padding-left: 2rem;
+  padding-right: 3.5rem;
   color: ${(props) => props.theme.textColor};
+
   ::placeholder {
     color: ${(props) => props.theme.gray3};
   }

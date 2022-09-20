@@ -87,8 +87,8 @@ const Favorite = styled.div`
 
   svg {
     fill: ${(props) => props.theme.gray4};
-    width: 13px;
-    height: 13px;
+    width: 14px;
+    height: 14px;
     margin-right: 6px;
   }
 `;

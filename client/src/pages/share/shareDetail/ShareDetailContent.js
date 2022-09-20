@@ -13,6 +13,7 @@ export default ShareDetailContent
 const ContentDiv = styled.div`
 display: flex;
 flex-direction: column;
+margin: 0rem 0rem 15rem 0rem;
 `
 const Year = styled.div`
 color:  ${(props) => props.theme.gray2};

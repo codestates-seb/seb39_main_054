@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import styled from "styled-components";
 import example from "../../../assets/img/item/sample.png"
 import { useMediaQuery } from "react-responsive";
 import ShareDetailTitle from "./ShareDetailTitle";
 import ShareDetailContent from "./ShareDetailContent";
+import { Link , useParams } from "react-router-dom";
+import axios from "axios";
 
 
 
@@ -11,18 +13,28 @@ const ShareDetail = () => {
   const Mobile = useMediaQuery({ maxWidth: 786 })
   const [Detail , setDetail] = useState({name : "공유자" , statename : "대여가능" , heart : "13"})
   const [Content , setContent] = useState({date : "2022.09.16" , content : "작년에 샀어요 너무 좋아요작년에 샀어요 너무 좋아요 작년에 샀어요 너무 좋아요ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ" })
-  const name = "채팅하기"
+  const [data , setData] = useState("")
+  const { id } = useParams();
+  const getData = async () => {
+    await axios
+      .get(`${process.env.REACT_APP_API_URL}/product/${id}`)
+      .then((res) => setData(res.data));
+  };
+  useEffect(() => {
+    getData();
+  }, []);
+  
   return (
     <>
       <ShareContainer>
         <Container>
           <Title>캠핑 장비 공유합니다.</Title>
           <Editdiv><EditButton>...</EditButton></Editdiv>
-          <Picture><img src={example}></img></Picture>
+          <Picture><Img src={data.image01}></Img></Picture>
           <ShareDetailTitle Detail={Detail}></ShareDetailTitle>
           <div><hr></hr></div>
           <ShareDetailContent content = {Content}></ShareDetailContent> 
-          <Buttondiv><ChatBtn>채팅하기</ChatBtn></Buttondiv>
+          <Buttondiv><Link to={`/chat/detail/:id`}><ChatBtn>채팅하기</ChatBtn></Link></Buttondiv>
         </Container>
       </ShareContainer>
     </>
@@ -40,6 +52,12 @@ const ShareContainer = styled.div`
     margin: 1rem 0rem;
   }
 `;
+const Img = styled.img`
+
+width: 100%;
+height: 100%;
+border-radius: 14px;
+`
 const Container = styled.div`
 display: flex;
 flex-direction: column;

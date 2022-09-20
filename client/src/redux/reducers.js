@@ -1,4 +1,4 @@
-import { LOGIN_INFO, LOGOUT } from "../actions/index";
+import { LOGIN_INFO, LOGOUT } from "./actions/index";
 
 const initialstate = {
   isLogin: false

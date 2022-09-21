@@ -5,7 +5,7 @@ import styled from "styled-components";
 const NavDropdown = ({ openDropDown }) => {
 
   return (
-    <Ul display={openDropDown.display} height={openDropDown.height} class={openDropDown.class}>
+    <Ul display={openDropDown.display} height={openDropDown.height} className={openDropDown.className}>
       <Link to="/mypage/favorite">
         <li>관심목록</li>
       </Link>
@@ -38,7 +38,7 @@ const Ul = styled.ul`
   border-radius: 14px;
   overflow: hidden;
   height: ${props => props.height};
-  animation-name: ${props => props.class};
+  animation-name: ${props => props.className};
   animation-duration: 1s;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 5px;
   z-index: 100;

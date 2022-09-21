@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Pagination from "../../../components/pagination/Pagination";
+import Paginations from "../../../components/pagination/Paginations";
 import ShareListContent from "./ShareListContent";
 import ShareListFilter from "./ShareListFilter";
 
@@ -9,7 +9,7 @@ const ShareList = () => {
     <Container>
       <ShareListFilter></ShareListFilter>
       <ShareListContent></ShareListContent>
-      <Pagination></Pagination>
+      <Paginations></Paginations>
     </Container>
   );
 };

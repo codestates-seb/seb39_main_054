@@ -13,11 +13,11 @@ const ShareDetailTitle = ({ Detail }) =>{
       <Div className="flexbox">
       <Div className="flexbox1">
         <Stateball />
-        <Div className="mediumFont">{Detail.statename}</Div>
+        <Div className="mediumFont">{Detail.status}</Div>
       </Div>
       <Div className="flexbox">
         <HeartSvg/>
-        <Div className="mediumFont">{Detail.heart}</Div>
+        <Div className="mediumFont">{Detail.favoritecount}</Div>
       </Div>
       </Div>
     </Div>

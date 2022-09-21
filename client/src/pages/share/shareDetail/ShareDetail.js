@@ -63,12 +63,12 @@ const ShareDetail = () => {
             <EditButton onClick={editDrop}>...
             <DetailDropdown openDropDown={openDropDown}/>
             </EditButton>
-            
           </Editdiv>
-          
+
           <Div>
           <ShareDetailImg url = {url}></ShareDetailImg>
           </Div>
+          
           <ShareDetailTitle Detail={detail}></ShareDetailTitle>
           <div><hr></hr></div>
           <ShareDetailContent content = {data}></ShareDetailContent> 

@@ -13,7 +13,7 @@ const DetailDropdown = ({openDropDown})=>{
           <li>{openDropDown.first}</li>
         </Link>
           <li>{openDropDown.second}</li>
-          <li onClick={DetailDropdown}>{openDropDown.third}</li>
+          <li>{openDropDown.third}</li>
 
       </Ul>
       

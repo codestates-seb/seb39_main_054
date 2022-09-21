@@ -31,9 +31,13 @@ const ShareDetailImg = ({url}) => {
   <PictureContainer>
   <Picture ref={slideRef}>
     {value.map((values) =>
-    <Img src = {values}></Img>)}
+    <div>
+    <Img src = {values}></Img>
+    </div>)}
     </Picture>
     </PictureContainer>
+    
+    
     <Btndiv>
     <LeftBtn onClick = {onClickLeftBtn}></LeftBtn>
     <RightBtn onClick = {onClickRightBtn}></RightBtn>
@@ -80,7 +84,6 @@ position: relative;
 `
 const Img = styled.img`
   object-fit: cover;
-  border-radius: 14px;
   width: 56.25rem;
 `;
 

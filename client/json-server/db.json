@@ -130,11 +130,11 @@
       }
     }
   ],
-  "member": {
+  "member": [{
     "id": 1,
     "memberName": "호밀이",
-    "nuckname": "호밀이",
+    "nickname": "호밀이",
     "roles": "ROLE_USER",
     "memberStatus": "활동중"
-  }
+  }]
 }

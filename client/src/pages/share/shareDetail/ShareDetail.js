@@ -1,40 +1,64 @@
 import React, { useState ,useEffect} from "react";
 import styled from "styled-components";
-import example from "../../../assets/img/item/sample.png"
 import { useMediaQuery } from "react-responsive";
 import ShareDetailTitle from "./ShareDetailTitle";
 import ShareDetailContent from "./ShareDetailContent";
 import { Link , useParams } from "react-router-dom";
 import axios from "axios";
-
-
+import ShareDetailImg from "./ShareDetailImg";
 
 const ShareDetail = () => {
   const Mobile = useMediaQuery({ maxWidth: 786 })
-  const [Detail , setDetail] = useState({name : "공유자" , statename : "대여가능" , heart : "13"})
-  const [Content , setContent] = useState({date : "2022.09.16" , content : "작년에 샀어요 너무 좋아요작년에 샀어요 너무 좋아요 작년에 샀어요 너무 좋아요ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ" })
+  const [detail , setDetail] = useState("")
   const [data , setData] = useState("")
   const { id } = useParams();
+  const url = data.image
+  const [openDropDown, setOpenDropDown] = useState({
+    class: "up",
+    height: "0px",
+    display: "none"
+  });
+
   const getData = async () => {
     await axios
       .get(`${process.env.REACT_APP_API_URL}/product/${id}`)
-      .then((res) => setData(res.data));
+      .then((res) => setData(res.data))
+
   };
+  const getMember = async () => {
+    await axios
+      .get(`${process.env.REACT_APP_API_URL}/member/${id}`)
+      .then((res) => setDetail(res.data)); 
+  };
+  const editDrop = () =>{
+    if (openDropDown.class === "up") {
+      setOpenDropDown({ class: "down", height: "250px", display: "flex" });
+    } else {
+      setOpenDropDown({ class: "up", height: "0px", display: "none" });
+    }
+  }
+
+
   useEffect(() => {
     getData();
+    getMember()
+    
   }, []);
   
   return (
     <>
       <ShareContainer>
         <Container>
-          <Title>캠핑 장비 공유합니다.</Title>
-          <Editdiv><EditButton>...</EditButton></Editdiv>
-          <Picture><Img src={data.image01}></Img></Picture>
-          <ShareDetailTitle Detail={Detail}></ShareDetailTitle>
+          {/* {data !== null()} */}
+          <Title>{data.title}</Title>
+          <Editdiv><EditButton onClick={editDrop}>...</EditButton></Editdiv>
+          <ShareDetailImg url = {url}></ShareDetailImg>
+          <ShareDetailTitle Detail={detail}></ShareDetailTitle>
           <div><hr></hr></div>
-          <ShareDetailContent content = {Content}></ShareDetailContent> 
+          <ShareDetailContent content = {data}></ShareDetailContent> 
           <Buttondiv><Link to={`/chat/detail/:id`}><ChatBtn>채팅하기</ChatBtn></Link></Buttondiv>
+          {/* 하나로 묶어서 null */}
+        
         </Container>
       </ShareContainer>
     </>
@@ -52,12 +76,7 @@ const ShareContainer = styled.div`
     margin: 1rem 0rem;
   }
 `;
-const Img = styled.img`
 
-width: 100%;
-height: 100%;
-border-radius: 14px;
-`
 const Container = styled.div`
 display: flex;
 flex-direction: column;
@@ -66,11 +85,6 @@ width:56.25rem;
 `
 const Title = styled.div`
 font-size: 3rem;
-`
-const Picture = styled.div`
-width: 56.25rem;
-height: 34.375rem;
-
 `
 const EditButton = styled.button`
 border: none;

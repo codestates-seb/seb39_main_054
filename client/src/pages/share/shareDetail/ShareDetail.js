@@ -47,20 +47,22 @@ const ShareDetail = () => {
   
   return (
     <>
-      <ShareContainer>
+    {!!data && (
+        <ShareContainer>
         <Container>
-          {/* {data !== null()} */}
           <Title>{data.title}</Title>
           <Editdiv><EditButton onClick={editDrop}>...</EditButton></Editdiv>
+          <Div>
           <ShareDetailImg url = {url}></ShareDetailImg>
+          </Div>
           <ShareDetailTitle Detail={detail}></ShareDetailTitle>
           <div><hr></hr></div>
           <ShareDetailContent content = {data}></ShareDetailContent> 
           <Buttondiv><Link to={`/chat/detail/:id`}><ChatBtn>채팅하기</ChatBtn></Link></Buttondiv>
-          {/* 하나로 묶어서 null */}
         
         </Container>
-      </ShareContainer>
+        </ShareContainer>
+    )}
     </>
   );
 };
@@ -85,6 +87,11 @@ width:56.25rem;
 `
 const Title = styled.div`
 font-size: 3rem;
+`
+const Div = styled.div`
+height: 34.375rem;
+width: 50.626rem;
+
 `
 const EditButton = styled.button`
 border: none;

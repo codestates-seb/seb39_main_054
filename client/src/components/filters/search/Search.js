@@ -41,7 +41,7 @@ const Container = styled.div`
 const Input = styled.input`
   width: 30.9375rem;
   height: 4.125rem;
-  background-color: ${(props) => props.theme.gray6};
+  background-color: ${(props) => props.theme.gray5};
   border-radius: 14px;
   border: 0;
   font-size: 18px;

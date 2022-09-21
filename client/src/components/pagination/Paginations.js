@@ -31,7 +31,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin: 1.5rem 0;
+  margin-bottom: 2rem;
 
   .pagination {
     display: flex;

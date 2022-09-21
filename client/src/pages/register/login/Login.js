@@ -20,13 +20,13 @@ const Login = () => {
               mb="4.625rem"
               type="text"
               placeholder="아이디를 입력해주세요"
-            ></Input>
+            />
             <label>비밀번호</label>
             <Input
               mb="3.5rem"
               type="password"
               placeholder="비밀번호를 입력해주세요"
-            ></Input>
+            />
             <button>로그인</button>
           </Form>
           <Divider>

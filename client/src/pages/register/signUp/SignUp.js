@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useForm } from "react-hook-form";
 // import { Link } from "react-router-dom";
 
 const SignUp = () => {
+ 
+
   return (
     <>
       <LoginContainer>
@@ -11,29 +14,33 @@ const SignUp = () => {
           <Form>
             <label>아이디</label>
             <Input
-              mb="3.125rem"
+              name="id"
               type="text"
               placeholder="아이디를 입력해주세요"
-            ></Input>
+              mb="3.125rem"
+            />
             <label>비밀번호</label>
             <Input
-              mb="3.125rem"
+              name="password"
               type="password"
               placeholder="비밀번호를 입력해주세요"
-            ></Input>
+              mb="3.125rem"
+            />
             <label>비밀번호 확인</label>
             <Input
-              mb="3.125rem"
+              name="password_confirm"
               type="password"
               placeholder="비밀번호를 다시 한번 입력해주세요"
-            ></Input>
+              mb="3.125rem"
+            />
             <label>닉네임</label>
             <Input
-              mb="2rem"
+              name="nickname"
               type="text"
               placeholder="닉네임을 입력해주세요"
-            ></Input>
-            <button>로그인</button>
+              mb="2rem"
+            />
+            <button type="submit">로그인</button>
           </Form>
         </LoginContent>
       </LoginContainer>

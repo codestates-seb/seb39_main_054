@@ -1,4 +1,4 @@
-import { LOGIN_INFO, LOGOUT } from "./actions/index";
+import { LOGIN_INFO, LOGOUT } from "../actions/logInAction";
 
 const initialstate = {
   isLogin: false
@@ -9,11 +9,13 @@ const loginReducer = (state = initialstate, action) => {
   switch (action.type) {
     case LOGIN_INFO:
       return {
+        ...state,
         isLogin: true,
         ...action.payload // res?
       };
     case LOGOUT:
       return {
+        ...state,
         isLogin: false
       };
     default:

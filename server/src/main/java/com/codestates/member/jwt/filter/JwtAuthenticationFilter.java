@@ -58,6 +58,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String jwtToken = JWT.create()
                 .withSubject("PreProject54Team")
+                // TODO 운영 배포 시 600분 -> 60분 으로 수정할 것
                 .withExpiresAt(new Date(System.currentTimeMillis() + (1000 * 60 * 600))) // 600분
                 .withClaim("id", principalDetails.getMember().getMemberId())
                 .withClaim("nickname", principalDetails.getMember().getNickname())

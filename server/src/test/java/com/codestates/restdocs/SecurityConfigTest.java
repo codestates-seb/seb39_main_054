@@ -1,7 +1,7 @@
 package com.codestates.restdocs;
 
 import com.codestates.helper.ControllerTestHelper;
-import com.codestates.helper.StubData;
+import com.codestates.helper.MemberStubData;
 import com.codestates.member.dto.MemberPostDto;
 import com.codestates.member.entity.Member;
 import com.codestates.member.repository.MemberRepository;
@@ -27,7 +27,6 @@ import java.util.List;
 
 import static com.codestates.util.ApiDocumentUtils.getRequestPreProcessor;
 import static com.codestates.util.ApiDocumentUtils.getResponsePreProcessor;
-import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
@@ -36,7 +35,6 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 //@AutoConfigureMockMvc
@@ -79,7 +77,7 @@ class SecurityConfigTest implements ControllerTestHelper {
 //        String userId = "csytest1";
 //        String password = "1234qwer";
 
-        MemberPostDto post = (MemberPostDto) StubData.MockMember.getRequestBody(HttpMethod.POST);
+        MemberPostDto post = (MemberPostDto) MemberStubData.MockMember.getRequestBody(HttpMethod.POST);
         String content = toJsonContent(post);
 
         // when

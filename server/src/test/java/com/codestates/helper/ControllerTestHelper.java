@@ -16,6 +16,7 @@ import java.util.stream.Stream;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
 
 public interface ControllerTestHelper<T> {
@@ -25,6 +26,16 @@ public interface ControllerTestHelper<T> {
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content);
+
+    }
+    default RequestBuilder postwithVariableRequestBuilder(String url, long resourceId,
+                                              String content) {
+        return post(url, resourceId)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content)
+                .with(csrf()) // 이거 없으면 403 에러 발생
+                ;
     }
 
     default RequestBuilder patchRequestBuilder(String url, long resourceId, String content) {

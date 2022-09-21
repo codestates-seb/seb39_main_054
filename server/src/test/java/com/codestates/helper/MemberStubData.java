@@ -1,6 +1,6 @@
 package com.codestates.helper;
 
-import com.codestates.member.dto.MemberDto;
+import com.codestates.favorite.dto.FavoriteResponseDto;
 import com.codestates.member.dto.MemberPatchDto;
 import com.codestates.member.dto.MemberPostDto;
 import com.codestates.member.dto.MemberResponseDto;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class StubData {
+public class MemberStubData {
     private static Map<HttpMethod, Object> stubRequestBody;
     static {
         stubRequestBody = new HashMap<>();

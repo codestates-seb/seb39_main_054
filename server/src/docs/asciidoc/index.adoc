@@ -77,3 +77,20 @@ include::{snippets}/post-login/http-response.adoc[]
 
 .response-headers
 include::{snippets}/post-login/response-headers.adoc[]
+
+== FavoriteController
+=== 관심 등록
+.curl-request
+include::{snippets}/post-favorite/curl-request.adoc[]
+
+.http-request
+include::{snippets}/post-favorite/http-request.adoc[]
+
+.request-fields
+include::{snippets}/post-favorite/request-fields.adoc[]
+
+.http-response
+include::{snippets}/post-favorite/http-response.adoc[]
+
+.response-fields
+include::{snippets}/post-favorite/response-fields.adoc[]

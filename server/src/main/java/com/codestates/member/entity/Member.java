@@ -46,6 +46,13 @@ public class Member extends Auditable {
         this.password = password;
     }
 
+    public Member(Long memberId, String memberName, String password, String nickname) {
+        this.memberId = memberId;
+        this.memberName = memberName;
+        this.password = password;
+        this.nickname = nickname;
+    }
+
     public List<String> getRoleList() {    //????? 언제 사용하니???
         if (this.roles.length() > 0) {
             return Arrays.asList(this.roles.split(","));

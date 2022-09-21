@@ -1,0 +1,50 @@
+package com.codestates.favorite.controller;
+
+import com.codestates.favorite.dto.FavoritePostDto;
+import com.codestates.favorite.entity.Favorite;
+import com.codestates.favorite.mapper.FavoriteMapper;
+import com.codestates.favorite.service.FavoriteService;
+import com.codestates.member.jwt.oauth.PrincipalDetails;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import javax.validation.constraints.Positive;
+
+@RestController
+@RequestMapping("/v1/favorites")
+@Validated
+@RequiredArgsConstructor
+public class FavoriteController {
+    private final FavoriteService favoriteService;
+    private final FavoriteMapper mapper;
+
+    @PostMapping("/{product-id}")
+    public ResponseEntity postFavorite(@PathVariable("product-id") @Positive long productId,
+                                       @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        //TODO 09/21 PrincipalDetails 를 가지고 오지 못하는 이유?
+//        System.out.println("user.getUsername() = " + user.getUsername());
+//        System.out.println("user.getPassword() = " + user.getPassword());
+        long memberId = principalDetails.getMember().getMemberId();
+        FavoritePostDto favoritePostDto = new FavoritePostDto(memberId, productId);
+        favoriteService.createFavorite(productId, memberId);
+        Favorite favorite = mapper.favoritePostDtoToFavorite(favoritePostDto);
+
+        return new ResponseEntity<>(mapper.favoriteToFavoriteResponseDto(favorite), HttpStatus.CREATED);
+//        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("{product-id}")
+    public ResponseEntity deleteFavorite(@PathVariable("product-id") @Positive long productId,
+                                         @AuthenticationPrincipal PrincipalDetails principalDetails) {
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+}
+

@@ -1,6 +1,6 @@
 package com.codestates.helper;
 
-import com.codestates.member.dto.MemberDto;
+import com.codestates.favorite.dto.FavoriteResponseDto;
 import com.codestates.member.dto.MemberPatchDto;
 import com.codestates.member.dto.MemberPostDto;
 import com.codestates.member.dto.MemberResponseDto;
@@ -17,12 +17,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class StubData {
+public class MemberStubData {
     private static Map<HttpMethod, Object> stubRequestBody;
     static {
         stubRequestBody = new HashMap<>();
         stubRequestBody.put(HttpMethod.POST, new MemberPostDto("team54","abcd1234!@", "아이언맨"));
-        stubRequestBody.put(HttpMethod.PATCH, new MemberPatchDto(1L, "토르", "1234abcd#"));
+        stubRequestBody.put(HttpMethod.PATCH, new MemberPatchDto(1L, "아이언맨", "1234abcd#", Member.MemberStatus.MEMBER_ACTIVE));
     }
 
     public static class MockMember {

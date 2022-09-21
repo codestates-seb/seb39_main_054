@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useForm } from "react-hook-form";
 // import { Link } from "react-router-dom";
 
 const SignUp = () => {
+ 
+
   return (
     <>
       <LoginContainer>
@@ -11,29 +14,33 @@ const SignUp = () => {
           <Form>
             <label>아이디</label>
             <Input
-              mb="3.125rem"
-              type="email"
+              name="id"
+              type="text"
               placeholder="아이디를 입력해주세요"
-            ></Input>
+              mb="3.125rem"
+            />
             <label>비밀번호</label>
             <Input
-              mb="3.125rem"
-              type="email"
+              name="password"
+              type="password"
               placeholder="비밀번호를 입력해주세요"
-            ></Input>
+              mb="3.125rem"
+            />
             <label>비밀번호 확인</label>
             <Input
-              mb="3.125rem"
-              type="email"
+              name="password_confirm"
+              type="password"
               placeholder="비밀번호를 다시 한번 입력해주세요"
-            ></Input>
+              mb="3.125rem"
+            />
             <label>닉네임</label>
             <Input
-              mb="2rem"
-              type="email"
+              name="nickname"
+              type="text"
               placeholder="닉네임을 입력해주세요"
-            ></Input>
-            <button>로그인</button>
+              mb="2rem"
+            />
+            <button type="submit">로그인</button>
           </Form>
         </LoginContent>
       </LoginContainer>
@@ -94,7 +101,7 @@ const Input = styled.input`
   height: 3.75rem;
   background-color: ${(props) => props.theme.bgColor};
   color: ${(props) => props.theme.textColor};
-  border: 0.0625rem solid ${(props) => props.theme.gray4};
+  border: 0.08rem solid ${(props) => props.theme.gray4};
   border-radius: 0.625rem;
   font-size: 1.25rem;
   padding-left: 1.25rem;
@@ -105,6 +112,7 @@ const Input = styled.input`
     color: ${(props) => props.theme.gray4};
   }
   &:focus {
+    border: 0.09rem solid;
     border-color: ${(props) => props.theme.primary};
     outline: none;
   }

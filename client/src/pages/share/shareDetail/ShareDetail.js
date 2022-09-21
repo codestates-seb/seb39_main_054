@@ -6,6 +6,7 @@ import ShareDetailContent from "./ShareDetailContent";
 import { Link , useParams } from "react-router-dom";
 import axios from "axios";
 import ShareDetailImg from "./ShareDetailImg";
+import DetailDropdown from "../../../components/dropdowns/DetailDropdown";
 
 const ShareDetail = () => {
   const Mobile = useMediaQuery({ maxWidth: 786 })
@@ -16,7 +17,10 @@ const ShareDetail = () => {
   const [openDropDown, setOpenDropDown] = useState({
     class: "up",
     height: "0px",
-    display: "none"
+    display: "none",
+    first : "수정하기",
+    second : "삭제하기",
+    third : "공유상태 변경"
   });
 
   const getData = async () => {
@@ -32,9 +36,13 @@ const ShareDetail = () => {
   };
   const editDrop = () =>{
     if (openDropDown.class === "up") {
-      setOpenDropDown({ class: "down", height: "250px", display: "flex" });
+      setOpenDropDown({ class: "down", display: "flex" , first : "수정하기",
+      second : "삭제하기",
+      third : "공유상태 변경"});
     } else {
-      setOpenDropDown({ class: "up", height: "0px", display: "none" });
+      setOpenDropDown({ class: "up", display: "none" , first : "수정하기",
+      second : "삭제하기",
+      third : "공유상태 변경"});
     }
   }
 
@@ -51,7 +59,13 @@ const ShareDetail = () => {
         <ShareContainer>
         <Container>
           <Title>{data.title}</Title>
-          <Editdiv><EditButton onClick={editDrop}>...</EditButton></Editdiv>
+          <Editdiv>
+            <EditButton onClick={editDrop}>...
+            <DetailDropdown openDropDown={openDropDown}/>
+            </EditButton>
+            
+          </Editdiv>
+          
           <Div>
           <ShareDetailImg url = {url}></ShareDetailImg>
           </Div>
@@ -91,18 +105,19 @@ font-size: 3rem;
 const Div = styled.div`
 height: 34.375rem;
 width: 50.626rem;
-
 `
 const EditButton = styled.button`
 border: none;
 background-color: ${(props) => props.theme.bgColor};
 color: ${(props) => props.theme.textColor};
 font-size: 1.875rem;
-text-align: right;
 `
 const Editdiv = styled.div`
+color: ${(props) => props.theme.textColor};
+font-size: 1.875rem;
+margin: 0rem 0rem 1rem 0rem;
 text-align: right;
-margin: -1rem 0rem 1.875rem 0rem;
+
 `
 const ChatBtn = styled.button`
 width: 8.125rem;

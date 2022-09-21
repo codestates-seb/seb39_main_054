@@ -39,7 +39,7 @@ const App = () => {
               ></Route>
               <Route path="/share/detail/:id" element={<ShareDetail />}></Route>
               <Route path="/share/post"></Route>
-              <Route path="/share/edit"></Route>
+              <Route path="/share/edit/:id"></Route>
               <Route path="/login" element={<Login></Login>}></Route>
               <Route path="/signup" element={<SignUp></SignUp>}></Route>
               <Route path="/mypage/favorite"></Route>

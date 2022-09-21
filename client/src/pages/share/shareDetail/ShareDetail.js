@@ -13,21 +13,30 @@ const ShareDetail = () => {
   const [data , setData] = useState("")
   const { id } = useParams();
   const url = data.image
+  const [openDropDown, setOpenDropDown] = useState({
+    class: "up",
+    height: "0px",
+    display: "none"
+  });
 
   const getData = async () => {
     await axios
       .get(`${process.env.REACT_APP_API_URL}/product/${id}`)
       .then((res) => setData(res.data))
 
-        
   };
   const getMember = async () => {
     await axios
       .get(`${process.env.REACT_APP_API_URL}/member/${id}`)
-      .then((res) => setDetail(res.data));
-      
-        
+      .then((res) => setDetail(res.data)); 
   };
+  const editDrop = () =>{
+    if (openDropDown.class === "up") {
+      setOpenDropDown({ class: "down", height: "250px", display: "flex" });
+    } else {
+      setOpenDropDown({ class: "up", height: "0px", display: "none" });
+    }
+  }
 
 
   useEffect(() => {
@@ -40,13 +49,16 @@ const ShareDetail = () => {
     <>
       <ShareContainer>
         <Container>
+          {/* {data !== null()} */}
           <Title>{data.title}</Title>
-          <Editdiv><EditButton>...</EditButton></Editdiv>
+          <Editdiv><EditButton onClick={editDrop}>...</EditButton></Editdiv>
           <ShareDetailImg url = {url}></ShareDetailImg>
           <ShareDetailTitle Detail={detail}></ShareDetailTitle>
           <div><hr></hr></div>
           <ShareDetailContent content = {data}></ShareDetailContent> 
           <Buttondiv><Link to={`/chat/detail/:id`}><ChatBtn>채팅하기</ChatBtn></Link></Buttondiv>
+          {/* 하나로 묶어서 null */}
+        
         </Container>
       </ShareContainer>
     </>

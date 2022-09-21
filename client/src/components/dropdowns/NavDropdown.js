@@ -5,7 +5,7 @@ import styled from "styled-components";
 const NavDropdown = ({ openDropDown }) => {
 
   return (
-    <Ul display={openDropDown.display} height={openDropDown.height} class={openDropDown.class}>
+    <Ul display={openDropDown.display} height={openDropDown.height} className={openDropDown.class}>
       <Link to="/mypage/favorite">
         <li>관심목록</li>
       </Link>

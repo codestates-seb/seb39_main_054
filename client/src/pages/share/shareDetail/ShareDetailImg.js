@@ -5,7 +5,7 @@ const ShareDetailImg = ({url}) => {
   console.log(url)
   return(
     <>
-  <Picture><Img src={url.image01}></Img>
+  <Picture><Img src={url}></Img>
   <CaretDiv><LeftBtn /><RightBtn /></CaretDiv>
   </Picture>
   

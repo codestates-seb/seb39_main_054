@@ -7,7 +7,9 @@ const ShareCard = ({ id, title, content, status, image01 }) => {
   return (
     <Link to={`/share/detail/${id}`}>
       <Container>
-        <Img src={image01}></Img>
+        <div className="img-container">
+          <Img src={image01}></Img>
+        </div>
         <Title>{title}</Title>
         <Content>{content}</Content>
         <div className="share-status">
@@ -37,15 +39,25 @@ const Container = styled.div`
     display: flex;
     justify-content: space-between;
   }
+
+  .img-container {
+    width: 210px;
+    height: 210px;
+    overflow: hidden;
+    border-radius: 14px;
+    border: 0px;
+    margin-bottom: 13px;
+  }
 `;
 
 const Img = styled.img`
-  background-color: #222222;
-  width: 210px;
-  height: 210px;
-  border-radius: 14px;
-  border: 0px;
-  margin-bottom: 13px;
+  width: 100%;
+  height: 100%;
+  transition: all 0.2s linear;
+
+  &:hover {
+    transform: scale(1.2);
+  }
 `;
 
 const Title = styled.div`

@@ -4,7 +4,7 @@ const ShareDetailContent = ({content})=>{
   return(
     <ContentDiv>
       <Year>{content.date}</Year>
-      <Body>{content.content}</Body>
+      <Body>{content.description}</Body>
     </ContentDiv>
   )
 }

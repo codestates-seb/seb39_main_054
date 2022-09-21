@@ -8,7 +8,7 @@ const ShareDetailTitle = ({ Detail }) =>{
     <Div className="flexboxContainer">
       <Div className="flexbox">
         <Div className="profileimg"></Div>
-        <Div className="middle">{Detail.name}</Div>
+        <Div className="middle">{Detail.nickname}</Div>
       </Div>
       <Div className="flexbox">
       <Div className="flexbox1">

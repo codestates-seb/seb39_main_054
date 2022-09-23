@@ -1,29 +1,10 @@
 import styled from "styled-components";
-import { ReactComponent as Down } from "../../../assets/img/icon/caret-down.svg";
-import { ReactComponent as Up } from "../../../assets/img/icon/caret-up.svg";
 import { useState , useEffect } from "react";
+import PostDropdown from "../../../components/dropdowns/PostDropdown";
 
 
 const SharePost = () =>{
 
-  const [updown, setUpdown] = useState({
-    className : "up",
-    height : "0px",
-    display : "none"
-
-  });
-  const [categoty , setCategory] = useState("카테고리")
-  const ClickDrop = ({list}) =>{
-    setCategory(list)
-
-  }
-  const ClickBtn = ()=>{
-    if(updown.className === "up"){
-      setUpdown({className : "down", height : "250px" , display : "flex"})
-    }else{
-      setUpdown({className : "up", height : "0px" , display : "none"})
-    }
-  }
   return(
     
     <MainContainer>
@@ -33,8 +14,8 @@ const SharePost = () =>{
           <SubTitle>제목</SubTitle>
           <PageContainer>
           <InputText type="text" placeholder="제목을 입력해주세요"></InputText>
-          <TagBtn onClick={ClickBtn}>카테고리 
-          {updown.className === "up" ?(<DownBtn />) : (<UpBtn />)}</TagBtn>
+          <PostDropdown />
+          
           </PageContainer>
           <FlexContainer>
           <SubTitle>이미지 첨부</SubTitle>
@@ -55,18 +36,6 @@ const SharePost = () =>{
 export default SharePost;
 
 
-const DownBtn = styled(Down)`
-  width : 1rem;
-  height: 1rem;
-  fill : ${(props) => props.theme.primary};
-  margin: 0rem -2rem 0rem 1em;
-`
-const UpBtn = styled(Up)`
- width : 1rem;
-  height: 1rem;
-  fill : ${(props) => props.theme.primary};
-  margin: 0rem -2rem 0rem 1em;
-`
 
 const MainContainer = styled.div`
   display: flex;
@@ -106,6 +75,7 @@ margin: 5.3125rem;
 const InputText = styled.input`
 width: 32.5rem;
 height: 3.44rem;
+padding: 1rem;
 font-size: 1.2rem;
 background-color:  ${(props) => props.theme.bgColor};
 border-radius: 10px;
@@ -116,6 +86,7 @@ border-color:${(props) => props.theme.gray5} ;
 const ContentText = styled.textarea`
 height: 55.625rem;
 width: 100%;
+padding: 1rem;
 font-size: 1.2rem;
 background-color:  ${(props) => props.theme.bgColor};
 border-radius: 10px;
@@ -125,27 +96,19 @@ vertical-align: top;
 resize: none;
 
 `
-const TagBtn = styled.button`
-width:12rem;
-height: 3.44rem;;
-background-color:  ${(props) => props.theme.bgColor};
-font-size: 1.2rem;
-border:solid 0.1875rem;
-border-color:${(props) => props.theme.gray5} ;
-border-radius: 10px;
-margin: 0rem;
-`
 const BtnDiv = styled.div`
   display: flex;
   justify-content: center;
   margin: 0rem 0rem -3rem 0rem;
   font-size: 1.375rem;
+
 `
 const CancelBtn = styled.button`
   width: 8.44rem;
   height: 3.125rem;
   background-color:${(props) => props.theme.gray3};
   color: white;
+  border-radius: 10px;
   margin: 2.5rem 2rem;
   font-size: 1.375rem;
   
@@ -154,6 +117,7 @@ const PostBtn = styled.button`
   width: 8.44rem;
   height: 3.125rem;
   background-color:${(props) => props.theme.primary};
+  border-radius: 10px;
   color:White;
   margin: 2.5rem 2rem;
   font-size: 1.375rem;

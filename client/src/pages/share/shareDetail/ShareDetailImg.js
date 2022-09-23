@@ -54,6 +54,7 @@ position: relative;
 width: 56.25rem;
 height: 550px;
 overflow: hidden;
+border-radius: 15px;
 `
 const Btndiv = styled.div`
 display: flex;

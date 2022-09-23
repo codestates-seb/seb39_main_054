@@ -1,26 +1,23 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
-// import Detail2Dropdown from "./Detail2Dropdown";
-// import { useState} from "react";
 
-const DetailDropdown = ({openDropDown} ,{editDrod2})=>{
 
+
+const Detail2Dropdown = ({openDropDown2})=>{
+  
     return (
-      <>
-      <Ul display={openDropDown.display} height={openDropDown.height} class={openDropDown.class}>
-        <Link to="/share/edit/:id">
-          <li>{openDropDown.first}</li>
-        </Link>
-          <li>{openDropDown.second}</li>
-          <li onClick = {editDrod2}>{openDropDown.third}</li>
+      
+      <Ul display={openDropDown2.display} height={openDropDown2.height} class={openDropDown2.class}>
+          <li>{openDropDown2.first}</li>
+          <li>{openDropDown2.second}</li>
+          <li>{openDropDown2.third}</li>
+
       </Ul>
       
-      </>
     );
   
 }
-export default DetailDropdown
+export default Detail2Dropdown
 
 const Ul = styled.ul`
   position: absolute;

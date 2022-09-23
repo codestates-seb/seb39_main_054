@@ -44,7 +44,8 @@ const ShareDetail = () => {
   const getMember = async () => {
     await axios
       .get(`${process.env.REACT_APP_API_URL}/member/${id}`)
-      .then((res) => setDetail(res.data)); 
+      .then((res) => setDetail(res.data))
+
   };
   const editDrop = () =>{
     if (openDropDown.class === "up") {
@@ -94,7 +95,7 @@ const ShareDetail = () => {
           <ShareDetailImg url = {url}></ShareDetailImg>
           </Div>
           
-          <ShareDetailTitle Detail={detail}></ShareDetailTitle>
+          <ShareDetailTitle Detail={data} Data = {detail}></ShareDetailTitle>
           <div><hr></hr></div>
           <ShareDetailContent content = {data}></ShareDetailContent> 
           <Buttondiv><Link to={`/chat/detail/:id`}><ChatBtn>채팅하기</ChatBtn></Link></Buttondiv>

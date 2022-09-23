@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-const ShareDetailContent = ({content})=>{
+const ShareDetailContent = ({content} ,)=>{
   return(
     <ContentDiv>
       <Year>{content.createDate}</Year>
@@ -21,7 +21,7 @@ text-align: right;
 margin: 0.8rem 0rem;
 font-size: 1.25rem;
 `
-const Body = styled.div`
+const Body = styled.pre`
 font-size: 1.25rem;
 margin: 0.5rem 0rem;
 `

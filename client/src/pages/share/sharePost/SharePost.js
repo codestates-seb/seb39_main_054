@@ -12,6 +12,11 @@ const SharePost = () =>{
     display : "none"
 
   });
+  const [categoty , setCategory] = useState("카테고리")
+  const ClickDrop = ({list}) =>{
+    setCategory(list)
+
+  }
   const ClickBtn = ()=>{
     if(updown.className === "up"){
       setUpdown({className : "down", height : "250px" , display : "flex"})
@@ -35,7 +40,7 @@ const SharePost = () =>{
           <SubTitle>이미지 첨부</SubTitle>
           </FlexContainer>
           <SubTitle>내용</SubTitle>
-          <ContentText placeholder="내용을 입력해주세요" type="text" ></ContentText>
+          <ContentText placeholder="내용을 입력해주세요" ></ContentText>
           <BtnDiv>
           <CancelBtn>취소</CancelBtn>
           <PostBtn>등록</PostBtn>
@@ -108,7 +113,7 @@ border:solid 0.1875rem;
 border-color:${(props) => props.theme.gray5} ;
 
 `
-const ContentText = styled.input`
+const ContentText = styled.textarea`
 height: 55.625rem;
 width: 100%;
 font-size: 1.2rem;
@@ -117,6 +122,7 @@ border-radius: 10px;
 border:solid 0.1875rem;
 border-color:${(props) => props.theme.gray5};
 vertical-align: top;
+resize: none;
 
 `
 const TagBtn = styled.button`

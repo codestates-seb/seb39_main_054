@@ -122,7 +122,6 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 // import styled from "styled-components";
-import "./SignUp.css";
 
 const SignUp = () => {
   const schema = yup.object().shape({

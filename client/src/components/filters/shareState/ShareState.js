@@ -88,8 +88,8 @@ const Content = styled.div`
 
   svg {
     display: ${(props) => props.display};
-    width: 1.2rem;
-    height: 1.2rem;
+    width: 0.9rem;
+    height: 0.9rem;
     fill: ${(props) => props.theme.white};
     margin-right: 0.5rem;
   }

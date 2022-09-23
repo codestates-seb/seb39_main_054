@@ -87,18 +87,18 @@ public class Member extends Auditable {
     private List<Favorite> favoriteList = new ArrayList<>();
 
 
-    public void addProduct(Product product) {
-        this.productList.add(product);
-        if (product.getMember() != this) {
-            product.addMember(this);
-        }
-    }
-
-    public void addFavorite(Favorite favorite) {
-        this.favoriteList.add(favorite);
-        if (favorite.getMember() != this) {
-            favorite.addMember(this);
-        }
-    }
+//    public void addProduct(Product product) {
+//        this.productList.add(product);
+//        if (product.getMember() != this) {
+//            product.addMember(this);
+//        }
+//    }
+//
+//    public void addFavorite(Favorite favorite) {
+//        this.favoriteList.add(favorite);
+//        if (favorite.getMember() != this) {
+//            favorite.addMember(this);
+//        }
+//    }
 
 }

@@ -5,17 +5,17 @@ import com.codestates.favorite.entity.Favorite;
 import com.codestates.member.entity.Member;
 import com.codestates.pcategory.entity.Pcategory;
 import com.codestates.pimage.entity.Pimage;
-import com.codestates.pstatus.entity.Pstatus;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Builder
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Product extends Auditable {
@@ -24,62 +24,83 @@ public class Product extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
 
-    @Column(nullable = false)
+    @Column
     private String title;
 
-    @Column(nullable = false)
+    @Column
     private String description;
+
+    @Enumerated(value = EnumType.STRING)
+    private ProductStatus productStatus;
+
+    @Transient // DB Column 생성 X
+    @ColumnDefault("false")
+    private boolean favoriteStatus;
+
+    @ColumnDefault("0")
+    private Long favoriteCount;
 
     @ManyToOne
     @JoinColumn(name = "PCATEGORY_ID")
     private Pcategory pcategory;
 
-    @OneToOne (mappedBy = "product")
-    private Pimage pimage;
-
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @ManyToOne
-    @JoinColumn(name = "PSTATUS_ID")
-    private Pstatus pstatus;
+    @OneToMany (mappedBy = "product", cascade = CascadeType.REMOVE)
+    private List<Pimage> pimageList = new ArrayList<>();
 
-    @OneToMany (mappedBy = "product")
+
+    @OneToMany (mappedBy = "product", cascade = CascadeType.REMOVE)
     private List<Favorite> favoriteList = new ArrayList<>();
 
-    public void addPcategory(Pcategory pcategory) {
-        this.pcategory = pcategory;
-        if (!this.pcategory.getProductList().contains(this)) {
-            this.pcategory.getProductList().add(this);
-        }
-    }
 
-    public void addPimage(Pimage pimage) {
-        this.pimage = pimage;
-        if (pimage.getProduct() != this) {
-            pimage.addProduct(this);
-        }
-    }
+    public enum ProductStatus{
+        PRODUCT_AVAILABLE("대여가능"),
+        PRODUCT_USE("대여중"),
+        PRODUCT_COMPLETED("반납완료");
 
-    public void addMember(Member member) {
-        this.member = member;
-        if (!this.member.getProductList().contains(this)) {
-            this.member.getProductList().add(this);
-        }
-    }
+        @Getter
+        private String status;
 
-    public void addPstatus(Pstatus pstatus) {
-        this.pstatus = pstatus;
-        if (!this.pstatus.getProductList().contains(this)) {
-            this.pstatus.getProductList().add(this);
+        ProductStatus(String status){
+            this.status = status;
         }
     }
-
-    public void addFavorite(Favorite favorite) {
-        this.favoriteList.add(favorite);
-        if (favorite.getProduct() != this) {
-            favorite.addProduct(this);
-        }
-    }
+//
+//    public void addPcategory(Pcategory pcategory) {
+//        this.pcategory = pcategory;
+//        if (!this.pcategory.getProductList().contains(this)) {
+//            this.pcategory.getProductList().add(this);
+//        }
+//    }
+//
+//    public void addPimage(Pimage pimage) {
+//        this.pimageList.add(pimage);
+//        if (!this.pimageList.get) {
+//            pimage.addProduct(this);
+//        }
+//    }
+//
+//    public void addMember(Member member) {
+//        this.member = member;
+//        if (!this.member.getProductList().contains(this)) {
+//            this.member.getProductList().add(this);
+//        }
+//    }
+//
+//    public void addPstatus(Pstatus pstatus) {
+//        this.pstatus = pstatus;
+//        if (!this.pstatus.getProductList().contains(this)) {
+//            this.pstatus.getProductList().add(this);
+//        }
+//    }
+//
+//    public void addFavorite(Favorite favorite) {
+//        this.favoriteList.add(favorite);
+//        if (favorite.getProduct() != this) {
+//            favorite.addProduct(this);
+//        }
+//    }
 }

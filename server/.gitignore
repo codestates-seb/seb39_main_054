@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### AWS 정보 ###
+application-aws.yml

@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 
 const ShareDetailTitle = ({ Detail }) =>{
+  console.log(Detail)
   return(
     <Div className="profile">
     <Div className="flexboxContainer">

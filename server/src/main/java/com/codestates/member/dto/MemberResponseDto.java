@@ -20,6 +20,10 @@ public class MemberResponseDto {
 
     private Member.MemberStatus memberStatus;
 
+    private String imageName;
+
+    private String imageUrl;
+
     private LocalDateTime creationDate;
 
     private LocalDateTime lastEditDate;

@@ -17,6 +17,7 @@ public class PrincipalDetailsService implements UserDetailsService { //Spring Se
     @Override
     public UserDetails loadUserByUsername(String memberName) throws UsernameNotFoundException {
 
+        // TODO 09/22 login test 에서 memberEntity 가 null 이어서 실패함
         Member memberEntity = memberRepository.findByMemberName(memberName);
         return new PrincipalDetails(memberEntity);
 

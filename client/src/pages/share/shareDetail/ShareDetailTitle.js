@@ -2,14 +2,13 @@ import { ReactComponent as Heart } from "../../../assets/img/icon/heart.svg"
 import styled from "styled-components";
 
 
-const ShareDetailTitle = ({ Detail }) =>{
-  console.log(Detail)
+const ShareDetailTitle = ({ Detail , Data}) =>{
   return(
     <Div className="profile">
     <Div className="flexboxContainer">
       <Div className="flexbox">
         <Div className="profileimg"></Div>
-        <Div className="middle">{Detail.nickname}</Div>
+        <Div className="middle">{Data.nickname}</Div>
       </Div>
       <Div className="flexbox">
       <Div className="flexbox1">

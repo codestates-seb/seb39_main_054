@@ -10,6 +10,7 @@ import ShareDetail  from "./pages/share/shareDetail/ShareDetail";
 import Login from "./pages/register/login/Login";
 import SignUp from "./pages/register/signUp/SignUp";
 import ShareList from "./pages/share/shareList/ShareList";
+import SharePost from "./pages/share/sharePost/SharePost";
 
 const App = () => {
   // 테마 변경 (lightTheme, darkTheme)
@@ -38,7 +39,7 @@ const App = () => {
                 element={<ShareList></ShareList>}
               ></Route>
               <Route path="/share/detail/:id" element={<ShareDetail />}></Route>
-              <Route path="/share/post"></Route>
+              <Route path="/share/post" element = {<SharePost/>}></Route>
               <Route path="/share/edit/:id"></Route>
               <Route path="/login" element={<Login></Login>}></Route>
               <Route path="/signup" element={<SignUp></SignUp>}></Route>

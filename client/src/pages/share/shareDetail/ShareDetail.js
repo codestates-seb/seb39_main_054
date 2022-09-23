@@ -7,6 +7,7 @@ import { Link , useParams } from "react-router-dom";
 import axios from "axios";
 import ShareDetailImg from "./ShareDetailImg";
 import DetailDropdown from "../../../components/dropdowns/DetailDropdown";
+import Detail2Dropdown from "../../../components/dropdowns/Detail2Dropdown";
 
 const ShareDetail = () => {
   const Mobile = useMediaQuery({ maxWidth: 786 })
@@ -14,6 +15,7 @@ const ShareDetail = () => {
   const [data , setData] = useState("")
   const { id } = useParams();
   const url = data.image
+
   const [openDropDown, setOpenDropDown] = useState({
     class: "up",
     height: "0px",
@@ -22,6 +24,16 @@ const ShareDetail = () => {
     second : "삭제하기",
     third : "공유상태 변경"
   });
+  const [openDropDown2, setOpenDropDown2] = useState({
+    class: "up",
+    height: "0px",
+    display: "none",
+    first : "대여가능",
+    second : "대여중",
+    third : "반납완료"
+  });
+  
+
 
   const getData = async () => {
     await axios
@@ -32,7 +44,8 @@ const ShareDetail = () => {
   const getMember = async () => {
     await axios
       .get(`${process.env.REACT_APP_API_URL}/member/${id}`)
-      .then((res) => setDetail(res.data)); 
+      .then((res) => setDetail(res.data))
+
   };
   const editDrop = () =>{
     if (openDropDown.class === "up") {
@@ -45,6 +58,18 @@ const ShareDetail = () => {
       third : "공유상태 변경"});
     }
   }
+  const editDrop2 = () =>{
+    if (openDropDown2.class === "up") {
+      setOpenDropDown2({ class: "down", display: "flex" , first : "대여가능",
+      second : "대여중",
+      third : "반납완료"});
+    } else {
+      setOpenDropDown2({ class: "up", display: "none" , first : "대여가능",
+      second : "대여중",
+      third : "반납완료"});
+    }
+  }
+  
 
 
   useEffect(() => {
@@ -61,7 +86,8 @@ const ShareDetail = () => {
           <Title>{data.title}</Title>
           <Editdiv>
             <EditButton onClick={editDrop}>...
-            <DetailDropdown openDropDown={openDropDown}/>
+            <DetailDropdown openDropDown={openDropDown} editDrod2 ={editDrop2} />
+            <Detail2Dropdown openDropDown2={openDropDown2} />
             </EditButton>
           </Editdiv>
 
@@ -69,7 +95,7 @@ const ShareDetail = () => {
           <ShareDetailImg url = {url}></ShareDetailImg>
           </Div>
           
-          <ShareDetailTitle Detail={detail}></ShareDetailTitle>
+          <ShareDetailTitle Detail={data} Data = {detail}></ShareDetailTitle>
           <div><hr></hr></div>
           <ShareDetailContent content = {data}></ShareDetailContent> 
           <Buttondiv><Link to={`/chat/detail/:id`}><ChatBtn>채팅하기</ChatBtn></Link></Buttondiv>

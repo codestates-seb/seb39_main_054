@@ -53,9 +53,20 @@ spring:
         format_sql: true
 #config:
 #  domain: {AWS S3 Endpoint}
-aws:
-  paramstore:
-    enabled: true
-    prefix: /spring-boot-aws
-    name: seb-39-pre-054
-    profile-separator: _
+cloud:
+  aws:
+    paramstore:
+      enabled: true
+      prefix: /spring-boot-aws
+      name: seb-39-pre-054
+      profile-separator: _
+    credentials:
+      accessKey: AKIA2WL4MMEVHRX35WGN     # AWS IAM AccessKey 적기
+      secretKey: VJ5xrB6l36TRDiFqdzNTjq4thGYYLxhdnRuagJJs   # AWS IAM SecretKey 적기
+    s3:
+      bucket: mainproject39
+      dir: /productImage
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false

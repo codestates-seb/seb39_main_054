@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../../redux/actions/logInAction";
 import styled from "styled-components";
 import axios from "axios";
-import Modal2 from "../../../components/ui/modals/Modal2";
+import ModalConfirm from "../../../components/ui/modals/ModalConfirm.js";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -95,7 +95,7 @@ const Login = () => {
               )}
             </div>
             <button type="submit">로그인</button>
-            <Modal2
+            <ModalConfirm
               isOpen={isOpen}
               setIsOpen={setIsOpen}
               handleModal={handleModal}

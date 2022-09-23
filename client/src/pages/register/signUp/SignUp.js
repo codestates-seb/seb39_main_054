@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import Modal2 from "../../../components/ui/modals/Modal2";
+import ModalConfirm from "../../../components/ui/modals/ModalConfirm.js";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -80,7 +80,7 @@ const SignUp = () => {
       })
       .catch((err) => {
         if (err.message === "Request failed with status code 500") {
-          // alert("이미 가입된 이메일입니다.");
+          // alert("이미 가입된 입니다.");
           // duplicateCheck()
           setIsOpen(!isOpen);
         }
@@ -150,11 +150,13 @@ const SignUp = () => {
               )}
             </div>
             <button type="submit">회원가입</button>
-            <Modal2
+            <ModalConfirm
               isOpen={isOpen}
               setIsOpen={setIsOpen}
               handleModal={handleModal}
               children={"회원가입이 완료되었습니다!"}
+
+              // 삼항연산자로. 스테이트 만들어서.
             />
           </form>
         </SignupContent>

@@ -39,7 +39,8 @@ const schema = yup.object().shape({
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false); // 모달창 열림 닫힘 상태
+  const [modaltext, setModalText] = useState("");
 
   const {
     register,
@@ -49,14 +50,13 @@ const SignUp = () => {
     resolver: yupResolver(schema),
   });
 
-  // const duplicateCheck = () => {
-  //   alert("이미 가입된 아이디입니다.");
-  // setIsOpen(!isOpen);
-  // };
+  const duplicateCheck = () => {
+    setModalText("이미 가입된 아이디입니다.");
+    setIsOpen(!isOpen);
+  };
 
-  // 이렇게 다른 모달창이 두가지가 뜨는 경우는 children을 어떻게 지정해줘야되지?
-  const completeSignup = () => {
-    // alert("회원가입이 완료되었습니다!");
+  const successSignup = () => {
+    setModalText("회원가입이 완료되었습니다!");
     setIsOpen(!isOpen);
   };
 
@@ -74,15 +74,12 @@ const SignUp = () => {
         password: data.password,
       })
       .then((res) => {
-        // alert("회원가입이 완료되었습니다!");
-        completeSignup();
+        successSignup();
         console.log(res);
       })
       .catch((err) => {
         if (err.message === "Request failed with status code 500") {
-          // alert("이미 가입된 입니다.");
-          // duplicateCheck()
-          setIsOpen(!isOpen);
+          duplicateCheck();
         }
         console.log(err);
       });
@@ -154,9 +151,7 @@ const SignUp = () => {
               isOpen={isOpen}
               setIsOpen={setIsOpen}
               handleModal={handleModal}
-              children={"회원가입이 완료되었습니다!"}
-
-              // 삼항연산자로. 스테이트 만들어서.
+              children={modaltext}
             />
           </form>
         </SignupContent>
@@ -192,7 +187,6 @@ const SignupContent = styled.div`
   width: 31.25rem;
   height: 42.5rem;
   margin: 0 auto 8.875rem auto;
-  /* box-shadow: 0 0 10px gray; */
 
   label {
     font-size: 1.5rem;

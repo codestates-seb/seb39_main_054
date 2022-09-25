@@ -11,6 +11,7 @@ import Login from "./pages/register/login/Login";
 import SignUp from "./pages/register/signUp/SignUp";
 import ShareList from "./pages/share/shareList/ShareList";
 import SharePost from "./pages/share/sharePost/SharePost";
+import ShopDetail from "./pages/shop/shopDetail/ShopDetail";
 import MyPageFavorite from "./pages/myPage/MyPageFavorite";
 
 const App = () => {
@@ -51,7 +52,7 @@ const App = () => {
               <Route path="/mypage/mypost"></Route>
               <Route path="/mypage/edit"></Route>
               <Route path="/shop/list"></Route>
-              <Route path="/shop/detail/:id"></Route>
+              <Route path="/shop/detail/:id" element={<ShopDetail></ShopDetail>}></Route>
               <Route path="/shop/post"></Route>
               <Route path="/shop/edit"></Route>
               {/* id: 로그인 유저 */}

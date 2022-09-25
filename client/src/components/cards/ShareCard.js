@@ -13,7 +13,7 @@ const ShareCard = ({ id, title, content, status, image01 }) => {
         <Title>{title}</Title>
         <Content>{content}</Content>
         <div className="share-status">
-          <ShareState>
+          <ShareState status={status}>
             <div className="circle"></div>
             {status}
           </ShareState>
@@ -86,7 +86,12 @@ const ShareState = styled.div`
     width: 13px;
     height: 13px;
     /* 상태값에 따라 색상 변경 */
-    background-color: ${(props) => props.theme.stateGreen};
+    background-color: ${(props) =>
+      props.status === "대여가능"
+        ? props.theme.stateGreen
+        : props.status === "대여중"
+        ? props.theme.stateBlue
+        : props.theme.stateRed};
     border: 0;
     border-radius: 25px;
     margin-right: 6px;

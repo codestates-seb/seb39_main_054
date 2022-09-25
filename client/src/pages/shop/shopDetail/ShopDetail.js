@@ -71,17 +71,18 @@ const ShopDetail = () => {
               <ShopDetailImg url={url}></ShopDetailImg>
             </Imagediv>
             <Title>
-              <ShopDetailTitle data={data} user={user}></ShopDetailTitle>
+              <ShopDetailTitle data={data}></ShopDetailTitle>
             </Title>
             <div>
               <hr></hr>
             </div>
-            <Buttondiv>
-              <Link to={`/chat/user/:id`}>
-                <ChatBtn>채팅하기</ChatBtn>
-              </Link>
-            </Buttondiv>
-            <ShopMap></ShopMap>
+            <ContentDiv>
+              <CreatedPost>2022.09.16</CreatedPost>
+              {data.description}
+            </ContentDiv>
+            <MapDiv>
+              <ShopMap></ShopMap>
+            </MapDiv>
           </Container>
         </ShopContainer>
       )}
@@ -111,7 +112,8 @@ const Container = styled.div`
 
 const Title = styled.div`
   font-size: 1.875rem;
-  margin: 1.875rem 0;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
 `;
 
 const Imagediv = styled.div`
@@ -133,21 +135,18 @@ const Editdiv = styled.div`
   text-align: right;
 `;
 
-const ChatBtn = styled.button`
-  width: 8.125rem;
-  height: 8.125rem;
-  border-radius: 50%;
-  background-color: ${(props) => props.theme.primary};
-  font-size: 1.375rem;
-  color: white;
+const ContentDiv = styled.div`
+  font-size: 20px;
+  line-height: 2rem;
 `;
 
-const Buttondiv = styled.div`
-  text-align: right;
-  margin: 0rem 0rem 1rem 0rem;
+const CreatedPost = styled.div`
+  display: flex;
+  justify-content: right;
 `;
 
-// const MapDiv = styled.div`
-//   /* width: 300px;
-//   height: 300px; */
-// `
+const MapDiv = styled.div`
+  margin-top: 5.875rem;
+  margin-bottom: 2.5rem;
+  border-radius: 14px;
+`;

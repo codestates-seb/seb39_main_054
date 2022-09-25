@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import styled from "styled-components";
 
 const { kakao } = window;
 
@@ -14,12 +15,13 @@ const ShopMap = () => {
     let map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
   }, []);
 
-  return (
-    <div
-      id="map"
-      style={{ width: "300px", height: "500px" }}
-    ></div>
-  );
+  return <KakaoMap id="map"></KakaoMap>;
 };
 
 export default ShopMap;
+
+const KakaoMap = styled.div`
+  width: 100%;
+  height: 18.75rem;
+  border-radius: 14px;
+`;

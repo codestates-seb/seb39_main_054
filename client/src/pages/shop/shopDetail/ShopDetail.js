@@ -78,7 +78,7 @@ const ShopDetail = () => {
             </div>
             <ContentDiv>
               <CreatedPost>2022.09.16</CreatedPost>
-              {data.description}
+              <Content>{data.description}</Content>
             </ContentDiv>
             <MapDiv>
               <ShopMap data={data}></ShopMap>
@@ -144,6 +144,7 @@ const CreatedPost = styled.div`
   display: flex;
   justify-content: right;
 `;
+const Content = styled.pre``;
 
 const MapDiv = styled.div`
   margin-top: 5.875rem;

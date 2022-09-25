@@ -81,7 +81,7 @@ const ShopDetail = () => {
               {data.description}
             </ContentDiv>
             <MapDiv>
-              <ShopMap></ShopMap>
+              <ShopMap data={data}></ShopMap>
             </MapDiv>
           </Container>
         </ShopContainer>

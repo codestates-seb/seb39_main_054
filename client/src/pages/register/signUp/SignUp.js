@@ -38,9 +38,9 @@ const schema = yup.object().shape({
 });
 
 const SignUp = () => {
-  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false); // 모달창 열림 닫힘 상태
   const [modaltext, setModalText] = useState("");
+  const navigate = useNavigate();
 
   const {
     register,

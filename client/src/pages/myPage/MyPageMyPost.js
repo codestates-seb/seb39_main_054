@@ -9,7 +9,7 @@ import MyPageContent from "./MyPageContent";
 const MyPageMyPost = () => {
   return (
     <>
-      <MFContainer>
+      <MPContainer>
         <MyPageHeader />
         <BtnContainer>
           <Link to="/mypage/favorite">
@@ -30,14 +30,14 @@ const MyPageMyPost = () => {
           <ShareState />
         </ShareStateContainer>
         <MyPageContent />
-      </MFContainer>
+      </MPContainer>
     </>
   );
 };
 
 export default MyPageMyPost;
 
-const MFContainer = styled.div`
+const MPContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;

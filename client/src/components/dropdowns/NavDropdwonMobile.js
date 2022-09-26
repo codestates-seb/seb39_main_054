@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const NavDropdwonMobile = ({ isLogin, openDropDown }) => {
-  console.log(openDropDown);
   return (
     <Container isLogin={isLogin} openDropDown={openDropDown}>
       <Link to="/share/list">
@@ -46,7 +45,7 @@ export default NavDropdwonMobile;
 
 const Container = styled.ul`
   position: absolute;
-  display: ${(props) => props.openDropDown.display};
+  display: ${props => props.openDropDown.display} ;
   flex-direction: column;
   justify-content: center;
   align-items: center;

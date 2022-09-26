@@ -40,7 +40,10 @@ const Nav = ({ isTheme, setIsTheme }) => {
     if (openDropDown.className === "up") {
       setOpenDropDown({ className: "down", height: "290px", display: "flex" });
     } else {
-      setOpenDropDown({ className: "up", height: "0px", display: "none" });
+      setOpenDropDown({ className: "up", height: "0px", display: "flex" });
+      setTimeout(() => {
+        setOpenDropDown({ className: "up", height: "0px", display: "none" });
+      }, 900);
     }
   };
 
@@ -92,7 +95,10 @@ const Nav = ({ isTheme, setIsTheme }) => {
           ) : (
             <div className="bars">
               <Bars onClick={toggleNickName}></Bars>
-              <NavDropdwonMobile isLogin={isLogin} openDropDown={openDropDown}></NavDropdwonMobile>
+              <NavDropdwonMobile
+                isLogin={isLogin}
+                openDropDown={openDropDown}
+              ></NavDropdwonMobile>
             </div>
           )}
         </NavRight>

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import logo from "../../assets/img/logo/ANBD-3.png";
 
-const Footer = () => {
+const FooterDesktop = () => {
   return (
     <FooterContainer>
       <FooterContent>
@@ -24,7 +24,7 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default FooterDesktop;
 
 const FooterContainer = styled.div`
   display: flex;

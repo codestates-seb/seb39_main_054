@@ -40,6 +40,10 @@ public class Member extends Auditable {
     @Column(length = 20, nullable = false)
     private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
 
+    private String imageName;
+
+    private String imageUrl;
+
     public Member(String nickname, String memberName, String password) {
         this.nickname = nickname;
         this.memberName = memberName;

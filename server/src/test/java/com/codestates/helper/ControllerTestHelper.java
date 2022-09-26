@@ -33,7 +33,8 @@ public interface ControllerTestHelper<T> {
         return post(url, resourceId)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(content)
+//                .content(content)
+                .header("Authorization", "Bearer 1qaz2wsx3edc")
                 .with(csrf()) // 이거 없으면 403 에러 발생
                 ;
     }
@@ -98,6 +99,10 @@ public interface ControllerTestHelper<T> {
                 parameterWithName("page").description("Page 번호"),
                 parameterWithName("size").description("Page Size")
         );
+    }
+
+    default RequestBuilder deleteRequestBuilder(String url, long resourceId) {
+        return delete(url, resourceId).with(csrf());
     }
 
     default String toJsonContent(T t) {

@@ -23,7 +23,7 @@ public interface FavoriteControllerTestHelper extends ControllerTestHelper {
     }
 
     default List<ParameterDescriptor> getFavoriteRequestPathParameterDescriptor() {
-        return Arrays.asList(parameterWithName("member-id").description("회원 식별자 ID"));
+        return List.of(parameterWithName("product-id").description("물품 식별자"));
     }
 
     default List<FieldDescriptor> getDefaultFavoriteResponseDescriptors(DataResponseType dataResponseType) {

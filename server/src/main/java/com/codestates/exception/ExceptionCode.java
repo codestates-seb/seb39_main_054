@@ -8,7 +8,7 @@ public enum ExceptionCode {
     NOT_IMPLEMENTATION(501, "Not Implementation"),
     INVALID_MEMBER_STATUS(400, "Invalid member status"),
     QUESTION_NOT_FOUND(404, "Question not found" ),
-    ANSWER_NOT_FOUND(404, "Answer not found");
+    FAVORITE_NOT_FOUND(404, "Favorite not found");
 
     @Getter
     private int status;

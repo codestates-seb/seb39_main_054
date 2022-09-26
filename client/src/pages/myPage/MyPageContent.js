@@ -4,7 +4,7 @@ import { useMediaQuery } from "react-responsive";
 import axios from "axios";
 import ShareCardContent from "../../components/cards/ShareCardContent";
 
-const MainContent = () => {
+const MyPageContent = () => {
   // 반응형으로 틀의 크기잡기
   const [width, setWidth] = useState("71.25rem");
   // 반응형 별 카드 갯수
@@ -37,14 +37,13 @@ const MainContent = () => {
   return (
     <Container>
       <Content width={width}>
-        <div className="title">최근 게시물</div>
         <ShareCardContent data={data} number={8}></ShareCardContent>
       </Content>
     </Container>
   );
 };
 
-export default MainContent;
+export default MyPageContent;
 
 const Container = styled.div`
   display: flex;
@@ -59,22 +58,6 @@ const Content = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 4.5rem auto;
-  /* responsive 라이브러리 사용할 때 */
-  /* width: ${(props) => props.width}; */
-  width: 72.25rem;
-
-  @media ${(props) => props.theme.tabletL} {
-    width: 53.5rem;
-  }
-
-  @media ${(props) => props.theme.tabletS} {
-    width: 36rem;
-  }
-
-  .title {
-    font-size: 1.625rem;
-    font-family: "NotoSansKR-Medium";
-    margin-bottom: 4.5rem;
-  }
+  margin: 1.5rem auto;
+  width: ${(props) => props.width};
 `;

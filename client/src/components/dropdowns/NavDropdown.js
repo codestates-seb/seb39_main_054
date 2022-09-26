@@ -33,7 +33,7 @@ const Ul = styled.ul`
   font-family: "NotoSansKR-Medium";
   color: ${(props) => props.theme.gray2};
   background-color: ${props=> props.theme.bgColor};
-  margin-top: 1.4rem;
+  padding: 1.5rem 0;
   width: 185px;
   border-radius: 14px;
   overflow: hidden;
@@ -53,7 +53,7 @@ const Ul = styled.ul`
 
   @keyframes up {
     0% {
-      height: 250px;
+      height: 290px;
     }
     100% {
       height: 0px;
@@ -65,7 +65,7 @@ const Ul = styled.ul`
       height: 0px;
     }
     100% {
-      height: 250px;
+      height: 290px;
     }
   }
 `;

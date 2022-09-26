@@ -6,11 +6,13 @@ import { darkTheme, lightTheme } from "./assets/styles/Theme";
 import Footer from "./components/footer/Footer";
 import Nav from "./components/nav/Nav";
 import Main from "./pages/main/Main";
-import ShareDetail  from "./pages/share/shareDetail/ShareDetail";
+import ShareDetail from "./pages/share/shareDetail/ShareDetail";
 import Login from "./pages/register/login/Login";
 import SignUp from "./pages/register/signUp/SignUp";
 import ShareList from "./pages/share/shareList/ShareList";
 import SharePost from "./pages/share/sharePost/SharePost";
+import ShopDetail from "./pages/shop/shopDetail/ShopDetail";
+import MyPageFavorite from "./pages/myPage/MyPageFavorite";
 
 const App = () => {
   // 테마 변경 (lightTheme, darkTheme)
@@ -39,15 +41,18 @@ const App = () => {
                 element={<ShareList></ShareList>}
               ></Route>
               <Route path="/share/detail/:id" element={<ShareDetail />}></Route>
-              <Route path="/share/post" element = {<SharePost/>}></Route>
+              <Route path="/share/post" element={<SharePost />}></Route>
               <Route path="/share/edit/:id"></Route>
               <Route path="/login" element={<Login></Login>}></Route>
               <Route path="/signup" element={<SignUp></SignUp>}></Route>
-              <Route path="/mypage/favorite"></Route>
+              <Route
+                path="/mypage/favorite"
+                element={<MyPageFavorite></MyPageFavorite>}
+              ></Route>
               <Route path="/mypage/mypost"></Route>
               <Route path="/mypage/edit"></Route>
               <Route path="/shop/list"></Route>
-              <Route path="/shop/detail/:id"></Route>
+              <Route path="/shop/detail/:id" element={<ShopDetail></ShopDetail>}></Route>
               <Route path="/shop/post"></Route>
               <Route path="/shop/edit"></Route>
               {/* id: 로그인 유저 */}
@@ -55,7 +60,7 @@ const App = () => {
               {/* id: 상대방 id query &myid = =dsadsa &otherid*/}
               <Route path="/chat/detail/:id"></Route>
             </Routes>
-            <Footer/>
+            <Footer />
           </Router>
         </AppContainer>
       </ThemeProvider>

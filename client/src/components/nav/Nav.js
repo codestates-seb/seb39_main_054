@@ -20,7 +20,6 @@ const Nav = ({ isTheme, setIsTheme }) => {
   // 닉네임 클릭 드롭다운
   const [openDropDown, setOpenDropDown] = useState({
     className: "up",
-    height: "0px",
     display: "none",
   });
 
@@ -38,12 +37,12 @@ const Nav = ({ isTheme, setIsTheme }) => {
   // 닉네임 버튼 클릭 (드롭다운)
   const toggleNickName = () => {
     if (openDropDown.className === "up") {
-      setOpenDropDown({ className: "down", height: "290px", display: "flex" });
+      setOpenDropDown({ className: "down", display: "flex" });
     } else {
-      setOpenDropDown({ className: "up", height: "0px", display: "flex" });
+      setOpenDropDown({ className: "up", display: "flex" });
       setTimeout(() => {
-        setOpenDropDown({ className: "up", height: "0px", display: "none" });
-      }, 900);
+        setOpenDropDown({ className: "up", display: "none" });
+      }, 1900);
     }
   };
 

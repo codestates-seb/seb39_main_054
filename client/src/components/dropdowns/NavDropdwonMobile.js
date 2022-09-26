@@ -49,7 +49,7 @@ const Container = styled.ul`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  top: 69px;
+  top: 68px;
   left: 0;
   width: 100%;
   color: ${(props) => props.theme.gray2};
@@ -60,7 +60,7 @@ const Container = styled.ul`
   overflow: hidden;
   height: ${(props) => props.height};
   animation-name: ${(props) => props.openDropDown.className};
-  animation-duration: 1s;
+  animation-duration: 2s;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 5px;
   z-index: 100;
 

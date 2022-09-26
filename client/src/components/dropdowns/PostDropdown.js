@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { ReactComponent as Down } from "../../assets/img/icon/caret-down.svg";
 import { ReactComponent as Up } from "../../assets/img/icon/caret-up.svg";
 
-const PostDropdown =() => {
+const PostDropdown =({categoryChange}) => {
 
 
   const category = ["캠핑" ,"낚시" , "등산" , "스포츠" , "기타"];
@@ -14,6 +14,7 @@ const PostDropdown =() => {
     height: "0px",
     display: "none"
   });
+  
   const clickCategoty = () => {
     if (open.className === "up") {
       setOpen({ className: "down", height: "280px", display: "flex" });
@@ -22,13 +23,14 @@ const PostDropdown =() => {
     }
   };
   const menuClick = (e) =>{
-    setChoice(e)
+    setChoice(e);
   }
+
 
     return (
     <>
     <div>
-    <TagBtn onClick={clickCategoty}>{choice}
+    <TagBtn onClick={clickCategoty} onChange = {(e) => categoryChange(e.target.value)}> {choice}
           {open.className === "up" ?(<DownBtn />) : (<UpBtn />)}
           </TagBtn>
     <Ul display={open.display} height={open.height} className={open.className}>
@@ -72,6 +74,7 @@ const Ul = styled.ul`
       color: ${(props) => props.theme.primary};
     }
   }
+
   @keyframes up {
     0% {
       height: 280px;

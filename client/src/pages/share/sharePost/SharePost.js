@@ -1,30 +1,65 @@
 import styled from "styled-components";
 import { useState , useEffect } from "react";
 import PostDropdown from "../../../components/dropdowns/PostDropdown";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 
 const SharePost = () =>{
 
-  return(
+ 
+  const navigate = useNavigate();
+  const [sharePost , setSharePost] = useState({
+    memberId : 1,
+    title: "",
+    description: "",
+    status: "대여가능",
+    pcategory: "",
+    image :{}
+  })
+  const titleChange = (el) =>{
+    setSharePost({...sharePost , title : el})
+  }
+  const contentChange = (el) =>{
+    setSharePost({...sharePost , description : el})
+  }
+  const categoryChange = (el) =>{
+    setSharePost({...sharePost , pcategory : el})
+  }
+
+  const cancleClick = () =>{
+    navigate(`/share/list`)
+  }
+  const postClick = () =>{
+
+       axios 
+      .post(`${process.env.REACT_APP_API_URL}/product`)
+      .then(console.log(sharePost))
+      .catch((err) => console.log(err))
     
+    
+  }
+ 
+
+
+  return(
     <MainContainer>
       <Title>공유 물품 작성</Title>
       <WriteContainer>
         <TextDiv>
           <SubTitle>제목</SubTitle>
           <PageContainer>
-          <InputText type="text" placeholder="제목을 입력해주세요"></InputText>
-          <PostDropdown />
-          
+          <InputText type="text" placeholder="제목을 입력해주세요" onChange={(e) => titleChange(e.target.value)}></InputText>
+          <PostDropdown categoryChange={categoryChange}/>
           </PageContainer>
           <FlexContainer>
           <SubTitle>이미지 첨부</SubTitle>
           </FlexContainer>
           <SubTitle>내용</SubTitle>
-          <ContentText placeholder="내용을 입력해주세요" ></ContentText>
+          <ContentText placeholder="내용을 입력해주세요" onChange={(e) => contentChange(e.target.value)}></ContentText>
           <BtnDiv>
-          <CancelBtn>취소</CancelBtn>
-          <PostBtn>등록</PostBtn>
+          <CancelBtn onClick={cancleClick}>취소</CancelBtn>
+          <PostBtn onClick={postClick}>등록</PostBtn>
           </BtnDiv>
         </TextDiv>
       </WriteContainer>

@@ -1,23 +1,28 @@
 package com.codestates.product.mapper;
 
-import com.codestates.pcategory.entity.Pcategory;
-import com.codestates.product.dto.ProductDetailDto;
-import com.codestates.product.dto.ProductDto;
+import com.codestates.pcategory.service.PcategoryService;
+import com.codestates.product.dto.ProductPostDetailDto;
+import com.codestates.product.dto.ProductResponseDto;
 import com.codestates.product.entity.Product;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.mapstruct.Mapper;
-import org.springframework.stereotype.Component;
+import org.mapstruct.ReportingPolicy;
+
+import java.util.List;
 
 
-@Mapper(componentModel = "spring")
+
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ProductMapper {
 
-    default Product postToProduct(ProductDto.Post post) {
-
-        Product product = Product.builder()
-                .title(post.getDetailPost().getTitle())
-                .description(post.getDetailPost().getDescription())
-                .build();
+    default Product postDetailDtoToProduct(ProductPostDetailDto productPostDetailDto, PcategoryService pcategoryService) {
+        Product product = new Product();
+        product.setTitle(productPostDetailDto.getTitle());
+        product.setDescription(productPostDetailDto.getDescription());
+        product.setPcategory(pcategoryService.findPcategory(productPostDetailDto.getPcategoryName()));
         return product;
     }
+
+
+    ProductResponseDto.POST ProductUrlToProductResponseDto(Product product, List<String> fileUrlList);
+
 }

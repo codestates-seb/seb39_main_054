@@ -16,7 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.filter.CorsFilter;
 
 @Configuration
-@EnableWebSecurity (debug = true) // 시큐리티 활성화 -> 기본 스프링 필터 체인에 등록
+@EnableWebSecurity // 시큐리티 활성화 -> 기본 스프링 필터 체인에 등록
 @RequiredArgsConstructor
 public class SecurityConfig {
 

@@ -8,7 +8,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Entity
 @Getter
 @Setter
@@ -21,11 +20,18 @@ public class Pimage extends Auditable {
     private Long pimageId;
 
     @Column
-    private String url;
+    private String imageUrl;
 
     @ManyToOne
     @JoinColumn(name = "PRODUCT_ID")
     private Product product;
 
 
+    public void setProduct(Product product) {
+        if (this.product != null) {
+            this.product.getPimageList().remove(this);
+        }
+        this.product = product;
+        product.addPimage(this);
+    }
 }

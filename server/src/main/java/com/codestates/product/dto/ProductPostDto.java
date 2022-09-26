@@ -1,17 +1,18 @@
 package com.codestates.product.dto;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-public class ProductDto {
+@Getter
+@Setter
+public class ProductPostDto {
 
-    @Getter
-    public static class Post {
-
-        private ProductDetailDto.Post detailPost;
+        private Long memberId;
+        private ProductPostDetailDto productPostDetailDto;
+//        private MultipartFile multipartFileList;
         private List<MultipartFile> multipartFileList;
-    }
 
 }

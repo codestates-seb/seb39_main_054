@@ -38,3 +38,4 @@ out/
 
 ### AWS 정보 ###
 application-aws.yml
+application.yml

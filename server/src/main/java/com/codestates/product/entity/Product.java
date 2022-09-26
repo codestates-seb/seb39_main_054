@@ -68,6 +68,15 @@ public class Product extends Auditable {
             this.status = status;
         }
     }
+
+    public void addPimage(Pimage pimage) {
+        this.pimageList.add(pimage);
+        pimage.setProduct(this);
+    }
+
+
+
+
 //
 //    public void addPcategory(Pcategory pcategory) {
 //        this.pcategory = pcategory;
@@ -76,12 +85,7 @@ public class Product extends Auditable {
 //        }
 //    }
 //
-//    public void addPimage(Pimage pimage) {
-//        this.pimageList.add(pimage);
-//        if (!this.pimageList.get) {
-//            pimage.addProduct(this);
-//        }
-//    }
+
 //
 //    public void addMember(Member member) {
 //        this.member = member;

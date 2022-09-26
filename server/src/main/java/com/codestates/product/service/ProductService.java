@@ -5,11 +5,14 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.codestates.exception.CustomException;
 import com.codestates.member.entity.Member;
 import com.codestates.member.service.MemberService;
+import com.codestates.pimage.entity.Pimage;
+import com.codestates.pimage.repository.PimageRepository;
 import com.codestates.product.entity.Product;
 import com.codestates.product.repository.ProductRepository;
-import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -22,21 +25,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+
 @Service
 public class ProductService{
 
     private final MemberService memberService;
     private final ProductRepository productRepository;
-    private final AmazonS3 amazonS3;
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
+    private final AmazonS3 amazonS3;
+    private final PimageRepository pimageRepository ;
 
-    public ProductService(MemberService memberService, ProductRepository productRepository, AmazonS3 amazonS3) {
+    public ProductService(MemberService memberService, ProductRepository productRepository, AmazonS3 amazonS3, PimageRepository pimageRepository) {
         this.memberService = memberService;
         this.productRepository = productRepository;
         this.amazonS3 = amazonS3;
+        this.pimageRepository = pimageRepository;
     }
-
 
     /**
      * 제품 등록
@@ -44,35 +49,51 @@ public class ProductService{
     public Product createProduct(Product product, Long memberId) {
         Member member = memberService.findVerifiedMember(memberId);
         product.setMember(member);
-
-        return product;
+        return productRepository.save(product);
     }
 
 
     /**
      * AWS 이미지 등록
      */
-    public List<String> uploadImage(List<MultipartFile> multipartFileList) {
+    public List<String> uploadImage(List<MultipartFile> multipartFileList, Long productId) {
+
         List<String> fileUrlList = new ArrayList<>();
+        Product product = verifyProduct(productId);
 
         multipartFileList.forEach(file -> {
             String fileName = createFileName(file.getOriginalFilename());
             ObjectMetadata objectMetadata = new ObjectMetadata();
             objectMetadata.setContentLength(file.getSize());
             objectMetadata.setContentType(file.getContentType());
+            System.out.println(fileName);
+            System.out.println(bucket);
 
             try(InputStream inputStream = file.getInputStream()) {
                 amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
                         .withCannedAcl(CannedAccessControlList.PublicRead));
-                fileUrlList.add(amazonS3.getUrl(bucket, fileName).toString());
+//                fileUrlList.add(amazonS3.getUrl(bucket, fileName).toString());
             } catch(IOException e) {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 업로드에 실패했습니다.");
             }
         });
 
+        fileUrlList.stream()
+                .forEach(url -> {
+                    Pimage image = new Pimage();
+
+                    image.setProduct(product);
+                    image.setImageUrl(url);
+                    pimageRepository.save(image);
+                });
+
         return fileUrlList;
     }
 
+
+    /**
+     * 이미지 삭제
+     */
     public void deleteImage(String fileName) {
         amazonS3.deleteObject(new DeleteObjectRequest(bucket, fileName));
     }
@@ -88,5 +109,13 @@ public class ProductService{
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "잘못된 형식의 파일(" + fileName + ") 입니다.");
         }
     }
+
+
+    public Product verifyProduct(Long productId) {
+
+        return productRepository.findById(productId).orElseThrow(() -> new CustomException("Product not Found", HttpStatus.NO_CONTENT));
+    }
+
+
 
 }

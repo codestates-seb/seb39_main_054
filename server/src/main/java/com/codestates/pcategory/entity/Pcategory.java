@@ -23,7 +23,7 @@ public class Pcategory extends Auditable {
     private Long pcategoryId;
 
     @Column(nullable = false)
-    private String name;
+    private String pcategoryName;
 
     @OneToMany(mappedBy = "pcategory")
     private List<Product> productList = new ArrayList<>();

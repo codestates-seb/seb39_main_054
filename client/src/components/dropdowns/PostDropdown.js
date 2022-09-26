@@ -73,6 +73,7 @@ const Ul = styled.ul`
     &:hover {
       color: ${(props) => props.theme.primary};
     }
+    cursor: pointer;
   }
 
   @keyframes up {

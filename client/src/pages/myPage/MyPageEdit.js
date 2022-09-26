@@ -6,14 +6,14 @@ import ShareState from "../../components/filters/shareState/ShareState";
 import MyPageHeader from "./MyPageHeader";
 import MyPageContent from "./MyPageContent";
 
-const MyPageFavorite = () => {
+const MyPageEdit = () => {
   return (
     <>
       <MFContainer>
         <MyPageHeader />
         <BtnContainer>
           <Link to="/mypage/favorite">
-            <button className="active">관심목록</button>
+            <button>관심목록</button>
           </Link>
           <Link to="/mypage/mypost">
             <button>내가 쓴 게시글</button>
@@ -22,7 +22,7 @@ const MyPageFavorite = () => {
             <button>채팅 목록</button>
           </Link>
           <Link to="/mypage/edit">
-            <button>회원정보 수정</button>
+            <button className="active">회원정보 수정</button>
           </Link>
           <button>회원 탈퇴</button>
         </BtnContainer>
@@ -35,7 +35,7 @@ const MyPageFavorite = () => {
   );
 };
 
-export default MyPageFavorite;
+export default MyPageEdit;
 
 const MFContainer = styled.div`
   display: flex;

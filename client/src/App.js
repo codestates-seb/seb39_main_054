@@ -13,6 +13,8 @@ import ShareList from "./pages/share/shareList/ShareList";
 import SharePost from "./pages/share/sharePost/SharePost";
 import ShopDetail from "./pages/shop/shopDetail/ShopDetail";
 import MyPageFavorite from "./pages/myPage/MyPageFavorite";
+import MyPageMyPost from "./pages/myPage/MyPageMyPost";
+import MyPageEdit from "./pages/myPage/MyPageEdit";
 
 const App = () => {
   // 테마 변경 (lightTheme, darkTheme)
@@ -49,10 +51,19 @@ const App = () => {
                 path="/mypage/favorite"
                 element={<MyPageFavorite></MyPageFavorite>}
               ></Route>
-              <Route path="/mypage/mypost"></Route>
-              <Route path="/mypage/edit"></Route>
+              <Route
+                path="/mypage/mypost"
+                element={<MyPageMyPost></MyPageMyPost>}
+              ></Route>
+              <Route
+                path="/mypage/edit"
+                element={<MyPageEdit></MyPageEdit>}
+              ></Route>
               <Route path="/shop/list"></Route>
-              <Route path="/shop/detail/:id" element={<ShopDetail></ShopDetail>}></Route>
+              <Route
+                path="/shop/detail/:id"
+                element={<ShopDetail></ShopDetail>}
+              ></Route>
               <Route path="/shop/post"></Route>
               <Route path="/shop/edit"></Route>
               {/* id: 로그인 유저 */}

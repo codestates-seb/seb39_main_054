@@ -61,8 +61,15 @@ const Img = styled.img`
 `;
 
 const Title = styled.div`
+  width: 210px;
   font-size: 18px;
   font-family: "NotoSansKR-Medium";
+  line-height: 1.2rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const Content = styled.div`

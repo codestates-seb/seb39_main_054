@@ -8,6 +8,7 @@ import { ReactComponent as Bars } from "../../assets/img/icon/bars.svg";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 import NavDropdown from "../dropdowns/NavDropdown";
+import NavDropdwonMobile from "../dropdowns/NavDropdwonMobile";
 
 const Nav = ({ isTheme, setIsTheme }) => {
   // 화면 크기 (반응형 구현)
@@ -20,7 +21,7 @@ const Nav = ({ isTheme, setIsTheme }) => {
   const [openDropDown, setOpenDropDown] = useState({
     className: "up",
     height: "0px",
-    display: "none"
+    display: "none",
   });
 
   // 테마 변경 함수
@@ -42,6 +43,7 @@ const Nav = ({ isTheme, setIsTheme }) => {
       setOpenDropDown({ className: "up", height: "0px", display: "none" });
     }
   };
+
   return (
     <NavContainer>
       <NavContent>
@@ -89,7 +91,8 @@ const Nav = ({ isTheme, setIsTheme }) => {
             </>
           ) : (
             <div className="bars">
-              <Bars></Bars>
+              <Bars onClick={toggleNickName}></Bars>
+              <NavDropdwonMobile isLogin={isLogin} openDropDown={openDropDown}></NavDropdwonMobile>
             </div>
           )}
         </NavRight>

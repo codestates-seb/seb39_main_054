@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 
+
+
 const SharePost = () =>{
 
  
@@ -25,21 +27,22 @@ const SharePost = () =>{
   }
   const categoryChange = (el) =>{
     setSharePost({...sharePost , pcategory : el})
+    console.log(sharePost)
   }
 
   const cancleClick = () =>{
     navigate(`/share/list`)
   }
+  
   const postClick = () =>{
-
     axios 
       .post(`${process.env.REACT_APP_API_URL}/product`,sharePost)  
       .then(console.log(sharePost))
-      .catch((err) => console.log(err))
-      
+      .catch((err) => console.log(err))   
   }
- 
-
+  useEffect(()=>{
+    
+  },[sharePost.pcategory])
 
   return(
     <MainContainer>
@@ -56,6 +59,7 @@ const SharePost = () =>{
           </FlexContainer>
           <SubTitle>내용</SubTitle>
           <ContentText placeholder="내용을 입력해주세요" onChange={(e) => contentChange(e.target.value)}></ContentText>
+    
           <BtnDiv>
           <CancelBtn onClick={cancleClick}>취소</CancelBtn>
           <PostBtn onClick={postClick}>등록</PostBtn>
@@ -76,6 +80,13 @@ const MainContainer = styled.div`
   width: 100vw;
   flex-direction: column;
   align-items : center;
+
+  .ck-editor__editable{
+    min-height: 42.5rem;
+  }
+  .ck .ck-editor__main > .ck-editor__editable {
+  background: #FFF;
+}
 
 
   `

@@ -27,13 +27,11 @@ const ShareDetailImg = ({url}) => {
 
   return(
     <>
-  
   <PictureContainer>
   <Picture ref={slideRef}>
     {value.map((values) =>
-    <div>
     <Img src = {values}></Img>
-    </div>)}
+    )}
     </Picture>
     </PictureContainer> 
     <Btndiv>
@@ -46,41 +44,41 @@ const ShareDetailImg = ({url}) => {
 export default ShareDetailImg
 const PictureContainer = styled.div`
 position: relative;
-width: 56.25rem;
-height: 550px;
+/* width: 56.25rem; */
+width: 100%;
+height: 34.3rem;
 overflow: hidden;
 border-radius: 15px;
 `
 const Btndiv = styled.div`
 display: flex;
-position: relative;
-width: 65rem;
-margin: -18rem 0rem 0rem -4.5rem;
-justify-content: space-between;
+justify-content: center;
+
 
 `
 const Picture = styled.div`
   display: flex;
-  width: 100%;
+  width: 100vw;
   height: 100%;
+  position: absolute;
 `
+
 const LeftBtn = styled(Left)`
 
 width: 2rem;
 height:2rem;
 fill:  ${(props) => props.theme.textColor};
-position: relative;
+margin: 1rem 1rem 0rem ;
 `
 const RightBtn = styled(Right)`
 width: 2rem;
 height: 2rem;
 fill:  ${(props) => props.theme.textColor};
-position: relative;
-
+margin: 1rem 1rem 0rem ;
 `
 const Img = styled.img`
+  /* width: 40rem; */
+  height: 100%;
   object-fit: cover;
-  width: 56.25rem;
-  
 `;
 

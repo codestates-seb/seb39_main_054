@@ -43,12 +43,12 @@ const ShareDetail = () => {
         <Container>
           <Title>{data.title}</Title>
           <DetailEditDropdown/>
-          <Div>
           <ShareDetailImg url = {url}></ShareDetailImg>
-          </Div>
           <ShareDetailTitle Detail={data} Data = {detail}></ShareDetailTitle>
           <div><hr></hr></div>
-          <ShareDetailContent content = {data}></ShareDetailContent> 
+          <ContentContainer>
+          <ShareDetailContent content = {data}></ShareDetailContent>
+          </ContentContainer>
           <Buttondiv><Link to={`/chat/detail/:id`}><ChatBtn>채팅하기</ChatBtn></Link></Buttondiv>
         
         </Container>
@@ -69,21 +69,25 @@ const ShareContainer = styled.div`
     margin: 1rem 0rem;
   }
 `;
+const ContentContainer = styled.div`
+width: 100%;
+word-break:break-all; 
+margin-bottom: 5rem;
+display: flex;
+flex-direction: column;
+`
 
 const Container = styled.div`
 display: flex;
 flex-direction: column;
 margin-top: 7.5rem;
-/* width:56.25rem; */
+width:56.25rem;
 width: 40rem;
 `
 const Title = styled.div`
 font-size: 3rem;
 `
-const Div = styled.div`
-height: 34.375rem;
-width: 50.626rem;
-`
+
 const ChatBtn = styled.button`
 width: 8.125rem;
 height: 8.125rem;

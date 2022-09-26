@@ -114,4 +114,5 @@ border:solid 0.1875rem;
 border-color:${(props) => props.theme.gray5} ;
 border-radius: 10px;
 margin: 0rem;
+color: ${(props) => props.theme.textColor};
 `

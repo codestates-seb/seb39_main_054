@@ -40,6 +40,9 @@ const DetailEditDropdown =()=> {
     } else {
       setOpen({ class: "up", height : "0px",display: "none" });
     }
+    if(open2.class === "down"){
+      setOpen2({class: "up", height : "0px",display: "none"})
+    }
   }
 
   const editDrop2 = () =>{

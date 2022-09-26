@@ -37,7 +37,7 @@
       "memberId": 1,
       "title": "텐트 빌려드려요! 사고나서 한번쓰고 고이 모셔뒀습니다!",
       "description": "어떻게 언제 어디서 대여 하실래용?",
-      "status": "",
+      "status": "반납완료",
       "pcategory": "캠핑",
       "image": {
         "image01": "https://www.incheonin.com/news/photo/202205/87828_122219_3711.jpg",

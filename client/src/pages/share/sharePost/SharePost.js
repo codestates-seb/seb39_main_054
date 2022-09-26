@@ -32,12 +32,11 @@ const SharePost = () =>{
   }
   const postClick = () =>{
 
-       axios 
-      .post(`${process.env.REACT_APP_API_URL}/product`)
+    axios 
+      .post(`${process.env.REACT_APP_API_URL}/product`,sharePost)  
       .then(console.log(sharePost))
       .catch((err) => console.log(err))
-    
-    
+      
   }
  
 

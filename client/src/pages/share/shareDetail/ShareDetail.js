@@ -73,8 +73,9 @@ const ShareContainer = styled.div`
 const Container = styled.div`
 display: flex;
 flex-direction: column;
-margin: 7.5rem 10rem 0rem 10rem;
-width:56.25rem;
+margin-top: 7.5rem;
+/* width:56.25rem; */
+width: 40rem;
 `
 const Title = styled.div`
 font-size: 3rem;

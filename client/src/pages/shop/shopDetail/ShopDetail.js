@@ -63,7 +63,6 @@ const ShopDetail = () => {
           <Container>
             <Editdiv>
               <EditButton onClick={editDrop}>
-                ...
                 <DetailEditDropdown openDropDown={openDropDown}></DetailEditDropdown>
               </EditButton>
             </Editdiv>

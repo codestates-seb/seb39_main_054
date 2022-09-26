@@ -60,7 +60,17 @@ const Content = styled.div`
   justify-content: center;
   align-items: center;
   margin: 4.5rem auto;
-  width: ${(props) => props.width};
+  /* responsive 라이브러리 사용할 때 */
+  /* width: ${(props) => props.width}; */
+  width: 72.25rem;
+
+  @media ${(props) => props.theme.tabletL} {
+    width: 53.5rem;
+  }
+
+  @media ${(props) => props.theme.tabletS} {
+    width: 36rem;
+  }
 
   .title {
     font-size: 1.625rem;

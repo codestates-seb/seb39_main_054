@@ -37,7 +37,7 @@ const Nav = ({ isTheme, setIsTheme }) => {
   // 닉네임 버튼 클릭 (드롭다운)
   const toggleNickName = () => {
     if (openDropDown.className === "up") {
-      setOpenDropDown({ className: "down", height: "250px", display: "flex" });
+      setOpenDropDown({ className: "down", height: "290px", display: "flex" });
     } else {
       setOpenDropDown({ className: "up", height: "0px", display: "none" });
     }

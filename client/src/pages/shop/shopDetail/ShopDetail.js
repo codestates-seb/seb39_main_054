@@ -147,7 +147,7 @@ const CreatedPost = styled.div`
 const Content = styled.pre``;
 
 const MapDiv = styled.div`
-  margin-top: 5.875rem;
+  margin-top: 10rem;
   margin-bottom: 2.5rem;
   border-radius: 14px;
 `;

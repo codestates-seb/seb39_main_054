@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
-import DetailDropdown from "../../../components/dropdowns/DetailDropdown";
+import DetailEditDropdown from "../../../components/dropdowns/DetailEditDropdown";
 import ShopDetailImg from "./ShopDetailImg";
 import ShopDetailTitle from "./ShopDetailTitle";
 import ShopMap from "./ShopMap";
@@ -64,7 +64,7 @@ const ShopDetail = () => {
             <Editdiv>
               <EditButton onClick={editDrop}>
                 ...
-                <DetailDropdown openDropDown={openDropDown}></DetailDropdown>
+                <DetailEditDropdown openDropDown={openDropDown}></DetailEditDropdown>
               </EditButton>
             </Editdiv>
             <Imagediv>

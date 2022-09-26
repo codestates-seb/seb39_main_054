@@ -35,17 +35,12 @@ const ShareDetailImg = ({url}) => {
     <Img src = {values}></Img>
     </div>)}
     </Picture>
-    </PictureContainer>
-    
-    
+    </PictureContainer> 
     <Btndiv>
     <LeftBtn onClick = {onClickLeftBtn}></LeftBtn>
     <RightBtn onClick = {onClickRightBtn}></RightBtn>
     </Btndiv>
-   
   </>
-
-  
   )
 }
 export default ShareDetailImg
@@ -54,6 +49,7 @@ position: relative;
 width: 56.25rem;
 height: 550px;
 overflow: hidden;
+border-radius: 15px;
 `
 const Btndiv = styled.div`
 display: flex;
@@ -85,5 +81,6 @@ position: relative;
 const Img = styled.img`
   object-fit: cover;
   width: 56.25rem;
+  
 `;
 

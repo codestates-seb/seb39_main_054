@@ -16,14 +16,13 @@ const ShareListFilter = () => {
     navigate("/share/post");
   };
 
-  const categoryChange = (el) => {
-  };
+  const categoryChange = (el) => {};
 
   return (
     <Container>
       {!isMobile && <Category></Category>}
       <SearchAndPostContainer>
-        <div className="test">
+        <div className="search-category">
           <Search>search</Search>
           {isMobile && (
             <CategoryDropdown
@@ -31,9 +30,10 @@ const ShareListFilter = () => {
             ></CategoryDropdown>
           )}
         </div>
-        <PostBtn onClick={postToggle}>글작성</PostBtn>
+        {!isMobile && <PostBtn onClick={postToggle}>글작성</PostBtn>}
       </SearchAndPostContainer>
-      <ShareState>공유상태</ShareState>
+      <ShareState></ShareState>
+      {isMobile && <PostBtn onClick={postToggle}>글작성</PostBtn>}
     </Container>
   );
 };
@@ -55,7 +55,7 @@ const SearchAndPostContainer = styled.div`
 
   @media ${(props) => props.theme.mobile} {
     flex-direction: column;
-    .test{
+    .search-category {
       display: flex;
     }
   }

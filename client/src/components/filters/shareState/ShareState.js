@@ -60,8 +60,9 @@ const Container = styled.div`
   }
 
   @media ${(props) => props.theme.mobile} {
-    width: 23.75rem;
     justify-content: center;
+    width: 23.75rem;
+    margin-top: 1rem;
   }
 `;
 

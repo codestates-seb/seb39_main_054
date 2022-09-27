@@ -38,9 +38,9 @@ const schema = yup.object().shape({
 });
 
 const SignUp = () => {
-  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false); // 모달창 열림 닫힘 상태
   const [modaltext, setModalText] = useState("");
+  const navigate = useNavigate();
 
   const {
     register,
@@ -97,7 +97,7 @@ const SignUp = () => {
         <h1>회원가입</h1>
         <SignupContent>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div style={{ marginBottom: "1.65rem" }}>
+            <div style={{ marginBottom: "1.05rem" }}>
               <label>아이디</label>
               <input
                 type="text"
@@ -106,7 +106,7 @@ const SignUp = () => {
               />
               {errors.id && <Validations value={errors.id.message} />}
             </div>
-            <div style={{ marginBottom: "2.9rem" }}>
+            <div style={{ marginBottom: "2.3rem" }}>
               <label>
                 <div className="text-wrapper">
                   <div className="text">비밀번호</div>
@@ -124,7 +124,7 @@ const SignUp = () => {
                 <Validations value={errors.password.message} />
               )}
             </div>
-            <div style={{ marginBottom: "2.9rem" }}>
+            <div style={{ marginBottom: "2.3rem" }}>
               <label>비밀번호 확인</label>
               <input
                 type="password"
@@ -135,7 +135,7 @@ const SignUp = () => {
                 <Validations value={errors.confirmPassword.message} />
               )}
             </div>
-            <div style={{ marginBottom: "2rem" }}>
+            <div style={{ marginBottom: "1.4rem" }}>
               <label>닉네임</label>
               <input
                 type="text"

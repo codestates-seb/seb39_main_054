@@ -128,6 +128,7 @@ const NavContent = styled.div`
 
   img {
     margin-right: 2rem;
+    margin-top: 0.3rem;
     padding: 0.5rem;
     width: 180px;
     cursor: pointer;

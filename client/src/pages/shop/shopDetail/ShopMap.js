@@ -9,6 +9,7 @@ const ShopMap = ({ data }) => {
     let options = {
       //지도를 생성할 때 필요한 기본 옵션
       center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
+      draggable: false, // 줌인 아웃 막기
       level: 3, //지도의 레벨(확대, 축소 정도)
     };
 

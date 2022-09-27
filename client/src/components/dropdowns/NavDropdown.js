@@ -5,7 +5,7 @@ import styled from "styled-components";
 const NavDropdown = ({ openDropDown }) => {
 
   return (
-    <Ul display={openDropDown.display} height={openDropDown.height} className={openDropDown.className}>
+    <Ul display={openDropDown.display} className={openDropDown.className}>
       <Link to="/mypage/favorite">
         <li>관심목록</li>
       </Link>
@@ -33,19 +33,24 @@ const Ul = styled.ul`
   font-family: "NotoSansKR-Medium";
   color: ${(props) => props.theme.gray2};
   background-color: ${props=> props.theme.bgColor};
-  padding: 1.5rem 0;
+  top: 68px;
   width: 185px;
+  height: 15.725rem;
   border-radius: 14px;
   overflow: hidden;
   height: ${props => props.height};
   animation-name: ${props => props.className};
-  animation-duration: 1s;
+  animation-duration: 2s;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 5px;
   z-index: 100;
 
   li {
+    display: flex;
+    align-items: center;
     padding: 17.5px 0;
     margin-left: 1.5rem;
+    height: 3.125rem;
+
     &:hover {
       color: ${(props) => props.theme.primary};
     }
@@ -53,7 +58,7 @@ const Ul = styled.ul`
 
   @keyframes up {
     0% {
-      height: 290px;
+      height: 15.725rem;
     }
     100% {
       height: 0px;
@@ -65,7 +70,7 @@ const Ul = styled.ul`
       height: 0px;
     }
     100% {
-      height: 290px;
+      height: 15.725rem;
     }
   }
 `;

@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 const DetailEditDropdown =()=> {
     const [open, setOpen] = useState({
@@ -16,23 +18,21 @@ const DetailEditDropdown =()=> {
     display: "none",
   });
   const {id} = useParams();
-  const [value , setValue] = useState("대여가능")
+  const [value , setValue] = useState()
   const stateClick =  async (e) =>{
     setValue(e);
-  }
-  const changeState = async ()=>{ 
     await axios
     .patch(`${process.env.REACT_APP_API_URL}/product/${id}`,
     {status : value}
-  )
+  )}
+  const changeMessage = () => {
+    alert("변경되었습니다!")
+    window.location.reload();
+    console.log("hi")
   }
-
-
   useEffect(() => {
-    stateClick();
-    changeState();
-    
-  }, []);
+    stateClick();   
+  }, [value]);
 
     const editDrop = () =>{
     if (open.class === "up") {
@@ -66,7 +66,7 @@ const DetailEditDropdown =()=> {
           <Ul onClick={editDrop2} display={open2.display} height={open2.height} class={open2.class}
             style = {{marginLeft : -208  , marginTop : 150} }>
             {stateList.map((el , idx) =>(
-        <li onClick = {() => stateClick(stateList[idx])}>{el}</li>
+        <li onClick = {() => {stateClick(stateList[idx]);changeMessage()}}>{el}</li>
       ))}
           </Ul>
       </EditButton>

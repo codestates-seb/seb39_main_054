@@ -59,7 +59,6 @@ const SharePost = () =>{
           </FlexContainer>
           <SubTitle>내용</SubTitle>
           <ContentText placeholder="내용을 입력해주세요" onChange={(e) => contentChange(e.target.value)}></ContentText>
-    
           <BtnDiv>
           <CancelBtn onClick={cancleClick}>취소</CancelBtn>
           <PostBtn onClick={postClick}>등록</PostBtn>

@@ -11,17 +11,19 @@ const ShareCard = ({ id, title, description, status, image01 }) => {
           <div className="img-container">
             <Img src={image01}></Img>
           </div>
-          <Title>{title}</Title>
-          <Description>{description}</Description>
-          <div className="share-status">
-            <ShareState status={status}>
-              <div className="circle"></div>
-              {status}
-            </ShareState>
-            <Favorite>
-              <Heart />
-              13
-            </Favorite>
+          <div className="text-content">
+            <Title>{title}</Title>
+            <Description>{description}</Description>
+            <div className="share-status">
+              <ShareState status={status}>
+                <div className="circle"></div>
+                {status}
+              </ShareState>
+              <Favorite>
+                <Heart />
+                13
+              </Favorite>
+            </div>
           </div>
         </Content>
       </Link>
@@ -40,6 +42,10 @@ const Container = styled.div`
   .share-status {
     display: flex;
     justify-content: space-between;
+
+    @media ${(props) => props.theme.mobile} {
+      flex-direction: column;
+    }
   }
 
   .img-container {
@@ -48,7 +54,6 @@ const Container = styled.div`
     overflow: hidden;
     border-radius: 14px;
     border: 0px;
-    margin-bottom: 13px;
   }
 `;
 
@@ -56,6 +61,16 @@ const Content = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
+
+  @media ${(props) => props.theme.mobile} {
+    flex-direction: row;
+
+    .text-content {
+      display: flex;
+      flex-direction: column;
+      padding: 0 13px;
+    }
+  }
 `;
 
 const Img = styled.img`
@@ -73,11 +88,17 @@ const Title = styled.div`
   font-size: 18px;
   font-family: "NotoSansKR-Medium";
   line-height: 1.2rem;
+  margin-top: 13px;
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  @media ${(props) => props.theme.mobile} {
+    margin-top: 0;
+    margin-bottom: 23px;
+  }
 `;
 
 const Description = styled.div`
@@ -91,11 +112,22 @@ const Description = styled.div`
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  @media ${(props) => props.theme.mobile} {
+    margin-top: 0;
+    margin-bottom: 40px;
+    height: 3.75rem;
+    -webkit-line-clamp: 3;
+  }
 `;
 
 const ShareState = styled.div`
   display: flex;
   font-size: 13px;
+
+  @media ${(props) => props.theme.mobile} {
+    margin-bottom: 10px;
+  }
 
   .circle {
     width: 13px;

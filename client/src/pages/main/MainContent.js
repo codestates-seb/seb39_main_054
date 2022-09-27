@@ -55,6 +55,10 @@ const Content = styled.div`
     width: 36rem;
   }
 
+  @media ${(props) => props.theme.mobile} {
+    width: 26.75rem;
+  }
+
   .title {
     font-size: 1.625rem;
     font-family: "NotoSansKR-Medium";

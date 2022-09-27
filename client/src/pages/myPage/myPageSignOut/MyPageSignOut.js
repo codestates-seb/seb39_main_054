@@ -1,18 +1,40 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import MyPageHeader from "../MyPageHeader";
 import MyPageNav from "../MyPageNav";
-import Modal from "../../../components/ui/modals/Modal";
+import ModalConfirm from "../../../components/ui/modals/ModalConfirm";
 
 const MyPageSignOut = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { id } = useParams();
   const navigate = useNavigate();
+
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `${localStorage.getItem("authorization")}`,
+  };
 
   // 모달창의 확인버튼을 눌렀을때의 동작
   const handleModal = () => {
     setIsOpen(!isOpen);
-    navigate(`/`);
+    // navigate(`/`);
+  };
+
+  const handleSignOut = async () => {
+    await axios
+      .patch(
+        `${process.env.REACT_APP_API_URL}/member/${id}`,
+        // `${process.env.REACT_APP_API_URL}/member`,
+        { memberStatus: "MEMBER_QUIT" },
+        { headers: headers }
+      )
+      .then(() => {
+        handleModal();
+        console.log("ok");
+      })
+      .catch((error) => console.error(error));
   };
 
   return (
@@ -30,16 +52,20 @@ const MyPageSignOut = () => {
             <Link to="/mypage/favorite">
               <button className="btn-cancel">취소</button>
             </Link>
-            <button className="btn-confirm" type="submit">
+            <button
+              onClick={handleSignOut}
+              className="btn-confirm"
+              type="submit"
+            >
               확인
             </button>
           </Btns>
         </SignOutContainer>
-        <Modal
+        <ModalConfirm
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           handleModal={handleModal}
-          children={"회원정보가 변경되었습니다."}
+          children={"그동안 이용해주셔서 감사합니다."}
         />
       </MSContainer>
     </>

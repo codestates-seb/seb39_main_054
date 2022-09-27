@@ -4,9 +4,6 @@ import PostDropdown from "../../../components/dropdowns/PostDropdown";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-
-
-
 const SharePost = () =>{
 
  
@@ -33,6 +30,10 @@ const SharePost = () =>{
   const cancleClick = () =>{
     navigate(`/share/list`)
   }
+  const addImages = (e) => {
+    const imageLists = e.target.files;
+    // const img
+  }
   
   const postClick = () =>{
     axios 
@@ -55,7 +56,8 @@ const SharePost = () =>{
           <PostDropdown categoryChange={categoryChange}/>
           </PageContainer>
           <FlexContainer>
-          <SubTitle>이미지 첨부</SubTitle>
+          {/* <SubTitle>이미지 첨부</SubTitle> */}
+          <ImgPost type= "file" accept="image/*"  multiple></ImgPost>
           </FlexContainer>
           <SubTitle>내용</SubTitle>
           <ContentText placeholder="내용을 입력해주세요" onChange={(e) => contentChange(e.target.value)}></ContentText>
@@ -165,5 +167,11 @@ const PostBtn = styled.button`
   color:White;
   margin: 2.5rem 2rem;
   font-size: 1.375rem;
+`
+const ImgPost = styled.input`
+font-size: 1.375rem;
+margin: 2rem 0rem 0.5rem 0.5rem;
+
+
 `
 

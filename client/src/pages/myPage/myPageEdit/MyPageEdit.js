@@ -45,15 +45,15 @@ const MyPageEdit = () => {
     resolver: yupResolver(schema),
   });
 
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `${localStorage.getItem("authorization")}`,
+  };
+
   // 모달창의 확인버튼을 눌렀을때의 동작
   const handleModal = () => {
     setIsOpen(!isOpen);
     // navigate(`/member`);
-  };
-
-  const headers = {
-    "Content-Type": "application/json",
-    Authorization: `${localStorage.getItem("authorization")}`,
   };
 
   const onSubmit = async (data) => {

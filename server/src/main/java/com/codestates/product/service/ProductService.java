@@ -78,15 +78,15 @@ public class ProductService{
             }
 
         });
-
-        fileUrlList.stream()
-                .forEach(url -> {
-                    Pimage image = new Pimage();
-
-                    image.setProduct(product);
-                    image.setImageUrl(url);
-                    pimageRepository.save(image);
-                });
+//
+//        fileUrlList.stream()
+//                .forEach(url -> {
+//                    Pimage image = new Pimage();
+//
+//                    image.setProduct(product);
+//                    image.setImageUrl(url);
+//                    pimageRepository.save(image);
+//                });
 
         return fileUrlList;
     }

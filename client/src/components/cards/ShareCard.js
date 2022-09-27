@@ -3,27 +3,29 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as Heart } from "../../assets/img/icon/heart.svg";
 
-const ShareCard = ({ id, title, content, status, image01 }) => {
+const ShareCard = ({ id, title, description, status, image01 }) => {
   return (
-    <Link to={`/share/detail/${id}`}>
-      <Container>
-        <div className="img-container">
-          <Img src={image01}></Img>
-        </div>
-        <Title>{title}</Title>
-        <Content>{content}</Content>
-        <div className="share-status">
-          <ShareState status={status}>
-            <div className="circle"></div>
-            {status}
-          </ShareState>
-          <Favorite>
-            <Heart />
-            13
-          </Favorite>
-        </div>
-      </Container>
-    </Link>
+    <Container>
+      <Link to={`/share/detail/${id}`}>
+        <Content>
+          <div className="img-container">
+            <Img src={image01}></Img>
+          </div>
+          <Title>{title}</Title>
+          <Description>{description}</Description>
+          <div className="share-status">
+            <ShareState status={status}>
+              <div className="circle"></div>
+              {status}
+            </ShareState>
+            <Favorite>
+              <Heart />
+              13
+            </Favorite>
+          </div>
+        </Content>
+      </Link>
+    </Container>
   );
 };
 
@@ -50,6 +52,12 @@ const Container = styled.div`
   }
 `;
 
+const Content = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+`;
+
 const Img = styled.img`
   width: 100%;
   height: 100%;
@@ -72,7 +80,7 @@ const Title = styled.div`
   text-overflow: ellipsis;
 `;
 
-const Content = styled.div`
+const Description = styled.div`
   font-size: 15px;
   width: 210px;
   margin: 10px 0;

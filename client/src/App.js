@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
 import GlobalStyle from "./assets/styles/GlobalStyle";
 import { darkTheme, lightTheme } from "./assets/styles/Theme";
-import Footer from "./components/footer/Footer";
 import Nav from "./components/nav/Nav";
 import Main from "./pages/main/Main";
 import ShareDetail from "./pages/share/shareDetail/ShareDetail";
@@ -16,6 +15,7 @@ import MyPageFavorite from "./pages/myPage/MyPageFavorite";
 import MyPageMyPost from "./pages/myPage/MyPageMyPost";
 import MyPageEdit from "./pages/myPage/MyPageEdit";
 import MyPageSignOut from "./pages/myPage/MyPageSignOut";
+import Footer from "./components/footer";
 
 const App = () => {
   // 테마 변경 (lightTheme, darkTheme)

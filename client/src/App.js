@@ -15,6 +15,7 @@ import ShopDetail from "./pages/shop/shopDetail/ShopDetail";
 import MyPageFavorite from "./pages/myPage/MyPageFavorite";
 import MyPageMyPost from "./pages/myPage/MyPageMyPost";
 import MyPageEdit from "./pages/myPage/MyPageEdit";
+import MyPageSignOut from "./pages/myPage/MyPageSignOut";
 
 const App = () => {
   // 테마 변경 (lightTheme, darkTheme)
@@ -58,6 +59,10 @@ const App = () => {
               <Route
                 path="/mypage/edit"
                 element={<MyPageEdit></MyPageEdit>}
+              ></Route>
+              <Route
+                path="/mypage/signout"
+                element={<MyPageSignOut></MyPageSignOut>}
               ></Route>
               <Route path="/shop/list"></Route>
               <Route

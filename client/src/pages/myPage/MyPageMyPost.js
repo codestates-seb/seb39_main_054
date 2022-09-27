@@ -24,7 +24,9 @@ const MyPageMyPost = () => {
           <Link to="/mypage/edit">
             <button>회원정보 수정</button>
           </Link>
-          <button>회원 탈퇴</button>
+          <Link to="/mypage/signout">
+            <button>회원 탈퇴</button>
+          </Link>
         </BtnContainer>
         <ShareStateContainer>
           <ShareState />

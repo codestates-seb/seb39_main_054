@@ -20,7 +20,7 @@ const Nav = ({ isTheme, setIsTheme }) => {
   const [openDropDown, setOpenDropDown] = useState({
     className: "up",
     height: "0px",
-    display: "none"
+    display: "none",
   });
 
   // 테마 변경 함수
@@ -120,6 +120,7 @@ const NavContent = styled.div`
 
   img {
     margin-right: 2rem;
+    margin-top: 0.3rem;
     padding: 0.5rem;
     width: 180px;
     cursor: pointer;

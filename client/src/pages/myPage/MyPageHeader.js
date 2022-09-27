@@ -33,7 +33,7 @@ const AvartarContainer = styled.div`
   align-items: center;
   width: 79.625rem;
   height: 18.25rem;
-  margin: 5.875rem 0 2.3125rem 0;
+  margin: 5rem 0 2.3125rem 0;
   border-radius: 1.25rem;
   background-color: ${(props) => props.theme.primary};
 

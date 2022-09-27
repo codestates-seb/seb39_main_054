@@ -9,8 +9,6 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-// /mypage/favorite
-
 const schema = yup.object().shape({
   nickname: yup
     .string()
@@ -91,13 +89,15 @@ const MyPageEdit = () => {
           <Link to="/mypage/edit">
             <button className="active">회원정보 수정</button>
           </Link>
-          <button>회원 탈퇴</button>
+          <Link to="/mypage/signout">
+            <button>회원 탈퇴</button>
+          </Link>
         </BtnContainer>
 
         <EditContainer>
           <EditContent>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div style={{ marginBottom: "2.9375rem" }}>
+              <div style={{ marginBottom: "1.6875rem" }}>
                 <label>닉네임</label>
                 <input
                   type="text"
@@ -108,20 +108,25 @@ const MyPageEdit = () => {
                   <Validations value={errors.nickname.message} />
                 )}
               </div>
-
               <div style={{ marginBottom: "2.9375rem" }}>
-                <label>비밀번호</label>
+                <label>
+                  <div className="text-wrapper">
+                    <div className="text">비밀번호</div>
+                    <div className="text-small">
+                      (영문, 숫자, 특수문자를 포함한 8~16자리)
+                    </div>
+                  </div>
+                </label>
                 <input
                   type="password"
-                  placeholder="새로운 비밀번호를 입력해주세요"
+                  placeholder="비밀번호를 입력해주세요"
                   {...register("password")}
                 />
                 {errors.password && (
                   <Validations value={errors.password.message} />
                 )}
               </div>
-
-              <div style={{ marginBottom: "2.9rem" }}>
+              <div style={{ marginBottom: "4.8125rem" }}>
                 <label>비밀번호 확인</label>
                 <input
                   type="password"
@@ -132,8 +137,14 @@ const MyPageEdit = () => {
                   <Validations value={errors.confirmPassword.message} />
                 )}
               </div>
-
-              <button type="submit">수정</button>
+              <Btns>
+                <Link to="/mypage/favorite">
+                  <button className="btn-cancel">취소</button>
+                </Link>
+                <button className="btn-confirm" type="submit">
+                  수정
+                </button>
+              </Btns>
               <ModalConfirm
                 isOpen={isOpen}
                 setIsOpen={setIsOpen}
@@ -210,11 +221,23 @@ const EditContent = styled.div`
   padding: 0 1.5625rem;
   width: 31.25rem;
   height: 40.625rem;
-  margin: -1rem auto 8.875rem auto;
+  margin: 1rem auto 5rem auto;
 
   label {
     font-size: 1.5rem;
     padding: 0 0 0 0.625rem;
+
+    .text-wrapper {
+      display: flex;
+    }
+    .text {
+      padding: 0 0 0 0.625rem;
+    }
+    .text-small {
+      font-size: 1rem;
+      padding: 0 0 0 0.4rem;
+      margin-top: 0.3rem;
+    }
   }
 
   input {
@@ -238,14 +261,35 @@ const EditContent = styled.div`
       outline: none;
     }
   }
+`;
 
-  button {
+const Btns = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  width: 21.875rem;
+
+  .btn-cancel {
+    background-color: ${(props) => props.theme.gray4};
+    font-size: 1.375rem;
+    color: ${(props) => props.theme.white};
+    width: 8.75rem;
+    height: 3.75rem;
+    border-radius: 0.625rem;
+    font-family: "NotoSansKR-Medium";
+    :hover {
+      filter: drop-shadow(0rem 0.25rem 0.25rem ${(props) => props.theme.gray5});
+    }
+  }
+
+  .btn-confirm {
     background-color: ${(props) => props.theme.primary};
     font-size: 1.375rem;
     color: ${(props) => props.theme.white};
-    width: 28.125rem;
+    width: 8.75rem;
     height: 3.75rem;
     border-radius: 0.625rem;
+    font-family: "NotoSansKR-Medium";
     :hover {
       filter: drop-shadow(0rem 0.25rem 0.25rem ${(props) => props.theme.gray5});
     }

@@ -48,6 +48,15 @@ const Container = styled.div`
   width: 66.5rem;
   margin-top: 2.5rem;
   margin-bottom: 1rem;
+
+
+  @media ${(props) => props.theme.tabletL} {
+    width: 48.5rem;
+  }
+
+  @media ${(props) => props.theme.tabletS} {
+    justify-content: center;
+  }
 `;
 
 const Content = styled.div`

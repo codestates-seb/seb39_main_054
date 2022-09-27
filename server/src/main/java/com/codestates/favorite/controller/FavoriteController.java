@@ -24,11 +24,11 @@ public class FavoriteController {
     private final FavoriteService favoriteService;
     private final FavoriteMapper mapper;
 
+    // TODO 09/23 product 생성 api 나오면 로직 작업 가능할 듯
     @PostMapping("/{product-id}")
     public ResponseEntity postFavorite(@PathVariable("product-id") @Positive long productId,
                                        @AuthenticationPrincipal PrincipalDetails principalDetails) {
-        // TODO 09/21 테스트에서 PrincipalDetails 를 가지고 오지 못하는 이유?
-        // => PrincipalDetails 인스턴스를 만들어줘야 함
+        // 09/21 테스트에서 PrincipalDetails 를 가지고 오지 못하는 이유? => PrincipalDetails 인스턴스를 만들어줘야 함.
 //        System.out.println("user.getUsername() = " + user.getUsername());
 //        System.out.println("user.getPassword() = " + user.getPassword());
         long memberId = principalDetails.getMember().getMemberId();

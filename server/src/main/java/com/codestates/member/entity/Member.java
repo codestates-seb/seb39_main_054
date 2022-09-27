@@ -1,23 +1,22 @@
 package com.codestates.member.entity;
 
 import com.codestates.audit.Auditable;
+import com.codestates.exception.BusinessLogicException;
+import com.codestates.exception.ExceptionCode;
 import com.codestates.favorite.entity.Favorite;
 import com.codestates.product.entity.Product;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.http.HttpStatus;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @NoArgsConstructor
 @Getter
 @Setter
 @AllArgsConstructor
 @Entity
+@Builder
 public class Member extends Auditable {
 
     @Id
@@ -28,6 +27,8 @@ public class Member extends Auditable {
     private String memberName;  // 사용자 ID
 
     @Column
+    private String email;
+    @Column(nullable = false)
     private String password;
 
     @Column
@@ -42,7 +43,14 @@ public class Member extends Auditable {
 
     private String imageName;
 
+    @Column(length = 512)
     private String imageUrl;
+
+    private String provider;
+
+    private String providerId;
+
+    private String refreshToken;
 
     public Member(String nickname, String memberName, String password) {
         this.nickname = nickname;
@@ -56,6 +64,48 @@ public class Member extends Auditable {
         this.password = password;
         this.nickname = nickname;
     }
+
+    public static Member of(ProviderType providerType, Map<String, Object> attributes) {
+        switch (providerType) {
+            case GOOGLE:
+                return Member.builder()
+                        .email((String) attributes.get("email"))
+                        .nickname((String) attributes.get("given_name"))
+                        .memberName((String) attributes.get("name"))
+                        .provider(providerType.name())
+                        .providerId((String) attributes.get("sub"))
+                        .imageUrl((String) attributes.get("picture"))
+                        .roles("ROLE_USER")
+                        .memberStatus(MemberStatus.MEMBER_ACTIVE)
+                        .password("12345678")
+                        .build();
+            case KAKAO:
+                Map<String, Object> account = (Map<String, Object>) attributes.get("kakao_account");
+                Map<String, Object> properties = (Map<String, Object>) attributes.get("properties");
+                return Member.builder()
+                        .email(Optional.ofNullable(account.get("email")).orElse("KAKAO" + attributes.get("id").toString()).toString())
+                        .nickname((String) properties.get("nickname"))
+                        .imageUrl((String) properties.get("profile_image"))
+                        .provider("KAKAO")
+                        .providerId(String.valueOf(attributes.get("id")))
+                        .password("12345678")
+                        .roles("ROLE_USER")
+                        .memberStatus(MemberStatus.MEMBER_ACTIVE)
+                        .build();
+
+            default:
+                throw new BusinessLogicException(ExceptionCode.PROVIDER_NOT_FOUND);
+        }
+    }
+
+//    @Builder
+//    public Member(String memberName, String email, String roles, String provider, String providerId) {
+//        this.memberName = memberName;
+//        this.email = email;
+//        this.roles = roles;
+//        this.provider = provider;
+//        this.providerId = providerId;
+//    }
 
     public List<String> getRoleList() {    //????? 언제 사용하니???
         if (this.roles.length() > 0) {
@@ -74,6 +124,21 @@ public class Member extends Auditable {
 
         MemberStatus(String status) {
             this.status = status;
+        }
+    }
+
+    public enum ProviderType {
+        GOOGLE("GOOGLE"),
+        KAKAO("KAKAO");
+
+        private final String name;
+
+        ProviderType(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
         }
     }
 

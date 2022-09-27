@@ -16,16 +16,10 @@ public class Application {
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-//
-//	public static final String APPLICATION_LOCATIONS = "spring.config.location="
-//			+ "classpath:application.yml,"
-//			+ "classpath:application-aws.yml";
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 
-//		new SpringApplicationBuilder(Application.class)
-//				.properties(APPLICATION_LOCATIONS)
-//						.run(args);
 	}
 }

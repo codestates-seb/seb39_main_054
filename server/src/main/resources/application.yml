@@ -7,7 +7,7 @@ spring:
 ---
 spring:
   config:
-#    location: classpath:aws.yml
+    #    location: classpath:aws.yml
     activate:
       on-profile: local
   h2:
@@ -29,7 +29,6 @@ spring:
     init:
       mode: always
 
-
 logging:
   level:
     org:
@@ -41,7 +40,6 @@ server:
   servlet:
     encoding:
       force-response: true
-
 
 ---
 spring:

@@ -39,10 +39,8 @@ logging:
 server:
   servlet:
     encoding:
-<<<<<<< HEAD
       force-response: true
-=======
-      force-response: true
+
 ---
 spring:
   config:
@@ -72,4 +70,3 @@ aws:
     prefix: /spring-boot-aws
     name: seb-39-pre-054  # TODO 09/23 aws 배포 시 수정 요망
     profile-separator: _
->>>>>>> 986ac31c08fb5636e454d5d465646edaee7aaf73

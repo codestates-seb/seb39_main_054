@@ -38,3 +38,4 @@ out/
 .vscode/
 
 ### AWS 정보 ###
+application-oauth.yml

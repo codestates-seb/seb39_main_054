@@ -4,21 +4,21 @@ import styled from "styled-components";
 const MyPageHeader = () => {
   return (
     <>
-      <Container>
+      <MHContainer>
         <AvartarContainer>
           <AvartarWrapper>
             <img></img>
           </AvartarWrapper>
           <p>키키님 반갑습니다.</p>
         </AvartarContainer>
-      </Container>
+      </MHContainer>
     </>
   );
 };
 
 export default MyPageHeader;
 
-const Container = styled.div`
+const MHContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;

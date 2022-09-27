@@ -11,10 +11,10 @@ import SignUp from "./pages/register/signUp/SignUp";
 import ShareList from "./pages/share/shareList/ShareList";
 import SharePost from "./pages/share/sharePost/SharePost";
 import ShopDetail from "./pages/shop/shopDetail/ShopDetail";
-import MyPageFavorite from "./pages/myPage/MyPageFavorite";
-import MyPageMyPost from "./pages/myPage/MyPageMyPost";
-import MyPageEdit from "./pages/myPage/MyPageEdit";
-import MyPageSignOut from "./pages/myPage/MyPageSignOut";
+import MyPageFavorite from "./pages/myPage/myPageFavorite/MyPageFavorite";
+import MyPageMyPost from "./pages/myPage/myPageMyPost/MyPageMyPost";
+import MyPageEdit from "./pages/myPage/myPageEdit/MyPageEdit";
+import MyPageSignOut from "./pages/myPage/myPageSignOut/MyPageSignOut";
 import Footer from "./components/footer";
 
 const App = () => {

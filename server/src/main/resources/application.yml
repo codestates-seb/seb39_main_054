@@ -29,6 +29,7 @@ spring:
     init:
       mode: always
 
+
 logging:
   level:
     org:
@@ -40,6 +41,7 @@ server:
   servlet:
     encoding:
       force-response: true
+
 
 ---
 spring:

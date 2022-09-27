@@ -39,6 +39,10 @@ const Container = styled.div`
   padding: 0 37.5px;
   margin-bottom: 70px;
 
+  @media ${(props) => props.theme.mobile} {
+    padding: 0 20px;
+  }
+
   .share-status {
     display: flex;
     justify-content: space-between;
@@ -84,7 +88,7 @@ const Img = styled.img`
 `;
 
 const Title = styled.div`
-  width: 210px;
+  width: 13.125rem;
   font-size: 18px;
   font-family: "NotoSansKR-Medium";
   line-height: 1.2rem;
@@ -98,6 +102,7 @@ const Title = styled.div`
   @media ${(props) => props.theme.mobile} {
     margin-top: 0;
     margin-bottom: 23px;
+    width: 9.25rem;
   }
 `;
 
@@ -116,6 +121,7 @@ const Description = styled.div`
   @media ${(props) => props.theme.mobile} {
     margin-top: 0;
     margin-bottom: 40px;
+    width: 9.25rem;
     height: 3.75rem;
     -webkit-line-clamp: 3;
   }

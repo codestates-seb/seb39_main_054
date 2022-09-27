@@ -33,7 +33,6 @@ const FooterContainer = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 206px;
   border-top: 1px solid ${(props) => props.theme.primary};
   font-size: 1.125rem;
 
@@ -49,20 +48,19 @@ const FooterContent = styled.div`
   justify-content: left;
   align-items: center;
   flex-direction: column;
-  width: 81.25rem;
-  height: 100%;
-  padding-top: 1.5rem;
+  width: 28.75rem;
+  height: 100%; 
+  padding: 2rem 0;
 `;
 
 const FooterTop = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 3rem;
+  padding: 0 1rem;
   width: 100%;
 
   img {
-    margin: 0.5rem;
     width: 70px;
     height: 70px;
     cursor: pointer;
@@ -77,7 +75,7 @@ const FooterButtom = styled.div`
   display: flex;
   justify-content: left;
   flex-direction: column;
-  padding: 0 3rem;
+  padding: 0 1rem;
   width: 100%;
 
   div {

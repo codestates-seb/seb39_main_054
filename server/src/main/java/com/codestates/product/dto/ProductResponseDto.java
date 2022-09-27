@@ -20,6 +20,3 @@ public class ProductResponseDto {
         private List<String> fileUrlList;
     }
 }
-
-
-

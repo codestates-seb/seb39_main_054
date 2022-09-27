@@ -19,9 +19,9 @@ const schema = yup.object().shape({
 });
 
 const Login = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [isOpen, setIsOpen] = useState(false);
 
   const {
     register,

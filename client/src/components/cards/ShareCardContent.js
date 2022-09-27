@@ -12,7 +12,7 @@ const ShareCardContent = ({ data, number }) => {
               key={el.productId}
               id={el.productId}
               title={el.title}
-              content={el.description}
+              description={el.description}
               status={el.status}
               image01={el.image.image01}
             />

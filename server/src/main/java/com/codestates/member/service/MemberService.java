@@ -20,6 +20,7 @@ public class MemberService {
 
         member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
         member.setRoles("ROLE_USER");
+        member.setMemberStatus(Member.MemberStatus.MEMBER_ACTIVE);
         return memberRepository.save(member);
     }
 

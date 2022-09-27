@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate, Link } from "react-router-dom";
-import MyPageHeader from "./MyPageHeader";
-import Modal from "../../components/ui/modals/Modal";
+import MyPageHeader from "../MyPageHeader";
+import MyPageNav from "../MyPageNav";
+import Modal from "../../../components/ui/modals/Modal";
 
 const MyPageSignOut = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,25 +17,9 @@ const MyPageSignOut = () => {
 
   return (
     <>
-      <MFContainer>
+      <MSContainer>
         <MyPageHeader />
-        <BtnContainer>
-          <Link to="/mypage/favorite">
-            <button className="active">관심목록</button>
-          </Link>
-          <Link to="/mypage/mypost">
-            <button>내가 쓴 게시글</button>
-          </Link>
-          <Link to="/chat/list/:id">
-            <button>채팅 목록</button>
-          </Link>
-          <Link to="/mypage/edit">
-            <button>회원정보 수정</button>
-          </Link>
-          <Link to="/mypage/signout">
-            <button>회원 탈퇴</button>
-          </Link>
-        </BtnContainer>
+        <MyPageNav />
         <SignOutContainer>
           <p>정말로 회원 탈퇴를 하시겠습니까?</p>
           <p className="text-small">
@@ -56,55 +41,19 @@ const MyPageSignOut = () => {
           handleModal={handleModal}
           children={"회원정보가 변경되었습니다."}
         />
-      </MFContainer>
+      </MSContainer>
     </>
   );
 };
 
 export default MyPageSignOut;
 
-const MFContainer = styled.div`
+const MSContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100vw;
   height: 100%;
-`;
-
-const BtnContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 53.75rem;
-  height: 3.75rem;
-  margin-bottom: 1.8125rem;
-
-  button {
-    width: 8.75rem;
-    height: 3.75rem;
-    border-radius: 0.625rem;
-    border: 0.125rem solid ${(props) => props.theme.gray4};
-    background-color: ${(props) => props.theme.bgColor};
-    font-size: 1.125rem;
-    font-family: "NotoSansKR-Bold";
-    color: ${(props) => props.theme.gray3};
-    :hover {
-      background-color: ${(props) => props.theme.primary};
-      border: none;
-      color: ${(props) => props.theme.white};
-    }
-    &:focus {
-      background-color: ${(props) => props.theme.primary};
-      border: none;
-      color: ${(props) => props.theme.white};
-    }
-  }
-
-  .active {
-    background-color: ${(props) => props.theme.primary};
-    border: none;
-    color: ${(props) => props.theme.white};
-  }
 `;
 
 const SignOutContainer = styled.div`

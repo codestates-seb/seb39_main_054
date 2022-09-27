@@ -57,20 +57,3 @@ public class ProductController {
         return new ResponseEntity(productResponseDto, HttpStatus.CREATED);
     }
 }
-
-
-//    @PostMapping
-//    public ResponseEntity postProduct(@ModelAttribute @Valid ProductPostDto request,
-//                                      @AuthenticationPrincipal PrincipalDetails principalDetails) {
-//
-//        Product product = mapper.postDetailDtoToProduct(request.getProductPostDetailDto());
-//        Long memberId = principalDetails.getMember().getMemberId();
-//
-//        Product productResponse = productService.createProduct(product, memberId);
-//        List<String> fileUrlList = productService.uploadImage(request.getMultipartFileList(), productResponse.getProductId());
-//
-//        ProductResponseDto.POST productResponseDto = mapper.ProductUrlToProductResponseDto(productResponse, fileUrlList);
-//
-//        return new ResponseEntity(productResponseDto, HttpStatus.CREATED);
-//    }
-//}

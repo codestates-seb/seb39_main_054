@@ -12,7 +12,6 @@ public class ProductPostDto {
 
         private Long memberId;
         private ProductPostDetailDto productPostDetailDto;
-//        private MultipartFile multipartFileList;
         private List<MultipartFile> multipartFileList;
 
 }

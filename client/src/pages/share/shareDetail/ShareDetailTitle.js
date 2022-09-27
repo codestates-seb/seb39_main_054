@@ -2,22 +2,22 @@ import { ReactComponent as Heart } from "../../../assets/img/icon/heart.svg"
 import styled from "styled-components";
 
 
-const ShareDetailTitle = ({ Detail , Data}) =>{
+const ShareDetailTitle = ({ Detail,Data}) =>{
   return(
     <Div className="profile">
     <Div className="flexboxContainer">
       <Div className="flexbox">
         <Div className="profileimg"></Div>
-        <Div className="middle">{Data.nickname}</Div>
+        <Div className="middle">{Detail.nickname}</Div>
       </Div>
       <Div className="flexbox">
       <Div className="flexbox1">
-        <Stateball />
-        <Div className="mediumFont">{Detail.status}</Div>
+        <Stateball status = {Detail.status}/>
+        <Div className="mediumFont">{Data.status}</Div>
       </Div>
       <Div className="flexbox">
         <HeartSvg/>
-        <Div className="mediumFont">{Detail.favoritecount}</Div>
+        <Div className="mediumFont">{Data.favoritecount}</Div>
       </Div>
       </Div>
     </Div>
@@ -70,8 +70,7 @@ const Stateball = styled.div`
 width: 1.75rem;
 height: 1.75rem;
 border-radius: 50%;
-background-color: ${(props) => props.theme.stateGreen} ;
-
+background-color: ${(props) => props.theme.stateGreen};
 `
 const HeartSvg = styled(Heart)`
 fill:  ${(props) => props.theme.bgColor};

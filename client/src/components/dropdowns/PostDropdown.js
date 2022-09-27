@@ -1,8 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useState } from 'react';
+import { useState , useEffect} from 'react';
 import { ReactComponent as Down } from "../../assets/img/icon/caret-down.svg";
 import { ReactComponent as Up } from "../../assets/img/icon/caret-up.svg";
+
 
 const PostDropdown =({categoryChange}) => {
 
@@ -22,20 +23,27 @@ const PostDropdown =({categoryChange}) => {
       setOpen({ className: "up", height: "0px", display: "none" });
     }
   };
-  const menuClick = (e) =>{
-    setChoice(e);
+  const menuClick = () =>{
+    console.log(choice)
+    categoryChange(choice)
   }
-
+  useEffect(() =>{
+    menuClick();
+  },[choice])
 
     return (
     <>
     <div>
-    <TagBtn onClick={clickCategoty} onChange = {(e) => categoryChange(e.target.value)}> {choice}
+    <TagBtn onClick={clickCategoty}> {choice}
           {open.className === "up" ?(<DownBtn />) : (<UpBtn />)}
           </TagBtn>
     <Ul display={open.display} height={open.height} className={open.className}>
-      {category.map((el , idx) =>(
-        <li onClick = {() => menuClick(category[idx])}>{el}</li>
+      {category.map((el) =>(
+        <li onClick = {() => {
+          menuClick()
+          setChoice(el)
+          setOpen({ className: "up", height: "0px", display: "none" })
+        }}>{el}</li>
       ))}
 
     </Ul>
@@ -73,6 +81,7 @@ const Ul = styled.ul`
     &:hover {
       color: ${(props) => props.theme.primary};
     }
+    cursor: pointer;
   }
 
   @keyframes up {
@@ -114,4 +123,5 @@ border:solid 0.1875rem;
 border-color:${(props) => props.theme.gray5} ;
 border-radius: 10px;
 margin: 0rem;
+color: ${(props) => props.theme.textColor};
 `

@@ -10,8 +10,8 @@ import DetailEditDropdown from "../../../components/dropdowns/DetailEditDropdown
 
 const ShareDetail = () => {
   const Mobile = useMediaQuery({ maxWidth: 786 })
-  const [detail , setDetail] = useState("")
   const [data , setData] = useState("")
+  const [detail , setDetail] = useState("") 
   const { id } = useParams();
   const url = data.image
 
@@ -43,12 +43,12 @@ const ShareDetail = () => {
         <Container>
           <Title>{data.title}</Title>
           <DetailEditDropdown/>
-          <Div>
           <ShareDetailImg url = {url}></ShareDetailImg>
-          </Div>
-          <ShareDetailTitle Detail={data} Data = {detail}></ShareDetailTitle>
+          <ShareDetailTitle Detail={detail} Data = {data}></ShareDetailTitle>
           <div><hr></hr></div>
-          <ShareDetailContent content = {data}></ShareDetailContent> 
+          <ContentContainer>
+          <ShareDetailContent content = {data}></ShareDetailContent>
+          </ContentContainer>
           <Buttondiv><Link to={`/chat/detail/:id`}><ChatBtn>채팅하기</ChatBtn></Link></Buttondiv>
         
         </Container>
@@ -65,25 +65,31 @@ const ShareContainer = styled.div`
   width: 100%;
   height: 100%;
   justify-content: center;
-  hr{
-    margin: 1rem 0rem;
-  }
-`;
 
+`;
 const Container = styled.div`
 display: flex;
 flex-direction: column;
 margin-top: 7.5rem;
-/* width:56.25rem; */
-width: 40rem;
+width:56.25rem;
+//width: 40rem;
+hr{
+    margin: 1rem 0rem;
+  }
 `
+const ContentContainer = styled.div`
+width: 100%;
+word-break:break-all; 
+margin-bottom: 5rem;
+display: flex;
+flex-direction: column;
+`
+
+
 const Title = styled.div`
 font-size: 3rem;
 `
-const Div = styled.div`
-height: 34.375rem;
-width: 50.626rem;
-`
+
 const ChatBtn = styled.button`
 width: 8.125rem;
 height: 8.125rem;
@@ -91,7 +97,6 @@ border-radius: 50%;
 background-color:  ${(props) => props.theme.primary};
 font-size: 1.375rem;
 color: white;
-
 `
 const Buttondiv = styled.div`
 text-align: right;

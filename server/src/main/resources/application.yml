@@ -38,16 +38,3 @@ server:
   servlet:
     encoding:
       force-response: true
-
-cloud:
-  aws:
-    credentials:
-      accessKey: AKIA2WL4MMEVN5YNHOQS
-      secretKey: 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
-    s3:
-      bucket: mainproject54
-      dir: /productImage
-    region:
-      static: ap-northeast-2
-    stack:
-      auto: false

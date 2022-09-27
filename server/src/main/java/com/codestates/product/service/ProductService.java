@@ -1,5 +1,6 @@
 package com.codestates.product.service;
 
+import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
@@ -21,9 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 
 @Service
@@ -68,15 +67,16 @@ public class ProductService{
             objectMetadata.setContentType(file.getContentType());
             System.out.println(fileName);
             System.out.println(bucket);
+            fileUrlList.add(generateUrl(fileName, HttpMethod.GET));
+            System.out.println(fileUrlList);
 
             try(InputStream inputStream = file.getInputStream()) {
                 amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
                         .withCannedAcl(CannedAccessControlList.PublicRead));
-                //                fileUrlList.add(amazonS3.getUrl(bucket, fileName).toString());
             } catch(IOException e) {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 업로드에 실패했습니다.");
             }
-            fileUrlList.add(file.get)
+
         });
 
         fileUrlList.stream()
@@ -91,6 +91,15 @@ public class ProductService{
         return fileUrlList;
     }
 
+    /**
+     * URL 생성
+     */
+    private String generateUrl(String fileName, HttpMethod httpMethod) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.MINUTE, 2); // Generated URL will be valid for 2minutes
+        return amazonS3.generatePresignedUrl(bucket, fileName, calendar.getTime(), httpMethod).toString();
+    }
 
     /**
      * 이미지 삭제

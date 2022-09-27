@@ -38,6 +38,9 @@ import java.util.List;
 import static com.codestates.util.ApiDocumentUtils.getRequestPreProcessor;
 import static com.codestates.util.ApiDocumentUtils.getResponsePreProcessor;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
@@ -73,6 +76,8 @@ public class FavoriteControllerDocumentationTest implements FavoriteControllerTe
         Member member = new Member(1L, "csytest1", "user", passwordEncoder.encode("1234qwer"));
         member.setRoles("ROLE_USER");
         memberRepository.save(member);
+        Member user = memberRepository.findByMemberName("user");
+
 
         PrincipalDetails principalDetails = new PrincipalDetails(member);
         Authentication authentication = new UsernamePasswordAuthenticationToken(principalDetails, null, principalDetails.getAuthorities());
@@ -109,8 +114,10 @@ public class FavoriteControllerDocumentationTest implements FavoriteControllerTe
                 .andDo(document("post-favorite",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
-                        requestFields(getDefaultFavoritePostRequestDescriptors())
-                        ,
+                        pathParameters(getFavoriteRequestPathParameterDescriptor()),
+                        requestHeaders(
+                                headerWithName("Authorization").description("JWT Bearer Token")
+                        ),
                         responseFields(
                                 getFullResponseDescriptors(
                                         getDefaultFavoriteResponseDescriptors(DataResponseType.SINGLE)
@@ -118,34 +125,24 @@ public class FavoriteControllerDocumentationTest implements FavoriteControllerTe
                         )));
     }
 
-//    @Test
-//    public void getFavoriteTest() throws Exception {
-//        // given
-//        long favoriteId = 1L;
-//        FavoriteResponseDto response = StubData.MockFavorite.getSingleResponseBody();
-//
-//        given(favoriteService.findFavorite(Mockito.anyLong())).willReturn(new Favorite());
-//        given(mapper.favoriteToFavoriteResponseDto(Mockito.any(Favorite.class))).willReturn(response);
-//
-//        // when
-//        ResultActions actions = mockMvc.perform(getRequestBuilder(getURI(), favoriteId));
-//
-//        // then
-//        actions.andExpect(status().isOk())
-//                .andExpect(jsonPath("$.memberId").value(memberId))
-//                .andExpect(jsonPath("$.nickname").value(response.getNickname()))
-//                .andDo(
-//                        document("get-member",
-//                                getRequestPreProcessor(),
-//                                getResponsePreProcessor(),
-//                                pathParameters(
-//                                        getFavoriteRequestPathParameterDescriptor()
-//                                ),
-//                                responseFields(
-//                                        getFullResponseDescriptors(
-//                                                getDefaultFavoriteResponseDescriptors(DataResponseType.SINGLE)
-//                                        )
-//                                ))
-//                );
-//    }
+    @Test
+    public void deleteFavoriteTest() throws Exception {
+
+        long productId = 1;
+        doNothing().when(favoriteService).deleteFavorite(Mockito.anyLong());
+        // when
+        ResultActions actions = mockMvc.perform(deleteRequestBuilder(getURI(), productId));
+
+        // then
+        actions.andExpect(status().isNoContent())
+                .andDo(document("delete-favorite",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        pathParameters(getFavoriteRequestPathParameterDescriptor())
+                        )
+                );
+    }
+
+
+
 }

@@ -8,10 +8,10 @@ import org.springframework.data.repository.query.Param;
 
 public interface FavoriteRepository extends JpaRepository<Favorite, Long> {
     @Modifying
-    @Query(value = "INSERT INTO likes(imageId, userId, createDate) VALUES(:imageId, :principalId, now())", nativeQuery = true)
-    int mLikes(@Param("imageId") long imageId, @Param("principalId") long principalId);
+    @Query(value = "INSERT INTO favorite(product_id, member_id, creation_date) VALUES(:productId, :principalId, now())", nativeQuery = true)
+    int mLikes(@Param("productId") long productId, @Param("principalId") long principalId);
 
     @Modifying
-    @Query(value = "DELETE FROM likes WHERE imageId = :imageId AND userId = :principalId", nativeQuery = true)
-    int mUnLikes(@Param("imageId") int imageId, @Param("principalId") int principalId);
+    @Query(value = "DELETE FROM favorite WHERE product_id = :productId AND member_id = :principalId", nativeQuery = true)
+    int mUnLikes(@Param("productId") int productId, @Param("principalId") int principalId);
 }

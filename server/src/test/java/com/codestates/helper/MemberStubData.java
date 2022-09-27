@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -21,7 +22,7 @@ public class MemberStubData {
     private static Map<HttpMethod, Object> stubRequestBody;
     static {
         stubRequestBody = new HashMap<>();
-        stubRequestBody.put(HttpMethod.POST, new MemberPostDto("team54","abcd1234!@", "아이언맨"));
+        stubRequestBody.put(HttpMethod.POST, new MemberPostDto("user", "password", "아이언맨"));
         stubRequestBody.put(HttpMethod.PATCH, new MemberPatchDto(1L, "아이언맨", "1234abcd#", Member.MemberStatus.MEMBER_ACTIVE));
     }
 
@@ -32,10 +33,12 @@ public class MemberStubData {
 
         public static MemberResponseDto getSingleResponseBody() {
             return new MemberResponseDto(1,
-                    "team54",
+                    "user",
                     "아이언맨",
                     "ROLE_USER",
                     Member.MemberStatus.MEMBER_ACTIVE,
+                    "test.jpg",
+                    "https://mybucket-example-com.s3.amazonaws.com/userid/images/test.jpg",
                     LocalDateTime.now(),
                     LocalDateTime.now());
         }

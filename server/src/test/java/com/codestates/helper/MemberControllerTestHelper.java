@@ -34,6 +34,8 @@ public interface MemberControllerTestHelper extends ControllerTestHelper {
                 fieldWithPath(parentPath.concat("nickname")).type(JsonFieldType.STRING).description("닉네임"),
                 fieldWithPath(parentPath.concat("roles")).type(JsonFieldType.STRING).description("권한"),
                 fieldWithPath(parentPath.concat("memberStatus")).type(JsonFieldType.STRING).description("상태"),
+                fieldWithPath(parentPath.concat("imageName")).type(JsonFieldType.STRING).description("이미지파일 이름"),
+                fieldWithPath(parentPath.concat("imageUrl")).type(JsonFieldType.STRING).description("이미지파일 주소"),
                 fieldWithPath(parentPath.concat("creationDate")).type(JsonFieldType.STRING).description("생성일시"),
                 fieldWithPath(parentPath.concat("lastEditDate")).type(JsonFieldType.STRING).description("수정일시")
         );

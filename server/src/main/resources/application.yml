@@ -2,6 +2,8 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  profiles:
+    include: oauth
 ---
 spring:
   config:
@@ -37,4 +39,37 @@ logging:
 server:
   servlet:
     encoding:
+<<<<<<< HEAD
       force-response: true
+=======
+      force-response: true
+---
+spring:
+  config:
+    activate:
+      on-profile: server
+    import: 'aws-parameterstore:'
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  # url, username, password 를 aws-parameter store 에서 가져오도록 설정
+  #    url: jdbc:mysql://{AWS RDS Endpoint}/test?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+  #    username: {RDS Mysql Admin id}
+  #    password: {RDS Mysql Admin password}
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+#config:
+#  domain: {AWS S3 Endpoint}
+aws:
+  paramstore:
+    enabled: true
+    prefix: /spring-boot-aws
+    name: seb-39-pre-054  # TODO 09/23 aws 배포 시 수정 요망
+    profile-separator: _
+>>>>>>> 986ac31c08fb5636e454d5d465646edaee7aaf73

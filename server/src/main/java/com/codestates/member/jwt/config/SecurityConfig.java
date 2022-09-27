@@ -1,9 +1,12 @@
 package com.codestates.member.jwt.config;
 
+import com.codestates.config.oauth.CustomOauth2SuccessHandler;
+import com.codestates.config.oauth.PrincipalOauth2UserService;
 import com.codestates.member.jwt.filter.JwtAuthenticationFilter;
 import com.codestates.member.jwt.filter.JwtAuthorizationFilter;
 import com.codestates.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -20,8 +23,11 @@ import org.springframework.web.filter.CorsFilter;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    private final PrincipalOauth2UserService principalOauth2UserService;
     private final CorsFilter corsFilter;
     private final MemberRepository memberRepository;
+
+    private final CustomOauth2SuccessHandler customOauth2SuccessHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -35,6 +41,7 @@ public class SecurityConfig {
                 .apply(new CustomDsl()) // 추가
                 .and()
                 .authorizeRequests()
+//                .antMatchers("/v1/**").hasRole("USER")
                 .antMatchers(HttpMethod.POST,"/v1/questions","/v1/answers")
                 .access("hasRole('ROLE_USER')")
                 .antMatchers(HttpMethod.PATCH,"/v1/questions/**","/v1/answers/**","/v1/members/**")
@@ -43,7 +50,19 @@ public class SecurityConfig {
                 .access("hasRole('ROLE_USER')")
                 .antMatchers(HttpMethod.DELETE,"/v1/questions/**","/v1/answers/**")
                 .access("hasRole('ROLE_USER')")
-                .anyRequest().permitAll();
+                .anyRequest().permitAll()
+                .and()
+                .logout()
+                .logoutSuccessUrl("/")
+                .and()
+                .oauth2Login()
+                .loginPage("/auths/login-form")     // TODO 9/26 로그인 페이지 프론트 주소로 변경 (https://....../login)
+                .authorizationEndpoint()
+                .and()
+                .successHandler(customOauth2SuccessHandler)
+                .userInfoEndpoint()
+                .userService(principalOauth2UserService)
+        ;
         return http.build();
     }
 

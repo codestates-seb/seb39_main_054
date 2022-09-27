@@ -86,11 +86,30 @@ include::{snippets}/post-favorite/curl-request.adoc[]
 .http-request
 include::{snippets}/post-favorite/http-request.adoc[]
 
-.request-fields
-include::{snippets}/post-favorite/request-fields.adoc[]
+.path-parameters
+include::{snippets}/post-favorite/path-parameters.adoc[]
+
+.request-headers
+include::{snippets}/post-favorite/request-headers.adoc[]
+
+//.request-fields
+//include::{snippets}/post-favorite/request-fields.adoc[]
 
 .http-response
 include::{snippets}/post-favorite/http-response.adoc[]
 
 .response-fields
 include::{snippets}/post-favorite/response-fields.adoc[]
+
+=== 관심 취소
+.curl-request
+include::{snippets}/delete-favorite/curl-request.adoc[]
+
+.http-request
+include::{snippets}/delete-favorite/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/delete-favorite/path-parameters.adoc[]
+
+.http-response
+include::{snippets}/delete-favorite/http-response.adoc[]

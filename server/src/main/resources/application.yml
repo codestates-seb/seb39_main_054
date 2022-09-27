@@ -7,6 +7,7 @@ spring:
 ---
 spring:
   config:
+#    location: classpath:aws.yml
     activate:
       on-profile: local
   h2:
@@ -17,21 +18,31 @@ spring:
     url: jdbc:h2:mem:test
   jpa:
     hibernate:
-      ddl-auto: create  # (1) 스키마 자동 생성
+      ddl-auto: create-drop  # (1) 스키마 자동 생성
     show-sql: true      # (2) SQL 쿼리 출력
     properties:
       hibernate:
         format_sql: true  # (3) SQL pretty print
+    defer-datasource-initialization: true
+    open-in-view: false
+  sql:
+    init:
+      mode: always
+
+
 logging:
   level:
     org:
       springframework:
         orm:
           jpa: DEBUG
+
 server:
   servlet:
     encoding:
       force-response: true
+
+
 ---
 spring:
   config:

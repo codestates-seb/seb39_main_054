@@ -4,16 +4,16 @@ package com.codestates.pcategory.entity;
 import com.codestates.audit.Auditable;
 import com.codestates.member.entity.Member;
 import com.codestates.product.entity.Product;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Pcategory extends Auditable {
@@ -23,15 +23,9 @@ public class Pcategory extends Auditable {
     private Long pcategoryId;
 
     @Column(nullable = false)
-    private String name;
+    private String pcategoryName;
 
     @OneToMany(mappedBy = "pcategory")
     private List<Product> productList = new ArrayList<>();
 
-    public void addProduct(Product product) {
-        this.productList.add(product);
-        if (product.getPcategory() != this) {
-            product.addPcategory(this);
-        }
-    }
 }

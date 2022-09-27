@@ -160,18 +160,18 @@ public class Member extends Auditable {
     @ManyToMany(mappedBy = "members", cascade = CascadeType.ALL)
     private Set<Conversation> conversations = new HashSet<>();
 
-    public void addProduct(Product product) {
-        this.productList.add(product);
-        if (product.getMember() != this) {
-            product.addMember(this);
-        }
-    }
-
-    public void addFavorite(Favorite favorite) {
-        this.favoriteList.add(favorite);
-        if (favorite.getMember() != this) {
-            favorite.addMember(this);
-        }
-    }
+//    public void addProduct(Product product) {
+//        this.productList.add(product);
+//        if (product.getMember() != this) {
+//            product.addMember(this);
+//        }
+//    }
+//
+//    public void addFavorite(Favorite favorite) {
+//        this.favoriteList.add(favorite);
+//        if (favorite.getMember() != this) {
+//            favorite.addMember(this);
+//        }
+//    }
 
 }

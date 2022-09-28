@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState , useEffect , useRef } from "react";
+import { useState ,useRef } from "react";
 import PostDropdown from "../../../components/dropdowns/PostDropdown";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -8,7 +8,6 @@ import PostEditor from "../../../components/editor/PostEditor";
 
 const SharePost = () =>{
 
- 
   const navigate = useNavigate();
   const [sharePost , setSharePost] = useState({
     memberId : 1,
@@ -21,39 +20,33 @@ const SharePost = () =>{
   const titleChange = (el) =>{
     setSharePost({...sharePost , title : el})
   }
-  const contentChange = (el) =>{
-    setSharePost({...sharePost , description : el})
-  }
+  
   const editorRef = useRef(null)
-  const viewRef = useRef(null)
-  const handleonChange = () =>{
-    const value = editorRef.current.getInstance().getMarkdown();
-    viewRef.current.getInstance().setMarkdown(value)
-
-  }
-
+  
   const categoryChange = (el) =>{
     setSharePost({...sharePost , pcategory : el})
+  }
+  const contentChange = () =>{
+    const content = editorRef.current.getInstance().getMarkdown();
+    setSharePost({...sharePost , description :content })
   }
 
   const cancleClick = () =>{
     navigate(`/share/list`)
   }
-  // const addImages = (e) => {
-  //   const imageLists = e.target.files;
-  //   // const img
-  // }
-  
-  const postClick = () =>{
+
+  const postClick = async () =>{
+    if(sharePost.title === "" || sharePost.description ==="" || sharePost.pcategory === "카테고리"){
+      alert("제목, 내용이 비어있으면 안되고 카테고리를 선택해주세요")
+    }
+    else{
     axios 
       .post(`${process.env.REACT_APP_API_URL}/product`,sharePost)  
       .then(console.log(sharePost))
-      .catch((err) => console.log(err))   
+      .then(alert("완료"))
+      .catch((err) => console.log(err))  
+    } 
   }
-  useEffect(()=>{
-    
-  },[sharePost.pcategory])
-
   return(
     
     <MainContainer>
@@ -72,7 +65,7 @@ const SharePost = () =>{
           </FlexContainer>
           <SubTitle>내용</SubTitle>
           {/* <ContentText placeholder="내용을 입력해주세요" onChange={(e) => contentChange(e.target.value)}></ContentText> */}
-          <PostEditor value= " " editorRef={editorRef} onChange = {handleonChange}/>
+          <PostEditor value= " " editorRef={editorRef} onChange = {contentChange}/>
           <ImgPlusBtn><label for="input-file"><ImgDiv><Camera /></ImgDiv></label></ImgPlusBtn>
           <BtnDiv>
           <CancelBtn onClick={cancleClick}>취소</CancelBtn>
@@ -130,10 +123,39 @@ margin: 1rem;
 `
 const TextDiv = styled.div`
 margin: 5.3125rem;
-
-.toastui-editor-toolbar {
-  height: 100px;
-  box-sizing: border-box;
+.toastui-editor-defaultUI{
+  border:solid 0.1875rem;
+  border-color:${(props) => props.theme.gray5};
+}
+.toastui-editor-defaultUI-toolbar{
+  background-color:  ${(props) => props.theme.bgColor};
+  border-color:${(props) => props.theme.gray5} ;
+}
+.toastui-editor-defaultUI-toolbar button{
+  border: 1px solid;
+  border-color:${(props) => props.theme.gray5} ;
+}
+.toastui-editor-contents{
+  font-size: 1.2rem;
+  color:${(props) => props.theme.textColor};
+  background-color:  ${(props) => props.theme.bgColor};
+}
+.toastui-editor-mode-switch{
+  background-color:  ${(props) => props.theme.bgColor};
+  border-top: 1px solid;
+  border-color:${(props) => props.theme.gray5} ;
+}
+.toastui-editor-mode-switch .tab-item {
+  background:  ${(props) => props.theme.bgColor};
+  color:${(props) => props.theme.textColor};
+  border: 1px solid;
+  border-color:${(props) => props.theme.gray5} ;
+}
+.toastui-editor-contents p{
+  color:${(props) => props.theme.textColor};
+}
+.ProseMirror .placeholder{
+  font-size: 1.2rem;
 }
 `
 const InputText = styled.input`
@@ -147,20 +169,20 @@ border-radius: 10px;
 border:solid 0.1875rem;
 border-color:${(props) => props.theme.gray5} ;
 
-`
-const ContentText = styled.textarea`
-height: 55.625rem;
-width: 100%;
-padding: 1rem;
-font-size: 1.2rem;
-background-color:  ${(props) => props.theme.bgColor};
-border-radius: 10px;
-border:solid 0.1875rem;
-border-color:${(props) => props.theme.gray5};
-vertical-align: top;
-resize: none;
+// `
+// const ContentText = styled.textarea`
+// height: 55.625rem;
+// width: 100%;
+// padding: 1rem;
+// font-size: 1.2rem;
+// background-color:  ${(props) => props.theme.bgColor};
+// border-radius: 10px;
+// border:solid 0.1875rem;
+// border-color:${(props) => props.theme.gray5};
+// vertical-align: top;
+// resize: none;
 
-`
+// `
 const BtnDiv = styled.div`
   display: flex;
   justify-content: center;

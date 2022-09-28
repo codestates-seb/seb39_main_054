@@ -16,16 +16,16 @@ const PostEditor =({value , editorRef, onChange}) => {
         initialValue={value}
         ref = {editorRef}
         onChange = {onChange}
-        theme='dark'
         toolbarItems={[
         
           ['bold', 'italic', 'strike'],
           ['hr', 'quote'],
-          ['ul', 'ol', 'task', 'indent', 'outdent'],
+          ['ul', 'ol', 'task'],
           ['table']
         ]}
       ></Editor>
   )
 }
+
 
 export default PostEditor

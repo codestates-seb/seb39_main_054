@@ -2,17 +2,18 @@ import React from "react";
 import styled from "styled-components";
 
 const MyPageHeader = () => {
+  // 프로필 이미지 업로드 코드
+  // 닉네임 요청
+
   return (
-    <>
-      <MHContainer>
-        <AvartarContainer>
-          <AvartarWrapper>
-            <img></img>
-          </AvartarWrapper>
-          <p>키키님 반갑습니다.</p>
-        </AvartarContainer>
-      </MHContainer>
-    </>
+    <MHContainer>
+      <AvartarContainer>
+        <AvartarWrapper>
+          <img></img>
+        </AvartarWrapper>
+        <p>키키님 반갑습니다.</p>
+      </AvartarContainer>
+    </MHContainer>
   );
 };
 

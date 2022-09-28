@@ -74,72 +74,70 @@ const MyPageEdit = () => {
   };
 
   return (
-    <>
-      <MEContainer>
-        <MyPageHeader />
-        <MyPageNav />
-        <EditContainer>
-          <EditContent>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div style={{ marginBottom: "1.6875rem" }}>
-                <label>닉네임</label>
-                <input
-                  type="text"
-                  placeholder="새로운 님네임을 입력해주세요"
-                  {...register("nickname")}
-                />
-                {errors.nickname && (
-                  <Validations value={errors.nickname.message} />
-                )}
-              </div>
-              <div style={{ marginBottom: "2.9375rem" }}>
-                <label>
-                  <div className="text-wrapper">
-                    <div className="text">비밀번호</div>
-                    <div className="text-small">
-                      (영문, 숫자, 특수문자를 포함한 8~16자리)
-                    </div>
-                  </div>
-                </label>
-                <input
-                  type="password"
-                  placeholder="비밀번호를 입력해주세요"
-                  {...register("password")}
-                />
-                {errors.password && (
-                  <Validations value={errors.password.message} />
-                )}
-              </div>
-              <div style={{ marginBottom: "4.8125rem" }}>
-                <label>비밀번호 확인</label>
-                <input
-                  type="password"
-                  placeholder="새로운 비밀번호를 다시 입력해주세요"
-                  {...register("confirmPassword")}
-                />
-                {errors.confirmPassword && (
-                  <Validations value={errors.confirmPassword.message} />
-                )}
-              </div>
-              <Btns>
-                <Link to="/mypage/favorite">
-                  <button className="btn-cancel">취소</button>
-                </Link>
-                <button className="btn-confirm" type="submit">
-                  수정
-                </button>
-              </Btns>
-              <ModalConfirm
-                isOpen={isOpen}
-                setIsOpen={setIsOpen}
-                handleModal={handleModal}
-                children={"회원정보가 변경되었습니다."}
+    <MEContainer>
+      <MyPageHeader />
+      <MyPageNav />
+      <EditContainer>
+        <EditContent>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div style={{ marginBottom: "1.6875rem" }}>
+              <label>닉네임</label>
+              <input
+                type="text"
+                placeholder="새로운 님네임을 입력해주세요"
+                {...register("nickname")}
               />
-            </form>
-          </EditContent>
-        </EditContainer>
-      </MEContainer>
-    </>
+              {errors.nickname && (
+                <Validations value={errors.nickname.message} />
+              )}
+            </div>
+            <div style={{ marginBottom: "2.9375rem" }}>
+              <label>
+                <div className="text-wrapper">
+                  <div className="text">비밀번호</div>
+                  <div className="text-small">
+                    (영문, 숫자, 특수문자를 포함한 8~16자리)
+                  </div>
+                </div>
+              </label>
+              <input
+                type="password"
+                placeholder="비밀번호를 입력해주세요"
+                {...register("password")}
+              />
+              {errors.password && (
+                <Validations value={errors.password.message} />
+              )}
+            </div>
+            <div style={{ marginBottom: "4.8125rem" }}>
+              <label>비밀번호 확인</label>
+              <input
+                type="password"
+                placeholder="새로운 비밀번호를 다시 입력해주세요"
+                {...register("confirmPassword")}
+              />
+              {errors.confirmPassword && (
+                <Validations value={errors.confirmPassword.message} />
+              )}
+            </div>
+            <Btns>
+              <Link to="/mypage/favorite">
+                <button className="btn-cancel">취소</button>
+              </Link>
+              <button className="btn-confirm" type="submit">
+                수정
+              </button>
+            </Btns>
+            <ModalConfirm
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+              handleModal={handleModal}
+              children={"회원정보가 변경되었습니다."}
+            />
+          </form>
+        </EditContent>
+      </EditContainer>
+    </MEContainer>
   );
 };
 

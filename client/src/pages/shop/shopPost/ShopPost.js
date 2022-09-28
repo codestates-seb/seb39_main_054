@@ -45,7 +45,13 @@ const ShopPost = () => {
 
   // 전화번호 입력
   const telChange = (el) => {
-    setSharePost({ ...shopPost, tel: el });
+    if (el.length <= 13) {
+      let tel = el
+        .replace(/[^0-9]/g, "")
+        .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3")
+        .replace(/(\-{1,2})$/g, "");
+      setSharePost({ ...shopPost, tel: tel });
+    }
   };
 
   // 주소 입력 모달 여닫기
@@ -114,10 +120,12 @@ const ShopPost = () => {
             <ColumnContainer>
               <SubTitle>전화번호</SubTitle>
               <InputText
-                type="tel"
+                type="text"
                 placeholder="전화번호를 입력해주세요"
+                value={shopPost.tel}
                 onChange={(e) => telChange(e.target.value)}
                 width="20rem"
+                maxlength="13"
               ></InputText>
             </ColumnContainer>
           </PageContainer>

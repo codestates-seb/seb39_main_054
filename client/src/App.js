@@ -18,6 +18,7 @@ import MyPageSignOut from "./pages/myPage/myPageSignOut/MyPageSignOut";
 import Footer from "./components/footer";
 import ChatList from "./pages/chat/chatList/ChatList";
 import ChatDetail from "./pages/chat/chatDetail/ChatDetail";
+import ShopPost from "./pages/shop/shopPost/ShopPost";
 
 const App = () => {
   // 테마 변경 (lightTheme, darkTheme)
@@ -71,7 +72,7 @@ const App = () => {
                 path="/shop/detail/:id"
                 element={<ShopDetail></ShopDetail>}
               ></Route>
-              <Route path="/shop/post"></Route>
+              <Route path="/shop/post" element={<ShopPost></ShopPost>}></Route>
               <Route path="/shop/edit"></Route>
               {/* id: 로그인 유저 */}
               <Route

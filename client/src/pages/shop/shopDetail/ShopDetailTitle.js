@@ -14,7 +14,7 @@ const ShopDetailTitle = ({ data }) => {
         </AddressName>
       </TitleMiddle>
       <TitleTel>
-        전화번호 <Tel>{data.tell}</Tel>
+        전화번호 <Tel>{data.tel}</Tel>
       </TitleTel>
     </TitleContainer>
   );

@@ -52,7 +52,7 @@ const Login = () => {
         let jwtToken = res.headers.authorization;
         const memberid = res.headers.memberid;
         localStorage.setItem("authorization", jwtToken);
-        localStorage.setItem("memberid", memberid);
+        localStorage.setItem("memberid", memberid); // (key, value)
         dispatch(loginSuccess(memberid));
         console.log("ok");
         // navigate(`/`);

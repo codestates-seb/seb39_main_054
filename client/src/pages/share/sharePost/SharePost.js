@@ -1,8 +1,10 @@
 import styled from "styled-components";
-import { useState , useEffect } from "react";
+import { useState , useEffect , useRef } from "react";
 import PostDropdown from "../../../components/dropdowns/PostDropdown";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { ReactComponent as Camera } from "../../../assets/img/icon/camera-solid.svg"
+import PostEditor from "../../../components/editor/PostEditor";
 
 const SharePost = () =>{
 
@@ -22,18 +24,25 @@ const SharePost = () =>{
   const contentChange = (el) =>{
     setSharePost({...sharePost , description : el})
   }
+  const editorRef = useRef(null)
+  const viewRef = useRef(null)
+  const handleonChange = () =>{
+    const value = editorRef.current.getInstance().getMarkdown();
+    viewRef.current.getInstance().setMarkdown(value)
+
+  }
+
   const categoryChange = (el) =>{
     setSharePost({...sharePost , pcategory : el})
-    console.log(sharePost)
   }
 
   const cancleClick = () =>{
     navigate(`/share/list`)
   }
-  const addImages = (e) => {
-    const imageLists = e.target.files;
-    // const img
-  }
+  // const addImages = (e) => {
+  //   const imageLists = e.target.files;
+  //   // const img
+  // }
   
   const postClick = () =>{
     axios 
@@ -46,6 +55,7 @@ const SharePost = () =>{
   },[sharePost.pcategory])
 
   return(
+    
     <MainContainer>
       <Title>공유 물품 작성</Title>
       <WriteContainer>
@@ -57,10 +67,13 @@ const SharePost = () =>{
           </PageContainer>
           <FlexContainer>
           {/* <SubTitle>이미지 첨부</SubTitle> */}
-          <ImgPost type= "file" accept="image/*"  multiple></ImgPost>
+          
+          <ImgPost id="input-file" type= "file" accept="image/*"  multiple></ImgPost>
           </FlexContainer>
           <SubTitle>내용</SubTitle>
-          <ContentText placeholder="내용을 입력해주세요" onChange={(e) => contentChange(e.target.value)}></ContentText>
+          {/* <ContentText placeholder="내용을 입력해주세요" onChange={(e) => contentChange(e.target.value)}></ContentText> */}
+          <PostEditor value= " " editorRef={editorRef} onChange = {handleonChange}/>
+          <ImgPlusBtn><label for="input-file"><ImgDiv><Camera /></ImgDiv></label></ImgPlusBtn>
           <BtnDiv>
           <CancelBtn onClick={cancleClick}>취소</CancelBtn>
           <PostBtn onClick={postClick}>등록</PostBtn>
@@ -117,10 +130,16 @@ margin: 1rem;
 `
 const TextDiv = styled.div`
 margin: 5.3125rem;
+
+.toastui-editor-toolbar {
+  height: 100px;
+  box-sizing: border-box;
+}
 `
 const InputText = styled.input`
 width: 32.5rem;
 height: 3.44rem;
+color:${(props) => props.theme.textColor};
 padding: 1rem;
 font-size: 1.2rem;
 background-color:  ${(props) => props.theme.bgColor};
@@ -171,7 +190,30 @@ const PostBtn = styled.button`
 const ImgPost = styled.input`
 font-size: 1.375rem;
 margin: 2rem 0rem 0.5rem 0.5rem;
+display: none;
+`
+const ImgPlusBtn = styled.button`
+width: 5rem;
+height: 5rem;
+background-color: ${(props) => props.theme.gray6};
+border-radius: 15px;
+border:solid 0.1875rem;
+border-color:${(props) => props.theme.gray5} ;
+margin-top: 1rem;
+display: flex;
+justify-content: center;
+align-items: center;
+`
+const ImgDiv = styled.div`
+display: flex;
+flex-direction: column;
+color:${(props) => props.theme.textColor};
 
 
+svg{
+  width: 2rem;
+  height: 2rem;
+  fill : ${(props) => props.theme.textColor};
+}
 `
 

@@ -7,16 +7,14 @@ import MyPageContent from "../MyPageContent";
 
 const MyPageFavorite = () => {
   return (
-    <>
-      <MFContainer>
-        <MyPageHeader />
-        <MyPageNav />
-        <ShareStateContainer>
-          <ShareState />
-        </ShareStateContainer>
-        <MyPageContent />
-      </MFContainer>
-    </>
+    <MFContainer>
+      <MyPageHeader />
+      <MyPageNav />
+      <ShareStateContainer>
+        <ShareState />
+      </ShareStateContainer>
+      <MyPageContent />
+    </MFContainer>
   );
 };
 

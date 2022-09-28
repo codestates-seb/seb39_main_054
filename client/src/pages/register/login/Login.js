@@ -69,80 +69,76 @@ const Login = () => {
   };
 
   return (
-    <>
-      <LoginContainer>
-        <h1>ANBD</h1>
-        <LoginContent>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div style={{ marginBottom: "4.2rem" }}>
-              <label>아이디</label>
-              <input
-                type="text"
-                placeholder="아이디를 입력해주세요"
-                {...register("id")}
-              />
-              {errors.id && <Validations value={errors.id.message} />}
-            </div>
-            <div style={{ marginBottom: "3.5rem" }}>
-              <label>비밀번호</label>
-              <input
-                type="password"
-                placeholder="비밀번호를 입력해주세요"
-                {...register("password")}
-              />
-              {errors.password && (
-                <Validations value={errors.password.message} />
-              )}
-            </div>
-            <button type="submit">로그인</button>
-            <ModalConfirm
-              isOpen={isOpen}
-              setIsOpen={setIsOpen}
-              handleModal={handleModal}
-              children={"사용자가 없습니다"}
+    <LoginContainer>
+      <h1>ANBD</h1>
+      <LoginContent>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div style={{ marginBottom: "4.2rem" }}>
+            <label>아이디</label>
+            <input
+              type="text"
+              placeholder="아이디를 입력해주세요"
+              {...register("id")}
             />
-          </form>
-          <p className="divider">
-            <span>소셜 로그인</span>
-          </p>
-          <div className="social">
-            <button
-              className="social-button"
-              style={{ backgroundColor: "#ffe600" }}
-            >
-              <img
-                className="logo-image"
-                style={{ width: "2.1rem" }}
-                src={logo_kakao}
-                alt="logo_kakao"
-              ></img>
-            </button>
-            <button
-              className="social-button"
-              style={{ backgroundColor: "#ffffff" }}
-            >
-              <img
-                className="logo-image"
-                style={{ width: "2rem" }}
-                src={logo_google}
-                alt="logo_google"
-              ></img>
-            </button>
-            <button
-              className="social-button"
-              style={{ backgroundColor: "#09c858" }}
-            >
-              <img
-                className="logo-image"
-                style={{ width: "2.5rem" }}
-                src={logo_naver}
-                alt="logo_naver"
-              ></img>
-            </button>
+            {errors.id && <Validations value={errors.id.message} />}
           </div>
-        </LoginContent>
-      </LoginContainer>
-    </>
+          <div style={{ marginBottom: "3.5rem" }}>
+            <label>비밀번호</label>
+            <input
+              type="password"
+              placeholder="비밀번호를 입력해주세요"
+              {...register("password")}
+            />
+            {errors.password && <Validations value={errors.password.message} />}
+          </div>
+          <button type="submit">로그인</button>
+          <ModalConfirm
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            handleModal={handleModal}
+            children={"사용자가 없습니다"}
+          />
+        </form>
+        <p className="divider">
+          <span>소셜 로그인</span>
+        </p>
+        <div className="social">
+          <button
+            className="social-button"
+            style={{ backgroundColor: "#ffe600" }}
+          >
+            <img
+              className="logo-image"
+              style={{ width: "2.1rem" }}
+              src={logo_kakao}
+              alt="logo_kakao"
+            ></img>
+          </button>
+          <button
+            className="social-button"
+            style={{ backgroundColor: "#ffffff" }}
+          >
+            <img
+              className="logo-image"
+              style={{ width: "2rem" }}
+              src={logo_google}
+              alt="logo_google"
+            ></img>
+          </button>
+          <button
+            className="social-button"
+            style={{ backgroundColor: "#09c858" }}
+          >
+            <img
+              className="logo-image"
+              style={{ width: "2.5rem" }}
+              src={logo_naver}
+              alt="logo_naver"
+            ></img>
+          </button>
+        </div>
+      </LoginContent>
+    </LoginContainer>
   );
 };
 
@@ -158,7 +154,6 @@ const LoginContainer = styled.div`
 
   h1 {
     text-align: center;
-    /* margin: 8.125rem 0 3.4375rem 0; */
     margin: 3.8rem 0 1.3125rem 0;
     font-size: 2.9375rem;
     font-family: "NotoSansKR-Bold";
@@ -174,7 +169,6 @@ const LoginContent = styled.div`
   width: 31.25rem;
   height: 40.625rem;
   margin: 0 auto 8.875rem auto;
-  /* box-shadow: 0 0 10px gray; */
 
   label {
     font-size: 1.5rem;

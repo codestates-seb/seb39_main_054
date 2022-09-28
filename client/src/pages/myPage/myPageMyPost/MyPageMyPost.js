@@ -7,16 +7,14 @@ import MyPageContent from "../MyPageContent";
 
 const MyPageMyPost = () => {
   return (
-    <>
-      <MPContainer>
-        <MyPageHeader />
-        <MyPageNav />
-        <ShareStateContainer>
-          <ShareState />
-        </ShareStateContainer>
-        <MyPageContent />
-      </MPContainer>
-    </>
+    <MPContainer>
+      <MyPageHeader />
+      <MyPageNav />
+      <ShareStateContainer>
+        <ShareState />
+      </ShareStateContainer>
+      <MyPageContent />
+    </MPContainer>
   );
 };
 

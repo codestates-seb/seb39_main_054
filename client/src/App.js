@@ -16,6 +16,8 @@ import MyPageMyPost from "./pages/myPage/myPageMyPost/MyPageMyPost";
 import MyPageEdit from "./pages/myPage/myPageEdit/MyPageEdit";
 import MyPageSignOut from "./pages/myPage/myPageSignOut/MyPageSignOut";
 import Footer from "./components/footer";
+import ChatList from "./pages/chat/chatList/ChatList";
+import ChatDetail from "./pages/chat/chatDetail/ChatDetail";
 
 const App = () => {
   // 테마 변경 (lightTheme, darkTheme)
@@ -72,9 +74,16 @@ const App = () => {
               <Route path="/shop/post"></Route>
               <Route path="/shop/edit"></Route>
               {/* id: 로그인 유저 */}
-              <Route path="/chat/list/:id"></Route>
+              <Route
+                // path="/chat/list/:id"
+                path="/chat/list"
+                element={<ChatList></ChatList>}
+              ></Route>
               {/* id: 상대방 id query &myid = =dsadsa &otherid*/}
-              <Route path="/chat/detail/:id"></Route>
+              <Route
+                path="/chat/detail/:id"
+                element={<ChatDetail></ChatDetail>}
+              ></Route>
             </Routes>
             <Footer />
           </Router>

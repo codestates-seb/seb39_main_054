@@ -92,71 +92,65 @@ const SignUp = () => {
   console.log(errors);
 
   return (
-    <>
-      <SignupContainer>
-        <h1>회원가입</h1>
-        <SignupContent>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div style={{ marginBottom: "1.05rem" }}>
-              <label>아이디</label>
-              <input
-                type="text"
-                placeholder="아이디를 입력해주세요"
-                {...register("id")}
-              />
-              {errors.id && <Validations value={errors.id.message} />}
-            </div>
-            <div style={{ marginBottom: "2.3rem" }}>
-              <label>
-                <div className="text-wrapper">
-                  <div className="text">비밀번호</div>
-                  <div className="text-small">
-                    (영문, 숫자, 특수문자를 포함한 8~16자리)
-                  </div>
-                </div>
-              </label>
-              <input
-                type="password"
-                placeholder="비밀번호를 입력해주세요"
-                {...register("password")}
-              />
-              {errors.password && (
-                <Validations value={errors.password.message} />
-              )}
-            </div>
-            <div style={{ marginBottom: "2.3rem" }}>
-              <label>비밀번호 확인</label>
-              <input
-                type="password"
-                placeholder="비밀번호를 다시 입력해주세요"
-                {...register("confirmPassword")}
-              />
-              {errors.confirmPassword && (
-                <Validations value={errors.confirmPassword.message} />
-              )}
-            </div>
-            <div style={{ marginBottom: "1.4rem" }}>
-              <label>닉네임</label>
-              <input
-                type="text"
-                placeholder="닉네임을 입력해주세요"
-                {...register("nickname")}
-              />
-              {errors.nickname && (
-                <Validations value={errors.nickname.message} />
-              )}
-            </div>
-            <button type="submit">회원가입</button>
-            <ModalConfirm
-              isOpen={isOpen}
-              setIsOpen={setIsOpen}
-              handleModal={handleModal}
-              children={modaltext}
+    <SignupContainer>
+      <h1>회원가입</h1>
+      <SignupContent>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div style={{ marginBottom: "1.05rem" }}>
+            <label>아이디</label>
+            <input
+              type="text"
+              placeholder="아이디를 입력해주세요"
+              {...register("id")}
             />
-          </form>
-        </SignupContent>
-      </SignupContainer>
-    </>
+            {errors.id && <Validations value={errors.id.message} />}
+          </div>
+          <div style={{ marginBottom: "2.3rem" }}>
+            <label>
+              <div className="text-wrapper">
+                <div className="text">비밀번호</div>
+                <div className="text-small">
+                  (영문, 숫자, 특수문자를 포함한 8~16자리)
+                </div>
+              </div>
+            </label>
+            <input
+              type="password"
+              placeholder="비밀번호를 입력해주세요"
+              {...register("password")}
+            />
+            {errors.password && <Validations value={errors.password.message} />}
+          </div>
+          <div style={{ marginBottom: "2.3rem" }}>
+            <label>비밀번호 확인</label>
+            <input
+              type="password"
+              placeholder="비밀번호를 다시 입력해주세요"
+              {...register("confirmPassword")}
+            />
+            {errors.confirmPassword && (
+              <Validations value={errors.confirmPassword.message} />
+            )}
+          </div>
+          <div style={{ marginBottom: "1.4rem" }}>
+            <label>닉네임</label>
+            <input
+              type="text"
+              placeholder="닉네임을 입력해주세요"
+              {...register("nickname")}
+            />
+            {errors.nickname && <Validations value={errors.nickname.message} />}
+          </div>
+          <button type="submit">회원가입</button>
+          <ModalConfirm
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            handleModal={handleModal}
+            children={modaltext}
+          />
+        </form>
+      </SignupContent>
+    </SignupContainer>
   );
 };
 

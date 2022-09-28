@@ -37,7 +37,6 @@ const ShopDetailImg = ({ url }) => {
           ))}
         </Picture>
       </PictureContainer>
-
       <Btndiv>
         <LeftBtn onClick={onClickLeftBtn}></LeftBtn>
         <RightBtn onClick={onClickRightBtn}></RightBtn>
@@ -49,40 +48,43 @@ const ShopDetailImg = ({ url }) => {
 export default ShopDetailImg;
 
 const PictureContainer = styled.div`
-position: relative;
-width: 56.25rem;
-height: 550px;
-overflow: hidden;
-border-radius: 14px;
-`
-const Btndiv = styled.div`
-display: flex;
-position: relative;
-width: 65rem;
-margin: -18rem 0rem 0rem -4.5rem;
-justify-content: space-between;
+  position: relative;
+  width: 56.25rem;
+  height: 34.3rem;
+  overflow: hidden;
+  border-radius: 15px;
+`;
 
-`
 const Picture = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
-`
-const LeftBtn = styled(Left)`
+  position: absolute;
+`;
 
-width: 2rem;
-height:2rem;
-fill:  ${(props) => props.theme.textColor};
-position: relative;
-`
-const RightBtn = styled(Right)`
-width: 2rem;
-height: 2rem;
-fill:  ${(props) => props.theme.textColor};
-position: relative;
-
-`
 const Img = styled.img`
   object-fit: cover;
   width: 56.25rem;
+  height: 100%;
+  border-radius: 15px;
+`;
+
+const Btndiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const LeftBtn = styled(Left)`
+  width: 2rem;
+  height: 2rem;
+  fill: ${(props) => props.theme.textColor};
+  margin: 1rem 1rem 0rem;
+`;
+
+const RightBtn = styled(Right)`
+  width: 2rem;
+  height: 2rem;
+  fill: ${(props) => props.theme.textColor};
+  margin: 1rem 1rem 0rem;
 `;

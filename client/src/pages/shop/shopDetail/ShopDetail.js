@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import DetailEditDropdown from "../../../components/dropdowns/DetailEditDropdown";
 import ShopDetailImg from "./ShopDetailImg";
@@ -9,7 +9,6 @@ import ShopMap from "./ShopMap";
 
 const ShopDetail = () => {
   const [data, setData] = useState("");
-  const [user, setUser] = useState("");
   const { id } = useParams();
   const url = data.image;
 
@@ -25,12 +24,6 @@ const ShopDetail = () => {
     await axios
       .get(`${process.env.REACT_APP_API_URL}/shop/${id}`)
       .then((res) => setData(res.data));
-  };
-
-  const getMember = async () => {
-    await axios
-      .get(`${process.env.REACT_APP_API_URL}/member/${id}`)
-      .then((res) => setUser(res.data));
   };
 
   const editDrop = () => {
@@ -53,7 +46,6 @@ const ShopDetail = () => {
 
   useEffect(() => {
     getData();
-    getMember();
   }, []);
 
   return (
@@ -63,7 +55,9 @@ const ShopDetail = () => {
           <Container>
             <Editdiv>
               <EditButton onClick={editDrop}>
-                <DetailEditDropdown openDropDown={openDropDown}></DetailEditDropdown>
+                <DetailEditDropdown
+                  openDropDown={openDropDown}
+                ></DetailEditDropdown>
               </EditButton>
             </Editdiv>
             <Imagediv>
@@ -116,8 +110,10 @@ const Title = styled.div`
 `;
 
 const Imagediv = styled.div`
-  height: 34.375rem;
-  width: 50.626rem;
+  display: flex;
+  flex-direction: column;
+  /* height: 34.375rem; */
+  /* width: 56.25rem; */
 `;
 
 const EditButton = styled.button`

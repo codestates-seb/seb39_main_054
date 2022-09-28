@@ -15,7 +15,7 @@ const CategoryDropdown = ({ categoryChange }) => {
 
   const clickCategoty = () => {
     if (open.className === "up") {
-      setOpen({ className: "down", height: "330px", display: "flex" });
+      setOpen({ className: "down", height: "300px", display: "flex" });
     } else {
       setOpen({ className: "up", height: "0px", display: "none" });
     }
@@ -28,35 +28,55 @@ const CategoryDropdown = ({ categoryChange }) => {
   }, [choice]);
 
   return (
-    <>
-      <div>
-        <TagBtn onClick={clickCategoty}>
-          {" "}
-          {choice}
-          {open.className === "up" ? <DownBtn /> : <UpBtn />}
-        </TagBtn>
-        <Ul
-          display={open.display}
-          height={open.height}
-          className={open.className}
-        >
-          {category.map((el) => (
-            <li
-              onClick={() => {
-                menuClick();
-                setChoice(el);
-                setOpen({ className: "up", height: "0px", display: "none" });
-              }}
-            >
-              {el}
-            </li>
-          ))}
-        </Ul>
-      </div>
-    </>
+    <Container>
+      <TagBtn onClick={clickCategoty}>
+        {" "}
+        {choice}
+        {open.className === "up" ? <DownBtn /> : <UpBtn />}
+      </TagBtn>
+      <Ul
+        display={open.display}
+        height={open.height}
+        className={open.className}
+      >
+        {category.map((el) => (
+          <li
+            onClick={() => {
+              menuClick();
+              setChoice(el);
+              setOpen({ className: "up", height: "0px", display: "none" });
+            }}
+          >
+            {el}
+          </li>
+        ))}
+      </Ul>
+    </Container>
   );
 };
 export default CategoryDropdown;
+
+const Container = styled.div`
+  display: flex;
+  padding-top: 1rem;
+`;
+
+const TagBtn = styled.button`
+  width: 12rem;
+  height: 3.44rem;
+  background-color: ${(props) => props.theme.bgColor};
+  font-size: 1.2rem;
+  border: solid 0.1875rem;
+  border-color: ${(props) => props.theme.gray5};
+  border-radius: 10px;
+  color: ${(props) => props.theme.textColor};
+
+  @media ${(props) => props.theme.mobile} {
+    width: 8.875rem;
+    height: 2.5rem;
+    font-size: 15px;
+  }
+`;
 
 const Ul = styled.ul`
   position: absolute;
@@ -65,7 +85,7 @@ const Ul = styled.ul`
   font-size: 1.2rem;
   font-family: "NotoSansKR-Medium";
   background-color: ${(props) => props.theme.bgColor};
-  margin-top: 1rem;
+  margin-top: 3rem;
   opacity: 0.8;
   width: 12rem;
   border-radius: 10px;
@@ -79,6 +99,11 @@ const Ul = styled.ul`
   z-index: 100;
   text-align: center;
 
+  @media ${(props) => props.theme.mobile} {
+    width: 8.875rem;
+    font-size: 15px;
+  }
+
   li {
     padding: 17.5px 0;
 
@@ -90,7 +115,7 @@ const Ul = styled.ul`
 
   @keyframes up {
     0% {
-      height: 330px;
+      height: 300px;
     }
     100% {
       height: 0px;
@@ -102,7 +127,7 @@ const Ul = styled.ul`
       height: 0px;
     }
     100% {
-      height: 330px;
+      height: 300px;
     }
   }
 `;
@@ -117,15 +142,4 @@ const UpBtn = styled(Up)`
   height: 1rem;
   fill: ${(props) => props.theme.primary};
   margin: 0rem -2rem 0rem 1em;
-`;
-const TagBtn = styled.button`
-  width: 12rem;
-  height: 3.44rem;
-  background-color: ${(props) => props.theme.bgColor};
-  font-size: 1.2rem;
-  border: solid 0.1875rem;
-  border-color: ${(props) => props.theme.gray5};
-  border-radius: 10px;
-  margin: 0rem;
-  color: ${(props) => props.theme.textColor};
 `;

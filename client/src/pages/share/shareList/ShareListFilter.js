@@ -13,22 +13,27 @@ const ShareListFilter = () => {
   const isMobile = useMediaQuery({ maxWidth: 786 });
 
   const postToggle = () => {
-    navigate("/share/post")
-  }
+    navigate("/share/post");
+  };
 
-  const categoryChange= (el) => {
-    console.log(el)
-  }
+  const categoryChange = (el) => {};
 
   return (
     <Container>
-      <Category></Category>
+      {!isMobile && <Category></Category>}
       <SearchAndPostContainer>
-        <Search>search</Search>
-        {/* <CategoryDropdown categoryChange={categoryChange}></CategoryDropdown> */}
-        <PostBtn onClick={postToggle}>글작성</PostBtn>
+        <div className="search-category">
+          <Search>search</Search>
+          {isMobile && (
+            <CategoryDropdown
+              categoryChange={categoryChange}
+            ></CategoryDropdown>
+          )}
+        </div>
+        {!isMobile && <PostBtn onClick={postToggle}>글작성</PostBtn>}
       </SearchAndPostContainer>
-      <ShareState>공유상태</ShareState>
+      <ShareState></ShareState>
+      {isMobile && <PostBtn onClick={postToggle}>글작성</PostBtn>}
     </Container>
   );
 };
@@ -47,5 +52,11 @@ const SearchAndPostContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`;
 
+  @media ${(props) => props.theme.mobile} {
+    flex-direction: column;
+    .search-category {
+      display: flex;
+    }
+  }
+`;

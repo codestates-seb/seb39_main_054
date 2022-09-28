@@ -55,7 +55,14 @@ const Container = styled.div`
   }
 
   @media ${(props) => props.theme.tabletS} {
+    width: 46.5rem;
     justify-content: center;
+  }
+
+  @media ${(props) => props.theme.mobile} {
+    justify-content: center;
+    width: 23.75rem;
+    margin-top: 1rem;
   }
 `;
 

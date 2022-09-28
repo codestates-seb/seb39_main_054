@@ -22,7 +22,8 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
   margin: 1rem 0;
-  div{
+
+  div {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -35,6 +36,12 @@ const Container = styled.div`
     height: 22px;
     fill: ${(props) => props.theme.textColor};
     cursor: pointer;
+
+    @media ${(props) => props.theme.mobile} {
+      width: 18px;
+      height: 18px;
+      right: 2rem;
+    }
   }
 `;
 
@@ -52,5 +59,12 @@ const Input = styled.input`
 
   ::placeholder {
     color: ${(props) => props.theme.gray3};
+  }
+
+  @media ${(props) => props.theme.mobile} {
+    width: 13.75rem;
+    height: 2.5rem;
+    padding-left: 1rem;
+    padding-right: 2.5rem;
   }
 `;

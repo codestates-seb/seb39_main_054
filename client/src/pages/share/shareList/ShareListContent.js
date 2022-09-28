@@ -33,6 +33,7 @@ const Content = styled.div`
   justify-content: center;
   align-items: center;
   margin: 1.5rem auto;
+  width: 72.25rem;
   
   @media ${(props) => props.theme.tabletL} {
     width: 53.5rem;

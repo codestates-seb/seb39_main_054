@@ -19,6 +19,7 @@ const ShopListContent = () => {
   }, []);
   return (
     <Content>
+      {/* shop 카드, 컨텐트 생성 해야함 */}
       <ShareCardContent data={data} number={16}></ShareCardContent>
     </Content>
   );

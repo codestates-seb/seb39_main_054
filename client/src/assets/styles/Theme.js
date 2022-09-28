@@ -10,6 +10,13 @@ const colors = {
   modalBg: "#4F4F4F",
 };
 
+const size = {
+  desktop: "1141px",
+  tabletL: "1140px",
+  tabletS: "860px",
+  mobile: "786px",
+}
+
 export const lightTheme = {
   // 변하는 부분
   bgColor: "#FFFFFF",
@@ -29,6 +36,11 @@ export const lightTheme = {
 
   // 변하지 않는 부분
   ...colors,
+
+  desktop: `(min-width: ${size.desktop})`,
+  tabletL: `(max-width: ${size.tabletL})`,
+  tabletS: `(max-width: ${size.tabletS})`,
+  mobile: `(max-width: ${size.mobile})`,
 };
 
 export const darkTheme = {
@@ -48,6 +60,11 @@ export const darkTheme = {
   validation: "#FF4F4F",
 
   ...colors,
+
+  desktop: `(min-width: ${size.desktop})`,
+  tabletL: `(max-width: ${size.tabletL})`,
+  tabletS: `(max-width: ${size.tabletS})`,
+  mobile: `(max-width: ${size.mobile})`,
 };
 
 export const theme = {

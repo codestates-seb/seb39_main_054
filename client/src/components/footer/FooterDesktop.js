@@ -2,11 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import logo from "../../assets/img/logo/ANBD-3.png";
 
-const Footer = () => {
+const FooterDesktop = () => {
   return (
     <FooterContainer>
       <FooterContent>
-        <img src={logo} />
+        <img src={logo} alt="ANBD logo"/>
         <FooterMiddle>
           <div className="footer-team-name">TEAM ANBD</div>
           <div>Email: alsalsdyd@gmail.com</div>
@@ -24,7 +24,7 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default FooterDesktop;
 
 const FooterContainer = styled.div`
   display: flex;
@@ -37,6 +37,8 @@ const FooterContainer = styled.div`
 
   .footer-team-name{
     padding: 0.5rem 0;
+    height: 2rem;
+    font-family: "NotoSansKR-Bold";
   }
 `;
 
@@ -71,6 +73,7 @@ const FooterRight = styled.div`
   justify-content: center;
   flex-direction: column;
   padding: 0 1.5rem;
+
   div{
     padding: 2px;
   }

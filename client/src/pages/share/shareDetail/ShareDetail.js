@@ -6,33 +6,14 @@ import ShareDetailContent from "./ShareDetailContent";
 import { Link , useParams } from "react-router-dom";
 import axios from "axios";
 import ShareDetailImg from "./ShareDetailImg";
-import DetailDropdown from "../../../components/dropdowns/DetailDropdown";
-import Detail2Dropdown from "../../../components/dropdowns/Detail2Dropdown";
+import DetailEditDropdown from "../../../components/dropdowns/DetailEditDropdown";
 
 const ShareDetail = () => {
   const Mobile = useMediaQuery({ maxWidth: 786 })
-  const [detail , setDetail] = useState("")
   const [data , setData] = useState("")
+  const [detail , setDetail] = useState("") 
   const { id } = useParams();
   const url = data.image
-
-  const [openDropDown, setOpenDropDown] = useState({
-    class: "up",
-    height: "0px",
-    display: "none",
-    first : "수정하기",
-    second : "삭제하기",
-    third : "공유상태 변경"
-  });
-  const [openDropDown2, setOpenDropDown2] = useState({
-    class: "up",
-    height: "0px",
-    display: "none",
-    first : "대여가능",
-    second : "대여중",
-    third : "반납완료"
-  });
-  
 
 
   const getData = async () => {
@@ -47,29 +28,6 @@ const ShareDetail = () => {
       .then((res) => setDetail(res.data))
 
   };
-  const editDrop = () =>{
-    if (openDropDown.class === "up") {
-      setOpenDropDown({ class: "down", display: "flex" , first : "수정하기",
-      second : "삭제하기",
-      third : "공유상태 변경"});
-    } else {
-      setOpenDropDown({ class: "up", display: "none" , first : "수정하기",
-      second : "삭제하기",
-      third : "공유상태 변경"});
-    }
-  }
-  const editDrop2 = () =>{
-    if (openDropDown2.class === "up") {
-      setOpenDropDown2({ class: "down", display: "flex" , first : "대여가능",
-      second : "대여중",
-      third : "반납완료"});
-    } else {
-      setOpenDropDown2({ class: "up", display: "none" , first : "대여가능",
-      second : "대여중",
-      third : "반납완료"});
-    }
-  }
-  
 
 
   useEffect(() => {
@@ -84,20 +42,13 @@ const ShareDetail = () => {
         <ShareContainer>
         <Container>
           <Title>{data.title}</Title>
-          <Editdiv>
-            <EditButton onClick={editDrop}>...
-            <DetailDropdown openDropDown={openDropDown} editDrod2 ={editDrop2} />
-            <Detail2Dropdown openDropDown2={openDropDown2} />
-            </EditButton>
-          </Editdiv>
-
-          <Div>
+          <DetailEditDropdown/>
           <ShareDetailImg url = {url}></ShareDetailImg>
-          </Div>
-          
-          <ShareDetailTitle Detail={data} Data = {detail}></ShareDetailTitle>
+          <ShareDetailTitle Detail={detail} Data = {data}></ShareDetailTitle>
           <div><hr></hr></div>
-          <ShareDetailContent content = {data}></ShareDetailContent> 
+          <ContentContainer>
+          <ShareDetailContent content = {data}></ShareDetailContent>
+          </ContentContainer>
           <Buttondiv><Link to={`/chat/detail/:id`}><ChatBtn>채팅하기</ChatBtn></Link></Buttondiv>
         
         </Container>
@@ -114,37 +65,31 @@ const ShareContainer = styled.div`
   width: 100%;
   height: 100%;
   justify-content: center;
-  hr{
-    margin: 1rem 0rem;
-  }
-`;
 
+`;
 const Container = styled.div`
 display: flex;
 flex-direction: column;
-margin: 7.5rem 10rem 0rem 10rem;
+margin-top: 7.5rem;
 width:56.25rem;
+//width: 40rem;
+hr{
+    margin: 1rem 0rem;
+  }
 `
+const ContentContainer = styled.div`
+width: 100%;
+word-break:break-all; 
+margin-bottom: 5rem;
+display: flex;
+flex-direction: column;
+`
+
+
 const Title = styled.div`
 font-size: 3rem;
 `
-const Div = styled.div`
-height: 34.375rem;
-width: 50.626rem;
-`
-const EditButton = styled.button`
-border: none;
-background-color: ${(props) => props.theme.bgColor};
-color: ${(props) => props.theme.textColor};
-font-size: 1.875rem;
-`
-const Editdiv = styled.div`
-color: ${(props) => props.theme.textColor};
-font-size: 1.875rem;
-margin: 0rem 0rem 1rem 0rem;
-text-align: right;
 
-`
 const ChatBtn = styled.button`
 width: 8.125rem;
 height: 8.125rem;
@@ -152,7 +97,6 @@ border-radius: 50%;
 background-color:  ${(props) => props.theme.primary};
 font-size: 1.375rem;
 color: white;
-
 `
 const Buttondiv = styled.div`
 text-align: right;

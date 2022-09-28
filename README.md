@@ -2,11 +2,10 @@
 집에 있는 레저용품 공유하자!
   
 ## 팀원 소개
-| Frontend  | Github  |  Backend  |  Github  | 
-| :-------- | :------- |  :------- | :------- |
-| `조민우` | [homile](https://github.com/homile) | `정재진` | [sojournre](https://github.com/sojournre) |
-| `염혜지` | [haji3354](https://github.com/haji3354) | `조진우`| [jinwapp](https://github.com/jinwapp) |
-| `이혜진` | [crdrst777](https://github.com/crdrst777) | | |
+|조민우 (FE 팀장)|염혜지 (FE 팀원)|이혜진 (FE 팀원)|정재진 (BE 팀원)|조진우 (BE 팀원)|
+|:-:|:-:|:-:|:-:|:-:|
+|<img src="https://avatars.githubusercontent.com/u/56163157?v=4" width=150px/>|<img src="https://avatars.githubusercontent.com/u/85109300?v=4" width=150px/>|<img src="https://avatars.githubusercontent.com/u/101506779?v=4" width=150px/>|<img src="https://avatars.githubusercontent.com/u/24771844?v=4" width=150px/>|<img src="https://avatars.githubusercontent.com/u/104186487?v=4" width=150px/>|
+|[homile](https://github.com/homile)|[haji3354](https://github.com/haji3354)|[crdrst777](https://github.com/crdrst777)|[sojournre](https://github.com/sojournre)|[jinwapp](https://github.com/jinwapp)|
 
 ## 사용스택
 ### Frontend

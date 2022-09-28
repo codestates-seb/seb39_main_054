@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { ReactComponent as Left } from "../../../assets/img/icon/caret-left.svg";
 import { ReactComponent as Right } from "../../../assets/img/icon/caret-right.svg";
+import Slide from "../../../components/carousel/Slide";
 
 
 const ShareDetailImg = ({url}) => {
@@ -27,63 +28,59 @@ const ShareDetailImg = ({url}) => {
 
   return(
     <>
-  
   <PictureContainer>
   <Picture ref={slideRef}>
     {value.map((values) =>
     <div>
     <Img src = {values}></Img>
-    </div>)}
+    </div>
+    )} 
     </Picture>
     </PictureContainer>
-    
-    
     <Btndiv>
     <LeftBtn onClick = {onClickLeftBtn}></LeftBtn>
     <RightBtn onClick = {onClickRightBtn}></RightBtn>
     </Btndiv>
-   
-  </>
-
-  
+    </>
   )
 }
 export default ShareDetailImg
+
 const PictureContainer = styled.div`
 position: relative;
-width: 56.25rem;
-height: 550px;
+//width: 100%;
+height: 34.3rem;
 overflow: hidden;
-`
-const Btndiv = styled.div`
-display: flex;
-position: relative;
-width: 65rem;
-margin: -18rem 0rem 0rem -4.5rem;
-justify-content: space-between;
-
+border-radius: 15px;
 `
 const Picture = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
+  position: absolute;
+`
+const Img = styled.img`
+  object-fit: cover;
+  width: 56.25rem;
+  //width: 40rem;
+  height: 100%;
+`
+const Btndiv = styled.div`
+display: flex;
+justify-content: center;
+
 `
 const LeftBtn = styled(Left)`
 
 width: 2rem;
 height:2rem;
 fill:  ${(props) => props.theme.textColor};
-position: relative;
+margin: 1rem 1rem 0rem ;
 `
 const RightBtn = styled(Right)`
 width: 2rem;
 height: 2rem;
 fill:  ${(props) => props.theme.textColor};
-position: relative;
-
+margin: 1rem 1rem 0rem ;
 `
-const Img = styled.img`
-  object-fit: cover;
-  width: 56.25rem;
-`;
 

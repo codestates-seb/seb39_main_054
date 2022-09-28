@@ -1,15 +1,39 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 import styled from "styled-components";
+import CategoryDropdown from "../../../components/dropdowns/CategoryDropdown";
 import Category from "../../../components/filters/category/Category";
 import Search from "../../../components/filters/search/Search";
 import ShareState from "../../../components/filters/shareState/ShareState";
+import { PostBtn } from "../../../components/ui/buttons/buttons";
 
 const ShareListFilter = () => {
+  const navigate = useNavigate();
+  const isMobile = useMediaQuery({ maxWidth: 786 });
+
+  const postToggle = () => {
+    navigate("/share/post");
+  };
+
+  const categoryChange = (el) => {};
+
   return (
     <Container>
-      <Category></Category>
-      <Search>search</Search>
-      <ShareState>공유상태</ShareState>
+      {!isMobile && <Category></Category>}
+      <SearchAndPostContainer>
+        <div className="search-category">
+          <Search>search</Search>
+          {isMobile && (
+            <CategoryDropdown
+              categoryChange={categoryChange}
+            ></CategoryDropdown>
+          )}
+        </div>
+        {!isMobile && <PostBtn onClick={postToggle}>글작성</PostBtn>}
+      </SearchAndPostContainer>
+      <ShareState></ShareState>
+      {isMobile && <PostBtn onClick={postToggle}>글작성</PostBtn>}
     </Container>
   );
 };
@@ -22,4 +46,17 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+`;
+
+const SearchAndPostContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media ${(props) => props.theme.mobile} {
+    flex-direction: column;
+    .search-category {
+      display: flex;
+    }
+  }
 `;

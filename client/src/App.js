@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
 import GlobalStyle from "./assets/styles/GlobalStyle";
 import { darkTheme, lightTheme } from "./assets/styles/Theme";
-import Footer from "./components/footer/Footer";
 import Nav from "./components/nav/Nav";
 import Main from "./pages/main/Main";
 import ShareDetail from "./pages/share/shareDetail/ShareDetail";
@@ -11,7 +10,14 @@ import Login from "./pages/register/login/Login";
 import SignUp from "./pages/register/signUp/SignUp";
 import ShareList from "./pages/share/shareList/ShareList";
 import SharePost from "./pages/share/sharePost/SharePost";
-import MyPageFavorite from "./pages/myPage/MyPageFavorite";
+import ShopDetail from "./pages/shop/shopDetail/ShopDetail";
+import MyPageFavorite from "./pages/myPage/myPageFavorite/MyPageFavorite";
+import MyPageMyPost from "./pages/myPage/myPageMyPost/MyPageMyPost";
+import MyPageEdit from "./pages/myPage/myPageEdit/MyPageEdit";
+import MyPageSignOut from "./pages/myPage/myPageSignOut/MyPageSignOut";
+import Footer from "./components/footer";
+import ChatList from "./pages/chat/chatList/ChatList";
+import ChatDetail from "./pages/chat/chatDetail/ChatDetail";
 
 const App = () => {
   // 테마 변경 (lightTheme, darkTheme)
@@ -48,16 +54,36 @@ const App = () => {
                 path="/mypage/favorite"
                 element={<MyPageFavorite></MyPageFavorite>}
               ></Route>
-              <Route path="/mypage/mypost"></Route>
-              <Route path="/mypage/edit"></Route>
+              <Route
+                path="/mypage/mypost"
+                element={<MyPageMyPost></MyPageMyPost>}
+              ></Route>
+              <Route
+                path="/mypage/edit"
+                element={<MyPageEdit></MyPageEdit>}
+              ></Route>
+              <Route
+                path="/mypage/signout"
+                element={<MyPageSignOut></MyPageSignOut>}
+              ></Route>
               <Route path="/shop/list"></Route>
-              <Route path="/shop/detail/:id"></Route>
+              <Route
+                path="/shop/detail/:id"
+                element={<ShopDetail></ShopDetail>}
+              ></Route>
               <Route path="/shop/post"></Route>
               <Route path="/shop/edit"></Route>
               {/* id: 로그인 유저 */}
-              <Route path="/chat/list/:id"></Route>
+              <Route
+                // path="/chat/list/:id"
+                path="/chat/list"
+                element={<ChatList></ChatList>}
+              ></Route>
               {/* id: 상대방 id query &myid = =dsadsa &otherid*/}
-              <Route path="/chat/detail/:id"></Route>
+              <Route
+                path="/chat/detail/:id"
+                element={<ChatDetail></ChatDetail>}
+              ></Route>
             </Routes>
             <Footer />
           </Router>

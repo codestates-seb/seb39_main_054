@@ -35,17 +35,17 @@ const MyPageContent = () => {
   }, []);
 
   return (
-    <Container>
+    <MCContainer>
       <Content width={width}>
         <ShareCardContent data={data} number={8}></ShareCardContent>
       </Content>
-    </Container>
+    </MCContainer>
   );
 };
 
 export default MyPageContent;
 
-const Container = styled.div`
+const MCContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;

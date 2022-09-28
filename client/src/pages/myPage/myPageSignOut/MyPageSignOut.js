@@ -38,37 +38,31 @@ const MyPageSignOut = () => {
   };
 
   return (
-    <>
-      <MSContainer>
-        <MyPageHeader />
-        <MyPageNav />
-        <SignOutContainer>
-          <p>정말로 회원 탈퇴를 하시겠습니까?</p>
-          <p className="text-small">
-            확인을 누르시면 30일 뒤 회원 정보가 삭제됩니다.
-          </p>
+    <MSContainer>
+      <MyPageHeader />
+      <MyPageNav />
+      <SignOutContainer>
+        <p>정말로 회원 탈퇴를 하시겠습니까?</p>
+        <p className="text-small">
+          확인을 누르시면 30일 뒤 회원 정보가 삭제됩니다.
+        </p>
 
-          <Btns>
-            <Link to="/mypage/favorite">
-              <button className="btn-cancel">취소</button>
-            </Link>
-            <button
-              onClick={handleSignOut}
-              className="btn-confirm"
-              type="submit"
-            >
-              확인
-            </button>
-          </Btns>
-        </SignOutContainer>
-        <ModalConfirm
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          handleModal={handleModal}
-          children={"그동안 이용해주셔서 감사합니다."}
-        />
-      </MSContainer>
-    </>
+        <Btns>
+          <Link to="/mypage/favorite">
+            <button className="btn-cancel">취소</button>
+          </Link>
+          <button onClick={handleSignOut} className="btn-confirm" type="submit">
+            확인
+          </button>
+        </Btns>
+      </SignOutContainer>
+      <ModalConfirm
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        handleModal={handleModal}
+        children={"그동안 이용해주셔서 감사합니다."}
+      />
+    </MSContainer>
   );
 };
 

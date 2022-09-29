@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import PostDropdown from "../../../components/dropdowns/PostDropdown";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -16,7 +16,9 @@ const SharePost = () => {
     pcategory: "",
     image: {},
   });
-  const [imageSrc, setImageSrc] = useState("");
+  const [imageSrc, setImageSrc] = useState([]);
+
+
   const titleChange = (el) => {
     setSharePost({ ...sharePost, title: el });
   };
@@ -30,15 +32,18 @@ const SharePost = () => {
     setSharePost({ ...sharePost, description: content });
   };
 
-  const ImageChange = (el) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(el);
-    return new Promise((resolve) => {
-      reader.onload = () => {
-        setImageSrc(reader.result);
-        resolve();
-      };
-    });
+  const ImageChange = (e) => {
+    const selectImg = e.target.files;
+    const imgList = [...imageSrc];
+    for(let i=0; i<selectImg.length;i++){
+      const imgurl = URL.createObjectURL(selectImg[i]);
+      imgList.push(imgurl);
+    }
+    setImageSrc(imgList)
+    if(imgList.length > 6){
+      alert("이미지의 최대 갯수는 6개입니다!!")
+      setImageSrc([]);
+    }
   };
 
   const cancleClick = () => {
@@ -60,6 +65,9 @@ const SharePost = () => {
         .catch((err) => console.log(err));
     }
   };
+  useEffect(() =>{
+    console.log(imageSrc)
+  },[imageSrc])
   return (
     <MainContainer>
       <Title>공유 물품 작성</Title>
@@ -86,8 +94,8 @@ const SharePost = () => {
             type="file"
             accept="image/*"
             multiple
-            onChange={(e) =>{
-              ImageChange(e.target.files[0]);
+            onChange={(e) => {
+              ImageChange(e);
             }}
           ></ImgPost>
           <ImgContainer>
@@ -98,10 +106,9 @@ const SharePost = () => {
                 </ImgDiv>
               </label>
             </ImgPlusBtn>
-            {imageSrc && <Imgbox>
-            {<img src= {imageSrc}></img>}
-            </Imgbox>
-            }
+            {imageSrc.length !== 0 && 
+            imageSrc.map((value) =>
+            <Imgbox>{<img src={value}></img>}</Imgbox>)}
           </ImgContainer>
           <BtnDiv>
             <CancelBtn onClick={cancleClick}>취소</CancelBtn>
@@ -119,13 +126,6 @@ const MainContainer = styled.div`
   width: 100vw;
   flex-direction: column;
   align-items: center;
-
-  .ck-editor__editable {
-    min-height: 42.5rem;
-  }
-  .ck .ck-editor__main > .ck-editor__editable {
-    background: #fff;
-  }
 `;
 const PageContainer = styled.div`
   display: flex;
@@ -150,40 +150,6 @@ const SubTitle = styled.div`
 `;
 const TextDiv = styled.div`
   margin: 5.3125rem;
-  .toastui-editor-defaultUI {
-    border: solid 0.1875rem;
-    border-color: ${(props) => props.theme.gray5};
-  }
-  .toastui-editor-defaultUI-toolbar {
-    background-color: ${(props) => props.theme.bgColor};
-    border-color: ${(props) => props.theme.gray5};
-  }
-  .toastui-editor-defaultUI-toolbar button {
-    border: 1px solid;
-    border-color: ${(props) => props.theme.gray5};
-  }
-  .toastui-editor-contents {
-    font-size: 1.2rem;
-    color: ${(props) => props.theme.textColor};
-    background-color: ${(props) => props.theme.bgColor};
-  }
-  .toastui-editor-mode-switch {
-    background-color: ${(props) => props.theme.bgColor};
-    border-top: 1px solid;
-    border-color: ${(props) => props.theme.gray5};
-  }
-  .toastui-editor-mode-switch .tab-item {
-    background: ${(props) => props.theme.bgColor};
-    color: ${(props) => props.theme.textColor};
-    border: 1px solid;
-    border-color: ${(props) => props.theme.gray5};
-  }
-  .toastui-editor-contents p {
-    color: ${(props) => props.theme.textColor};
-  }
-  .ProseMirror .placeholder {
-    font-size: 1.2rem;
-  }
 `;
 const InputText = styled.input`
   width: 32.5rem;
@@ -255,21 +221,19 @@ const ImgContainer = styled.div`
   display: flex;
 `;
 const Imgbox = styled.div`
- width: 5rem;
- height: 5rem;
- border-radius: 15px;
- border: solid 0.1875rem;
- border-color: ${(props) => props.theme.gray5};
- margin-top: 1rem;
-justify-content: center;
-align-items: center;
-margin-left: 2rem;
- img{
+  width: 5rem;
+  height: 5rem;
   border-radius: 15px;
-   width: 100%;
-   height: 100%;
-   border: none;
- }
- 
-
-`
+  border: solid 0.1875rem;
+  border-color: ${(props) => props.theme.gray5};
+  margin-top: 1rem;
+  justify-content: center;
+  align-items: center;
+  margin-left: 2rem;
+  img {
+    border-radius: 15px;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+`;

@@ -1,9 +1,13 @@
 package com.codestates.product.dto;
 
 
+import com.codestates.member.dto.MemberResponseDto;
 import com.codestates.member.entity.Member;
+import com.codestates.pcategory.dto.PcategoryResonseDto;
 import com.codestates.pcategory.entity.Pcategory;
+import com.codestates.pimage.dto.PimageResponseDto;
 import com.codestates.pimage.entity.Pimage;
+import com.codestates.product.entity.Product;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -41,12 +45,12 @@ public class ProductResponseDto {
         private Long productId;
         private String title;
         private String description;
-        private String productStatus;
+        private Product.ProductStatus productStatus;
         private Long favoriteCount;
         private LocalDateTime creationDate;
         private LocalDateTime lastEditDate;
-        private Pcategory pcategory;
-        private Member member;
-        private List<Pimage> pimageList;
+        private PcategoryResonseDto pcategory;
+        private MemberResponseDto member;
+        private List<PimageResponseDto> pimageList;
     }
 }

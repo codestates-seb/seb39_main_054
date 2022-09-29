@@ -1,5 +1,6 @@
 package com.codestates.member.dto;
 
+import com.codestates.audit.Auditable;
 import com.codestates.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,10 +24,6 @@ public class MemberResponseDto {
     private String imageName;
 
     private String imageUrl;
-
-    private LocalDateTime creationDate;
-
-    private LocalDateTime lastEditDate;
 
     // response 에 "활동중" 으로 표시됨. 빼면 "MEMBER_ACTIVE 로 표시"
     public String getMemberStatus() {

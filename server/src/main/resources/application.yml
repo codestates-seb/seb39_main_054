@@ -23,11 +23,11 @@ spring:
     properties:
       hibernate:
         format_sql: true  # (3) SQL pretty print
-    defer-datasource-initialization: true
+#    defer-datasource-initialization: true
     open-in-view: false
-  sql:
-    init:
-      mode: always
+#  sql:
+#    init:
+#      mode: always
 
 logging:
   level:

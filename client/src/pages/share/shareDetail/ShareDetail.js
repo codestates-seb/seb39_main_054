@@ -30,7 +30,7 @@ const ShareDetail = () => {
     getData();
     getMember();
   }, []);
-
+  console.log(data)
   return (
     <>
       {!!data && (

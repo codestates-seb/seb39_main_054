@@ -18,7 +18,6 @@ const SharePost = () => {
   });
   const [imageSrc, setImageSrc] = useState([]);
 
-
   const titleChange = (el) => {
     setSharePost({ ...sharePost, title: el });
   };
@@ -32,21 +31,22 @@ const SharePost = () => {
     setSharePost({ ...sharePost, description: content });
   };
 
-  const ImageChange = (e) => {
-    const selectImg = e.target.files;
+  const ImageChange = (el) => {
+    const selectImg = el.target.files;
     const imgList = [...imageSrc];
-    for(let i=0; i<selectImg.length;i++){
+    for (let i = 0; i < selectImg.length; i++) {
       const imgurl = URL.createObjectURL(selectImg[i]);
       imgList.push(imgurl);
     }
-    setImageSrc(imgList)
+    setImageSrc(imgList);
+    setSharePost({ ...sharePost, image: imgList });
   };
   useEffect(() => {
-    if([...imageSrc].length > 6){ 
-      alert("이미지의 최대 갯수는 6개입니다!!")
-      setImageSrc(imageSrc.slice(0,6));
+    if ([...imageSrc].length > 6) {
+      alert("이미지의 최대 갯수는 6개입니다!!");
+      setImageSrc(imageSrc.slice(0, 6));
     }
-  }, [imageSrc])
+  }, [imageSrc]);
 
   const cancleClick = () => {
     navigate(`/share/list`);
@@ -63,13 +63,12 @@ const SharePost = () => {
       axios
         .post(`${process.env.REACT_APP_API_URL}/product`, sharePost)
         .then(console.log(sharePost))
-        .then(alert("완료"))
+        .then(alert("등록되었습니다"))
+        // .then(navigate(`/mypage/favorite`))
         .catch((err) => console.log(err));
     }
   };
-  useEffect(() =>{
-    console.log(imageSrc)
-  },[imageSrc])
+  useEffect(() => {}, [imageSrc]);
   return (
     <MainContainer>
       <Title>공유 물품 작성</Title>
@@ -101,16 +100,16 @@ const SharePost = () => {
             }}
           ></ImgPost>
           <ImgContainer>
-            <ImgPlusBtn>
-              <label htmlFor="input-file">
-                <ImgDiv>
-                  <Camera />
-                </ImgDiv>
-              </label>
-            </ImgPlusBtn>
-            {imageSrc.length !== 0 && 
-            imageSrc.map((value) =>
-            <Imgbox>{<img src={value}></img>}</Imgbox>)}
+            <label htmlFor="input-file">
+              <ImgDiv>
+                <Camera />
+              </ImgDiv>
+            </label>
+
+            {imageSrc.length !== 0 &&
+              imageSrc.map((value) => (
+                <Imgbox>{<img src={value}></img>}</Imgbox>
+              ))}
           </ImgContainer>
           <BtnDiv>
             <CancelBtn onClick={cancleClick}>취소</CancelBtn>
@@ -195,19 +194,17 @@ const ImgPost = styled.input`
   margin: 2rem 0rem 0.5rem 0.5rem;
   display: none;
 `;
-const ImgPlusBtn = styled.button`
+const ImgDiv = styled.div`
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
   width: 5rem;
   height: 5rem;
   background-color: ${(props) => props.theme.gray6};
   border-radius: 15px;
   border: solid 0.1875rem;
   border-color: ${(props) => props.theme.gray5};
-  margin-top: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-const ImgDiv = styled.div`
   display: flex;
   flex-direction: column;
   color: ${(props) => props.theme.textColor};
@@ -232,10 +229,15 @@ const Imgbox = styled.div`
   justify-content: center;
   align-items: center;
   margin-left: 2rem;
+  :hover {
+  }
   img {
     border-radius: 15px;
     width: 100%;
     height: 100%;
     border: none;
+    :hover {
+      background-color: red;
+    }
   }
 `;

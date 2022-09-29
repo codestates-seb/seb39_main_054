@@ -1,10 +1,12 @@
 package com.codestates.product.entity;
 
+import com.amazonaws.services.ec2.model.EventType;
 import com.codestates.audit.Auditable;
 import com.codestates.favorite.entity.Favorite;
 import com.codestates.member.entity.Member;
 import com.codestates.pcategory.entity.Pcategory;
 import com.codestates.pimage.entity.Pimage;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -31,60 +33,53 @@ public class Product extends Auditable {
     private String description;
 
     @Enumerated(value = EnumType.STRING)
-    private ProductStatus productStatus;
+    @Column(length = 20, nullable = false)
+    private ProductStatus productStatus = ProductStatus.대여가능;
 
-    @Transient // DB Column 생성 X
     @ColumnDefault("false")
     private boolean favoriteStatus;
 
     @ColumnDefault("0")
     private Long favoriteCount;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PCATEGORY_ID")
     private Pcategory pcategory;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @OneToMany (mappedBy = "product", cascade = CascadeType.REMOVE)
+    @OneToMany (mappedBy = "product", cascade = {CascadeType.REMOVE,CascadeType.MERGE,CascadeType.PERSIST})
     private List<Pimage> pimageList = new ArrayList<>();
 
 
-    @OneToMany (mappedBy = "product", cascade = CascadeType.REMOVE)
+    @OneToMany (mappedBy = "product", cascade = CascadeType.ALL)
     private List<Favorite> favoriteList = new ArrayList<>();
 
 
     public enum ProductStatus{
-        PRODUCT_AVAILABLE("대여가능"),
-        PRODUCT_USE("대여중"),
-        PRODUCT_COMPLETED("반납완료");
-
-        @Getter
-        private String status;
-
-        ProductStatus(String status){
-            this.status = status;
-        }
+        대여가능,
+        대여중,
+        반납완료;
     }
 
     public void addPimage(Pimage pimage) {
         this.pimageList.add(pimage);
-        pimage.setProduct(this);
+        if (pimage.getProduct() != this) {
+            pimage.setProduct(this);
+        }
     }
-
-
-
-
 //
-//    public void addPcategory(Pcategory pcategory) {
+//    public void setPcategory(Pcategory pcategory) {
+//
 //        this.pcategory = pcategory;
-//        if (!this.pcategory.getProductList().contains(this)) {
-//            this.pcategory.getProductList().add(this);
+//        if (!pcategory.getProductList().contains(this)) {
+//            pcategory.addProduct(this);
 //        }
 //    }
 //
+
 
 //
 //    public void addMember(Member member) {

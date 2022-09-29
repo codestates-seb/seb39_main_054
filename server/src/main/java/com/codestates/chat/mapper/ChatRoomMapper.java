@@ -28,7 +28,24 @@ public interface ChatRoomMapper {
         return chatRoom;
     }
 
-    ChatRoomResponseDto chatRoomToChatRoomResponseDto(ChatRoom chatRoom);
+    default ChatRoomResponseDto chatRoomToChatRoomResponseDto(ChatRoom chatRoom) {
+        if (chatRoom == null) {
+            return null;
+        }
+
+        ChatRoomResponseDto chatRoomResponseDto = new ChatRoomResponseDto();
+
+        chatRoomResponseDto.setId(chatRoom.getId());
+        chatRoomResponseDto.setRoomId(chatRoom.getRoomId());
+        chatRoomResponseDto.setName(chatRoom.getName());
+        chatRoomResponseDto.setProductId(chatRoom.getProduct().getProductId());
+        chatRoomResponseDto.setSellerId(chatRoom.getSeller().getMemberId());
+        chatRoomResponseDto.setBuyerId(chatRoom.getBuyer().getMemberId());
+        chatRoomResponseDto.setCreationDate(chatRoom.getCreationDate());
+        chatRoomResponseDto.setLastEditDate(chatRoom.getLastEditDate());
+
+        return chatRoomResponseDto;
+    }
 
     List<ChatRoomResponseDto> chatRoomsToChatRoomResponseDtos(List<ChatRoom> chatRooms);
 

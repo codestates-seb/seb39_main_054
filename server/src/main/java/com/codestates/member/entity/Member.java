@@ -1,13 +1,11 @@
 package com.codestates.member.entity;
 
 import com.codestates.audit.Auditable;
-import com.codestates.chat.entity.Conversation;
 import com.codestates.exception.BusinessLogicException;
 import com.codestates.exception.ExceptionCode;
 import com.codestates.favorite.entity.Favorite;
 import com.codestates.product.entity.Product;
 import lombok.*;
-import org.springframework.http.HttpStatus;
 
 import javax.persistence.*;
 import java.util.*;
@@ -157,8 +155,8 @@ public class Member extends Auditable {
     @OneToMany (mappedBy = "member")
     private List<Favorite> favoriteList = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "members", cascade = CascadeType.ALL)
-    private Set<Conversation> conversations = new HashSet<>();
+//    @ManyToMany(mappedBy = "members", cascade = CascadeType.ALL)
+//    private Set<Conversation> conversations = new HashSet<>();
 
 //    public void addProduct(Product product) {
 //        this.productList.add(product);

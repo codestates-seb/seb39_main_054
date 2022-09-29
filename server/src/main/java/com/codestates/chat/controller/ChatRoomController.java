@@ -44,11 +44,11 @@ public class ChatRoomController {
     }
 
     //채팅방 조회
-    @GetMapping("/room/{room-id}")
-    public ResponseEntity getRoom(@PathVariable("room-id") @Positive String roomId){
+    @GetMapping("/room/{chatroom-id}")
+    public ResponseEntity getRoom(@PathVariable("chatroom-id") @Positive long chatRoomId){
 
-        log.info("# get Chat Room, roomID : " + roomId);
-        ChatRoom chatRoom = chatRoomService.findChatRoom(roomId);
+        log.info("# get Chat Room, chatRoomID : " + chatRoomId);
+        ChatRoom chatRoom = chatRoomService.findChatRoom(chatRoomId);
 
         return new ResponseEntity<>(chatRoomMapper.chatRoomToChatRoomResponseDto(chatRoom), HttpStatus.OK);
 

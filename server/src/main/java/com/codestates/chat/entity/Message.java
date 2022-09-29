@@ -21,28 +21,11 @@ public class Message extends Auditable {
 
     private String content;
 
-    private String imageName;
-
-    private String imageUrl;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "conversation_id")
-    private Conversation conversation;
+    @JoinColumn(name = "chatRoom_id")
+    private ChatRoom chatRoom;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
-
-    public Message(String content, Conversation conversation, Member member) {
-        this.content = content;
-        this.conversation = conversation;
-        this.member = member;
-    }
-
-    public Message(String content, String imageName, String imageUrl, Conversation conversation, Member member) {
-        this.content = content;
-        this.imageName = imageName;
-        this.imageUrl = imageUrl;
-        this.conversation = conversation;
-        this.member = member;
-    }
 }

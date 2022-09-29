@@ -7,8 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class MessageDto {
-    private String roomId;
-    private String writer;
-    private String message;
+public class MessagePostDto {
+    private long chatRoomId;
+    private long memberId;
+    private String content;
 }

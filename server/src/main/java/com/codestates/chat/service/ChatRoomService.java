@@ -10,8 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -20,29 +20,26 @@ public class ChatRoomService {
     private final MemberService memberService;
 
     public ChatRoom createChatRoom(ChatRoom chatRoom) {
-        Optional<ChatRoom> optionalChatRoom = findExistsRoom(chatRoom);
-        if (optionalChatRoom.isEmpty()) {
-            chatRoom.setRoomId(UUID.randomUUID().toString());
-        }
-        return chatRoomRepository.save(chatRoom);
+        ChatRoom existsRoom = findExistsRoom(chatRoom);
+        return Objects.requireNonNullElseGet(existsRoom, () -> chatRoomRepository.save(chatRoom));
     }
 
     public List<ChatRoom> findMyChatRooms(long memberId) {
         Member member = memberService.findMember(memberId);
         return chatRoomRepository.findAllByBuyerOrSeller(member, member);
     }
-    public ChatRoom findChatRoom(String roomId) {
-        return findVerifiedChatRoom(roomId);
+    public ChatRoom findChatRoom(long chatRoomId) {
+        return findVerifiedChatRoom(chatRoomId);
     }
 
-    private ChatRoom findVerifiedChatRoom(String roomId) {
-        Optional<ChatRoom> optionalChatRoom = chatRoomRepository.findByRoomId(roomId);
+    private ChatRoom findVerifiedChatRoom(long chatRoomId) {
+        Optional<ChatRoom> optionalChatRoom = chatRoomRepository.findById(chatRoomId);
         ChatRoom findChatRoom = optionalChatRoom.orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.CHATROOM_NOT_FOUND));
         return findChatRoom;
     }
 
-    private Optional<ChatRoom> findExistsRoom(ChatRoom chatRoom) {
+    private ChatRoom findExistsRoom(ChatRoom chatRoom) {
         return chatRoomRepository.findByBuyerAndSellerAndProduct(chatRoom.getBuyer(), chatRoom.getSeller(), chatRoom.getProduct());
     }
 

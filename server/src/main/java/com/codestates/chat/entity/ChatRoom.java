@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,7 +23,6 @@ public class ChatRoom extends Auditable {
     @Column(name = "chatRoom_id")
     private Long id;
 
-    @Column(nullable = false)
     private String roomId;
 
     private String name;
@@ -37,4 +38,7 @@ public class ChatRoom extends Auditable {
     @ManyToOne
     @JoinColumn(name = "buyer_id")
     private Member buyer;
+
+    @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Message> messages = new ArrayList<>();
 }

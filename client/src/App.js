@@ -83,7 +83,8 @@ const App = () => {
               ></Route>
               {/* id: 상대방 id query &myid = =dsadsa &otherid*/}
               <Route
-                path="/chat/detail/:id"
+                // path="/chat/detail/:id"
+                path="/chat/detail"
                 element={<ChatDetail></ChatDetail>}
               ></Route>
             </Routes>

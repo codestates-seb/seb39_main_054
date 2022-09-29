@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import PostDropdown from "../../../components/dropdowns/PostDropdown";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -16,7 +16,9 @@ const SharePost = () => {
     pcategory: "",
     image: {},
   });
-  const [imageSrc, setImageSrc] = useState("");
+  const [imageSrc, setImageSrc] = useState([]);
+
+
   const titleChange = (el) => {
     setSharePost({ ...sharePost, title: el });
   };
@@ -30,16 +32,18 @@ const SharePost = () => {
     setSharePost({ ...sharePost, description: content });
   };
 
-  const ImageChange = (el) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(el);
-    return new Promise((resolve) => {
-      reader.onload = () => {
-        setImageSrc(reader.result);
-        resolve();
-        console.log(imageSrc)
-      };
-    });
+  const ImageChange = (e) => {
+    const selectImg = e.target.files;
+    const imgList = [...imageSrc];
+    for(let i=0; i<selectImg.length;i++){
+      const imgurl = URL.createObjectURL(selectImg[i]);
+      imgList.push(imgurl);
+    }
+    setImageSrc(imgList)
+    if(imgList.length > 6){
+      alert("이미지의 최대 갯수는 6개입니다!!")
+      setImageSrc([]);
+    }
   };
 
   const cancleClick = () => {
@@ -61,6 +65,9 @@ const SharePost = () => {
         .catch((err) => console.log(err));
     }
   };
+  useEffect(() =>{
+    console.log(imageSrc)
+  },[imageSrc])
   return (
     <MainContainer>
       <Title>공유 물품 작성</Title>
@@ -88,7 +95,7 @@ const SharePost = () => {
             accept="image/*"
             multiple
             onChange={(e) => {
-              ImageChange(e.target.files[0]);
+              ImageChange(e);
             }}
           ></ImgPost>
           <ImgContainer>
@@ -99,7 +106,9 @@ const SharePost = () => {
                 </ImgDiv>
               </label>
             </ImgPlusBtn>
-            {imageSrc && <Imgbox>{<img src={imageSrc}></img>}</Imgbox>}
+            {imageSrc.length !== 0 && 
+            imageSrc.map((value) =>
+            <Imgbox>{<img src={value}></img>}</Imgbox>)}
           </ImgContainer>
           <BtnDiv>
             <CancelBtn onClick={cancleClick}>취소</CancelBtn>

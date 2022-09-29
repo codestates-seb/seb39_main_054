@@ -41,6 +41,7 @@ const Container = styled.div`
 
   @media ${(props) => props.theme.mobile} {
     padding: 0 20px;
+    margin-bottom: 2.5rem;
   }
 
   .share-status {
@@ -100,7 +101,7 @@ const Title = styled.div`
   text-overflow: ellipsis;
 
   @media ${(props) => props.theme.mobile} {
-    margin-top: 0;
+    margin-top: 0.3rem;
     margin-bottom: 23px;
     width: 9.25rem;
   }

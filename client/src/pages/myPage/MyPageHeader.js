@@ -38,10 +38,21 @@ const AvartarContainer = styled.div`
   border-radius: 1.25rem;
   background-color: ${(props) => props.theme.primary};
 
+  @media ${(props) => props.theme.mobile} {
+    width: 24.25rem;
+    height: 6.6875rem;
+    margin: 1.75rem 0 1.3125rem 0;
+  }
+
   p {
     color: ${(props) => props.theme.white};
     font-size: 1.5rem;
     margin: 1.8rem 0 0 0;
+
+    @media ${(props) => props.theme.mobile} {
+      font-size: 0.875rem;
+      margin: 0.8rem 0 0 0;
+    }
   }
 `;
 const AvartarWrapper = styled.div`
@@ -49,4 +60,8 @@ const AvartarWrapper = styled.div`
   height: 11.25rem;
   background-color: aliceblue;
   border-radius: 50%;
+  @media ${(props) => props.theme.mobile} {
+    width: 3.1875rem;
+    height: 3.1875rem;
+  }
 `;

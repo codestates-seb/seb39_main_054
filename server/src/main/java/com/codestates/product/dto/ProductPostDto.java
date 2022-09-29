@@ -10,7 +10,6 @@ import java.util.List;
 @Setter
 public class ProductPostDto {
 
-        private Long memberId;
         private ProductPostDetailDto productPostDetailDto;
         private List<MultipartFile> multipartFileList;
 

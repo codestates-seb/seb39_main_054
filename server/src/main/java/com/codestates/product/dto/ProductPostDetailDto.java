@@ -9,6 +9,8 @@ import javax.validation.constraints.NotBlank;
 @Setter
 public class ProductPostDetailDto {
 
+        private Long productId;
+        private Long memberId;
         @NotBlank(message = "제목을 입력해주세요")
         private String title;
         @NotBlank(message = "내용을 입력해주세요")

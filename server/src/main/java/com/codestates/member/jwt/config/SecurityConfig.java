@@ -50,6 +50,8 @@ public class SecurityConfig {
                 .access("hasRole('ROLE_USER')")
                 .antMatchers(HttpMethod.DELETE,"/v1/questions/**","/v1/answers/**")
                 .access("hasRole('ROLE_USER')")
+                .antMatchers(HttpMethod.DELETE,"/v1/questions/**","/v1/answers/**")
+                .access("hasRole('ROLE_USER')")
                 .anyRequest().permitAll()
                 .and()
                 .logout()

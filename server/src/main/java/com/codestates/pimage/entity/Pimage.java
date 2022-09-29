@@ -19,19 +19,17 @@ public class Pimage extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pimageId;
 
-    @Column
+    @Column (columnDefinition = "Text")
     private String imageUrl;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PRODUCT_ID")
     private Product product;
 
-
     public void setProduct(Product product) {
-        if (this.product != null) {
-            this.product.getPimageList().remove(this);
-        }
         this.product = product;
-        product.addPimage(this);
+        if (!product.getPimageList().contains(this)) {
+            product.addPimage(this);
+        }
     }
 }

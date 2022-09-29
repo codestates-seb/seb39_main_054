@@ -3,7 +3,6 @@ package com.codestates.product.service;
 import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.codestates.exception.CustomException;
@@ -11,21 +10,28 @@ import com.codestates.member.entity.Member;
 import com.codestates.member.service.MemberService;
 import com.codestates.pimage.entity.Pimage;
 import com.codestates.pimage.repository.PimageRepository;
+import com.codestates.product.dto.ProductResponseDto;
 import com.codestates.product.entity.Product;
+import com.codestates.product.mapper.ProductMapper;
 import com.codestates.product.repository.ProductRepository;
-import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class ProductService{
 
     private final MemberService memberService;
@@ -34,41 +40,71 @@ public class ProductService{
     private String bucket;
     private final AmazonS3 amazonS3;
     private final PimageRepository pimageRepository ;
+    private final ProductMapper mapper;
 
-    public ProductService(MemberService memberService, ProductRepository productRepository, AmazonS3 amazonS3, PimageRepository pimageRepository) {
-        this.memberService = memberService;
-        this.productRepository = productRepository;
-        this.amazonS3 = amazonS3;
-        this.pimageRepository = pimageRepository;
-    }
 
     /**
      * 제품 등록
      */
-    public Product createProduct(Product product, Long memberId) {
+    public Product createProduct(Product product, Long memberId, List<Pimage> pimageList) {
+
+        pimageList.stream().forEach(pimage -> {
+            pimage.setProduct(product);
+        });
         Member member = memberService.findVerifiedMember(memberId);
         product.setMember(member);
         return productRepository.save(product);
     }
 
+    /**
+     * 제품 수정
+     */
+    public Product updateProduct(Product product, Long memberId) {
+
+        Product certifiedProduct = verifyProduct(product.getProductId());
+        verifyMemberProduct(memberId, certifiedProduct);
+
+        Optional.ofNullable(product.getTitle()).ifPresent(certifiedProduct::setTitle);
+        Optional.ofNullable(product.getDescription()).ifPresent(certifiedProduct::setDescription);
+        Optional.ofNullable(product.getProductStatus()).ifPresent(certifiedProduct::setProductStatus);
+        Optional.ofNullable(product.getPcategory()).ifPresent(certifiedProduct::setPcategory);
+        certifiedProduct.setLastEditDate(LocalDateTime.now());
+        return productRepository.save(certifiedProduct);
+    }
+
+    // 제품 등록 여부 확인
+    public Product verifyProduct(Long productId) {
+        System.out.println("productId2 : "+ productId);
+        return productRepository.findById(productId).orElseThrow(() -> new CustomException("Product not Found", HttpStatus.NOT_FOUND));
+    }
+
+    // 제품 등록한 멤버가 맞는지 확인
+    private void verifyMemberProduct(Long memberId, Product certifiedProduct) {
+        Member member = memberService.findVerifiedMember(memberId);
+        if (!certifiedProduct.getMember().getMemberId().equals(memberId)) {
+            throw new CustomException("You are not the member of this product", HttpStatus.FORBIDDEN);
+        }
+    }
 
     /**
      * AWS 이미지 등록
      */
-    public List<String> uploadImage(List<MultipartFile> multipartFileList, Long productId) {
+    public List<Pimage> uploadImage(List<MultipartFile> multipartFileList, List<String> imageUrlList) {
 
-        List<String> fileUrlList = new ArrayList<>();
-        Product product = verifyProduct(productId);
 
-        multipartFileList.forEach(file -> {
+        List<Pimage> pimageList = multipartFileList.stream().map(file -> {
+            Pimage pimage = new Pimage();
             String fileName = createFileName(file.getOriginalFilename());
             ObjectMetadata objectMetadata = new ObjectMetadata();
             objectMetadata.setContentLength(file.getSize());
             objectMetadata.setContentType(file.getContentType());
-            System.out.println(fileName);
+
+            System.out.println("fileName :" + fileName);
             System.out.println(bucket);
-            fileUrlList.add(generateUrl(fileName, HttpMethod.GET));
-            System.out.println(fileUrlList);
+
+            String url = generateUrl(fileName, HttpMethod.GET);
+            pimage.setImageUrl(url);
+            imageUrlList.add(url);
 
             try(InputStream inputStream = file.getInputStream()) {
                 amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
@@ -76,23 +112,66 @@ public class ProductService{
             } catch(IOException e) {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 업로드에 실패했습니다.");
             }
+            return pimage;
+        }).collect(Collectors.toList());
 
-        });
-//
-//        fileUrlList.stream()
-//                .forEach(url -> {
-//                    Pimage image = new Pimage();
-//
-//                    image.setProduct(product);
-//                    image.setImageUrl(url);
-//                    pimageRepository.save(image);
-//                });
+        return pimageList;
+    }
 
-        return fileUrlList;
+    //    List<String> fileUrlList = new ArrayList<>();
+//
+//        multipartFileList.forEach(file -> {
+//            String fileName = createFileName(file.getOriginalFilename());
+//            ObjectMetadata objectMetadata = new ObjectMetadata();
+//            objectMetadata.setContentLength(file.getSize());
+//            objectMetadata.setContentType(file.getContentType());
+//            System.out.println("fileName :" + fileName);
+//            System.out.println(bucket);
+//            String url = generateUrl(fileName, HttpMethod.GET);
+//            fileUrlList.add(url);
+//            settingPimage(url, product);
+//
+//            try(InputStream inputStream = file.getInputStream()) {
+//                amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
+//                        .withCannedAcl(CannedAccessControlList.PublicRead));
+//            } catch(IOException e) {
+//                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 업로드에 실패했습니다.");
+//            }
+//        });
+
+//    private void settingPimage(String url, Product product) {
+//        Pimage pimage = new Pimage();
+//        pimage.setProduct(product);
+//    }
+
+    /**
+     * 이미지 업데이트
+     */
+    public List<String> updateImage(long productId, List<String> updatedImageUrl) {
+
+        Optional<List<Pimage>> optionalPimageList = pimageRepository.findByProductId(productId);
+        List<Pimage> legacyPimageList = optionalPimageList.orElseThrow(() -> new CustomException("Image not found", HttpStatus.NOT_FOUND));
+
+//        legacyPimageList.stream()
+//                .forEach(image -> image.setLastEditDate(LocalDateTime.now()));
+
+        List<Pimage> deleteImageList = legacyPimageList.stream()
+                .filter(image -> !updatedImageUrl.contains(image.getImageUrl()))
+                .collect(Collectors.toList());
+
+        deleteImageList.stream()
+                .forEach(deleteimage -> pimageRepository.deleteById(deleteimage.getPimageId()));
+
+        List<Pimage> modifiedPimageList = pimageRepository.findByProductId(productId).get();
+        List<String> modifiedImageUrlList = modifiedPimageList.stream()
+                .map(image -> image.getImageUrl())
+                .collect(Collectors.toList());
+
+        return modifiedImageUrlList;
     }
 
     /**
-     * URL 생성
+     * AWS URL 생성
      */
     private String generateUrl(String fileName, HttpMethod httpMethod) {
         Calendar calendar = Calendar.getInstance();
@@ -102,12 +181,8 @@ public class ProductService{
     }
 
     /**
-     * 이미지 삭제
+     * AWS 파일 이름 생성
      */
-    public void deleteImage(String fileName) {
-        amazonS3.deleteObject(new DeleteObjectRequest(bucket, fileName));
-    }
-
     public String createFileName(String fileName) {
         return UUID.randomUUID().toString().concat(getFileExtension(fileName));
     }
@@ -120,12 +195,34 @@ public class ProductService{
         }
     }
 
-
-    public Product verifyProduct(Long productId) {
-
-        return productRepository.findById(productId).orElseThrow(() -> new CustomException("Product not Found", HttpStatus.NO_CONTENT));
+    /**
+     * 제품 삭제
+     */
+    public void deleteQuestion(long productId,long memberId) {
+        Product certifiedProduct  = verifyProduct(productId);
+        verifyMemberProduct(memberId,certifiedProduct);
+        productRepository.delete(certifiedProduct);
     }
 
+    @Transactional
+    public ProductResponseDto.DetailResponse findProduct(long productId) {
+
+        Optional<Product> optionalProduct = productRepository.findById(productId);
+        Product product = optionalProduct.orElseThrow(() -> new CustomException("Product not Found", HttpStatus.NOT_FOUND));
+        System.out.println("product.getMember().getMemberId()1 : "+ product.getMember().getMemberId());
+        System.out.println("product.getDescription()1 : " + product.getDescription());
+        System.out.println("product.getPcategory()1 : " + product.getPcategory().getPcategoryName());
+        System.out.println("product.getPimageList()1 : " + product.getPimageList());
+
+        ProductResponseDto.DetailResponse productDetailResponseDto = mapper.ProductToProductDetailResponseDto(product);
+        System.out.println("product.getMember().getMemberId()2 :" + productDetailResponseDto.getMember().getMemberId());
+        System.out.println("product.getMember().getDescription()2 :" +productDetailResponseDto.getDescription());
+        System.out.println("product.getMember().getPcategory()2 :" +productDetailResponseDto.getPcategory().getPcategoryName());
+
+        productDetailResponseDto.getPimageList().stream()
+                .forEach(s -> System.out.println(s.getImageUrl()));
 
 
+        return productDetailResponseDto;
+    }
 }

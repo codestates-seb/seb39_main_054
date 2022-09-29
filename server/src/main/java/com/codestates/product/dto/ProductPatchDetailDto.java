@@ -1,5 +1,6 @@
 package com.codestates.product.dto;
 
+import com.codestates.product.entity.Product;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,5 +17,6 @@ public class ProductPatchDetailDto {
     @NotBlank(message = "내용을 입력해주세요")
     private String description;
     private String pcategoryName;
+    private Product.ProductStatus productStatus;
 
 }

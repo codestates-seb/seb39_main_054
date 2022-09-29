@@ -3,6 +3,7 @@ package com.codestates.pcategory.entity;
 
 import com.codestates.audit.Auditable;
 import com.codestates.member.entity.Member;
+import com.codestates.pimage.entity.Pimage;
 import com.codestates.product.entity.Product;
 import lombok.*;
 import org.springframework.stereotype.Component;
@@ -27,5 +28,12 @@ public class Pcategory extends Auditable {
 
     @OneToMany(mappedBy = "pcategory")
     private List<Product> productList = new ArrayList<>();
+
+    public void addProduct(Product product) {
+        this.productList.add(product);
+        if (product.getPcategory() != this) {
+            product.setPcategory(this);
+        }
+    }
 
 }

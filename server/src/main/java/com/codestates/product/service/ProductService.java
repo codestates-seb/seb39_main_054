@@ -16,6 +16,7 @@ import com.codestates.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -64,6 +65,7 @@ public class ProductService{
     public Product updateProduct(Product product, Long memberId) {
 
         Product certifiedProduct = verifyProduct(product.getProductId());
+        memberService.findVerifiedMember(memberId);
         verifyMemberProduct(memberId, certifiedProduct);
 
         Optional.ofNullable(product.getTitle()).ifPresent(certifiedProduct::setTitle);
@@ -76,13 +78,12 @@ public class ProductService{
 
     // 제품 등록 여부 확인
     public Product verifyProduct(Long productId) {
-        System.out.println("productId2 : "+ productId);
         return productRepository.findById(productId).orElseThrow(() -> new CustomException("Product not Found", HttpStatus.NOT_FOUND));
     }
 
     // 제품 등록한 멤버가 맞는지 확인
     private void verifyMemberProduct(Long memberId, Product certifiedProduct) {
-        Member member = memberService.findVerifiedMember(memberId);
+        memberService.findVerifiedMember(memberId);
         if (!certifiedProduct.getMember().getMemberId().equals(memberId)) {
             throw new CustomException("You are not the member of this product", HttpStatus.FORBIDDEN);
         }
@@ -228,10 +229,12 @@ public class ProductService{
     /**
      * 제품 리스트 조회
      */
-    public void findProductList(int page, int size, String pcategoryName, Product.ProductStatus status, String keyword) {
+    public PageImpl<Product> findProductList(int page, int size, String pcategoryName, Product.ProductStatus status, String keyword) {
         PageRequest pageRequest = PageRequest.of(page, size);
-        List<Product> productList = productRepository.findByCategoryStatusKeyword(pcategoryName, status, keyword);
+        PageImpl<Product> productList = productRepository.findByCategoryStatusKeyword(pcategoryName, status, keyword,pageRequest);
+
         productList.stream().forEach(List -> System.out.println("List.getProductId(: " + List.getProductId()));
+        return productList;
     }
 
 

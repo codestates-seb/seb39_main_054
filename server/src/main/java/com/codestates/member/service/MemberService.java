@@ -1,8 +1,10 @@
 package com.codestates.member.service;
 
+import com.codestates.exception.CustomException;
 import com.codestates.member.entity.Member;
 import com.codestates.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -51,7 +53,7 @@ public class MemberService {
 
     public Member findVerifiedMember(long memberId) {
         Optional<Member> optionalMember = memberRepository.findById(memberId);
-        Member findMember = optionalMember.orElseThrow(() -> new IllegalStateException());
-        return findMember;
+        Member member = optionalMember.orElseThrow(() -> new CustomException("Member not Found", HttpStatus.NOT_FOUND)); // Todo: 9/30일 조진우 수정함.
+        return member;
     }
 }

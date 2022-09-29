@@ -13,6 +13,7 @@ import com.codestates.response.MultiResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
@@ -92,33 +93,23 @@ public class ProductController {
     public ResponseEntity getProduct(@PathVariable("product-id") @Positive long productId) {
 
         Product product = productService.findProduct(productId);
-
-        System.out.println("product.getProductId()0 :" + product.getProductId());
-        System.out.println("product.getProductId()0 :" + product.getPcategory().getPcategoryName());
-
         ProductResponseDto.DetailResponse productDetailResponseDto = mapper.productToProductDetailResponseDto(product);
-
-        System.out.println("product.getMember().getMemberId()3 :" + productDetailResponseDto.getMember().getMemberId());
-        System.out.println("product.getMember().getDescription()3 :" +productDetailResponseDto.getDescription());
-        System.out.println("product.getMember().getPcategoryName()3 :" +productDetailResponseDto.getPcategory().getPcategoryName());
-        System.out.println("product.getMember().getPcategoryId()3 :" +productDetailResponseDto.getPcategory().getPcategoryId());
 
         return new ResponseEntity<>(productDetailResponseDto, HttpStatus.OK);
     }
 
     @GetMapping
-    public void getProductList(@Positive @RequestParam(defaultValue = "1") int page,
+    public ResponseEntity getProductList(@Positive @RequestParam(defaultValue = "1") int page,
                                          @Positive @RequestParam(defaultValue = "50") int size,
                                          @RequestParam @Nullable String pcategoryName,
                                          @RequestParam @Nullable Product.ProductStatus status,
                                          @RequestParam @Nullable String keyword) {
 
-        productService.findProductList(page - 1, size,pcategoryName,status,keyword);
+        PageImpl<Product> pageProductList = productService.findProductList(page - 1, size,pcategoryName,status,keyword);
+        List<Product> productList = pageProductList.getContent();
 
-//        List<Product> productList = pageProductList.getContent();
-//
-//        return new ResponseEntity<>(
-//                new MultiResponseDto<>(mapper.productToProductResponseDtoList(productList), pageProductList),HttpStatus.OK);
+        return new ResponseEntity<>(
+                new MultiResponseDto<>(mapper.productToProductResponseDtoList(productList), pageProductList),HttpStatus.OK);
     }
 
     @GetMapping("/myList/{member-id}")

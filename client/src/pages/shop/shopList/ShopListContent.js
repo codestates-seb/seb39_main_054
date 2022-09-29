@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import ShareCardContent from "../../../components/cards/ShareCardContent";
+import ShopCard from "../../../components/cards/ShopCard";
 
 const ShopListContent = () => {
   // 데이터
@@ -19,8 +20,9 @@ const ShopListContent = () => {
   }, []);
   return (
     <Content>
+      <ShopCard></ShopCard>
       {/* shop 카드, 컨텐트 생성 해야함 */}
-      <ShareCardContent data={data} number={16}></ShareCardContent>
+      {/* <ShareCardContent data={data} number={16}></ShareCardContent> */}
     </Content>
   );
 };

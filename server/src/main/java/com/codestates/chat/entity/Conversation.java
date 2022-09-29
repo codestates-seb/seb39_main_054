@@ -2,11 +2,11 @@ package com.codestates.chat.entity;
 
 import com.codestates.audit.Auditable;
 import com.codestates.member.entity.Member;
+import com.codestates.product.entity.Product;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.websocket.server.ServerEndpoint;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -37,6 +37,10 @@ public class Conversation extends Auditable {
             inverseJoinColumns = @JoinColumn(name = "member_id")
     )
     private Set<Member> members = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     public Conversation() {
     }

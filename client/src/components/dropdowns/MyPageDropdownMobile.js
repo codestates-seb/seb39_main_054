@@ -1,17 +1,43 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
-import { useState, useEffect } from "react";
 import { ReactComponent as Down } from "../../assets/img/icon/caret-down.svg";
 import { ReactComponent as Up } from "../../assets/img/icon/caret-up.svg";
 
-const CategoryDropdown = ({ categoryChange }) => {
-  const category = ["전체", "캠핑", "낚시", "등산", "스포츠", "기타"];
-  const [choice, setChoice] = useState("전체");
+const MyPageDropdownMobile = ({ categoryChange }) => {
+  const [choice, setChoice] = useState("관심 목록");
   const [open, setOpen] = useState({
     className: "up",
     height: "0px",
     display: "none",
   });
+  const navigate = useNavigate();
+  const category = [
+    "관심 목록",
+    "내가 쓴 게시물",
+    "채팅 목록",
+    "회원정보 수정",
+    "회원 탈퇴",
+  ];
+
+  const handleLink = (el) => {
+    if (el === "관심 목록") {
+      navigate(`/mypage/favorite`);
+    }
+    if (el === "내가 쓴 게시물") {
+      navigate(`/mypage/mypost`);
+    }
+    if (el === "채팅 목록") {
+      navigate(`/chat/list:id`);
+    }
+    if (el === "회원정보 수정") {
+      navigate(`/mypage/edit`);
+    }
+    if (el === "회원 탈퇴") {
+      navigate(`mypage/signout`);
+    }
+  };
+  // useparams로 값을 가져와서 그걸 변수에 넣어서
 
   const clickCategoty = () => {
     if (open.className === "up") {
@@ -42,6 +68,7 @@ const CategoryDropdown = ({ categoryChange }) => {
         {category.map((el) => (
           <li
             onClick={() => {
+              handleLink(el);
               menuClick();
               setChoice(el);
               setOpen({ className: "up", height: "0px", display: "none" });
@@ -54,11 +81,11 @@ const CategoryDropdown = ({ categoryChange }) => {
     </Container>
   );
 };
-export default CategoryDropdown;
+export default MyPageDropdownMobile;
 
 const Container = styled.div`
   display: flex;
-  padding-top: 1rem;
+  margin-bottom: 2.5rem;
 `;
 
 const TagBtn = styled.button`
@@ -66,15 +93,15 @@ const TagBtn = styled.button`
   height: 3.44rem;
   background-color: ${(props) => props.theme.bgColor};
   font-size: 1.2rem;
-  font-family: "NotoSansKR-Medium";
   border: solid 0.1875rem;
   border-color: ${(props) => props.theme.gray5};
   border-radius: 10px;
   color: ${(props) => props.theme.textColor};
+  font-family: "NotoSansKR-Medium";
 
   @media ${(props) => props.theme.mobile} {
-    width: 8.875rem;
-    height: 2.5rem;
+    width: 19.8125rem;
+    height: 3.0625rem;
     font-size: 15px;
   }
 `;
@@ -86,9 +113,9 @@ const Ul = styled.ul`
   font-size: 1.2rem;
   font-family: "NotoSansKR-Medium";
   background-color: ${(props) => props.theme.bgColor};
-  margin-top: 3rem;
-  opacity: 0.8;
-  width: 12rem;
+  margin-top: 3.4rem;
+  opacity: 0.9;
+
   border-radius: 10px;
   border: solid 0.1875rem;
   border-color: ${(props) => props.theme.gray5};
@@ -101,7 +128,8 @@ const Ul = styled.ul`
   text-align: center;
 
   @media ${(props) => props.theme.mobile} {
-    width: 8.875rem;
+    width: 19.8125rem;
+    height: 16rem;
     font-size: 15px;
   }
 

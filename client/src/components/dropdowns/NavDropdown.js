@@ -18,7 +18,7 @@ const NavDropdown = ({ openDropDown }) => {
   return (
     <Ul display={openDropDown.display} className={openDropDown.className}>
       <Link to="/mypage/favorite">
-        <li>관심목록</li>
+        <li>관심 목록</li>
       </Link>
       <Link to="/mypage/mypost">
         <li>내가 쓴 게시물</li>

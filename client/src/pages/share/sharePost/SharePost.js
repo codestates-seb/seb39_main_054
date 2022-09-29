@@ -37,6 +37,7 @@ const SharePost = () => {
       reader.onload = () => {
         setImageSrc(reader.result);
         resolve();
+        console.log(imageSrc)
       };
     });
   };

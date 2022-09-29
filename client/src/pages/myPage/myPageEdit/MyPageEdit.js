@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import styled from "styled-components";
 import MyPageHeader from "../MyPageHeader";
 import MyPageNav from "../MyPageNav";
+import MyPageDropdownMobile from "../../../components/dropdowns/MyPageDropdownMobile";
 import ModalConfirm from "../../../components/ui/modals/ModalConfirm";
 import Validations from "../../register/Validations";
 import axios from "axios";
@@ -36,6 +38,9 @@ const MyPageEdit = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
+  const isMobile = useMediaQuery({ maxWidth: 786 });
+
+  const categoryChange = (el) => {};
 
   const {
     register,
@@ -76,7 +81,12 @@ const MyPageEdit = () => {
   return (
     <MEContainer>
       <MyPageHeader />
-      <MyPageNav />
+      {isMobile && (
+        <MyPageDropdownMobile
+          categoryChange={categoryChange}
+        ></MyPageDropdownMobile>
+      )}
+      {!isMobile && <MyPageNav></MyPageNav>}
       <EditContainer>
         <EditContent>
           <form onSubmit={handleSubmit(onSubmit)}>

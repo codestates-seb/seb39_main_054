@@ -45,22 +45,20 @@ export default NavDropdwonMobile;
 
 const Container = styled.ul`
   position: absolute;
-  display: ${props => props.openDropDown.display} ;
+  display: flex ;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  top: 68px;
+  top: 69px;
   left: 0;
   width: 100%;
   color: ${(props) => props.theme.gray2};
   background-color: ${(props) => props.theme.bgColor};
-  height: ${(props) => (props.isLogin === false ? "13.75rem" : "22.75rem")};
+  height: ${(props) => (props.openDropDown.className === "up" ? "0px" : "22.75rem")};
+  transition: height 2s;
   font-size: 15px;
   font-family: "NotoSansKR-Medium";
   overflow: hidden;
-  height: ${(props) => props.height};
-  animation-name: ${(props) => props.openDropDown.className};
-  animation-duration: 2s;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 5px;
   z-index: 100;
 
@@ -72,24 +70,6 @@ const Container = styled.ul`
 
     &:hover {
       color: ${(props) => props.theme.primary};
-    }
-  }
-
-  @keyframes up {
-    0% {
-      height: ${(props) => (props.isLogin === false ? "13.75rem" : "22.75rem")};
-    }
-    100% {
-      height: 0px;
-    }
-  }
-
-  @keyframes down {
-    0% {
-      height: 0px;
-    }
-    100% {
-      height: ${(props) => (props.isLogin === false ? "13.75rem" : "22.75rem")};
     }
   }
 `;

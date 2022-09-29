@@ -48,9 +48,8 @@ const Ul = styled.ul`
   height: 15.725rem;
   border-radius: 14px;
   overflow: hidden;
-  height: ${(props) => props.height};
-  animation-name: ${(props) => props.className};
-  animation-duration: 2s;
+  height: ${(props) => (props.className === "up" ? "0px" : "15.725rem")};
+  transition: height 2s;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 5px;
   z-index: 100;
 
@@ -63,24 +62,6 @@ const Ul = styled.ul`
 
     &:hover {
       color: ${(props) => props.theme.primary};
-    }
-  }
-
-  @keyframes up {
-    0% {
-      height: 15.725rem;
-    }
-    100% {
-      height: 0px;
-    }
-  }
-
-  @keyframes down {
-    0% {
-      height: 0px;
-    }
-    100% {
-      height: 15.725rem;
     }
   }
 `;

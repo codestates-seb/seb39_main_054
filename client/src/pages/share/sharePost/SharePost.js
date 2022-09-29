@@ -40,11 +40,13 @@ const SharePost = () => {
       imgList.push(imgurl);
     }
     setImageSrc(imgList)
-    if(imgList.length > 6){
-      alert("이미지의 최대 갯수는 6개입니다!!")
-      setImageSrc([]);
-    }
   };
+  useEffect(() => {
+    if([...imageSrc].length > 6){ 
+      alert("이미지의 최대 갯수는 6개입니다!!")
+      setImageSrc(imageSrc.slice(0,6));
+    }
+  }, [imageSrc])
 
   const cancleClick = () => {
     navigate(`/share/list`);

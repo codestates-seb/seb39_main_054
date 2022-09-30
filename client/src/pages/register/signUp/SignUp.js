@@ -68,7 +68,7 @@ const SignUp = () => {
 
   const onSubmit = async (data) => {
     await axios
-      .post(`${process.env.REACT_APP_API_URL}/member`, {
+      .post(`${process.env.REACT_APP_API_URL}/v1/members/signup`, {
         memberName: data.id,
         nickname: data.nickname,
         password: data.password,

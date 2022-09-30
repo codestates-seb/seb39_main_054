@@ -22,7 +22,6 @@ public class FavoriteController {
     private final FavoriteService favoriteService;
     private final FavoriteMapper favoriteMapper;
 
-    // TODO 09/23 product 생성 api 나오면 로직 작업 가능할 듯
     @PostMapping("/{product-id}")
     public ResponseEntity postFavorite(@PathVariable("product-id") @Positive long productId,
                                        @AuthenticationPrincipal PrincipalDetails principalDetails) {

@@ -1,6 +1,5 @@
 package com.codestates.member.dto;
 
-import com.codestates.audit.Auditable;
 import com.codestates.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

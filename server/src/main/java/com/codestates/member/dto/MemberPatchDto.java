@@ -1,13 +1,10 @@
 package com.codestates.member.dto;
 
 import com.codestates.member.entity.Member;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
-@Getter
-@Setter
-@AllArgsConstructor
+@Data
 public class MemberPatchDto {
 
     private Long memberId;
@@ -18,4 +15,12 @@ public class MemberPatchDto {
 
     private Member.MemberStatus memberStatus;
 
+    private MultipartFile multipartFile;
+
+    public MemberPatchDto(Long memberId, String nickname, String password, Member.MemberStatus memberStatus) {
+        this.memberId = memberId;
+        this.nickname = nickname;
+        this.password = password;
+        this.memberStatus = memberStatus;
+    }
 }

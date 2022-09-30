@@ -22,7 +22,7 @@ const NavDropdown = ({ openDropDown, dropdwonHandler }) => {
   };
 
   return (
-    <Ul display={openDropDown.display} className={openDropDown.className}>
+    <Ul className={openDropDown.className}>
       {dropwDownContent.map((el, idx) => (
         <Link to={el[1]} key={idx} onClick={dropdwonHandler}>
           <li>{el[0]}</li>
@@ -44,7 +44,7 @@ export default NavDropdown;
 
 const Ul = styled.ul`
   position: absolute;
-  display: ${(props) => props.display};
+  display: flex;
   flex-direction: column;
   font-size: 1.0625rem;
   font-family: "NotoSansKR-Medium";

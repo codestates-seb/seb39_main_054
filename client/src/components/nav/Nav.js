@@ -20,7 +20,6 @@ const Nav = ({ isTheme, setIsTheme }) => {
   // 닉네임 클릭 드롭다운
   const [openDropDown, setOpenDropDown] = useState({
     className: "up",
-    display: "none",
   });
 
   // 테마 변경 함수
@@ -37,9 +36,9 @@ const Nav = ({ isTheme, setIsTheme }) => {
   // 닉네임 버튼 클릭 (드롭다운)
   const dropdwonHandler = () => {
     if (openDropDown.className === "up") {
-      setOpenDropDown({ className: "down", display: "flex" });
+      setOpenDropDown({ className: "down" });
     } else {
-      setOpenDropDown({ className: "up", display: "flex" });
+      setOpenDropDown({ className: "up" });
     }
   };
 

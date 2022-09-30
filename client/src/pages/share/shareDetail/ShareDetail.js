@@ -37,7 +37,7 @@ const ShareDetail = () => {
         <ShareContainer>
           <Container>
             <Title>{data.title}</Title>
-            <DetailEditDropdown />
+            <DetailEditDropdown data = {data}/>
             <ShareDetailImg url={url}></ShareDetailImg>
             <ShareDetailTitle Detail={detail} Data={data}></ShareDetailTitle>
             <div>

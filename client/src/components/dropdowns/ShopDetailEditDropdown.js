@@ -1,41 +1,27 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
-const DetailEditDropdown = (data) => {
+const ShopDetailEditDropdown = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [open, setOpen] = useState({
     class: "up",
     height: "0px",
     display: "none",
   });
+
   const [open2, setOpen2] = useState({
     class: "up",
     height: "0px",
     display: "none",
   });
-  const { id } = useParams();
-  const [value, setValue] = useState();
-  const stateClick = async (e) => {
-    setValue(e);
-    await axios.patch(`${process.env.REACT_APP_API_URL}/product/${id}`, {
-      status: value,
-    });
-  };
-  const changeMessage = () => {
-    alert("변경되었습니다!");
-    window.location.reload();
-    console.log("hi");
-  };
-  useEffect(() => {
-    stateClick();
-  }, [value]);
 
   const editDrop = () => {
     if (open.class === "up") {
-      setOpen({ class: "down", height: "12rem", display: "flex" });
+      setOpen({ class: "down", height: "7.5rem", display: "flex" });
     } else {
       setOpen({ class: "up", height: "0px", display: "none" });
     }
@@ -46,31 +32,33 @@ const DetailEditDropdown = (data) => {
 
   const editDrop2 = () => {
     if (open2.class === "up") {
-      setOpen2({ class: "down", height: "12rem", display: "flex" });
+      setOpen2({ class: "down", height: "7.5rem", display: "flex" });
     } else {
       setOpen2({ class: "up", height: "0px", display: "none" });
     }
   };
-  const stateList = ["대여가능", "대여중", "반납완료"];
+
+  const deleteHandelr = async () => {
+    await axios.delete(`${process.env.REACT_APP_API_URL}/shop/${id}`);
+    navigate(-1);
+  };
+
   return (
     <Editdiv>
       <EditButton>
         <span onClick={editDrop}>...</span>
         <Ul display={open.display} height={open.height} class={open.class}>
-          <Link
-            to={`/share/edit/${id}`}
-            state={{
-              // title: data.title,
-              // description: data.description,
-              // pcategory: data.pcategory,
-              // image: data.image,
-              data : data
+          <Link to={`/shop/edit/${id}`}>
+            <li onClick={editDrop}>수정하기</li>
+          </Link>
+          <li
+            onClick={() => {
+              editDrop();
+              deleteHandelr();
             }}
           >
-            <li onClick={{ editDrop }}>수정하기</li>
-          </Link>
-          <li onClick={editDrop}>삭제하기</li>
-          <li onClick={editDrop2}>공유상태 변경</li>
+            삭제하기
+          </li>
         </Ul>
         <Ul
           onClick={editDrop2}
@@ -78,23 +66,12 @@ const DetailEditDropdown = (data) => {
           height={open2.height}
           class={open2.class}
           style={{ marginLeft: -208, marginTop: 150 }}
-        >
-          {stateList.map((el, idx) => (
-            <li
-              onClick={() => {
-                stateClick(stateList[idx]);
-                changeMessage();
-              }}
-            >
-              {el}
-            </li>
-          ))}
-        </Ul>
+        ></Ul>
       </EditButton>
     </Editdiv>
   );
 };
-export default DetailEditDropdown;
+export default ShopDetailEditDropdown;
 
 const EditButton = styled.button`
   border: none;
@@ -136,7 +113,7 @@ const Ul = styled.ul`
 
   @keyframes up {
     0% {
-      height: 12rem;
+      height: 7.5rem;
     }
     100% {
       height: 0px;
@@ -148,7 +125,7 @@ const Ul = styled.ul`
       height: 0px;
     }
     100% {
-      height: 12rem;
+      height: 7.5rem;
     }
   }
 `;

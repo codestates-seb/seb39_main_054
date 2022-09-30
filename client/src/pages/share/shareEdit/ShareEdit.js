@@ -1,23 +1,22 @@
-import React from 'react'
+import React from "react";
 import styled from "styled-components";
 import { useState, useRef, useEffect } from "react";
 import PostDropdown from "../../../components/dropdowns/PostDropdown";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { ReactComponent as Camera } from "../../../assets/img/icon/camera-solid.svg";
 import PostEditor from "../../../components/editor/PostEditor";
 
-const ShareEdit =()  => {
+const ShareEdit = () => {
   const navigate = useNavigate();
   const [sharePost, setSharePost] = useState({
-    memberId: 1,
     title: "",
     description: "",
-    status: "대여가능",
+    status: "",
     pcategory: "",
-    image: {},
+    image: [],
   });
-  const {id} = useParams();
+  const { id } = useParams();
   const [imageSrc, setImageSrc] = useState([]);
 
   const titleChange = (el) => {
@@ -32,7 +31,6 @@ const ShareEdit =()  => {
     const content = editorRef.current.getInstance().getMarkdown();
     setSharePost({ ...sharePost, description: content });
   };
-
   const ImageChange = (el) => {
     const selectImg = el.target.files;
     const imgList = [...imageSrc];
@@ -50,11 +48,7 @@ const ShareEdit =()  => {
     }
   }, [imageSrc]);
 
-  const cancleClick = () => {
-    navigate(`/share/list`);
-  };
-
-  const postClick = async () => {
+  const EditClick = async () => {
     if (
       sharePost.title === "" ||
       sharePost.description === "" ||
@@ -63,14 +57,24 @@ const ShareEdit =()  => {
       alert("제목, 내용이 비어있으면 안되고 카테고리를 선택해주세요");
     } else {
       axios
-        .post(`${process.env.REACT_APP_API_URL}/product`, sharePost)
+        .patch(`${process.env.REACT_APP_API_URL}/product/${id}`, sharePost)
         .then(console.log(sharePost))
-        .then(alert("등록되었습니다"))
-        // .then(navigate(`/mypage/favorite`))
+        .then(alert("수정되었습니다"))
         .catch((err) => console.log(err));
     }
   };
+  const getData = async () => {
+    await axios
+      .get(`${process.env.REACT_APP_API_URL}/product/${id}`)
+      .then((res) => setSharePost({ ...sharePost, ...res.data }));
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   useEffect(() => {}, [imageSrc]);
+  const desc = sharePost.description
   return (
     <MainContainer>
       <Title>공유 물품 수정</Title>
@@ -80,15 +84,15 @@ const ShareEdit =()  => {
           <PageContainer>
             <InputText
               type="text"
+              defaultValue={sharePost.title}
               placeholder="제목을 입력해주세요"
               onChange={(e) => titleChange(e.target.value)}
             ></InputText>
             <PostDropdown categoryChange={categoryChange} />
           </PageContainer>
-
           <SubTitle>내용</SubTitle>
           <PostEditor
-            value=" "
+            value= " "
             editorRef={editorRef}
             onChange={contentChange}
           />
@@ -102,29 +106,24 @@ const ShareEdit =()  => {
             }}
           ></ImgPost>
           <ImgContainer>
-            <ImgPlusBtn>
-              <label htmlFor="input-file">
-                <ImgDiv>
-                  <Camera />
-                </ImgDiv>
-              </label>
-            </ImgPlusBtn>
             {imageSrc.length !== 0 &&
               imageSrc.map((value) => (
                 <Imgbox>{<img src={value}></img>}</Imgbox>
               ))}
           </ImgContainer>
           <BtnDiv>
-            <CancelBtn onClick={cancleClick}>취소</CancelBtn>
-            <PostBtn onClick={postClick}>수정</PostBtn>
+            <Link to={`/share/detail/${id}`}>
+              <CancelBtn>취소</CancelBtn>
+            </Link>
+            <EditBtn onClick={EditClick}>수정</EditBtn>
           </BtnDiv>
         </TextDiv>
       </WriteContainer>
     </MainContainer>
   );
-}
+};
 
-export default ShareEdit
+export default ShareEdit;
 const MainContainer = styled.div`
   display: flex;
   width: 100vw;
@@ -183,7 +182,7 @@ const CancelBtn = styled.button`
   margin: 2.5rem 2rem;
   font-size: 1.375rem;
 `;
-const PostBtn = styled.button`
+const EditBtn = styled.button`
   width: 8.44rem;
   height: 3.125rem;
   background-color: ${(props) => props.theme.primary};
@@ -196,30 +195,6 @@ const ImgPost = styled.input`
   font-size: 1.375rem;
   margin: 2rem 0rem 0.5rem 0.5rem;
   display: none;
-`;
-const ImgPlusBtn = styled.button`
-  width: 5rem;
-  height: 5rem;
-  background-color: ${(props) => props.theme.gray6};
-  border-radius: 15px;
-  border: solid 0.1875rem;
-  border-color: ${(props) => props.theme.gray5};
-  margin-top: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-const ImgDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  color: ${(props) => props.theme.textColor};
-
-  svg {
-    width: 2rem;
-    height: 2rem;
-    fill: ${(props) => props.theme.textColor};
-    cursor: pointer;
-  }
 `;
 const ImgContainer = styled.div`
   display: flex;
@@ -234,14 +209,14 @@ const Imgbox = styled.div`
   justify-content: center;
   align-items: center;
   margin-left: 2rem;
-  :hover{
+  :hover {
   }
   img {
     border-radius: 15px;
     width: 100%;
     height: 100%;
     border: none;
-    :hover{
+    :hover {
       background-color: red;
     }
   }

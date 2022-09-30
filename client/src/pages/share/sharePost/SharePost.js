@@ -68,6 +68,11 @@ const SharePost = () => {
         .catch((err) => console.log(err));
     }
   };
+  const deleteClick = (idx) =>{
+    setImageSrc([...imageSrc.slice(0,idx) ,
+    ...imageSrc.slice(idx + 1, imageSrc.length)])
+    
+  }
   useEffect(() => {}, [imageSrc]);
   return (
     <MainContainer>
@@ -83,7 +88,6 @@ const SharePost = () => {
             ></InputText>
             <PostDropdown categoryChange={categoryChange} />
           </PageContainer>
-
           <SubTitle>내용</SubTitle>
           <PostEditor
             value=" "
@@ -105,10 +109,15 @@ const SharePost = () => {
                 <Camera />
               </ImgDiv>
             </label>
-
             {imageSrc.length !== 0 &&
-              imageSrc.map((value) => (
-                <Imgbox>{<img src={value}></img>}</Imgbox>
+              imageSrc.map((value ,idx) => (
+                <>
+                <ImagePostDiv>
+                <Imgbox >
+                {<img src={value}></img>} 
+                </Imgbox>
+                </ImagePostDiv>
+                </>
               ))}
           </ImgContainer>
           <BtnDiv>
@@ -219,16 +228,14 @@ const ImgDiv = styled.div`
 const ImgContainer = styled.div`
   display: flex;
 `;
-const Imgbox = styled.div`
+const Imgbox = styled.button`
   width: 5rem;
   height: 5rem;
   border-radius: 15px;
   border: solid 0.1875rem;
   border-color: ${(props) => props.theme.gray5};
-  margin-top: 1rem;
   justify-content: center;
   align-items: center;
-  margin-left: 2rem;
   :hover {
   }
   img {
@@ -236,8 +243,15 @@ const Imgbox = styled.div`
     width: 100%;
     height: 100%;
     border: none;
-    :hover {
-      background-color: red;
-    }
   }
 `;
+const ImagePostDiv = styled.div`
+display: flex;
+flex-direction: column;
+margin-top: 1rem;
+margin-left: 2rem;
+justify-content: center;
+align-items: center;
+`
+
+

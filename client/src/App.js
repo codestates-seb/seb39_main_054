@@ -21,6 +21,7 @@ import ChatDetail from "./pages/chat/chatDetail/ChatDetail";
 import ShopPost from "./pages/shop/shopPost/ShopPost";
 import ShopList from "./pages/shop/shopList/ShopList";
 import ShareEdit from "./pages/share/shareEdit/ShareEdit";
+import ShopEdit from "./pages/shop/shopEdit/ShopEdit";
 
 const App = () => {
   // 테마 변경 (lightTheme, darkTheme)
@@ -75,7 +76,7 @@ const App = () => {
                 element={<ShopDetail></ShopDetail>}
               ></Route>
               <Route path="/shop/post" element={<ShopPost></ShopPost>}></Route>
-              <Route path="/shop/edit"></Route>
+              <Route path="/shop/edit/:id" element={<ShopEdit></ShopEdit>}></Route>
               {/* id: 로그인 유저 */}
               <Route
                 // path="/chat/list/:id"

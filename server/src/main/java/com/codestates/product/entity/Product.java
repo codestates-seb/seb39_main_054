@@ -42,19 +42,19 @@ public class Product extends Auditable {
     @ColumnDefault("0")
     private Long favoriteCount;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "PCATEGORY_ID")
     private Pcategory pcategory;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @OneToMany (mappedBy = "product", cascade = {CascadeType.REMOVE,CascadeType.MERGE,CascadeType.PERSIST})
+    @OneToMany (fetch = FetchType.EAGER,mappedBy = "product", cascade = {CascadeType.REMOVE,CascadeType.MERGE,CascadeType.PERSIST})
     private List<Pimage> pimageList = new ArrayList<>();
 
 
-    @OneToMany (mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany (fetch = FetchType.EAGER,mappedBy = "product", cascade = CascadeType.ALL)
     private List<Favorite> favoriteList = new ArrayList<>();
 
 
@@ -70,15 +70,15 @@ public class Product extends Auditable {
             pimage.setProduct(this);
         }
     }
-//
-//    public void setPcategory(Pcategory pcategory) {
-//
-//        this.pcategory = pcategory;
-//        if (!pcategory.getProductList().contains(this)) {
-//            pcategory.addProduct(this);
-//        }
-//    }
-//
+
+    public void setPcategory(Pcategory pcategory) {
+
+        this.pcategory = pcategory;
+        if (!pcategory.getProductList().contains(this)) {
+            pcategory.addProduct(this);
+        }
+    }
+
 
 
 //

@@ -10,12 +10,13 @@ import com.codestates.product.entity.Product;
 import com.codestates.product.mapper.ProductMapper;
 import com.codestates.product.service.ProductService;
 import com.codestates.response.MultiResponseDto;
-import com.codestates.response.SingleResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -43,18 +44,15 @@ public class ProductController {
 
         List<String> imageUrlList = new ArrayList<>();
 
-        System.out.println("imageUrlList 01 :" + imageUrlList);
 
         Long memberId = request.getProductPostDetailDto().getMemberId();
         Product product = mapper.postDetailDtoToProduct(request.getProductPostDetailDto(), pcategoryService);
 //      Long memberId = principalDetails.getMember().getMemberId(); // Todo: 9/27 배포 전, Security config 수정해야하고 PrincipalDetails로 수정 필요함
 
         List<Pimage> pimageList = productService.uploadImage(request.getMultipartFileList(), imageUrlList);
-        System.out.println("imageUrlList 02 :" + imageUrlList);
         Product productPost = productService.createProduct(product, memberId, pimageList);
 
-        ProductResponseDto.POST productResponseDto = mapper.ProductPostToProductResponseDto(productPost, imageUrlList);
-        System.out.println("imageUrlList 03 :" + imageUrlList);
+        ProductResponseDto.POST productResponseDto = mapper.productPostToProductResponseDto(productPost, imageUrlList);
         return new ResponseEntity(productResponseDto, HttpStatus.CREATED);
     }
 
@@ -74,7 +72,7 @@ public class ProductController {
         Product productPatch = productService.updateProduct(product, memberId);
         List<String> modifiedImageUrlList = productService.updateImage(productPatch.getProductId(), request.getImageUrlList());
 
-        ProductResponseDto.PATCH productResponseDto = mapper.ProductPatchToProductResponseDto(productPatch, modifiedImageUrlList);
+        ProductResponseDto.PATCH productResponseDto = mapper.productPatchToProductResponseDto(productPatch, modifiedImageUrlList);
 
 
         return new ResponseEntity<>(productResponseDto, HttpStatus.OK);
@@ -94,29 +92,36 @@ public class ProductController {
     @GetMapping("/{product-id}")
     public ResponseEntity getProduct(@PathVariable("product-id") @Positive long productId) {
 
-        ProductResponseDto.DetailResponse productDetailResponseDto = productService.findProduct(productId);
-        System.out.println("product.getMember().getMemberId()3 :" + productDetailResponseDto.getMember().getMemberId());
-        System.out.println("product.getMember().getDescription()3 :" +productDetailResponseDto.getDescription());
-        System.out.println("product.getMember().getPcategoryName()3 :" +productDetailResponseDto.getPcategory().getPcategoryName());
-        System.out.println("product.getMember().getPcategoryId()3 :" +productDetailResponseDto.getPcategory().getPcategoryId());
-        System.out.println("product.getMember().getProductList()3 :" +productDetailResponseDto.getPcategory().getProductList());
+        Product product = productService.findProduct(productId);
+        ProductResponseDto.DetailResponse productDetailResponseDto = mapper.productToProductDetailResponseDto(product);
 
-        productDetailResponseDto.getPimageList().stream()
-                .forEach(s -> System.out.println(s.getImageUrl()));
-
-
-        return new ResponseEntity<>(new SingleResponseDto<>(productDetailResponseDto), HttpStatus.OK);
+        return new ResponseEntity<>(productDetailResponseDto, HttpStatus.OK);
     }
 
-//    @GetMapping
-//    public ResponseEntity getQuestions(@Positive @RequestParam(defaultValue = "1") int page,
-//                                       @Positive @RequestParam(defaultValue = "50") int size) {
-//        Page<Question> pageQuestions = questionService.findQuestions(page - 1, size);
-//        List<Question> questions = pageQuestions.getContent();
-//
-//        return new ResponseEntity<>(
-//                new MultiResponseDto<>(mapper.questionToQuestionResponseDtos(questions), pageQuestions),HttpStatus.OK);
-//    }
+    @GetMapping
+    public ResponseEntity getProductList(@Positive @RequestParam(defaultValue = "1") int page,
+                                         @Positive @RequestParam(defaultValue = "50") int size,
+                                         @RequestParam @Nullable String pcategoryName,
+                                         @RequestParam @Nullable Product.ProductStatus status,
+                                         @RequestParam @Nullable String keyword) {
 
+        PageImpl<Product> pageProductList = productService.findProductList(page - 1, size,pcategoryName,status,keyword);
+        List<Product> productList = pageProductList.getContent();
+
+        return new ResponseEntity<>(
+                new MultiResponseDto<>(mapper.productToProductResponseDtoList(productList), pageProductList),HttpStatus.OK);
+    }
+
+    @GetMapping("/myList/{member-id}")
+    public ResponseEntity getMemberProductList(@PathVariable("member-id") @Positive long memberId,
+                                               @Positive @RequestParam(defaultValue = "1") int page,
+                                               @Positive @RequestParam(defaultValue = "50") int size) {
+
+        Page<Product> pageProductList = productService.findMemberList(page - 1, size,memberId);
+        List<Product> productList = pageProductList.getContent();
+
+        return new ResponseEntity<>(
+                new MultiResponseDto<>(mapper.productToProductResponseDtoList(productList), pageProductList),HttpStatus.OK);
+    }
 
 }

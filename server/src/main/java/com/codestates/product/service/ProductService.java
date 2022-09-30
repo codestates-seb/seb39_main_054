@@ -10,12 +10,14 @@ import com.codestates.member.entity.Member;
 import com.codestates.member.service.MemberService;
 import com.codestates.pimage.entity.Pimage;
 import com.codestates.pimage.repository.PimageRepository;
-import com.codestates.product.dto.ProductResponseDto;
 import com.codestates.product.entity.Product;
 import com.codestates.product.mapper.ProductMapper;
 import com.codestates.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,6 +50,7 @@ public class ProductService{
      */
     public Product createProduct(Product product, Long memberId, List<Pimage> pimageList) {
 
+        System.out.println("product.getPcategory()" + product.getPcategory());
         pimageList.stream().forEach(pimage -> {
             pimage.setProduct(product);
         });
@@ -62,6 +65,7 @@ public class ProductService{
     public Product updateProduct(Product product, Long memberId) {
 
         Product certifiedProduct = verifyProduct(product.getProductId());
+        memberService.findVerifiedMember(memberId);
         verifyMemberProduct(memberId, certifiedProduct);
 
         Optional.ofNullable(product.getTitle()).ifPresent(certifiedProduct::setTitle);
@@ -74,13 +78,12 @@ public class ProductService{
 
     // 제품 등록 여부 확인
     public Product verifyProduct(Long productId) {
-        System.out.println("productId2 : "+ productId);
         return productRepository.findById(productId).orElseThrow(() -> new CustomException("Product not Found", HttpStatus.NOT_FOUND));
     }
 
     // 제품 등록한 멤버가 맞는지 확인
     private void verifyMemberProduct(Long memberId, Product certifiedProduct) {
-        Member member = memberService.findVerifiedMember(memberId);
+        memberService.findVerifiedMember(memberId);
         if (!certifiedProduct.getMember().getMemberId().equals(memberId)) {
             throw new CustomException("You are not the member of this product", HttpStatus.FORBIDDEN);
         }
@@ -204,25 +207,46 @@ public class ProductService{
         productRepository.delete(certifiedProduct);
     }
 
-    @Transactional
-    public ProductResponseDto.DetailResponse findProduct(long productId) {
+
+    /**
+     * 제품 상세 조회
+     */
+    public Product findProduct(long productId) {
 
         Optional<Product> optionalProduct = productRepository.findById(productId);
         Product product = optionalProduct.orElseThrow(() -> new CustomException("Product not Found", HttpStatus.NOT_FOUND));
-        System.out.println("product.getMember().getMemberId()1 : "+ product.getMember().getMemberId());
-        System.out.println("product.getDescription()1 : " + product.getDescription());
-        System.out.println("product.getPcategory()1 : " + product.getPcategory().getPcategoryName());
-        System.out.println("product.getPimageList()1 : " + product.getPimageList());
 
-        ProductResponseDto.DetailResponse productDetailResponseDto = mapper.ProductToProductDetailResponseDto(product);
-        System.out.println("product.getMember().getMemberId()2 :" + productDetailResponseDto.getMember().getMemberId());
-        System.out.println("product.getMember().getDescription()2 :" +productDetailResponseDto.getDescription());
-        System.out.println("product.getMember().getPcategory()2 :" +productDetailResponseDto.getPcategory().getPcategoryName());
+        return product;
+    }
 
-        productDetailResponseDto.getPimageList().stream()
-                .forEach(s -> System.out.println(s.getImageUrl()));
+//    /**
+//     * 제품 리스트 조회
+//     */
+//    public Page<Product> findProductList(int page, int size) {
+//        return productRepository.findAll(PageRequest.of(page, size,Sort.by("productId").descending()));
+//    }
+
+    /**
+     * 제품 리스트 조회
+     */
+    public PageImpl<Product> findProductList(int page, int size, String pcategoryName, Product.ProductStatus status, String keyword) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        PageImpl<Product> productList = productRepository.findByCategoryStatusKeyword(pcategoryName, status, keyword,pageRequest);
+
+        productList.stream().forEach(List -> System.out.println("List.getProductId(: " + List.getProductId()));
+        return productList;
+    }
 
 
-        return productDetailResponseDto;
+
+    /**
+     * 유저가 작성한 게시물 조회
+     */
+    public Page<Product> findMemberList(int page, int size,long memberId) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Optional<Page<Product>> optionalProductList = productRepository.findByMemberId(memberId,pageRequest);
+        Page<Product> productList = optionalProductList.orElseThrow(() -> new CustomException("Member doesn't write Product", HttpStatus.NOT_FOUND));
+
+        return productList;
     }
 }

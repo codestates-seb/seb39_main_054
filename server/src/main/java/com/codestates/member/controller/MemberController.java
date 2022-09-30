@@ -5,12 +5,10 @@ import com.codestates.member.dto.MemberPostDto;
 import com.codestates.member.dto.MemberResponseDto;
 import com.codestates.member.entity.Member;
 import com.codestates.member.mapper.MemberMapper;
-import com.codestates.member.repository.MemberRepository;
 import com.codestates.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,11 +38,17 @@ public class MemberController {
     }
 
     @PatchMapping("/{member-id}")
-    public ResponseEntity patchMember(@PathVariable("member-id") @Positive long memberId,@Valid @RequestBody MemberPatchDto memberPatchDto) {
+    public ResponseEntity patchMember(@PathVariable("member-id") @Positive long memberId,@Valid MemberPatchDto memberPatchDto) {
 
         memberPatchDto.setMemberId(memberId);
+        Member patchDtoToMember = mapper.memberPatchDtoToMember(memberPatchDto);
 
-        Member member = memberService.updateMember(mapper.memberPatchDtoToMember(memberPatchDto));
+        if (memberPatchDto.getMultipartFile() != null) {
+            String uploadUrl = memberService.uploadImage(memberPatchDto.getMultipartFile());
+            patchDtoToMember.setImageUrl(uploadUrl);
+        }
+
+        Member member = memberService.updateMember(patchDtoToMember);
         MemberResponseDto memberResponseDto = mapper.memberToMemberResponseDto(member);
 
         return new ResponseEntity<>(memberResponseDto, HttpStatus.OK);

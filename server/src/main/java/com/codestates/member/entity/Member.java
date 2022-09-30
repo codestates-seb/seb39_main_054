@@ -6,7 +6,6 @@ import com.codestates.exception.ExceptionCode;
 import com.codestates.favorite.entity.Favorite;
 import com.codestates.product.entity.Product;
 import lombok.*;
-import org.springframework.http.HttpStatus;
 
 import javax.persistence.*;
 import java.util.*;
@@ -26,6 +25,7 @@ public class Member extends Auditable {
     @Column(nullable = false, updatable = false, unique = true)
     private String memberName;  // 사용자 ID
 
+    // TODO 09/27 PK 를 memeberName 이 아닌 email 로 변경 필요할 수도 (oauth2 로그인 때문에)
     @Column
     private String email;
     @Column(nullable = false)
@@ -155,6 +155,8 @@ public class Member extends Auditable {
     @OneToMany (mappedBy = "member")
     private List<Favorite> favoriteList = new ArrayList<>();
 
+//    @ManyToMany(mappedBy = "members", cascade = CascadeType.ALL)
+//    private Set<Conversation> conversations = new HashSet<>();
 
 //    public void addProduct(Product product) {
 //        this.productList.add(product);

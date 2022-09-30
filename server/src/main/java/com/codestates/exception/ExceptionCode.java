@@ -10,6 +10,7 @@ public enum ExceptionCode {
     QUESTION_NOT_FOUND(404, "Question not found" ),
     PROVIDER_NOT_FOUND(404, "Provider not found"),
     JWT_TOKEN_NOT_AUTHORIZED(401, "Expired or invalid JWT token"),
+    CHATROOM_NOT_FOUND(404, "ChatRoom not found"),
     FAVORITE_NOT_FOUND(404, "Favorite not found");
 
     @Getter

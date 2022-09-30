@@ -29,7 +29,9 @@ const PostDropdown = ({ categoryChange, pcategory }) => {
   }, [choice]);
 
   useEffect(() => {
-    setChoice(pcategory);
+    if (pcategory) {
+      setChoice(pcategory);
+    }
   }, []);
 
   return (

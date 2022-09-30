@@ -143,7 +143,7 @@ const ShopEdit = () => {
           </PageContainer>
           <SubTitle>내용</SubTitle>
           <PostEditor
-            value=" "
+            value={shopPost.description ? shopPost.description : " "}
             editorRef={editorRef}
             onChange={contentChange}
           />

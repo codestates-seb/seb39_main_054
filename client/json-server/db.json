@@ -6,7 +6,7 @@
       "memberId": 1,
       "title": "텐트 대여합니다.",
       "description": "2022년 9월 22일부터 3일간 텐트 대여해드립다. 보증금은 채팅으로 상의하여 맞춰봅시다.",
-      "status": "반납완료",
+      "status": "대여가능",
       "pcategory": "캠핑",
       "image": {
         "image01": "https://www.incheonin.com/news/photo/202205/87828_122219_3711.jpg",

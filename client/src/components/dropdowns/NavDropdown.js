@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { logout } from "../../redux/actions/logInAction";
 
-const NavDropdown = ({ openDropDown }) => {
+const NavDropdown = ({ openDropDown, dropdwonHandler }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const dropwDownContent = [
@@ -24,11 +24,18 @@ const NavDropdown = ({ openDropDown }) => {
   return (
     <Ul display={openDropDown.display} className={openDropDown.className}>
       {dropwDownContent.map((el, idx) => (
-        <Link to={el[1]} key={idx}>
+        <Link to={el[1]} key={idx} onClick={dropdwonHandler}>
           <li>{el[0]}</li>
         </Link>
       ))}
-      <li onClick={handleLogout}>로그아웃</li>
+      <li
+        onClick={() => {
+          handleLogout();
+          dropdwonHandler();
+        }}
+      >
+        로그아웃
+      </li>
     </Ul>
   );
 };

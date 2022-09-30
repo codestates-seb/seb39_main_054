@@ -35,7 +35,7 @@ const Nav = ({ isTheme, setIsTheme }) => {
   };
 
   // 닉네임 버튼 클릭 (드롭다운)
-  const toggleNickName = () => {
+  const dropdwonHandler = () => {
     if (openDropDown.className === "up") {
       setOpenDropDown({ className: "down", display: "flex" });
     } else {
@@ -81,19 +81,23 @@ const Nav = ({ isTheme, setIsTheme }) => {
                 </>
               ) : (
                 <div>
-                  <div className="profile" onClick={toggleNickName}>
+                  <div className="profile" onClick={dropdwonHandler}>
                     닉네임
                   </div>
-                  <NavDropdown openDropDown={openDropDown}></NavDropdown>
+                  <NavDropdown
+                    openDropDown={openDropDown}
+                    dropdwonHandler={dropdwonHandler}
+                  ></NavDropdown>
                 </div>
               )}
             </>
           ) : (
             <div className="bars">
-              <Bars onClick={toggleNickName}></Bars>
+              <Bars onClick={dropdwonHandler}></Bars>
               <NavDropdwonMobile
                 isLogin={isLogin}
                 openDropDown={openDropDown}
+                dropdwonHandler={dropdwonHandler}
               ></NavDropdwonMobile>
             </div>
           )}

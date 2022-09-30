@@ -1,40 +1,51 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { logout } from "../../redux/actions/logInAction";
 
-const NavDropdwonMobile = ({ isLogin, openDropDown }) => {
+const NavDropdwonMobile = ({ isLogin, openDropDown, dropdwonHandler }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const dropwDownContent = [
+    ["관심 목록", `/mypage/favorite`],
+    ["내가 쓴 게시물", `/mypage/mypost`],
+    ["채팅 목록", `/chat/list:id`],
+    ["회원정보 수정", `/mypage/edit`],
+  ];
+
+  const handleLogout = () => {
+    dispatch(logout());
+    localStorage.removeItem("authorization");
+    localStorage.removeItem("memberid");
+    navigate("/");
+  };
+
   return (
     <Container isLogin={isLogin} openDropDown={openDropDown}>
-      <Link to="/share/list">
+      <Link to="/share/list" onClick={dropdwonHandler}>
         <li>공유장터</li>
       </Link>
-      <Link to="/shop/list">
+      <Link to="/shop/list" onClick={dropdwonHandler}>
         <li>레저용품 판매점</li>
       </Link>
       {!isLogin ? (
         <>
-          <Link to="/login">
+          <Link to="/login" onClick={dropdwonHandler}>
             <li>로그인</li>
           </Link>
-          <Link to="/signup">
+          <Link to="/signup" onClick={dropdwonHandler}>
             <li>회원가입</li>
           </Link>
         </>
       ) : (
         <>
-          <Link to="/mypage/favorite">
-            <li>관심 목록</li>
-          </Link>
-          <Link to="/mypage/mypost">
-            <li>내가 쓴 게시물</li>
-          </Link>
-          <Link to="/chat/list:id">
-            <li>채팅 목록</li>
-          </Link>
-          <Link to="/mypage/edit">
-            <li>회원정보 수정</li>
-          </Link>
-          <li>로그아웃</li>
+          {dropwDownContent.map((el, idx) => (
+            <Link to={el[1]} key={idx} onClick={dropdwonHandler}>
+              <li>{el[0]}</li>
+            </Link>
+          ))}
+          <li onClick={dropdwonHandler}>로그아웃</li>
         </>
       )}
     </Container>
@@ -45,7 +56,7 @@ export default NavDropdwonMobile;
 
 const Container = styled.ul`
   position: absolute;
-  display: flex ;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -54,8 +65,12 @@ const Container = styled.ul`
   width: 100%;
   color: ${(props) => props.theme.gray2};
   background-color: ${(props) => props.theme.bgColor};
-  height: ${(props) => (props.openDropDown.className === "up" ? "0px" : "22.75rem")};
-  // "13.75rem" : "22.75rem"
+  height: ${(props) =>
+    props.openDropDown.className === "up"
+      ? "0px"
+      : props.isLogin
+      ? "22.75rem"
+      : "13.75rem"};
   transition: height 1.3s;
   font-size: 15px;
   font-family: "NotoSansKR-Medium";

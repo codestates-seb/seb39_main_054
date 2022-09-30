@@ -25,6 +25,11 @@ public class MemberResponseDto {
 
     private String imageUrl;
 
+    private LocalDateTime creationDate;
+
+    private LocalDateTime lastEditDate;
+
+
     // response 에 "활동중" 으로 표시됨. 빼면 "MEMBER_ACTIVE 로 표시"
     public String getMemberStatus() {
         return memberStatus.getStatus();

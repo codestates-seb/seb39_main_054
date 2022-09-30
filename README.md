@@ -26,7 +26,7 @@
   <img src="https://img.shields.io/badge/spring--security-6DB33F?style=for-the-badge&logo=spring-security&logoColor=white">
 </div>
 
-### Devobs
+### Deploy
 <div>
   <img src="https://img.shields.io/badge/aws ec2-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white">
   <img src="https://img.shields.io/badge/aws rds-FF9900?style=for-the-badge&logo=amazonrds&logoColor=white">

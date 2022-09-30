@@ -8,6 +8,7 @@ import com.codestates.pcategory.entity.Pcategory;
 import com.codestates.pcategory.service.PcategoryService;
 import com.codestates.pimage.dto.PimageResponseDto;
 import com.codestates.pimage.entity.Pimage;
+import com.codestates.product.dto.ProductDetailResponseDto;
 import com.codestates.product.dto.ProductPatchDetailDto;
 import com.codestates.product.dto.ProductPostDetailDto;
 import com.codestates.product.dto.ProductResponseDto;
@@ -48,24 +49,41 @@ public interface ProductMapper {
 
     ProductResponseDto.PATCH productPatchToProductResponseDto(Product product, List<String> modifiedImageUrlList);
 
-    default ProductResponseDto.DetailResponse productToProductDetailResponseDto(Product product) {
+    default ProductDetailResponseDto productToProductDetailResponseDto(Product product) {
+//        default ProductResponseDto.DetailResponse productToProductDetailResponseDto(Product product) {
         System.out.println("product.getProductId()1 :" + product.getProductId());
         System.out.println("product.getProductId()1 :" + product.getPcategory().getPcategoryName());
 
-        ProductResponseDto.DetailResponse response = ProductResponseDto.DetailResponse.builder()
-                .productId(product.getProductId())
-                .title(product.getTitle())
-                .description(product.getDescription())
-                .productStatus(product.getProductStatus())
-                .favoriteCount(product.getFavoriteCount())
-                .creationDate(product.getCreationDate())
-                .lastEditDate(product.getLastEditDate())
-                .pcategory(pcategoryToPcategoryResponse(product.getPcategory()))
-                .member(memberToMemberResponseDto(product.getMember()))
-                .pimageList(pimageListToPimageResponseDtoList(product.getPimageList()))
-                .build();
-        System.out.println("product.getProductId()2 :" + response.getProductId());
-        return response;
+            ProductDetailResponseDto productDetailResponseDto = new ProductDetailResponseDto();
+
+            productDetailResponseDto.setProductId(product.getProductId());
+            productDetailResponseDto.setTitle(product.getTitle());
+            productDetailResponseDto.setDescription(product.getDescription());
+            productDetailResponseDto.setProductStatus(product.getProductStatus());
+            productDetailResponseDto.setFavoriteCount(product.getFavoriteCount());
+            productDetailResponseDto.setCreationDate(product.getCreationDate());
+            productDetailResponseDto.setLastEditDate(product.getLastEditDate());
+            productDetailResponseDto.setPcategory(pcategoryToPcategoryResponse(product.getPcategory()));
+            productDetailResponseDto.setMember(memberToMemberResponseDto(product.getMember()));
+            productDetailResponseDto.setPimageList(pimageListToPimageResponseDtoList(product.getPimageList()));
+
+
+//        ProductResponseDto.DetailResponse response = ProductResponseDto.DetailResponse.builder()
+//                .productId(product.getProductId())
+//                .title(product.getTitle())
+//                .description(product.getDescription())
+//                .productStatus(product.getProductStatus())
+//                .favoriteCount(product.getFavoriteCount())
+//                .creationDate(product.getCreationDate())
+//                .lastEditDate(product.getLastEditDate())
+//                .pcategory(pcategoryToPcategoryResponse(product.getPcategory()))
+//                .member(memberToMemberResponseDto(product.getMember()))
+//                .pimageList(pimageListToPimageResponseDtoList(product.getPimageList()))
+//                .build();
+//        System.out.println("product.getProductId()2 :" + response.getProductId());
+
+        return productDetailResponseDto;
+//        return response;
     }
 
     PcategoryResonseDto pcategoryToPcategoryResponse(Pcategory pcategory);

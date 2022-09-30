@@ -50,11 +50,11 @@ public class Product extends Auditable {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @OneToMany (fetch = FetchType.EAGER,mappedBy = "product", cascade = {CascadeType.REMOVE,CascadeType.MERGE,CascadeType.PERSIST})
+    @OneToMany (mappedBy = "product", cascade = {CascadeType.REMOVE,CascadeType.MERGE,CascadeType.PERSIST})
     private List<Pimage> pimageList = new ArrayList<>();
 
 
-    @OneToMany (fetch = FetchType.EAGER,mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany (mappedBy = "product", cascade = CascadeType.ALL)
     private List<Favorite> favoriteList = new ArrayList<>();
 
 

@@ -1,15 +1,20 @@
 import React, { useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import styled from "styled-components";
 import axios from "axios";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import MyPageHeader from "../MyPageHeader";
 import MyPageNav from "../MyPageNav";
+import MyPageDropdownMobile from "../../../components/dropdowns/MyPageDropdownMobile";
 import ModalConfirm from "../../../components/ui/modals/ModalConfirm";
 
 const MyPageSignOut = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
+  const isMobile = useMediaQuery({ maxWidth: 786 });
+
+  const categoryChange = (el) => {};
 
   const headers = {
     "Content-Type": "application/json",
@@ -40,7 +45,12 @@ const MyPageSignOut = () => {
   return (
     <MSContainer>
       <MyPageHeader />
-      <MyPageNav />
+      {isMobile && (
+        <MyPageDropdownMobile
+          categoryChange={categoryChange}
+        ></MyPageDropdownMobile>
+      )}
+      {!isMobile && <MyPageNav></MyPageNav>}
       <SignOutContainer>
         <p>정말로 회원 탈퇴를 하시겠습니까?</p>
         <p className="text-small">

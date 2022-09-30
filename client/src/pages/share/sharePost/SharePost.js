@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import PostDropdown from "../../../components/dropdowns/PostDropdown";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -18,7 +18,6 @@ const SharePost = () => {
   });
   const [imageSrc, setImageSrc] = useState([]);
 
-
   const titleChange = (el) => {
     setSharePost({ ...sharePost, title: el });
   };
@@ -35,13 +34,13 @@ const SharePost = () => {
   const ImageChange = (e) => {
     const selectImg = e.target.files;
     const imgList = [...imageSrc];
-    for(let i=0; i<selectImg.length;i++){
+    for (let i = 0; i < selectImg.length; i++) {
       const imgurl = URL.createObjectURL(selectImg[i]);
       imgList.push(imgurl);
     }
-    setImageSrc(imgList)
-    if(imgList.length > 6){
-      alert("이미지의 최대 갯수는 6개입니다!!")
+    setImageSrc(imgList);
+    if (imgList.length > 6) {
+      alert("이미지의 최대 갯수는 6개입니다!!");
       setImageSrc([]);
     }
   };
@@ -65,9 +64,9 @@ const SharePost = () => {
         .catch((err) => console.log(err));
     }
   };
-  useEffect(() =>{
-    console.log(imageSrc)
-  },[imageSrc])
+  useEffect(() => {
+    console.log(imageSrc);
+  }, [imageSrc]);
   return (
     <MainContainer>
       <Title>공유 물품 작성</Title>
@@ -106,9 +105,10 @@ const SharePost = () => {
                 </ImgDiv>
               </label>
             </ImgPlusBtn>
-            {imageSrc.length !== 0 && 
-            imageSrc.map((value) =>
-            <Imgbox>{<img src={value}></img>}</Imgbox>)}
+            {imageSrc.length !== 0 &&
+              imageSrc.map((value) => (
+                <Imgbox>{<img src={value}></img>}</Imgbox>
+              ))}
           </ImgContainer>
           <BtnDiv>
             <CancelBtn onClick={cancleClick}>취소</CancelBtn>
@@ -163,7 +163,6 @@ const InputText = styled.input`
   border-color: ${(props) => props.theme.gray5};
 `;
 
-// `
 const BtnDiv = styled.div`
   display: flex;
   justify-content: center;

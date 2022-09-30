@@ -3,17 +3,20 @@ import styled from "styled-components";
 import { useMediaQuery } from "react-responsive";
 import ShareDetailTitle from "./ShareDetailTitle";
 import ShareDetailContent from "./ShareDetailContent";
-import { Link, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import ShareDetailImg from "./ShareDetailImg";
 import DetailEditDropdown from "../../../components/dropdowns/DetailEditDropdown";
 
 const ShareDetail = () => {
+  const navigate = useNavigate();
   const Mobile = useMediaQuery({ maxWidth: 786 });
   const [data, setData] = useState("");
   const [detail, setDetail] = useState("");
   const { id } = useParams();
   const url = data.image;
+
+  const memberId = localStorage.getItem("memberid");
 
   const getData = async () => {
     await axios
@@ -26,9 +29,24 @@ const ShareDetail = () => {
       .then((res) => setDetail(res.data));
   };
 
+  // 채팅방 개설, 채팅상세페이지로 이동
+  const openChatting = async () => {
+    await axios
+      .post(`${process.env.REACT_APP_API_URL}/v1/chat/room`, {
+        sellerId: detail.member.memberId,
+        buyerId: memberId,
+        productId: detail.productId,
+      })
+      .then((res) => {
+        navigate(`/chat/detail/${res.data.chatRoomId}`);
+      })
+      .catch((err) => console.log(err));
+  };
+
   useEffect(() => {
     getData();
     getMember();
+    openChatting();
   }, []);
 
   return (
@@ -46,10 +64,8 @@ const ShareDetail = () => {
             <ContentContainer>
               <ShareDetailContent content={data}></ShareDetailContent>
             </ContentContainer>
-            <Buttondiv>
-              <Link to={`/chat/detail/:id`}>
-                <ChatBtn>채팅하기</ChatBtn>
-              </Link>
+            <Buttondiv onClick={openChatting()}>
+              <ChatBtn>채팅하기</ChatBtn>
             </Buttondiv>
           </Container>
         </ShareContainer>

@@ -1,12 +1,16 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { shareStatusSelect } from "../../../redux/actions/filtersAction";
 import { ReactComponent as Check } from "../../../assets/img/icon/category/check.svg";
 
 const ShareState = () => {
   const [current, setCurrent] = useState("전체");
+  const dispatch = useDispatch();
 
   const checkToggle = (el) => {
     setCurrent(el);
+    dispatch(shareStatusSelect(el));
   };
 
   return (
@@ -48,7 +52,6 @@ const Container = styled.div`
   width: 66.5rem;
   margin-top: 2.5rem;
   margin-bottom: 1rem;
-
 
   @media ${(props) => props.theme.tabletL} {
     width: 48.5rem;

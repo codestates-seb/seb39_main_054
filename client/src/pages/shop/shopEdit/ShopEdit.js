@@ -108,7 +108,7 @@ const ShopEdit = () => {
               placeholder="제목을 입력해주세요"
               onChange={(e) => titleChange(e.target.value)}
             ></InputText>
-            <PostDropdown categoryChange={categoryChange} />
+            <PostDropdown categoryChange={categoryChange} pcategory={shopPost.pcategory} />
           </PageContainer>
           <FlexContainer>
             <ImgPost
@@ -143,7 +143,7 @@ const ShopEdit = () => {
           </PageContainer>
           <SubTitle>내용</SubTitle>
           <PostEditor
-            value=" "
+            value={shopPost.description ? shopPost.description : " "}
             editorRef={editorRef}
             onChange={contentChange}
           />

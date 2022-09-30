@@ -11,11 +11,12 @@ const ShopPost = () => {
   const navigate = useNavigate();
   const editorRef = useRef(null);
   const [shopPost, setSharePost] = useState({
+    productId: 4,
     memberId: 1,
     title: "",
     description: "",
     pcategory: "",
-    image: {},
+    image: [],
     address: "",
     tel: "",
   });
@@ -70,11 +71,19 @@ const ShopPost = () => {
   // }
 
   // 데이터 서버 업로드
-  const postClick = () => {
-    axios
-      .post(`${process.env.REACT_APP_API_URL}/shop`, shopPost)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+  const postClick = async () => {
+    if (
+      shopPost.title === "" ||
+      shopPost.description === "" ||
+      shopPost.pcategory === "카테고리"
+    ) {
+      alert("제목, 내용, 카테고리를 선택해주세요");
+    } else {
+      await axios
+        .post(`${process.env.REACT_APP_API_URL}/shop`, shopPost)
+        .then((res) => navigate(`/shop/detail/${res.data.productId}`))
+        .catch((err) => console.log(err));
+    }
   };
 
   useEffect(() => {}, [shopPost.pcategory]);

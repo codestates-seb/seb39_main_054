@@ -112,14 +112,6 @@ const Address = styled.div`
   .address {
     font-family: "NotoSansKR-Medium";
   }
-
-  @media ${(props) => props.theme.mobile} {
-    margin-top: 0;
-    margin-bottom: 40px;
-    width: 9.25rem;
-    height: 3.75rem;
-    -webkit-line-clamp: 3;
-  }
 `;
 
 const Tel = styled.div`
@@ -138,14 +130,6 @@ const Tel = styled.div`
 
   .tel {
     font-family: "NotoSansKR-Medium";
-  }
-
-  @media ${(props) => props.theme.mobile} {
-    margin-top: 0;
-    margin-bottom: 40px;
-    width: 9.25rem;
-    height: 3.75rem;
-    -webkit-line-clamp: 3;
   }
 `;
 

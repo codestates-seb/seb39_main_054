@@ -1,13 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { serachSelect } from "../../../redux/actions/filtersAction";
 import { ReactComponent as Glass } from "../../../assets/img/icon/magnifying-glass.svg";
 
 const Search = () => {
+  const [searchText, setSearchText] = useState("");
+  const dispatch = useDispatch();
+
+  const searchHandler = (el) => {
+    if (el === "Enter" || el === "click") {
+      dispatch(serachSelect(searchText));
+    }
+  };
+
   return (
     <Container>
       <div>
-        <Input placeholder="물품을 검색해보세요" />
-        <Glass />
+        <Input
+          onKeyDown={(el) => searchHandler(el.key)}
+          onChange={(el) => setSearchText(el.target.value)}
+          placeholder="물품을 검색해보세요"
+        />
+        <Glass onClick={(el) => searchHandler(el.type)} />
       </div>
     </Container>
   );

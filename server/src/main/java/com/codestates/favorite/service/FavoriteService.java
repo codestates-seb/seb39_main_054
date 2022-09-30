@@ -2,7 +2,6 @@ package com.codestates.favorite.service;
 
 import com.codestates.exception.BusinessLogicException;
 import com.codestates.exception.ExceptionCode;
-import com.codestates.favorite.dto.FavoriteResponseDto;
 import com.codestates.favorite.entity.Favorite;
 import com.codestates.favorite.repository.FavoriteRepository;
 import org.springframework.stereotype.Service;
@@ -18,15 +17,19 @@ public class FavoriteService {
         this.favoriteRepository = favoriteRepository;
     }
 
-    @Transactional
-    public void createFavorite(long productId, long memberId) {
-        favoriteRepository.mLikes(productId, memberId);
+//    @Transactional
+    public Favorite createFavorite(Favorite favorite) {
+//        favoriteRepository.mLikes(productId, memberId);
+        return favoriteRepository.save(favorite);
+
     }
 
-    public void deleteFavorite(long favoriteId) {
-        Favorite findFavorite = findVerifiedFavorite(favoriteId);
+    @Transactional
+    public void deleteFavorite(long productId, long memberId) {
+//        Favorite findFavorite = findVerifiedFavorite(favoriteId);
         
-        favoriteRepository.delete(findFavorite);
+//        favoriteRepository.delete(findFavorite);
+        favoriteRepository.mUnLikes(productId, memberId);
     }
 
     @Transactional(readOnly = true)

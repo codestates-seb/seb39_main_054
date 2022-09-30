@@ -1,12 +1,12 @@
 package com.codestates.favorite.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Getter
-@AllArgsConstructor
+@Setter
 public class FavoriteResponseDto {
 
     private long favoriteId;

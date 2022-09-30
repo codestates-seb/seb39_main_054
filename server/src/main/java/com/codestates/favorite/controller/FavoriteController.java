@@ -9,11 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
 @RestController
@@ -22,7 +20,7 @@ import javax.validation.constraints.Positive;
 @RequiredArgsConstructor
 public class FavoriteController {
     private final FavoriteService favoriteService;
-    private final FavoriteMapper mapper;
+    private final FavoriteMapper favoriteMapper;
 
     // TODO 09/23 product 생성 api 나오면 로직 작업 가능할 듯
     @PostMapping("/{product-id}")
@@ -33,16 +31,17 @@ public class FavoriteController {
 //        System.out.println("user.getPassword() = " + user.getPassword());
         long memberId = principalDetails.getMember().getMemberId();
         FavoritePostDto favoritePostDto = new FavoritePostDto(memberId, productId);
-        favoriteService.createFavorite(productId, memberId);
-        Favorite favorite = mapper.favoritePostDtoToFavorite(favoritePostDto);
+        Favorite favorite = favoriteService.createFavorite(favoriteMapper.favoritePostDtoToFavorite(favoritePostDto));
 
-        return new ResponseEntity<>(mapper.favoriteToFavoriteResponseDto(favorite), HttpStatus.CREATED);
+        return new ResponseEntity<>(favoriteMapper.favoriteToFavoriteResponseDto(favorite), HttpStatus.CREATED);
 //        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @DeleteMapping("{product-id}")
     public ResponseEntity deleteFavorite(@PathVariable("product-id") @Positive long productId,
                                          @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        long memberId = principalDetails.getMember().getMemberId();
+        favoriteService.deleteFavorite(productId, memberId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

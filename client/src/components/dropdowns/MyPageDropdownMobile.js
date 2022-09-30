@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as Down } from "../../assets/img/icon/caret-down.svg";
 import { ReactComponent as Up } from "../../assets/img/icon/caret-up.svg";
@@ -12,6 +12,7 @@ const MyPageDropdownMobile = ({ categoryChange }) => {
     display: "none",
   });
   const navigate = useNavigate();
+  const location = useLocation();
   const category = [
     "관심 목록",
     "내가 쓴 게시물",
@@ -20,24 +21,19 @@ const MyPageDropdownMobile = ({ categoryChange }) => {
     "회원 탈퇴",
   ];
 
+  const link = [
+    "/mypage/favorite",
+    "/mypage/mypost",
+    "/chat/list:id",
+    "/mypage/edit",
+    "/mypage/signout",
+  ];
+
   const handleLink = (el) => {
-    if (el === "관심 목록") {
-      navigate(`/mypage/favorite`);
-    }
-    if (el === "내가 쓴 게시물") {
-      navigate(`/mypage/mypost`);
-    }
-    if (el === "채팅 목록") {
-      navigate(`/chat/list:id`);
-    }
-    if (el === "회원정보 수정") {
-      navigate(`/mypage/edit`);
-    }
-    if (el === "회원 탈퇴") {
-      navigate(`mypage/signout`);
+    for (let i = 0; i < 5; i++) {
+      if (el === category[i]) navigate(link[i]);
     }
   };
-  // useparams로 값을 가져와서 그걸 변수에 넣어서
 
   const clickCategoty = () => {
     if (open.className === "up") {
@@ -52,6 +48,13 @@ const MyPageDropdownMobile = ({ categoryChange }) => {
   useEffect(() => {
     menuClick();
   }, [choice]);
+
+  useEffect(() => {
+    for (let j = 0; j < 5; j++) {
+      if (location.pathname === link[j]) setChoice(category[j]);
+    }
+    console.log("d");
+  }, []);
 
   return (
     <Container>

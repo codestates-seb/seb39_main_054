@@ -7,8 +7,8 @@ import { ReactComponent as Moon } from "../../assets/img/icon/moon.svg";
 import { ReactComponent as Bars } from "../../assets/img/icon/bars.svg";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
-import NavDropdown from "../dropdowns/NavDropdown";
-import NavDropdwonMobile from "../dropdowns/NavDropdwonMobile";
+import NavDropdown from "../dropdowns/nav/NavDropdown";
+import NavDropdwonMobile from "../dropdowns/nav/NavDropdwonMobile";
 
 const Nav = ({ isTheme, setIsTheme }) => {
   // 화면 크기 (반응형 구현)

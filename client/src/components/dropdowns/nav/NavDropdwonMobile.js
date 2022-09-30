@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { logout } from "../../redux/actions/logInAction";
+import { logout } from "../../../redux/actions/logInAction";
 
 const NavDropdwonMobile = ({ isLogin, openDropDown, dropdwonHandler }) => {
   const dispatch = useDispatch();
@@ -45,7 +45,14 @@ const NavDropdwonMobile = ({ isLogin, openDropDown, dropdwonHandler }) => {
               <li>{el[0]}</li>
             </Link>
           ))}
-          <li onClick={dropdwonHandler}>로그아웃</li>
+          <li
+            onClick={() => {
+              dropdwonHandler();
+              handleLogout();
+            }}
+          >
+            로그아웃
+          </li>
         </>
       )}
     </Container>

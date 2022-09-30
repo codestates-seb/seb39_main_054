@@ -16,39 +16,57 @@ const SharePost = () => {
     pcategory: "",
     image: {},
   });
+  const [imageSrc, setImageSrc] = useState([]);
+
   const titleChange = (el) => {
     setSharePost({ ...sharePost, title: el });
   };
-  const contentChange = (el) => {
-    setSharePost({ ...sharePost, description: el });
-  };
-  const editorRef = useRef(null);
-  const viewRef = useRef(null);
-  const handleonChange = () => {
-    const value = editorRef.current.getInstance().getMarkdown();
-    viewRef.current.getInstance().setMarkdown(value);
-  };
-
   const categoryChange = (el) => {
     setSharePost({ ...sharePost, pcategory: el });
+  };
+  //내용 연결
+  const editorRef = useRef(null);
+  const contentChange = () => {
+    const content = editorRef.current.getInstance().getMarkdown();
+    setSharePost({ ...sharePost, description: content });
+  };
+
+  const ImageChange = (e) => {
+    const selectImg = e.target.files;
+    const imgList = [...imageSrc];
+    for (let i = 0; i < selectImg.length; i++) {
+      const imgurl = URL.createObjectURL(selectImg[i]);
+      imgList.push(imgurl);
+    }
+    setImageSrc(imgList);
+    if (imgList.length > 6) {
+      alert("이미지의 최대 갯수는 6개입니다!!");
+      setImageSrc([]);
+    }
   };
 
   const cancleClick = () => {
     navigate(`/share/list`);
   };
-  // const addImages = (e) => {
-  //   const imageLists = e.target.files;
-  //   // const img
-  // }
 
-  const postClick = () => {
-    axios
-      .post(`${process.env.REACT_APP_API_URL}/product`, sharePost)
-      .then(console.log(sharePost))
-      .catch((err) => console.log(err));
+  const postClick = async () => {
+    if (
+      sharePost.title === "" ||
+      sharePost.description === "" ||
+      sharePost.pcategory === "카테고리"
+    ) {
+      alert("제목, 내용이 비어있으면 안되고 카테고리를 선택해주세요");
+    } else {
+      axios
+        .post(`${process.env.REACT_APP_API_URL}/product`, sharePost)
+        .then(console.log(sharePost))
+        .then(alert("완료"))
+        .catch((err) => console.log(err));
+    }
   };
-  useEffect(() => {}, [sharePost.pcategory]);
-
+  useEffect(() => {
+    console.log(imageSrc);
+  }, [imageSrc]);
   return (
     <MainContainer>
       <Title>공유 물품 작성</Title>
@@ -63,30 +81,35 @@ const SharePost = () => {
             ></InputText>
             <PostDropdown categoryChange={categoryChange} />
           </PageContainer>
-          <FlexContainer>
-            {/* <SubTitle>이미지 첨부</SubTitle> */}
 
-            <ImgPost
-              id="input-file"
-              type="file"
-              accept="image/*"
-              multiple
-            ></ImgPost>
-          </FlexContainer>
           <SubTitle>내용</SubTitle>
-          {/* <ContentText placeholder="내용을 입력해주세요" onChange={(e) => contentChange(e.target.value)}></ContentText> */}
           <PostEditor
             value=" "
             editorRef={editorRef}
-            onChange={handleonChange}
+            onChange={contentChange}
           />
-          <ImgPlusBtn>
-            <label for="input-file">
-              <ImgDiv>
-                <Camera />
-              </ImgDiv>
-            </label>
-          </ImgPlusBtn>
+          <ImgPost
+            id="input-file"
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={(e) => {
+              ImageChange(e);
+            }}
+          ></ImgPost>
+          <ImgContainer>
+            <ImgPlusBtn>
+              <label htmlFor="input-file">
+                <ImgDiv>
+                  <Camera />
+                </ImgDiv>
+              </label>
+            </ImgPlusBtn>
+            {imageSrc.length !== 0 &&
+              imageSrc.map((value) => (
+                <Imgbox>{<img src={value}></img>}</Imgbox>
+              ))}
+          </ImgContainer>
           <BtnDiv>
             <CancelBtn onClick={cancleClick}>취소</CancelBtn>
             <PostBtn onClick={postClick}>등록</PostBtn>
@@ -103,20 +126,10 @@ const MainContainer = styled.div`
   width: 100vw;
   flex-direction: column;
   align-items: center;
-
-  .ck-editor__editable {
-    min-height: 42.5rem;
-  }
-  .ck .ck-editor__main > .ck-editor__editable {
-    background: #fff;
-  }
 `;
 const PageContainer = styled.div`
   display: flex;
   justify-content: space-between;
-`;
-const FlexContainer = styled.div`
-  display: flex;
 `;
 const Title = styled.div`
   font-size: 2.5rem;
@@ -137,11 +150,6 @@ const SubTitle = styled.div`
 `;
 const TextDiv = styled.div`
   margin: 5.3125rem;
-
-  .toastui-editor-toolbar {
-    height: 100px;
-    box-sizing: border-box;
-  }
 `;
 const InputText = styled.input`
   width: 32.5rem;
@@ -154,18 +162,7 @@ const InputText = styled.input`
   border: solid 0.1875rem;
   border-color: ${(props) => props.theme.gray5};
 `;
-const ContentText = styled.textarea`
-  height: 55.625rem;
-  width: 100%;
-  padding: 1rem;
-  font-size: 1.2rem;
-  background-color: ${(props) => props.theme.bgColor};
-  border-radius: 10px;
-  border: solid 0.1875rem;
-  border-color: ${(props) => props.theme.gray5};
-  vertical-align: top;
-  resize: none;
-`;
+
 const BtnDiv = styled.div`
   display: flex;
   justify-content: center;
@@ -216,5 +213,26 @@ const ImgDiv = styled.div`
     width: 2rem;
     height: 2rem;
     fill: ${(props) => props.theme.textColor};
+    cursor: pointer;
+  }
+`;
+const ImgContainer = styled.div`
+  display: flex;
+`;
+const Imgbox = styled.div`
+  width: 5rem;
+  height: 5rem;
+  border-radius: 15px;
+  border: solid 0.1875rem;
+  border-color: ${(props) => props.theme.gray5};
+  margin-top: 1rem;
+  justify-content: center;
+  align-items: center;
+  margin-left: 2rem;
+  img {
+    border-radius: 15px;
+    width: 100%;
+    height: 100%;
+    border: none;
   }
 `;

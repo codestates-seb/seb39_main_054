@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import ShareCardContent from "../../../components/cards/ShareCardContent";
+import ShopCardContent from "../../../components/cards/ShopCardContent";
 
 const ShopListContent = () => {
   // 데이터
@@ -19,8 +19,7 @@ const ShopListContent = () => {
   }, []);
   return (
     <Content>
-      {/* shop 카드, 컨텐트 생성 해야함 */}
-      <ShareCardContent data={data} number={16}></ShareCardContent>
+      <ShopCardContent data={data}></ShopCardContent>
     </Content>
   );
 };
@@ -33,7 +32,7 @@ const Content = styled.div`
   justify-content: center;
   align-items: center;
   margin: 1.5rem auto;
-  width: 72.25rem;
+  width: 68rem;
 
   @media ${(props) => props.theme.tabletL} {
     width: 53.5rem;

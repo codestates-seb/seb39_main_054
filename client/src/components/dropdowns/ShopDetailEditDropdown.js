@@ -21,7 +21,7 @@ const ShopDetailEditDropdown = () => {
 
   const deleteHandelr = async () => {
     await axios.delete(`${process.env.REACT_APP_API_URL}/shop/${id}`);
-    navigate(-1);
+    navigate("/shop/list");
   };
 
   return (

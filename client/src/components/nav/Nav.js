@@ -9,13 +9,15 @@ import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 import NavDropdown from "../dropdowns/nav/NavDropdown";
 import NavDropdwonMobile from "../dropdowns/nav/NavDropdwonMobile";
+import { useSelector } from "react-redux";
 
 const Nav = ({ isTheme, setIsTheme }) => {
   // 화면 크기 (반응형 구현)
   const isMobile = useMediaQuery({ maxWidth: 786 });
+  const isLogin = useSelector((state) => state.loginReducer.isLogin);
 
-  // 로그인 테스트
-  const [isLogin, setIsLogin] = useState(true);
+  // // 로그인 테스트
+  // const [isLogin, setIsLogin] = useState(true);
 
   // 닉네임 클릭 드롭다운
   const [openDropDown, setOpenDropDown] = useState({

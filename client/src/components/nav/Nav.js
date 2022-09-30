@@ -40,9 +40,6 @@ const Nav = ({ isTheme, setIsTheme }) => {
       setOpenDropDown({ className: "down", display: "flex" });
     } else {
       setOpenDropDown({ className: "up", display: "flex" });
-      setTimeout(() => {
-        setOpenDropDown({ className: "up", display: "none" });
-      }, 1900);
     }
   };
 

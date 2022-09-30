@@ -49,13 +49,14 @@ const Container = styled.ul`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  top: 69px;
+  top: 68px;
   left: 0;
   width: 100%;
   color: ${(props) => props.theme.gray2};
   background-color: ${(props) => props.theme.bgColor};
   height: ${(props) => (props.openDropDown.className === "up" ? "0px" : "22.75rem")};
-  transition: height 2s;
+  // "13.75rem" : "22.75rem"
+  transition: height 1.3s;
   font-size: 15px;
   font-family: "NotoSansKR-Medium";
   overflow: hidden;

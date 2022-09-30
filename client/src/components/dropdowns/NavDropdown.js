@@ -41,15 +41,14 @@ const Ul = styled.ul`
   flex-direction: column;
   font-size: 1.0625rem;
   font-family: "NotoSansKR-Medium";
-  color: ${(props) => props.theme.gray2};
-  background-color: ${(props) => props.theme.bgColor};
   top: 68px;
   width: 185px;
-  height: 15.725rem;
+  height: ${(props) => (props.className === "up" ? "0px" : "15.725rem")};
+  color: ${(props) => props.theme.gray2};
+  background-color: ${(props) => props.theme.bgColor};
   border-radius: 14px;
   overflow: hidden;
-  height: ${(props) => (props.className === "up" ? "0px" : "15.725rem")};
-  transition: height 2s;
+  transition: height 1.3s;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 5px;
   z-index: 100;
 

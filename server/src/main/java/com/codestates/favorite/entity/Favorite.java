@@ -18,11 +18,11 @@ public class Favorite extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long favoriteId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "PRODUCT_ID")
     private Product product;
 

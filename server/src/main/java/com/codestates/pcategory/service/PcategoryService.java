@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Service
@@ -20,7 +21,18 @@ public class PcategoryService {
 
     private final PcategoryRepository pcategoryRepository;
 
-    public Pcategory findPcategory(String pcategoryName) {
+    public Pcategory createPcategory(String pcategoryName) {
+
+        if (pcategoryRepository.findByPcategoryName(pcategoryName).isEmpty()) {
+            Pcategory pcategory = new Pcategory();
+            pcategory.setPcategoryName(pcategoryName);
+            return pcategoryRepository.save(pcategory);
+        } else {
+            return findVerifiedPcategory(pcategoryName);
+        }
+    }
+
+    public Pcategory findVerifiedPcategory(String pcategoryName) {
         Optional<Pcategory> pcategory = pcategoryRepository.findByPcategoryName(pcategoryName);
         return pcategory.orElseThrow(() -> new CustomException("Category not Found", HttpStatus.NOT_FOUND));
     }

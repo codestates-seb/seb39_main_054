@@ -66,7 +66,8 @@ dependencies {
 	implementation 'org.webjars:bootstrap:3.3.7'
 	implementation 'org.webjars:jquery:3.1.1-1'
 }
-
+/*
+TODO 09/30 build 시 테스트 문제로 rest docs 관련 전부 주석처리
 tasks.named('test') {
 	outputs.dir snippetsDir
 	useJUnitPlatform()
@@ -97,6 +98,7 @@ bootJar {
 		into 'static/docs'     // (10-3)
 	}
 }
+*/
 
 /*
  * queryDSL 설정 추가

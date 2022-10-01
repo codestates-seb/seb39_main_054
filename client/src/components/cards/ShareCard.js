@@ -9,7 +9,7 @@ const ShareCard = ({ id, title, description, status, image01 }) => {
       <Link to={`/share/detail/${id}`}>
         <Content>
           <div className="img-container">
-            <Img src={image01}></Img>
+            <Img src={image01.imageUrl}></Img>
           </div>
           <div className="text-content">
             <Title>{title}</Title>

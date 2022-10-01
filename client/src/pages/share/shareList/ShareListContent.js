@@ -10,7 +10,7 @@ const ShareListContent = () => {
   // 데이터 받기
   const getData = async () => {
     await axios
-      .get(`${process.env.REACT_APP_API_URL}/product`)
+      .get(`${process.env.REACT_APP_API_URL}/v1/product`)
       .then((res) => setData(res.data));
   };
 
@@ -33,7 +33,7 @@ const Content = styled.div`
   align-items: center;
   margin: 1.5rem auto;
   width: 72.25rem;
-  
+
   @media ${(props) => props.theme.tabletL} {
     width: 53.5rem;
   }

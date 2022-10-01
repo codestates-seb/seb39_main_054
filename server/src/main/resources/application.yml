@@ -7,18 +7,19 @@ spring:
 ---
 spring:
   config:
-    #    location: classpath:aws.yml
     activate:
       on-profile: server
   h2:
     console:
       enabled: true
       path: /h2
-  datasource:
+#  datasource:
 #    url: jdbc:h2:mem:test
+  datasource:
     url: jdbc:mysql://codestates-seb39-054.cgo4ftt0wnjw.ap-northeast-2.rds.amazonaws.com:3306/DB_MainProject_054?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
     username: admin
     password: Qordpsem1!
+
   jpa:
     hibernate:
       ddl-auto: create-drop  # (1) 스키마 자동 생성
@@ -26,11 +27,8 @@ spring:
     properties:
       hibernate:
         format_sql: true  # (3) SQL pretty print
-#    defer-datasource-initialization: true
     open-in-view: false
-#  sql:
-#    init:
-#      mode: always
+
 
 logging:
   level:
@@ -43,33 +41,3 @@ server:
   servlet:
     encoding:
       force-response: true
-
----
-#spring:
-#  config:
-#    activate:
-#      on-profile: server
-#    import: 'aws-parameterstore:'
-#  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-##   url, username, password 를 aws-parameter store 에서 가져오도록 설정
-#    url: jdbc:mysql://codestates-seb39-054.cgo4ftt0wnjw.ap-northeast-2.rds.amazonaws.com:3306/DB_MainProject_054?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
-#    username: admin
-#    password: Qordpsem1!
-#  jpa:
-#    database: mysql
-#    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-#    hibernate:
-#      ddl-auto: validate
-#    show-sql: true
-#    properties:
-#      hibernate:
-#        format_sql: true
-#config:
-#  domain: {AWS S3 Endpoint}
-#aws:
-#  paramstore:
-#    enabled: true
-#    prefix: /spring-boot-aws
-#    name: seb-39-pre-054  # TODO 09/23 aws 배포 시 수정 요망
-#    profile-separator: _

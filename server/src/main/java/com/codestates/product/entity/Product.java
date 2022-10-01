@@ -1,12 +1,10 @@
 package com.codestates.product.entity;
 
-import com.amazonaws.services.ec2.model.EventType;
 import com.codestates.audit.Auditable;
 import com.codestates.favorite.entity.Favorite;
 import com.codestates.member.entity.Member;
 import com.codestates.pcategory.entity.Pcategory;
 import com.codestates.pimage.entity.Pimage;
-import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -50,7 +48,7 @@ public class Product extends Auditable {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @OneToMany (mappedBy = "product", cascade = {CascadeType.REMOVE,CascadeType.MERGE,CascadeType.PERSIST})
+    @OneToMany (fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Pimage> pimageList = new ArrayList<>();
 
 

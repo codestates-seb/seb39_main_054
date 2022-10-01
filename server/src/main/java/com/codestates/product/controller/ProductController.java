@@ -1,5 +1,7 @@
 package com.codestates.product.controller;
 
+import com.codestates.favorite.entity.Favorite;
+import com.codestates.favorite.service.FavoriteService;
 import com.codestates.member.jwt.oauth.PrincipalDetails;
 import com.codestates.pcategory.service.PcategoryService;
 import com.codestates.pimage.entity.Pimage;
@@ -68,8 +70,8 @@ public class ProductController {
         //      Long memberId = principalDetails.getMember().getMemberId(); // Todo: 9/27 배포 전, Security config 수정해야하고 PrincipalDetails로 수정 필요함
 
         Product product = mapper.patchDetailDtoToProduct(request.getProductPatchDetailDto(), pcategoryService);
-
         Product productPatch = productService.updateProduct(product, memberId);
+
         List<String> modifiedImageUrlList = productService.updateImage(productPatch.getProductId(), request.getImageUrlList());
 
         ProductResponseDto.PATCH productResponseDto = mapper.productPatchToProductResponseDto(productPatch, modifiedImageUrlList);

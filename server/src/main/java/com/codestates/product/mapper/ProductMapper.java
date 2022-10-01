@@ -8,14 +8,15 @@ import com.codestates.pcategory.entity.Pcategory;
 import com.codestates.pcategory.service.PcategoryService;
 import com.codestates.pimage.dto.PimageResponseDto;
 import com.codestates.pimage.entity.Pimage;
-import com.codestates.product.dto.ProductDetailResponseDto;
 import com.codestates.product.dto.ProductPatchDetailDto;
 import com.codestates.product.dto.ProductPostDetailDto;
 import com.codestates.product.dto.ProductResponseDto;
 import com.codestates.product.entity.Product;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -49,41 +50,26 @@ public interface ProductMapper {
 
     ProductResponseDto.PATCH productPatchToProductResponseDto(Product product, List<String> modifiedImageUrlList);
 
-    default ProductDetailResponseDto productToProductDetailResponseDto(Product product) {
-//        default ProductResponseDto.DetailResponse productToProductDetailResponseDto(Product product) {
-        System.out.println("product.getProductId()1 :" + product.getProductId());
-        System.out.println("product.getProductId()1 :" + product.getPcategory().getPcategoryName());
+    default ProductResponseDto.DetailResponse productToProductDetailResponseDto(Product product) {
+//        System.out.println("product.getProductId()1 :" + product.getProductId());
+//        System.out.println("product.getProductId()1 :" + product.getPcategory().getPcategoryName());
+//        product.getPimageList().stream().forEach(image -> System.out.println("product.getProductId()1 : " + image.getImageUrl()));
 
-            ProductDetailResponseDto productDetailResponseDto = new ProductDetailResponseDto();
-
-            productDetailResponseDto.setProductId(product.getProductId());
-            productDetailResponseDto.setTitle(product.getTitle());
-            productDetailResponseDto.setDescription(product.getDescription());
-            productDetailResponseDto.setProductStatus(product.getProductStatus());
-            productDetailResponseDto.setFavoriteCount(product.getFavoriteCount());
-            productDetailResponseDto.setCreationDate(product.getCreationDate());
-            productDetailResponseDto.setLastEditDate(product.getLastEditDate());
-            productDetailResponseDto.setPcategory(pcategoryToPcategoryResponse(product.getPcategory()));
-            productDetailResponseDto.setMember(memberToMemberResponseDto(product.getMember()));
-            productDetailResponseDto.setPimageList(pimageListToPimageResponseDtoList(product.getPimageList()));
-
-
-//        ProductResponseDto.DetailResponse response = ProductResponseDto.DetailResponse.builder()
-//                .productId(product.getProductId())
-//                .title(product.getTitle())
-//                .description(product.getDescription())
-//                .productStatus(product.getProductStatus())
-//                .favoriteCount(product.getFavoriteCount())
-//                .creationDate(product.getCreationDate())
-//                .lastEditDate(product.getLastEditDate())
-//                .pcategory(pcategoryToPcategoryResponse(product.getPcategory()))
-//                .member(memberToMemberResponseDto(product.getMember()))
-//                .pimageList(pimageListToPimageResponseDtoList(product.getPimageList()))
-//                .build();
+        ProductResponseDto.DetailResponse response = ProductResponseDto.DetailResponse.builder()
+                .productId(product.getProductId())
+                .title(product.getTitle())
+                .description(product.getDescription())
+                .productStatus(product.getProductStatus())
+                .favoriteStatus(product.isFavoriteStatus())
+                .favoriteCount(product.getFavoriteCount())
+                .creationDate(product.getCreationDate())
+                .lastEditDate(product.getLastEditDate())
+                .pcategory(pcategoryToPcategoryResponse(product.getPcategory()))
+                .member(memberToMemberResponseDto(product.getMember()))
+                .pimageList(pimageListToPimageResponseDtoList(product.getPimageList()))
+                .build();
 //        System.out.println("product.getProductId()2 :" + response.getProductId());
-
-        return productDetailResponseDto;
-//        return response;
+        return response;
     }
 
     PcategoryResonseDto pcategoryToPcategoryResponse(Pcategory pcategory);
@@ -91,12 +77,17 @@ public interface ProductMapper {
 
 
     default List<PimageResponseDto> pimageListToPimageResponseDtoList(List<Pimage> pimageList) {
-        return pimageList.stream()
+
+        List<PimageResponseDto> pimageResponseDtoList = new ArrayList<>();
+
+        pimageResponseDtoList =  pimageList.stream()
                 .map(image -> PimageResponseDto.builder()
-                                .pimageId(image.getPimageId())
-                                .imageUrl(image.getImageUrl())
-                                .build())
+                        .pimageId(image.getPimageId())
+                        .imageUrl(image.getImageUrl())
+                        .build())
                 .collect(Collectors.toList());
+        pimageList.stream().forEach(pimage -> System.out.println("pimage.getPimageId() : " + pimage.getPimageId()));
+        return pimageResponseDtoList;
     }
 
     List<ProductResponseDto.DetailResponse> productToProductResponseDtoList(List<Product> questions);

@@ -152,23 +152,36 @@ public class ProductService{
      */
     public List<String> updateImage(long productId, List<String> updatedImageUrl) {
 
+//        updatedImageUrl.stream().forEach(image -> System.out.println("image0 : " + image)); // 남길거 이미지 1개 request
+
         Optional<List<Pimage>> optionalPimageList = pimageRepository.findByProductId(productId);
         List<Pimage> legacyPimageList = optionalPimageList.orElseThrow(() -> new CustomException("Image not found", HttpStatus.NOT_FOUND));
 
-//        legacyPimageList.stream()
-//                .forEach(image -> image.setLastEditDate(LocalDateTime.now()));
+//        legacyPimageList.stream().forEach(image -> System.out.println("image1 : " + image.getImageUrl())); // 기존 3개
+
 
         List<Pimage> deleteImageList = legacyPimageList.stream()
                 .filter(image -> !updatedImageUrl.contains(image.getImageUrl()))
                 .collect(Collectors.toList());
 
+
+//        deleteImageList.stream().forEach(image -> System.out.println("image21 : " + image.getImageUrl())); // 지울거 URL
+//        deleteImageList.stream().forEach(image -> System.out.println("image22 : " + image.getPimageId())); // 지울거 ID
+
         deleteImageList.stream()
                 .forEach(deleteimage -> pimageRepository.deleteById(deleteimage.getPimageId()));
 
+        ////////////////여기서 쿼리 안날라간다....
+
         List<Pimage> modifiedPimageList = pimageRepository.findByProductId(productId).get();
+
+//        modifiedPimageList.stream().forEach(image -> System.out.println("image3 : " + image.getImageUrl())); // 응답줄거 이미지
+
         List<String> modifiedImageUrlList = modifiedPimageList.stream()
                 .map(image -> image.getImageUrl())
                 .collect(Collectors.toList());
+
+//        modifiedImageUrlList.stream().forEach(image -> System.out.println("image4 : " + image)); // 응답줄거 URL
 
         return modifiedImageUrlList;
     }
@@ -216,6 +229,7 @@ public class ProductService{
         Optional<Product> optionalProduct = productRepository.findById(productId);
         Product product = optionalProduct.orElseThrow(() -> new CustomException("Product not Found", HttpStatus.NOT_FOUND));
 
+        System.out.println(product.getProductId());
         return product;
     }
 

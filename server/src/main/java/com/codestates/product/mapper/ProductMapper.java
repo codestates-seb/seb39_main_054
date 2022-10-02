@@ -60,7 +60,7 @@ public interface ProductMapper {
                 .title(product.getTitle())
                 .description(product.getDescription())
                 .productStatus(product.getProductStatus())
-                .favoriteStatus(product.isFavoriteStatus())
+//                .favoriteStatus(product.isFavoriteStatus())
                 .favoriteCount(product.getFavoriteCount())
                 .creationDate(product.getCreationDate())
                 .lastEditDate(product.getLastEditDate())
@@ -86,7 +86,9 @@ public interface ProductMapper {
                         .imageUrl(image.getImageUrl())
                         .build())
                 .collect(Collectors.toList());
-        pimageList.stream().forEach(pimage -> System.out.println("pimage.getPimageId() : " + pimage.getPimageId()));
+
+        pimageResponseDtoList.stream().forEach(List -> System.out.println("List.getPimageId()" + List.getPimageId()));
+
         return pimageResponseDtoList;
     }
 

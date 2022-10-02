@@ -34,11 +34,11 @@ public class Product extends Auditable {
     @Column(length = 20, nullable = false)
     private ProductStatus productStatus = ProductStatus.대여가능;
 
-    @ColumnDefault("false")
+    @Transient // DB 컬럼에 만들어지지 않는다.
     private boolean favoriteStatus;
 
-    @ColumnDefault("0")
-    private Long favoriteCount;
+    @Transient // DB 컬럼에 만들어지지 않는다.
+    private int favoriteCount;
 
     @ManyToOne
     @JoinColumn(name = "PCATEGORY_ID")
@@ -48,7 +48,8 @@ public class Product extends Auditable {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @OneToMany (fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+//    @OneToMany (mappedBy = "product", cascade = {CascadeType.REMOVE,CascadeType.MERGE,CascadeType.PERSIST}) // Product 조회가 안됨. -> 지연로딩 에러
+    @OneToMany (mappedBy = "product", fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE,CascadeType.MERGE,CascadeType.PERSIST}) //  쿼리가 안날라감 -> 이미지 수정이 안됨.
     private List<Pimage> pimageList = new ArrayList<>();
 
 

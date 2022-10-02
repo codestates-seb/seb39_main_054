@@ -6,6 +6,8 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.codestates.exception.CustomException;
+import com.codestates.favorite.entity.Favorite;
+import com.codestates.favorite.repository.FavoriteRepository;
 import com.codestates.member.entity.Member;
 import com.codestates.member.service.MemberService;
 import com.codestates.pimage.entity.Pimage;
@@ -43,6 +45,7 @@ public class ProductService{
     private final AmazonS3 amazonS3;
     private final PimageRepository pimageRepository ;
     private final ProductMapper mapper;
+    private final FavoriteRepository favoriteRepository;
 
 
     /**
@@ -152,36 +155,39 @@ public class ProductService{
      */
     public List<String> updateImage(long productId, List<String> updatedImageUrl) {
 
-//        updatedImageUrl.stream().forEach(image -> System.out.println("image0 : " + image)); // 남길거 이미지 1개 request
+        updatedImageUrl.stream().forEach(image -> System.out.println("image00 : " + image)); // request
 
         Optional<List<Pimage>> optionalPimageList = pimageRepository.findByProductId(productId);
         List<Pimage> legacyPimageList = optionalPimageList.orElseThrow(() -> new CustomException("Image not found", HttpStatus.NOT_FOUND));
 
-//        legacyPimageList.stream().forEach(image -> System.out.println("image1 : " + image.getImageUrl())); // 기존 3개
+        legacyPimageList.stream().forEach(image -> System.out.println("image11 : " + image.getImageUrl())); // 기존 이미지 Url
 
+        legacyPimageList.stream()
+                .forEach(image -> image.setLastEditDate(LocalDateTime.now()));
 
         List<Pimage> deleteImageList = legacyPimageList.stream()
                 .filter(image -> !updatedImageUrl.contains(image.getImageUrl()))
                 .collect(Collectors.toList());
 
+        deleteImageList.stream().forEach(image -> System.out.println("image21 : " + image.getProduct().getProductId()));
+        deleteImageList.stream().forEach(image -> System.out.println("image22 : " + image.getPimageId()));
+        deleteImageList.stream().forEach(image -> System.out.println("image23 : " + image.getImageUrl())); // 지울거
 
-//        deleteImageList.stream().forEach(image -> System.out.println("image21 : " + image.getImageUrl())); // 지울거 URL
-//        deleteImageList.stream().forEach(image -> System.out.println("image22 : " + image.getPimageId())); // 지울거 ID
 
         deleteImageList.stream()
                 .forEach(deleteimage -> pimageRepository.deleteById(deleteimage.getPimageId()));
 
-        ////////////////여기서 쿼리 안날라간다....
-
         List<Pimage> modifiedPimageList = pimageRepository.findByProductId(productId).get();
 
-//        modifiedPimageList.stream().forEach(image -> System.out.println("image3 : " + image.getImageUrl())); // 응답줄거 이미지
+        modifiedPimageList.stream().forEach(image -> System.out.println("image31 : " + image.getImageUrl()));
+
 
         List<String> modifiedImageUrlList = modifiedPimageList.stream()
                 .map(image -> image.getImageUrl())
                 .collect(Collectors.toList());
 
-//        modifiedImageUrlList.stream().forEach(image -> System.out.println("image4 : " + image)); // 응답줄거 URL
+        modifiedImageUrlList.stream().forEach(image -> System.out.println("image41 : " + image));
+
 
         return modifiedImageUrlList;
     }
@@ -229,16 +235,9 @@ public class ProductService{
         Optional<Product> optionalProduct = productRepository.findById(productId);
         Product product = optionalProduct.orElseThrow(() -> new CustomException("Product not Found", HttpStatus.NOT_FOUND));
 
-        System.out.println(product.getProductId());
         return product;
     }
 
-//    /**
-//     * 제품 리스트 조회
-//     */
-//    public Page<Product> findProductList(int page, int size) {
-//        return productRepository.findAll(PageRequest.of(page, size,Sort.by("productId").descending()));
-//    }
 
     /**
      * 제품 리스트 조회
@@ -246,6 +245,10 @@ public class ProductService{
     public PageImpl<Product> findProductList(int page, int size, String pcategoryName, Product.ProductStatus status, String keyword) {
         PageRequest pageRequest = PageRequest.of(page, size);
         PageImpl<Product> productList = productRepository.findByCategoryStatusKeyword(pcategoryName, status, keyword,pageRequest);
+
+        productList.forEach(image -> {
+            image.setFavoriteCount(image.getFavoriteList().size());
+        });
 
         productList.stream().forEach(List -> System.out.println("List.getProductId(: " + List.getProductId()));
         return productList;

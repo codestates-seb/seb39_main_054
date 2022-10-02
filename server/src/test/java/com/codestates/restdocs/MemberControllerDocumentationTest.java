@@ -7,17 +7,23 @@ import com.codestates.member.dto.MemberPatchDto;
 import com.codestates.member.dto.MemberPostDto;
 import com.codestates.member.dto.MemberResponseDto;
 import com.codestates.member.entity.Member;
+import com.codestates.member.jwt.oauth.PrincipalDetails;
 import com.codestates.member.mapper.MemberMapper;
+import com.codestates.member.repository.MemberRepository;
 import com.codestates.member.service.MemberService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -31,7 +37,7 @@ import static org.springframework.restdocs.request.RequestDocumentation.pathPara
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(value = MemberController.class, excludeAutoConfiguration = SecurityAutoConfiguration.class)
+@WebMvcTest(value = MemberController.class)
 @MockBean(JpaMetamodelMappingContext.class)
 @AutoConfigureRestDocs
 public class MemberControllerDocumentationTest implements MemberControllerTestHelper {
@@ -39,11 +45,31 @@ public class MemberControllerDocumentationTest implements MemberControllerTestHe
     private MockMvc mockMvc;
 
     @MockBean
+    private MemberRepository memberRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
+    @MockBean
     private MemberService memberService;
 
     @MockBean
     private MemberMapper mapper;
 
+    @BeforeEach
+    public void setup() {
+        Member member = new Member(1L, "csytest1", "user", passwordEncoder.encode("1234qwer"));
+        member.setRoles("ROLE_USER");
+        memberRepository.save(member);
+        Member user = memberRepository.findByMemberName("user");
+
+
+        PrincipalDetails principalDetails = new PrincipalDetails(member);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(principalDetails, null, principalDetails.getAuthorities());
+//        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(member.getMemberName(), member.getPassword(), List.of(new SimpleGrantedAuthority("USER")));
+//        Authentication authentication = authenticationManager.authenticate(authenticationToken);
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
     @Test
     public void postMemberTest() throws Exception {
         MemberPostDto post = (MemberPostDto) MemberStubData.MockMember.getRequestBody(HttpMethod.POST);

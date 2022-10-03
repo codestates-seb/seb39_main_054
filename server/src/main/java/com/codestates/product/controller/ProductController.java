@@ -1,7 +1,6 @@
 package com.codestates.product.controller;
 
 import com.codestates.favorite.entity.Favorite;
-import com.codestates.favorite.service.FavoriteService;
 import com.codestates.member.jwt.oauth.PrincipalDetails;
 import com.codestates.pcategory.service.PcategoryService;
 import com.codestates.pimage.entity.Pimage;

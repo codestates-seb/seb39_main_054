@@ -26,7 +26,7 @@ public class Pcategory extends Auditable {
     @Column(nullable = false)
     private String pcategoryName;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "pcategory")
+    @OneToMany(mappedBy = "pcategory")
     private List<Product> productList = new ArrayList<>();
 
     public void addProduct(Product product) {

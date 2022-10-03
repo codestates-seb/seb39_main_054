@@ -1,12 +1,10 @@
 package com.codestates.product.entity;
 
-import com.amazonaws.services.ec2.model.EventType;
 import com.codestates.audit.Auditable;
 import com.codestates.favorite.entity.Favorite;
 import com.codestates.member.entity.Member;
 import com.codestates.pcategory.entity.Pcategory;
 import com.codestates.pimage.entity.Pimage;
-import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -36,11 +34,11 @@ public class Product extends Auditable {
     @Column(length = 20, nullable = false)
     private ProductStatus productStatus = ProductStatus.대여가능;
 
-    @ColumnDefault("false")
+    @Transient // DB에 컬럼 안만들어짐
     private boolean favoriteStatus;
 
-    @ColumnDefault("0")
-    private Long favoriteCount;
+    @Transient // DB에 컬럼 안만들어짐
+    private int favoriteCount;
 
     @ManyToOne
     @JoinColumn(name = "PCATEGORY_ID")
@@ -50,11 +48,11 @@ public class Product extends Auditable {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @OneToMany (fetch = FetchType.EAGER,mappedBy = "product", cascade = {CascadeType.REMOVE,CascadeType.MERGE,CascadeType.PERSIST})
+//    @OneToMany (mappedBy = "product", cascade = {CascadeType.REMOVE,CascadeType.MERGE,CascadeType.PERSIST}) // Product 조회가 안됨. -> 지연로딩 에러
+    @OneToMany (mappedBy = "product", fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE,CascadeType.MERGE,CascadeType.PERSIST}) // 이미지 수정이 안됨.
     private List<Pimage> pimageList = new ArrayList<>();
 
-
-    @OneToMany (fetch = FetchType.EAGER,mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany
     private List<Favorite> favoriteList = new ArrayList<>();
 
 
@@ -70,6 +68,15 @@ public class Product extends Auditable {
             pimage.setProduct(this);
         }
     }
+
+    // Todo : 추가
+    public void addFavorite(Favorite favorite) {
+        this.favoriteList.add(favorite);
+        if (favorite.getProduct() != this) {
+            favorite.setProduct(this);
+        }
+    }
+
 
     public void setPcategory(Pcategory pcategory) {
 

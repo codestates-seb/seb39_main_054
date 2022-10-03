@@ -8,7 +8,7 @@ application-oauth.yml
 application.yml
 
 ### STS ###
-.apt_generatsdf
+.apt_generat
 .classpath
 .factorypath
 .project

@@ -22,7 +22,7 @@ public class Pimage extends Auditable {
     @Column (columnDefinition = "Text")
     private String imageUrl;
 
-    @ManyToOne
+    @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "PRODUCT_ID")
     private Product product;
 

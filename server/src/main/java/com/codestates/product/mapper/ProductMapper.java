@@ -1,5 +1,6 @@
 package com.codestates.product.mapper;
 
+import com.codestates.favorite.entity.Favorite;
 import com.codestates.member.dto.MemberResponseDto;
 import com.codestates.member.entity.Member;
 import com.codestates.member.mapper.MemberMapper;
@@ -12,8 +13,7 @@ import com.codestates.product.dto.ProductPatchDetailDto;
 import com.codestates.product.dto.ProductPostDetailDto;
 import com.codestates.product.dto.ProductResponseDto;
 import com.codestates.product.entity.Product;
-import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -50,6 +50,7 @@ public interface ProductMapper {
 
     ProductResponseDto.PATCH productPatchToProductResponseDto(Product product, List<String> modifiedImageUrlList);
 
+    @IterableMapping(qualifiedByName = "defaultD2E")
     default ProductResponseDto.DetailResponse productToProductDetailResponseDto(Product product) {
 //        System.out.println("product.getProductId()1 :" + product.getProductId());
 //        System.out.println("product.getProductId()1 :" + product.getPcategory().getPcategoryName());
@@ -61,7 +62,7 @@ public interface ProductMapper {
                 .description(product.getDescription())
                 .productStatus(product.getProductStatus())
 //                .favoriteStatus(product.isFavoriteStatus())
-                .favoriteCount(product.getFavoriteCount())
+//                .favoriteCount(product.getFavoriteCount())
                 .creationDate(product.getCreationDate())
                 .lastEditDate(product.getLastEditDate())
                 .pcategory(pcategoryToPcategoryResponse(product.getPcategory()))
@@ -73,6 +74,7 @@ public interface ProductMapper {
     }
 
     PcategoryResonseDto pcategoryToPcategoryResponse(Pcategory pcategory);
+    @Named("defaultE2D")
     MemberResponseDto memberToMemberResponseDto(Member member);
 
 
@@ -87,11 +89,37 @@ public interface ProductMapper {
                         .build())
                 .collect(Collectors.toList());
 
-        pimageResponseDtoList.stream().forEach(List -> System.out.println("List.getPimageId()" + List.getPimageId()));
+        pimageResponseDtoList.stream().forEach(List -> System.out.println("List.getPimageId() : " + List.getPimageId()));
 
         return pimageResponseDtoList;
     }
 
-    List<ProductResponseDto.DetailResponse> productToProductResponseDtoList(List<Product> questions);
+    List<ProductResponseDto.DetailResponse> productToProductResponseDtoList(List<Product> productList);
 
+//    List<ProductResponseDto.DetailResponse> favoriteToProductResponseDtoList(List<Favorite> favoriteList);
+
+    PcategoryResonseDto pcategoryToPcategoryResponseDto(Pcategory pcategory);
+
+    List<ProductResponseDto.DetailResponse> favoriteToProductResponseDtoList(List<Favorite> favoriteList);
+
+
+//    default List<ProductResponseDto.DetailResponse> favoriteToProductResponseDtoList(List<Favorite> favoriteList) {
+//
+//        List<ProductResponseDto.DetailResponse> response = new ArrayList<>();
+//
+//        response =  favoriteList.stream()
+//                .map(favorite -> ProductResponseDto.DetailResponse.builder()
+//                        .productId(favorite.getProduct().getProductId())
+//                        .title(favorite.getProduct().getTitle())
+//                        .description(favorite.getProduct().getDescription())
+//                        .productStatus(favorite.getProduct().getProductStatus())
+//                        .favoriteCount(favorite.getProduct().getFavoriteCount())
+//                        .pcategory(pcategoryToPcategoryResponseDto(favorite.getProduct().getPcategory()))
+//                        .member(memberToMemberResponseDto(favorite.getMember()))
+//                        .pimageList(pimageListToPimageResponseDtoList(favorite.getProduct().getPimageList()))
+//                        .build())
+//                        .collect(Collectors.toList());
+//
+//        return response;
+//    }
 }

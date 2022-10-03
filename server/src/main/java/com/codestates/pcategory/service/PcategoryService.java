@@ -28,7 +28,6 @@ public class PcategoryService {
             pcategory.setPcategoryName(pcategoryName);
             return pcategoryRepository.save(pcategory);
         } else {
-//            return findVerifiedPcategory(pcategoryName);
 
             Pcategory verifiedPcategory = findVerifiedPcategory(pcategoryName);
             verifiedPcategory.getProductList().stream().forEach(product -> System.out.println("Category n123123d" + product.getProductId()));

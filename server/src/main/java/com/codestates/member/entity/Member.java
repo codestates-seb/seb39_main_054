@@ -145,7 +145,7 @@ public class Member extends Auditable {
     /**
      * 재진님에게 알려줘야함.
      */
-    @OneToMany (fetch = FetchType.EAGER,mappedBy = "member")
+    @OneToMany (mappedBy = "member")
     private List<Product> productList = new ArrayList<>();
 
     /**

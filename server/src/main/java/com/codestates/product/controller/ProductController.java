@@ -110,6 +110,10 @@ public class ProductController {
         PageImpl<Product> pageProductList = productService.findProductList(page - 1, size,pcategoryName,status,keyword);
         List<Product> productList = pageProductList.getContent();
 
+        productList.forEach(product -> {System.out.println("product.getFavoriteCount()2 : " + product.getProductId());});
+        productList.forEach(product -> {System.out.println("product.getFavoriteCount()2 : " + product.getFavoriteCount());});
+
+
         return new ResponseEntity<>(
                 new MultiResponseDto<>(mapper.productToProductResponseDtoList(productList), pageProductList),HttpStatus.OK);
     }
@@ -126,4 +130,16 @@ public class ProductController {
                 new MultiResponseDto<>(mapper.productToProductResponseDtoList(productList), pageProductList),HttpStatus.OK);
     }
 
+
+    @GetMapping("/myFavorite/{member-id}")
+    public ResponseEntity getMemberProd22ctList(@PathVariable("member-id") @Positive long memberId,
+                                               @Positive @RequestParam(defaultValue = "1") int page,
+                                               @Positive @RequestParam(defaultValue = "50") int size) {
+
+        Page<Favorite> pageFavoriteList = productService.findFavoriteList(page - 1, size,memberId);
+        List<Favorite> favoriteList = pageFavoriteList.getContent();
+
+        return new ResponseEntity<>(
+                new MultiResponseDto<>(mapper.favoriteToProductResponseDtoList(favoriteList), pageFavoriteList),HttpStatus.OK);
+    }
 }

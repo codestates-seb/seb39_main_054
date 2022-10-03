@@ -34,10 +34,10 @@ public class Product extends Auditable {
     @Column(length = 20, nullable = false)
     private ProductStatus productStatus = ProductStatus.대여가능;
 
-    @Transient // DB 컬럼에 만들어지지 않는다.
+    @Transient // DB에 컬럼 안만들어짐
     private boolean favoriteStatus;
 
-    @Transient // DB 컬럼에 만들어지지 않는다.
+    @Transient // DB에 컬럼 안만들어짐
     private int favoriteCount;
 
     @ManyToOne
@@ -49,11 +49,10 @@ public class Product extends Auditable {
     private Member member;
 
 //    @OneToMany (mappedBy = "product", cascade = {CascadeType.REMOVE,CascadeType.MERGE,CascadeType.PERSIST}) // Product 조회가 안됨. -> 지연로딩 에러
-    @OneToMany (mappedBy = "product", fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE,CascadeType.MERGE,CascadeType.PERSIST}) //  쿼리가 안날라감 -> 이미지 수정이 안됨.
+    @OneToMany (mappedBy = "product", fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE,CascadeType.MERGE,CascadeType.PERSIST}) // 이미지 수정이 안됨.
     private List<Pimage> pimageList = new ArrayList<>();
 
-
-    @OneToMany (mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany
     private List<Favorite> favoriteList = new ArrayList<>();
 
 
@@ -69,6 +68,15 @@ public class Product extends Auditable {
             pimage.setProduct(this);
         }
     }
+
+    // Todo : 추가
+    public void addFavorite(Favorite favorite) {
+        this.favoriteList.add(favorite);
+        if (favorite.getProduct() != this) {
+            favorite.setProduct(this);
+        }
+    }
+
 
     public void setPcategory(Pcategory pcategory) {
 

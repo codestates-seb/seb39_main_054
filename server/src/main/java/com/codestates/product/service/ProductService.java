@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -226,7 +227,6 @@ public class ProductService{
         productRepository.delete(certifiedProduct);
     }
 
-
     /**
      * 제품 상세 조회
      */
@@ -243,14 +243,15 @@ public class ProductService{
      * 제품 리스트 조회
      */
     public PageImpl<Product> findProductList(int page, int size, String pcategoryName, Product.ProductStatus status, String keyword) {
-        PageRequest pageRequest = PageRequest.of(page, size);
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("productId").descending());
         PageImpl<Product> productList = productRepository.findByCategoryStatusKeyword(pcategoryName, status, keyword,pageRequest);
 
-        productList.forEach(image -> {
-            image.setFavoriteCount(image.getFavoriteList().size());
-        });
 
-        productList.stream().forEach(List -> System.out.println("List.getProductId(: " + List.getProductId()));
+//        productList.forEach(product -> {
+//            product.setFavoriteCount(product.getFavoriteList().size());
+//            System.out.println("product.getFavoriteCount() : " + product.getFavoriteCount());
+//        });
+
         return productList;
     }
 
@@ -260,10 +261,29 @@ public class ProductService{
      * 유저가 작성한 게시물 조회
      */
     public Page<Product> findMemberList(int page, int size,long memberId) {
-        PageRequest pageRequest = PageRequest.of(page, size);
+        PageRequest pageRequest = PageRequest.of(page, size,Sort.by("PRODUCT_ID").descending());
         Optional<Page<Product>> optionalProductList = productRepository.findByMemberId(memberId,pageRequest);
         Page<Product> productList = optionalProductList.orElseThrow(() -> new CustomException("Member doesn't write Product", HttpStatus.NOT_FOUND));
 
         return productList;
+    }
+
+    /**
+     * 유저 관심목록 게시물 조회
+     */
+//    public Page<Product> findFavoriteList(int page, int size,long memberId) {
+    public Page<Favorite> findFavoriteList(int page, int size,long memberId) {
+
+        PageRequest pageRequest = PageRequest.of(page, size,Sort.by("MEMBER_ID").descending());
+        Optional<Page<Favorite>> optionalFavoriteList = favoriteRepository.findByMemberId(memberId,pageRequest);
+//        favoriteRepository.findById(memberId);
+//        System.out.println(productList.getTotalElements());
+
+        Page<Favorite> productList = optionalFavoriteList.orElseThrow(() -> new CustomException("Member doesn't write Product", HttpStatus.NOT_FOUND));
+
+        return productList;
+
+        // memberId로 FavoriteRepository에서 productId 반환
+        // productId로 ProductRepository에서 객체 반환
     }
 }

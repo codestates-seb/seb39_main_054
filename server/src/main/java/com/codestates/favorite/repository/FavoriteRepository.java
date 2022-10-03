@@ -21,6 +21,9 @@ public interface FavoriteRepository extends JpaRepository<Favorite, Long> {
     @Query(value = "DELETE FROM favorite WHERE product_id = :productId AND member_id = :principalId", nativeQuery = true)
     int mUnLikes(@Param("productId") long productId, @Param("principalId") long principalId);
 
+    /**
+     * 관심 목록 조회를 위한 추가
+     */
 //    @Query(value = "SELECT * FROM favorite WHERE member_id = :memberId", nativeQuery = true)
 //    Page<Favorite> findFavorite(@Param("memberid") long memberId, Pageable pageable);
 

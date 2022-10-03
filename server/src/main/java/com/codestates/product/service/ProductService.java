@@ -6,6 +6,8 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.codestates.exception.CustomException;
+import com.codestates.favorite.entity.Favorite;
+import com.codestates.favorite.repository.FavoriteRepository;
 import com.codestates.member.entity.Member;
 import com.codestates.member.service.MemberService;
 import com.codestates.pimage.entity.Pimage;
@@ -18,6 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,6 +46,7 @@ public class ProductService{
     private final AmazonS3 amazonS3;
     private final PimageRepository pimageRepository ;
     private final ProductMapper mapper;
+    private final FavoriteRepository favoriteRepository;
 
 
     /**
@@ -152,23 +156,39 @@ public class ProductService{
      */
     public List<String> updateImage(long productId, List<String> updatedImageUrl) {
 
+        updatedImageUrl.stream().forEach(image -> System.out.println("image00 : " + image)); // request
+
         Optional<List<Pimage>> optionalPimageList = pimageRepository.findByProductId(productId);
         List<Pimage> legacyPimageList = optionalPimageList.orElseThrow(() -> new CustomException("Image not found", HttpStatus.NOT_FOUND));
 
-//        legacyPimageList.stream()
-//                .forEach(image -> image.setLastEditDate(LocalDateTime.now()));
+        legacyPimageList.stream().forEach(image -> System.out.println("image11 : " + image.getImageUrl())); // 기존 이미지 Url
+
+        legacyPimageList.stream()
+                .forEach(image -> image.setLastEditDate(LocalDateTime.now()));
 
         List<Pimage> deleteImageList = legacyPimageList.stream()
                 .filter(image -> !updatedImageUrl.contains(image.getImageUrl()))
                 .collect(Collectors.toList());
 
+        deleteImageList.stream().forEach(image -> System.out.println("image21 : " + image.getProduct().getProductId()));
+        deleteImageList.stream().forEach(image -> System.out.println("image22 : " + image.getPimageId()));
+        deleteImageList.stream().forEach(image -> System.out.println("image23 : " + image.getImageUrl())); // 지울거
+
+
         deleteImageList.stream()
                 .forEach(deleteimage -> pimageRepository.deleteById(deleteimage.getPimageId()));
 
         List<Pimage> modifiedPimageList = pimageRepository.findByProductId(productId).get();
+
+        modifiedPimageList.stream().forEach(image -> System.out.println("image31 : " + image.getImageUrl()));
+
+
         List<String> modifiedImageUrlList = modifiedPimageList.stream()
                 .map(image -> image.getImageUrl())
                 .collect(Collectors.toList());
+
+        modifiedImageUrlList.stream().forEach(image -> System.out.println("image41 : " + image));
+
 
         return modifiedImageUrlList;
     }
@@ -207,7 +227,6 @@ public class ProductService{
         productRepository.delete(certifiedProduct);
     }
 
-
     /**
      * 제품 상세 조회
      */
@@ -219,34 +238,50 @@ public class ProductService{
         return product;
     }
 
-//    /**
-//     * 제품 리스트 조회
-//     */
-//    public Page<Product> findProductList(int page, int size) {
-//        return productRepository.findAll(PageRequest.of(page, size,Sort.by("productId").descending()));
-//    }
 
     /**
      * 제품 리스트 조회
      */
     public PageImpl<Product> findProductList(int page, int size, String pcategoryName, Product.ProductStatus status, String keyword) {
-        PageRequest pageRequest = PageRequest.of(page, size);
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("productId").descending());
         PageImpl<Product> productList = productRepository.findByCategoryStatusKeyword(pcategoryName, status, keyword,pageRequest);
 
-        productList.stream().forEach(List -> System.out.println("List.getProductId(: " + List.getProductId()));
+
+//        productList.forEach(product -> {
+//            product.setFavoriteCount(product.getFavoriteList().size());
+//            System.out.println("product.getFavoriteCount() : " + product.getFavoriteCount());
+//        });
+
         return productList;
     }
-
-
 
     /**
      * 유저가 작성한 게시물 조회
      */
     public Page<Product> findMemberList(int page, int size,long memberId) {
-        PageRequest pageRequest = PageRequest.of(page, size);
+        PageRequest pageRequest = PageRequest.of(page, size,Sort.by("PRODUCT_ID").descending());
         Optional<Page<Product>> optionalProductList = productRepository.findByMemberId(memberId,pageRequest);
         Page<Product> productList = optionalProductList.orElseThrow(() -> new CustomException("Member doesn't write Product", HttpStatus.NOT_FOUND));
 
         return productList;
+    }
+
+    /**
+     * 유저 관심목록 게시물 조회
+     */
+//    public Page<Product> findFavoriteList(int page, int size,long memberId) {
+    public Page<Favorite> findFavoriteList(int page, int size,long memberId) {
+
+        PageRequest pageRequest = PageRequest.of(page, size,Sort.by("MEMBER_ID").descending());
+        Optional<Page<Favorite>> optionalFavoriteList = favoriteRepository.findByMemberId(memberId,pageRequest);
+//        favoriteRepository.findById(memberId);
+//        System.out.println(productList.getTotalElements());
+
+        Page<Favorite> productList = optionalFavoriteList.orElseThrow(() -> new CustomException("Member doesn't write Product", HttpStatus.NOT_FOUND));
+
+        return productList;
+
+        // memberId로 FavoriteRepository에서 productId 반환
+        // productId로 ProductRepository에서 객체 반환
     }
 }

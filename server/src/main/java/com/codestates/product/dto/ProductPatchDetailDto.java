@@ -18,5 +18,4 @@ public class ProductPatchDetailDto {
     private String description;
     private String pcategoryName;
     private Product.ProductStatus productStatus;
-
 }

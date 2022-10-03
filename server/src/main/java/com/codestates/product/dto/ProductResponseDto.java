@@ -46,7 +46,8 @@ public class ProductResponseDto {
         private String title;
         private String description;
         private Product.ProductStatus productStatus;
-        private Long favoriteCount;
+        private boolean favoriteStatus;
+        private int favoriteCount;
         private LocalDateTime creationDate;
         private LocalDateTime lastEditDate;
         private PcategoryResonseDto pcategory;

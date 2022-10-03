@@ -10,13 +10,16 @@ const MainContent = () => {
   // 데이터 받기
   const getData = async () => {
     await axios
-      .get(`${process.env.REACT_APP_API_URL}/v1/product`)
+      .get(`${process.env.REACT_APP_API_URL}/v1/product`, {
+        params: { page: 1, size: 8 },
+      })
       .then((res) => setData(res.data.data));
   };
 
   useEffect(() => {
     getData();
   }, []);
+  console.log(data)
 
   return (
     <Container>

@@ -76,17 +76,18 @@ const App = () => {
                 element={<ShopDetail></ShopDetail>}
               ></Route>
               <Route path="/shop/post" element={<ShopPost></ShopPost>}></Route>
-              <Route path="/shop/edit/:id" element={<ShopEdit></ShopEdit>}></Route>
+              <Route
+                path="/shop/edit/:id"
+                element={<ShopEdit></ShopEdit>}
+              ></Route>
               {/* id: 로그인 유저 */}
               <Route
-                // path="/chat/list/:id"
-                path="/chat/list"
+                path="/chat/list/:id"
                 element={<ChatList></ChatList>}
               ></Route>
               {/* id: 상대방 id query &myid = =dsadsa &otherid*/}
               <Route
-                // path="/chat/detail/:id"
-                path="/chat/detail"
+                path="/chat/detail/:chatRoomId"
                 element={<ChatDetail></ChatDetail>}
               ></Route>
             </Routes>

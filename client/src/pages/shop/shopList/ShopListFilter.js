@@ -5,7 +5,6 @@ import styled from "styled-components";
 import CategoryDropdown from "../../../components/dropdowns/CategoryDropdown";
 import Category from "../../../components/filters/category/Category";
 import Search from "../../../components/filters/search/Search";
-import ShareState from "../../../components/filters/shareState/ShareState";
 import { PostBtn } from "../../../components/ui/buttons/buttons";
 
 const ShopListFilter = () => {

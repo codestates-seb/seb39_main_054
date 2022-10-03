@@ -2,9 +2,9 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { logout } from "../../redux/actions/logInAction";
+import { logout } from "../../../redux/actions/logInAction";
 
-const NavDropdown = ({ openDropDown }) => {
+const NavDropdown = ({ openDropDown, dropdwonHandler }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const dropwDownContent = [
@@ -22,13 +22,20 @@ const NavDropdown = ({ openDropDown }) => {
   };
 
   return (
-    <Ul display={openDropDown.display} className={openDropDown.className}>
+    <Ul className={openDropDown.className}>
       {dropwDownContent.map((el, idx) => (
-        <Link to={el[1]} key={idx}>
+        <Link to={el[1]} key={idx} onClick={dropdwonHandler}>
           <li>{el[0]}</li>
         </Link>
       ))}
-      <li onClick={handleLogout}>로그아웃</li>
+      <li
+        onClick={() => {
+          handleLogout();
+          dropdwonHandler();
+        }}
+      >
+        로그아웃
+      </li>
     </Ul>
   );
 };
@@ -37,7 +44,7 @@ export default NavDropdown;
 
 const Ul = styled.ul`
   position: absolute;
-  display: ${(props) => props.display};
+  display: flex;
   flex-direction: column;
   font-size: 1.0625rem;
   font-family: "NotoSansKR-Medium";

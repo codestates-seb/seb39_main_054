@@ -7,6 +7,7 @@ import Category from "../../../components/filters/category/Category";
 import Search from "../../../components/filters/search/Search";
 import ShareState from "../../../components/filters/shareState/ShareState";
 import { PostBtn } from "../../../components/ui/buttons/buttons";
+import { useSelector } from "react-redux";
 
 const ShareListFilter = () => {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ const ShareListFilter = () => {
   const postToggle = () => {
     navigate("/share/post");
   };
+  console.log(useSelector((state) => state.filtersReducer));
 
   const categoryChange = (el) => {};
 

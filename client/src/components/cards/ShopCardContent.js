@@ -29,6 +29,7 @@ const CardContent = styled.div`
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  margin-top: 2rem;
 
   @media ${(props) => props.theme.tabletL} {
     justify-content: center;

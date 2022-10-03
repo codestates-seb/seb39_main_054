@@ -55,7 +55,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 //                .fetch();
 //        return Optional.ofNullable(productList);
 //    }
-//
+
     private BooleanExpression pcategorySearch(String pcategory) {
         if (pcategory == null) {
             return null;
@@ -74,6 +74,6 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         if (keyword == null) {
             return null;
         }
-        return product.title.eq(keyword);
+        return product.title.contains(keyword);
     }
 }

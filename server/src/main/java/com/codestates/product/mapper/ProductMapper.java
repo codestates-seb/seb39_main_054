@@ -100,15 +100,32 @@ public interface ProductMapper {
 
     PcategoryResonseDto pcategoryToPcategoryResponseDto(Pcategory pcategory);
 
-    List<ProductResponseDto.DetailResponse> favoriteToProductResponseDtoList(List<Favorite> favoriteList);
 
+    List<Product> favoriteListToProductList(List<Favorite> favoriteList);
 
-//    default List<ProductResponseDto.DetailResponse> favoriteToProductResponseDtoList(List<Favorite> favoriteList) {
-//
-//        List<ProductResponseDto.DetailResponse> response = new ArrayList<>();
-//
-//        response =  favoriteList.stream()
-//                .map(favorite -> ProductResponseDto.DetailResponse.builder()
+    List<ProductResponseDto.DetailResponse> productListToProductResponseDtoDetailResponseList (List<Product> productList);
+
+//    List<ProductResponseDto.DetailResponse> favoriteToProductResponseDtoList(List<Favorite> favoriteList);
+    default List<ProductResponseDto.DetailResponse> favoriteToProductResponseDtoList(List<Favorite> favoriteList) {
+
+        List<ProductResponseDto.DetailResponse> response = new ArrayList<>();
+
+        response =  favoriteList.stream()
+                .map(favorite -> ProductResponseDto.DetailResponse.builder()
+                                .member(memberToMemberResponseDto(favorite.getMember()))
+                                .productId(favorite.getProduct().getProductId())
+                                .title(favorite.getProduct().getTitle())
+                                .description(favorite.getProduct().getDescription())
+                                .productStatus(favorite.getProduct().getProductStatus())
+                                .favoriteCount(favorite.getProduct().getFavoriteCount())
+                                .pcategory(pcategoryToPcategoryResponseDto(favorite.getProduct().getPcategory()))
+                                .pimageList(pimageListToPimageResponseDtoList(favorite.getProduct().getPimageList()))
+                                .creationDate(favorite.getCreationDate())
+                                .lastEditDate(favorite.getLastEditDate())
+                                .build())
+                .collect(Collectors.toList());
+        return response;
+
 //                        .productId(favorite.getProduct().getProductId())
 //                        .title(favorite.getProduct().getTitle())
 //                        .description(favorite.getProduct().getDescription())
@@ -119,7 +136,7 @@ public interface ProductMapper {
 //                        .pimageList(pimageListToPimageResponseDtoList(favorite.getProduct().getPimageList()))
 //                        .build())
 //                        .collect(Collectors.toList());
-//
+
 //        return response;
-//    }
+    }
 }

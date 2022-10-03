@@ -25,7 +25,8 @@ public interface ControllerTestHelper<T> {
         return post(url)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(content);
+                .content(content)
+                .with(csrf());
 
     }
     default RequestBuilder postwithVariableRequestBuilder(String url, long resourceId,
@@ -33,7 +34,7 @@ public interface ControllerTestHelper<T> {
         return post(url, resourceId)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-//                .content(content)
+                .content(content)
                 .header("Authorization", "Bearer 1qaz2wsx3edc")
                 .with(csrf()) // 이거 없으면 403 에러 발생
                 ;
@@ -43,7 +44,8 @@ public interface ControllerTestHelper<T> {
         return patch(url, resourceId)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(content);
+                .content(content)
+                .with(csrf());
     }
 
     default RequestBuilder getRequestBuilder(String url, long resourceId) {

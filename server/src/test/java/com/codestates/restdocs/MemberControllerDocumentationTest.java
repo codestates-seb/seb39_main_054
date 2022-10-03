@@ -20,6 +20,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.HttpMethod;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -109,6 +110,8 @@ public class MemberControllerDocumentationTest implements MemberControllerTestHe
     public void patchMemberTest() throws Exception {
         // given
         long memberId = 1L;
+        MockMultipartFile image = new MockMultipartFile("multipartFile", "image.png", "image/png",
+                "<<png data>>".getBytes());
         MemberPatchDto patch = (MemberPatchDto) MemberStubData.MockMember.getRequestBody(HttpMethod.PATCH);
         String content = toJsonContent(patch);
 
@@ -124,6 +127,7 @@ public class MemberControllerDocumentationTest implements MemberControllerTestHe
         // when
 //        ResultActions actions = mockMvc.perform(postwithVariableRequestBuilder(getURI(), memberId, content));
         ResultActions actions = mockMvc.perform(multipart(getURI(), memberId)
+                        .file(image)
                         .content(content)
                 .with(csrf())
         );

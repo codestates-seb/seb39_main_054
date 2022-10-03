@@ -120,7 +120,7 @@ public class MemberControllerDocumentationTest implements MemberControllerTestHe
         given(mapper.memberToMemberResponseDto(Mockito.any(Member.class))).willReturn(responseDto);
 
         // when
-        ResultActions actions = mockMvc.perform(patchRequestBuilder(getURI(), memberId, content));
+        ResultActions actions = mockMvc.perform(postwithVariableRequestBuilder(getURI(), memberId, content));
 
         // then
         actions.andExpect(status().isOk())

@@ -34,7 +34,7 @@ public interface ControllerTestHelper<T> {
         return post(url, resourceId)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-//                .content(content)
+                .content(content)
                 .header("Authorization", "Bearer 1qaz2wsx3edc")
                 .with(csrf()) // 이거 없으면 403 에러 발생
                 ;

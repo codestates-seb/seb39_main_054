@@ -31,9 +31,11 @@ import static com.codestates.util.ApiDocumentUtils.getRequestPreProcessor;
 import static com.codestates.util.ApiDocumentUtils.getResponsePreProcessor;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.multipart;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -120,7 +122,11 @@ public class MemberControllerDocumentationTest implements MemberControllerTestHe
         given(mapper.memberToMemberResponseDto(Mockito.any(Member.class))).willReturn(responseDto);
 
         // when
-        ResultActions actions = mockMvc.perform(postwithVariableRequestBuilder(getURI(), memberId, content));
+//        ResultActions actions = mockMvc.perform(postwithVariableRequestBuilder(getURI(), memberId, content));
+        ResultActions actions = mockMvc.perform(multipart(getURI(), memberId)
+                        .content(content)
+                .with(csrf())
+        );
 
         // then
         actions.andExpect(status().isOk())
@@ -136,6 +142,9 @@ public class MemberControllerDocumentationTest implements MemberControllerTestHe
                         ),
                         requestFields(
                                 getDefaultMemberPatchRequestDescriptors()
+                        ),
+                        requestParts(
+                                partWithName("multipartFile").description("프로필 이미지")
                         ),
                         responseFields(
                                 getFullResponseDescriptors(

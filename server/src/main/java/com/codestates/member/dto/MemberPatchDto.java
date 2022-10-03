@@ -17,10 +17,11 @@ public class MemberPatchDto {
 
     private MultipartFile multipartFile;
 
-    public MemberPatchDto(Long memberId, String nickname, String password, Member.MemberStatus memberStatus) {
+    public MemberPatchDto(Long memberId, String nickname, String password, Member.MemberStatus memberStatus, MultipartFile multipartFile) {
         this.memberId = memberId;
         this.nickname = nickname;
         this.password = password;
         this.memberStatus = memberStatus;
+        this.multipartFile = multipartFile;
     }
 }

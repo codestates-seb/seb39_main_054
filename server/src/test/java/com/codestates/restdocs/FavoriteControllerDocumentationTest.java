@@ -91,7 +91,8 @@ public class FavoriteControllerDocumentationTest implements FavoriteControllerTe
 
         given(mapper.favoritePostDtoToFavorite(Mockito.any(FavoritePostDto.class))).willReturn(new Favorite());
 
-//        given(favoriteService.createFavorite(Mockito.any(Favorite.class))).willReturn(new Favorite());
+        // 10/03 이거 주석처리 때문에 response body 가 null 이어서 3시간 넘게 에러남.
+        given(favoriteService.createFavorite(Mockito.any(Favorite.class))).willReturn(new Favorite());
 
         given(mapper.favoriteToFavoriteResponseDto(Mockito.any(Favorite.class))).willReturn(responseBody);
 

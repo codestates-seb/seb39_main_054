@@ -21,22 +21,22 @@ const ShareDetail = () => {
   };
 
   // 채팅방 개설, 채팅상세페이지로 이동
-  // const openChatting = async () => {
-  //   await axios
-  //     .post(`${process.env.REACT_APP_API_URL}/v1/chat/room`, {
-  //       // sellerId: detail.member.memberId,
-  //       buyerId: memberId,
-  //       // productId: detail.productId,
-  //     })
-  //     .then((res) => {
-  //       navigate(`/chat/detail/${res.data.chatRoomId}`);
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
+  const openChatting = async () => {
+    await axios
+      .post(`${process.env.REACT_APP_API_URL}/v1/chat/room`, {
+        sellerId: data.member.memberId,
+        buyerId: memberId,
+        productId: data.productId,
+      })
+      .then((res) => {
+        // roomId가 null로 나옴
+        // navigate(`/chat/detail/${res.data.roomId}`);
+      })
+      .catch((err) => console.log(err));
+  };
 
   useEffect(() => {
     getData();
-    // openChatting();
   }, []);
 
   return (
@@ -54,7 +54,7 @@ const ShareDetail = () => {
             <ContentContainer>
               <ShareDetailContent content={data}></ShareDetailContent>
             </ContentContainer>
-            <Buttondiv>
+            <Buttondiv onClick={openChatting}>
               <ChatBtn>채팅하기</ChatBtn>
             </Buttondiv>
           </Container>

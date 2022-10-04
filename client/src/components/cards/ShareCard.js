@@ -3,13 +3,24 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as Heart } from "../../assets/img/icon/heart.svg";
 
-const ShareCard = ({ id, title, description, status, image01 }) => {
+const ShareCard = ({
+  id,
+  title,
+  description,
+  status,
+  image01,
+  favoriteCount,
+}) => {
   return (
     <Container>
       <Link to={`/share/detail/${id}`}>
         <Content>
           <div className="img-container">
-            <Img src={image01.imageUrl}></Img>
+            {image01 !== undefined ? (
+              <Img src={image01.imageUrl}></Img>
+            ) : (
+              <Img className="image-undefinded"></Img>
+            )}
           </div>
           <div className="text-content">
             <Title>{title}</Title>
@@ -21,7 +32,7 @@ const ShareCard = ({ id, title, description, status, image01 }) => {
               </ShareState>
               <Favorite>
                 <Heart />
-                13
+                {favoriteCount}
               </Favorite>
             </div>
           </div>
@@ -85,6 +96,10 @@ const Img = styled.img`
 
   &:hover {
     transform: scale(1.2);
+  }
+
+  .image-undefinded {
+    background-color: ${(props) => props.theme.gray5};
   }
 `;
 

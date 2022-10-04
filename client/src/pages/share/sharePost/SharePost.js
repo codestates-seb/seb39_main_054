@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import PostDropdown from "../../../components/dropdowns/PostDropdown";
 import { useNavigate } from "react-router-dom";
-import axios, { Axios } from "axios";
+import axios from "axios";
 import { ReactComponent as Camera } from "../../../assets/img/icon/camera-solid.svg";
 
 const SharePost = () => {
@@ -41,33 +41,15 @@ const SharePost = () => {
     Object.values(imageSrc).forEach((file) => formData.append("multipartFileList" , file))
     // formData.append("multipartFileList", imageSrc);
     
-    // for (let key of formData.keys()) {
-    //   console.log(key);
-    // }
+    for (let key of formData.keys()) {
+      console.log(key);
+    }
     await axios
     .post(`${process.env.REACT_APP_API_URL}/v1/product` , formData ,{
       headers :{'Content-Type': 'multipart/form-data' }
     })
     .then((res) => alert("성공"))
-    // method : "post",
-    // url : `${process.env.REACT_APP_API_URL}/v1/product`,
-    // data : formData ,
-    // headers : {'Content-Type': 'multipart/form-data' }
-
-    // axios
-    // .post(`${process.env.REACT_APP_API_URL}/product` , formData ,{
-    //   headers: { 'Content-Type': 'multipart/form-data' },
-    //   data: formData,
-    // })
-    // .then((res) => alert("성공"))
-    // .catch((err) => console.log(err))
-    // await axios({
-    //   method : "POST" ,
-    //   url : `${process.env.REACT_APP_API_URL}/v1/product`,
-    //   mode : "cors",
-    //   headers: { 'Content-Type': 'multipart/form-data' },
-    //   data: formData,
-    // })
+    
   };
   const deleteClick = (idx) => {
     setImageSrc([

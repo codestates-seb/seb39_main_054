@@ -11,27 +11,29 @@ const DetailEditDropdown = (data) => {
     height: "0px",
     display: "none",
   });
+
   const [open2, setOpen2] = useState({
     class: "up",
     height: "0px",
     display: "none",
   });
+
   const { id } = useParams();
-  const [value, setValue] = useState();
+
   const stateClick = async (e) => {
-    setValue(e);
-    await axios.patch(`${process.env.REACT_APP_API_URL}/product/${id}`, {
-      status: value,
-    });
+    await axios
+      .patch(`${process.env.REACT_APP_API_URL}/v1/product/${id}`, {
+        status: e,
+      })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
+
   const changeMessage = () => {
     alert("변경되었습니다!");
     window.location.reload();
     console.log("hi");
   };
-  useEffect(() => {
-    stateClick();
-  }, [value]);
 
   const editDrop = () => {
     if (open.class === "up") {
@@ -51,6 +53,7 @@ const DetailEditDropdown = (data) => {
       setOpen2({ class: "up", height: "0px", display: "none" });
     }
   };
+
   const stateList = ["대여가능", "대여중", "반납완료"];
   return (
     <Editdiv>
@@ -64,7 +67,7 @@ const DetailEditDropdown = (data) => {
               // description: data.description,
               // pcategory: data.pcategory,
               // image: data.image,
-              data : data
+              data: data,
             }}
           >
             <li onClick={{ editDrop }}>수정하기</li>

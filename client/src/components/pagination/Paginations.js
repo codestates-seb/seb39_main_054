@@ -1,19 +1,24 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Pagination from "react-js-pagination";
+import { paginationInfo } from "../../redux/actions/paginationAction";
+import { useSelector, useDispatch } from "react-redux";
 
 const Paginations = () => {
+  const dispatch = useDispatch();
+  const totalPageInfo = useSelector((state) => state.paginationReducer);
   const [page, setPage] = useState(1);
   const pageChange = (page) => {
     setPage(page);
+    dispatch(paginationInfo({ page: page }));
   };
 
   return (
     <Container>
       <Pagination
         activePage={page} // 현재 페이지
-        itemsCountPerPage={16} // 한 페이지 보여줄 아이템 개수
-        totalItemsCount={50} // 총 아이템의 개수
+        itemsCountPerPage={totalPageInfo.size} // 한 페이지 보여줄 아이템 개수
+        totalItemsCount={totalPageInfo.totalElements} // 총 아이템의 개수
         pageRangeDisplayed={5} // 페이지의 범위
         prevPageText={"‹"}
         nextPageText={"›"}

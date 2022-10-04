@@ -34,7 +34,7 @@ const SharePost = () => {
   };
 
   const ImageChange = (el) => {
-    setImageSrc(el.target.files[0]);
+    setImageSrc(el.target.files);
   };
   useEffect(() => {}, [imageSrc]);
 
@@ -59,7 +59,7 @@ const SharePost = () => {
     // .catch((err) => console.log(err))
     // await axios({
     //   method : "POST" ,
-    //   url : `${process.env.REACT_APP_API_URL}/product`,
+    //   url : `${process.env.REACT_APP_API_URL}/v1/product`,
     //   mode : "cors",
     //   headers: { 'Content-Type': 'multipart/form-data' },
     //   data: formData,

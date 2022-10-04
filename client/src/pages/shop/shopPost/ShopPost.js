@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import PostDropdown from "../../../components/dropdowns/PostDropdown";
 import { ReactComponent as Camera } from "../../../assets/img/icon/camera-solid.svg";
-import PostEditor from "../../../components/editor/PostEditor";
 import ShopAddress from "./ShopAddress";
 
 const ShopPost = () => {
@@ -139,11 +138,11 @@ const ShopPost = () => {
             </ColumnContainer>
           </PageContainer>
           <SubTitle>내용</SubTitle>
-          <PostEditor
+          {/* <PostEditor
             value=" "
             editorRef={editorRef}
             onChange={contentChange}
-          />
+          /> */}
           <ImgPlusBtn>
             <label htmlFor="input-file">
               <ImgDiv>

@@ -8,7 +8,8 @@ import SockJS from "react-stomp";
 
 const ChatDetail = () => {
   const Stomp = require("stompjs"); // --> ??
-  const sock = new SockJS("http://localhost:8080/chat/detail");
+  // const sock = new SockJS("http://localhost:8080/chat/detail/2");
+  const sock = new SockJS(`${process.env.REACT_APP_API_URL}/chat/detail/2`);
   const client = Stomp.over(sock);
 
   // const roomId = ?
@@ -26,14 +27,14 @@ const ChatDetail = () => {
       console.log("STOMP Connection");
 
       // 2.접속한 유저의 정보를 서버로 보내기.
-      client.send(
-        "/app/enter",
-        {},
-        JSON.stringify({
-          // chatRoomId: roomId,
-          memberId: memberId,
-        })
-      );
+      // client.send(
+      //   "/app/enter",
+      //   {},
+      //   JSON.stringify({
+      //     // chatRoomId: roomId,
+      //     memberId: memberId,
+      //   })
+      // );
       // 유저가 로그인하면(접속하면) 접속한 유저의 아이디를 서버로 보내고 서버는 접속한 유저의 정보를 받게 된다.
 
       // 클라이언트(메세지와 받을사람아이디를 같이 전송) -> 서버(메세지를 받을 사람에게 전달) -> 클라이언트(받을사람이 메세지 수신)
@@ -54,8 +55,9 @@ const ChatDetail = () => {
     // 특정 채팅방에서 나가거나 해당 어플리케이션에서 나갔을 경우 상대방이 보낸 메세지를 읽지 않음으로 표시하기 위해 구독을 끊어준다.
     // 전달하는 메세지 / 전달받는 메세지를 따로 변수에 담아준다. --> 그래야 css 작업할 수 있을듯. 근데 이게 같은 내용 아닌가?
 
-    return () => client.disconnect();
-  }, [client, memberId]); // <--- ???
+    // return () => client.disconnect();
+    // }, [client, memberId]); // <--- ???
+  }, []); // <--- ???
 
   const sendMessage = (msg) => {
     // 3. 메세지 보내기 / 보내는 메세지? / 인풋창에 메세지 적고 '버튼'을 누르면 발생하는 이벤트.
@@ -63,7 +65,7 @@ const ChatDetail = () => {
       `/app/chat/1`, // 룸아이디
       {},
       JSON.stringify({
-        // chatRoomId: roomId, // roomId는 어떻게 받지?
+        chatRoomId: 2, // roomId는 어떻게 받지?
         memberId: memberId,
         content: msg,
       })
@@ -90,11 +92,9 @@ const ChatDetail = () => {
             type="button"
             onClick={() => {
               sendMessage(msg);
-              // setMsg("");
+              setMsg("");
             }}
-          >
-            전송
-          </input>
+          ></input>
         </CDContent>
       </CDContainer>
     </>

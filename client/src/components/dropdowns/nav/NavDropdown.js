@@ -7,10 +7,11 @@ import { logout } from "../../../redux/actions/logInAction";
 const NavDropdown = ({ openDropDown, dropdwonHandler }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const memberId = localStorage.getItem("memberid");
   const dropwDownContent = [
     ["관심 목록", `/mypage/favorite`],
     ["내가 쓴 게시물", `/mypage/mypost`],
-    ["채팅 목록", `/chat/list/:id`],
+    ["채팅 목록", `/chat/list/${memberId}`], // 이런식으로 해도 되는건가??? MyPageNav는 안건들임.
     ["회원정보 수정", `/mypage/edit`],
   ];
 

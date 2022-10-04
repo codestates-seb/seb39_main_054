@@ -4,7 +4,7 @@ import axios from "axios";
 import defaultAvatar from "../../assets/img/avatar/avatar.jpg";
 
 const MyPageHeader = () => {
-  const id = localStorage.getItem("memberid");
+  const memberId = localStorage.getItem("memberid");
 
   const [myNickname, setMyNickname] = useState("");
   const headers = {
@@ -15,11 +15,12 @@ const MyPageHeader = () => {
   // 데이터 받기
   const getData = async () => {
     await axios
-      .get(`${process.env.REACT_APP_API_URL}/v1/members/2`, {
+      .get(`${process.env.REACT_APP_API_URL}/v1/members/${memberId}`, {
         headers: headers,
       })
       .then((res) => {
         setMyNickname(res.data.nickname);
+        console.log(res);
       });
   };
 

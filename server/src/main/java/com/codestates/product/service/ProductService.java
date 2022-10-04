@@ -235,6 +235,8 @@ public class ProductService{
         Optional<Product> optionalProduct = productRepository.findById(productId);
         Product product = optionalProduct.orElseThrow(() -> new CustomException("Product not Found", HttpStatus.NOT_FOUND));
 
+        product.setFavoriteCount(product.getFavoriteList().size());
+
         return product;
     }
 

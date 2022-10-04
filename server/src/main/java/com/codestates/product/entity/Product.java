@@ -5,8 +5,8 @@ import com.codestates.favorite.entity.Favorite;
 import com.codestates.member.entity.Member;
 import com.codestates.pcategory.entity.Pcategory;
 import com.codestates.pimage.entity.Pimage;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -52,8 +52,9 @@ public class Product extends Auditable {
     @OneToMany (mappedBy = "product", fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE,CascadeType.MERGE,CascadeType.PERSIST}) // 이미지 수정이 안됨.
     private List<Pimage> pimageList = new ArrayList<>();
 
-    @OneToMany
-    private List<Favorite> favoriteList = new ArrayList<>();
+    @JsonIgnoreProperties
+    @OneToMany(mappedBy = "product")
+    private List<Favorite> favoriteList;
 
 
     public enum ProductStatus{

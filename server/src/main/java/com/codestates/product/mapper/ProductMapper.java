@@ -13,8 +13,10 @@ import com.codestates.product.dto.ProductPatchDetailDto;
 import com.codestates.product.dto.ProductPostDetailDto;
 import com.codestates.product.dto.ProductResponseDto;
 import com.codestates.product.entity.Product;
-import org.mapstruct.*;
-import org.springframework.transaction.annotation.Transactional;
+import org.mapstruct.IterableMapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.Named;
+import org.mapstruct.ReportingPolicy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,8 +63,8 @@ public interface ProductMapper {
                 .title(product.getTitle())
                 .description(product.getDescription())
                 .productStatus(product.getProductStatus())
-//                .favoriteStatus(product.isFavoriteStatus())
-//                .favoriteCount(product.getFavoriteCount())
+                .favoriteStatus(product.isFavoriteStatus())
+                .favoriteCount(product.getFavoriteCount())
                 .creationDate(product.getCreationDate())
                 .lastEditDate(product.getLastEditDate())
                 .pcategory(pcategoryToPcategoryResponse(product.getPcategory()))

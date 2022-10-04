@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import PostDropdown from "../../../components/dropdowns/PostDropdown";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -12,16 +12,7 @@ const SharePost = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
-  const [imageSrc, setImageSrc] = useState({});
-  
-  // const [sharePost, setSharePost] = useState({
-  //   memberId: memberId,
-  //   title: "",
-  //   description: "",
-  //   status: "대여가능",
-  //   pcategory: "",
-  //   image: {},
-  // });
+  const [imageSrc, setImageSrc] = useState([]);
 
   const titleChange = (el) => {
     setTitle(el);
@@ -30,13 +21,12 @@ const SharePost = () => {
     setCategory(el);
   };
   const contentChange = (el) => {
-    setContent(el)
+    setContent(el);
   };
 
   const ImageChange = (el) => {
     setImageSrc(el.target.files);
   };
-  useEffect(() => {}, [imageSrc]);
 
   const cancleClick = () => {
     navigate(`/share/list`);
@@ -44,27 +34,22 @@ const SharePost = () => {
 
   const postClick = async () => {
     const formData = new FormData();
+    formData.append("productPostDetailDto.memberId", memberId);
+    formData.append("productPostDetailDto.title", title);
+    formData.append("productPostDetailDto.description", content);
+    formData.append("productPostDetailDto.pcategoryName", category);
+    Object.values(imageSrc).forEach((file) => formData.append("multipartFileList" , file))
+    // formData.append("multipartFileList", imageSrc);
     
-    // formData.append("productPostDetailDto.title" , title);
-    // formData.append("productPostDetailDto.description" , content);
-    // formData.append("productPostDetailDto.pcategoryName" , category);
-    // formData.append("multipartFileList" , imageSrc);
-    console.log(formData)
-    // axios
-    // .post(`${process.env.REACT_APP_API_URL}/product` , formData ,{
-    //   headers: { 'Content-Type': 'multipart/form-data' },
-    //   data: formData,
-    // })
-    // .then((res) => alert("성공"))
-    // .catch((err) => console.log(err))
-    // await axios({
-    //   method : "POST" ,
-    //   url : `${process.env.REACT_APP_API_URL}/v1/product`,
-    //   mode : "cors",
-    //   headers: { 'Content-Type': 'multipart/form-data' },
-    //   data: formData,
-    // })
-
+    for (let key of formData.keys()) {
+      console.log(key);
+    }
+    await axios
+    .post(`${process.env.REACT_APP_API_URL}/v1/product` , formData ,{
+      headers :{'Content-Type': 'multipart/form-data' }
+    })
+    .then((res) => alert("성공"))
+    
   };
   const deleteClick = (idx) => {
     setImageSrc([
@@ -72,9 +57,7 @@ const SharePost = () => {
       ...imageSrc.slice(idx + 1, imageSrc.length),
     ]);
   };
-  useEffect(() => {
-
-  }, []);
+  useEffect(() => {}, []);
   return (
     <MainContainer>
       <Title>공유 물품 작성</Title>
@@ -90,8 +73,10 @@ const SharePost = () => {
             <PostDropdown categoryChange={categoryChange} />
           </PageContainer>
           <SubTitle>내용</SubTitle>
-          <ContentBox placeholder="내용을 입력해주세요" onChange={(e) =>contentChange(e.target.value)}>
-          </ContentBox>
+          <ContentBox
+            placeholder="내용을 입력해주세요"
+            onChange={(e) => contentChange(e.target.value)}
+          ></ContentBox>
           <ImgPost
             id="input-file"
             type="file"
@@ -148,12 +133,11 @@ const Title = styled.div`
   margin: 5rem;
   @media ${(props) => props.theme.mobile} {
     font-size: 1.5rem;
-
   }
 `;
 const WriteContainer = styled.div`
   width: 66.25rem;
-  
+
   display: flex;
   background-color: ${(props) => props.theme.gray6};
   flex-direction: column;
@@ -197,7 +181,7 @@ const InputText = styled.input`
   }
   @media ${(props) => props.theme.mobile} {
     height: 2.5rem;
-    ::placeholder{
+    ::placeholder {
       font-size: 1rem;
     }
   }
@@ -219,7 +203,7 @@ const CancelBtn = styled.button`
   font-size: 1.375rem;
   @media ${(props) => props.theme.mobile} {
     width: 5rem;
-    height:2rem;
+    height: 2rem;
     font-size: 1rem;
   }
 `;
@@ -233,7 +217,7 @@ const PostBtn = styled.button`
   font-size: 1.375rem;
   @media ${(props) => props.theme.mobile} {
     width: 5rem;
-    height:2rem;
+    height: 2rem;
     font-size: 1rem;
   }
 `;
@@ -256,10 +240,10 @@ const ImgDiv = styled.div`
   display: flex;
   flex-direction: column;
   color: ${(props) => props.theme.textColor};
-  
+
   @media ${(props) => props.theme.mobile} {
     width: 3rem;
-    height:3rem;
+    height: 3rem;
   }
 
   svg {
@@ -268,9 +252,9 @@ const ImgDiv = styled.div`
     fill: ${(props) => props.theme.textColor};
     cursor: pointer;
     @media ${(props) => props.theme.mobile} {
-    width: 1rem;
-    height:1rem;
-  }
+      width: 1rem;
+      height: 1rem;
+    }
   }
 `;
 const ImgContainer = styled.div`
@@ -314,9 +298,8 @@ const ContentBox = styled.textarea`
   resize: none;
   @media ${(props) => props.theme.mobile} {
     height: 25rem;
-    ::placeholder{
+    ::placeholder {
       font-size: 1rem;
     }
   }
 `;
-

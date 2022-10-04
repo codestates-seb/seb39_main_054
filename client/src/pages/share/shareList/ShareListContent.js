@@ -58,12 +58,7 @@ const ShareListContent = () => {
 
   useEffect(() => {
     getFilterData();
-    dispatch(paginationInfo({ page: 1 }));
-  }, [filter]);
-
-  useEffect(() => {
-    getFilterData();
-  }, [pageNum]);
+  }, [filter, pageNum]);
 
   return (
     <Content>

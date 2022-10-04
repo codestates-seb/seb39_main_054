@@ -9,7 +9,9 @@ import SockJS from "react-stomp";
 const ChatDetail = () => {
   const Stomp = require("stompjs"); // --> ??
   // const sock = new SockJS("http://localhost:8080/chat/detail/2");
-  const sock = new SockJS(`${process.env.REACT_APP_API_URL}/chat/detail/2`);
+  const sock = new SockJS(
+    `${process.env.REACT_APP_API_URL}/gs-guide-websocket`
+  );
   const client = Stomp.over(sock);
 
   // const roomId = ?

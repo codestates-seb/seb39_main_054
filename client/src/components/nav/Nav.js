@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import logo from "../../assets/img/logo/ANBD-2.png";
 import logoW from "../../assets/img/logo/ANBD-2-w.png";
@@ -10,14 +10,14 @@ import { Link } from "react-router-dom";
 import NavDropdown from "../dropdowns/nav/NavDropdown";
 import NavDropdwonMobile from "../dropdowns/nav/NavDropdwonMobile";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 const Nav = ({ isTheme, setIsTheme }) => {
   // 화면 크기 (반응형 구현)
   const isMobile = useMediaQuery({ maxWidth: 786 });
   const isLogin = useSelector((state) => state.loginReducer.isLogin);
 
-  // // 로그인 테스트
-  // const [isLogin, setIsLogin] = useState(true);
+  const [nickName, setNickName] = useState("");
 
   // 닉네임 클릭 드롭다운
   const [openDropDown, setOpenDropDown] = useState({
@@ -43,6 +43,26 @@ const Nav = ({ isTheme, setIsTheme }) => {
       setOpenDropDown({ className: "up" });
     }
   };
+
+  // 유저 닉네임 가져오기
+  const getUserInfo = async () => {
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `${localStorage.getItem("authorization")}`,
+    };
+    await axios
+      .get(
+        `${process.env.REACT_APP_API_URL}/v1/members/${localStorage.getItem(
+          "memberid"
+        )}`,
+        { headers: headers }
+      )
+      .then((res) => setNickName(res.data.nickname));
+  };
+
+  useEffect(() => {
+    if (isLogin) getUserInfo();
+  }, [isLogin]);
 
   return (
     <NavContainer>
@@ -83,7 +103,7 @@ const Nav = ({ isTheme, setIsTheme }) => {
               ) : (
                 <div>
                   <div className="profile" onClick={dropdwonHandler}>
-                    닉네임
+                    {nickName}
                   </div>
                   <NavDropdown
                     openDropDown={openDropDown}

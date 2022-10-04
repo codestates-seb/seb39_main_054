@@ -19,7 +19,6 @@ const MainContent = () => {
   useEffect(() => {
     getData();
   }, []);
-  console.log(data)
 
   return (
     <Container>

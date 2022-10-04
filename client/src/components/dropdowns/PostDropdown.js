@@ -86,6 +86,18 @@ const Ul = styled.ul`
   z-index: 100;
   text-align: center;
 
+  @media ${(props) => props.theme.tabletL} {
+    width: 39.4rem
+  }
+
+  @media ${(props) => props.theme.tabletS} {
+    width: 29.4rem
+  }
+  @media ${(props) => props.theme.mobile} {
+    width: 21rem
+  }
+
+
   li {
     padding: 17.5px 0;
 
@@ -131,6 +143,17 @@ const UpBtn = styled(Up)`
 const TagBtn = styled.button`
   width: 12rem;
   height: 3.44rem;
+  @media ${(props) => props.theme.mobile} {
+    height: 2.5rem;
+    width: 100%;
+  }
+  @media ${(props) => props.theme.tabletL} {
+    width: 100%;
+  }
+
+  @media ${(props) => props.theme.tabletS} {
+    width: 100%;
+  }
   background-color: ${(props) => props.theme.bgColor};
   font-size: 1.2rem;
   border: solid 0.1875rem;
@@ -138,4 +161,7 @@ const TagBtn = styled.button`
   border-radius: 10px;
   margin: 0rem;
   color: ${(props) => props.theme.textColor};
+  @media ${(props) => props.theme.tabletL} {
+    margin-top: 1rem;
+  }
 `;

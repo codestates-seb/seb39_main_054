@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { shareStatusSelect } from "../../../redux/actions/filtersAction";
 import { ReactComponent as Check } from "../../../assets/img/icon/category/check.svg";
 
 const ShareStateMobile = () => {
   const [current, setCurrent] = useState("전체");
+  const dispatch = useDispatch();
 
   const checkToggle = (el) => {
     setCurrent(el);
+    dispatch(shareStatusSelect(el));
   };
 
   return (

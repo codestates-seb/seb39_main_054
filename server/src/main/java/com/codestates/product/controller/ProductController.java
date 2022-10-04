@@ -101,9 +101,14 @@ public class ProductController {
      * 제품 상세조회
      */
     @GetMapping("/{product-id}")
-    public ResponseEntity getProduct(@PathVariable("product-id") @Positive long productId) {
+    public ResponseEntity getProduct(@PathVariable("product-id") @Positive long productId,
+                                     @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
-        Product product = productService.findProduct(productId);
+        Long memberId = null;
+        if (principalDetails != null) {
+            memberId = principalDetails.getMember().getMemberId();
+        }
+        Product product = productService.findProduct(productId, memberId);
         ProductResponseDto.DetailResponse productDetailResponseDto = mapper.productToProductDetailResponseDto(product);
 
         return new ResponseEntity<>(productDetailResponseDto, HttpStatus.OK);
@@ -117,9 +122,14 @@ public class ProductController {
                                          @Positive @RequestParam(defaultValue = "50") int size,
                                          @RequestParam @Nullable String pcategoryName,
                                          @RequestParam @Nullable Product.ProductStatus status,
-                                         @RequestParam @Nullable String keyword) {
+                                         @RequestParam @Nullable String keyword,
+                                         @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        Long memberId = null;
+        if (principalDetails != null) {
+            memberId = principalDetails.getMember().getMemberId();
+        }
 
-        PageImpl<Product> pageProductList = productService.findProductList(page - 1, size,pcategoryName,status,keyword);
+        PageImpl<Product> pageProductList = productService.findProductList(page - 1, size,pcategoryName,status,keyword, memberId);
         List<Product> productList = pageProductList.getContent();
 
         productList.forEach(product -> {System.out.println("product.getFavoriteCount()2 : " + product.getProductId());});

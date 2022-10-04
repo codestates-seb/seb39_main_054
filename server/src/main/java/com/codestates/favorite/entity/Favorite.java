@@ -2,9 +2,11 @@ package com.codestates.favorite.entity;
 
 import com.codestates.audit.Auditable;
 import com.codestates.member.entity.Member;
-import com.codestates.pcategory.entity.Pcategory;
 import com.codestates.product.entity.Product;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -13,6 +15,13 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(uniqueConstraints = {
+        @UniqueConstraint(
+                name = "favorite_uk",
+                columnNames = {"MEMBER_ID", "PRODUCT_ID"}
+        )
+}
+)
 public class Favorite extends Auditable {
 
     @Id

@@ -37,6 +37,9 @@ include::{snippets}/patch-member/http-request.adoc[]
 .request-fields
 include::{snippets}/patch-member/request-fields.adoc[]
 
+.request-parts
+include::{snippets}/patch-member/request-parts.adoc[]
+
 .http-response
 include::{snippets}/patch-member/http-response.adoc[]
 

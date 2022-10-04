@@ -60,7 +60,6 @@ const Login = () => {
       })
       .catch((err) => {
         if (err.message === "Request failed with status code 500") {
-          // alert("사용자가 없습니다");
           errSignup();
           setIsOpen(!isOpen);
         }

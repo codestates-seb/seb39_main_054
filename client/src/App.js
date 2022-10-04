@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "./redux/actions/logInAction";
+
 import GlobalStyle from "./assets/styles/GlobalStyle";
 import { darkTheme, lightTheme } from "./assets/styles/Theme";
 import Nav from "./components/nav/Nav";
@@ -27,6 +30,12 @@ const App = () => {
   // 테마 변경 (lightTheme, darkTheme)
   const [isTheme, setIsTheme] = useState("light");
   const theme = isTheme === "light" ? lightTheme : darkTheme;
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (localStorage.getItem("authorization") !== null) {
+      dispatch(loginSuccess());
+    }
+  }, []);
 
   useEffect(() => {
     if (localStorage.getItem("theme") === "light") {
@@ -63,7 +72,7 @@ const App = () => {
                 element={<MyPageMyPost></MyPageMyPost>}
               ></Route>
               <Route
-                path="/mypage/edit"
+                path="/mypage/edit/:id"
                 element={<MyPageEdit></MyPageEdit>}
               ></Route>
               <Route

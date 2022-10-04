@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import MyPageHeader from "../MyPageHeader";
@@ -9,16 +10,17 @@ import ShareStateMobile from "../../../components/filters/shareState/ShareStateM
 import ShareCardContent from "../../../components/cards/ShareCardContent";
 
 const MyPageFavorite = () => {
+  const isMobile = useMediaQuery({ maxWidth: 786 });
+  const { id } = useParams();
   // 데이터
   const [data, setData] = useState(null);
-  const isMobile = useMediaQuery({ maxWidth: 786 });
 
   const categoryChange = (el) => {};
 
   // 데이터 받기
   const getData = async () => {
     await axios
-      .get(`${process.env.REACT_APP_API_URL}/product`)
+      .get(`${process.env.REACT_APP_API_URL}/v1/product/mylist/${id}`)
       .then((res) => setData(res.data));
   };
 

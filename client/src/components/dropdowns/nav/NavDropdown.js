@@ -10,7 +10,7 @@ const NavDropdown = ({ openDropDown, dropdwonHandler }) => {
   const dropwDownContent = [
     ["관심 목록", `/mypage/favorite`],
     ["내가 쓴 게시물", `/mypage/mypost`],
-    ["채팅 목록", `/chat/list:id`],
+    ["채팅 목록", `/chat/list/:id`],
     ["회원정보 수정", `/mypage/edit`],
   ];
 

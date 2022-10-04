@@ -1,17 +1,37 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import axios from "axios";
+import defaultAvatar from "../../assets/img/avatar/avatar.jpg";
 
 const MyPageHeader = () => {
-  // 프로필 이미지 업로드 코드
-  // 닉네임 요청
+  const id = localStorage.getItem("memberid");
+
+  const [myNickname, setMyNickname] = useState("");
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `${localStorage.getItem("authorization")}`,
+  };
+
+  // 데이터 받기
+  const getData = async () => {
+    await axios
+      .get(`${process.env.REACT_APP_API_URL}/v1/members/2`, {
+        headers: headers,
+      })
+      .then((res) => {
+        setMyNickname(res.data.nickname);
+      });
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <MHContainer>
       <AvartarContainer>
-        <AvartarWrapper>
-          <img></img>
-        </AvartarWrapper>
-        <p>키키님 반갑습니다.</p>
+        <AvartarWrapper src={defaultAvatar}></AvartarWrapper>
+        <p>{myNickname}님 반갑습니다.</p>
       </AvartarContainer>
     </MHContainer>
   );
@@ -55,7 +75,7 @@ const AvartarContainer = styled.div`
     }
   }
 `;
-const AvartarWrapper = styled.div`
+const AvartarWrapper = styled.img`
   width: 11.25rem;
   height: 11.25rem;
   background-color: aliceblue;

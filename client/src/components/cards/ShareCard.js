@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as Heart } from "../../assets/img/icon/heart.svg";
 
-const ShareCard = ({ id, title, description, status, image01 }) => {
+const ShareCard = ({ id, title, description, status, image01, favoriteCount }) => {
   return (
     <Container>
       <Link to={`/share/detail/${id}`}>
@@ -21,7 +21,7 @@ const ShareCard = ({ id, title, description, status, image01 }) => {
               </ShareState>
               <Favorite>
                 <Heart />
-                13
+                {favoriteCount}
               </Favorite>
             </div>
           </div>

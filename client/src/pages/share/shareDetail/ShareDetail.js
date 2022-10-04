@@ -10,6 +10,7 @@ import DetailEditDropdown from "../../../components/dropdowns/DetailEditDropdown
 const ShareDetail = () => {
   const navigate = useNavigate();
   const [data, setData] = useState("");
+  const [productData, setProductData] = useState("");
   const { id } = useParams();
 
   const memberId = localStorage.getItem("memberid");
@@ -20,23 +21,35 @@ const ShareDetail = () => {
       .then((res) => setData(res.data));
   };
 
+  // 제품 상세 조회
+  const getProduct = async () => {
+    await axios
+      // .get(`${process.env.REACT_APP_API_URL}/product/${id}`)
+      .get(`${process.env.REACT_APP_API_URL}/v1/product/3`)
+      .then((res) => {
+        setProductData(res.data);
+        console.log(res);
+      });
+  };
+
   // 채팅방 개설, 채팅상세페이지로 이동
   const openChatting = async () => {
     await axios
       .post(`${process.env.REACT_APP_API_URL}/v1/chat/room`, {
-        sellerId: data.member.memberId,
+        sellerId: productData.member.memberId, // 3
         buyerId: memberId,
-        productId: data.productId,
+        productId: productData.productId,
       })
       .then((res) => {
-        // roomId가 null로 나옴
-        // navigate(`/chat/detail/${res.data.roomId}`);
+        navigate(`/chat/detail/${res.data.id}`);
+        console.log(res.data.id); // 2 / 룸아이디인듯
       })
       .catch((err) => console.log(err));
   };
 
   useEffect(() => {
     getData();
+    getProduct();
   }, []);
 
   return (
@@ -54,7 +67,7 @@ const ShareDetail = () => {
             <ContentContainer>
               <ShareDetailContent content={data}></ShareDetailContent>
             </ContentContainer>
-            <Buttondiv onClick={openChatting}>
+            <Buttondiv onClick={() => openChatting()}>
               <ChatBtn>채팅하기</ChatBtn>
             </Buttondiv>
           </Container>

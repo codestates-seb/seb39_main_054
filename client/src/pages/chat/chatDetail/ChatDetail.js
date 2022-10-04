@@ -4,23 +4,15 @@ import SockJS from "react-stomp";
 // import SockJS from "sockjs-client";
 // import * as Stomp from "@stomp/stompjs";
 
-// import InputContainer from "./InputContainer";
-
 const ChatDetail = () => {
-  const Stomp = require("stompjs"); // --> ??
-  // const sock = new SockJS("http://localhost:8080/chat/detail/2");
+  const Stomp = require("stompjs");
   const sock = new SockJS(
-    `${process.env.REACT_APP_API_URL}/gs-guide-websocket`
+    "http://ec2-13-125-149-205.ap-northeast-2.compute.amazonaws.com:8080/gs-guide-websocket"
   );
   const client = Stomp.over(sock);
 
-  // const roomId = ?
-
-  // 보내는 메세지
-  const [msg, setMsg] = useState("");
-  // 받는 메세지
-  const [data, setData] = useState("");
-
+  const [msg, setMsg] = useState(""); // 보내는 메세지
+  const [data, setData] = useState(""); // 받는 메세지
   const memberId = localStorage.getItem("memberid");
 
   useEffect(() => {
@@ -38,8 +30,6 @@ const ChatDetail = () => {
       //   })
       // );
       // 유저가 로그인하면(접속하면) 접속한 유저의 아이디를 서버로 보내고 서버는 접속한 유저의 정보를 받게 된다.
-
-      // 클라이언트(메세지와 받을사람아이디를 같이 전송) -> 서버(메세지를 받을 사람에게 전달) -> 클라이언트(받을사람이 메세지 수신)
 
       // 4. 구독 / 받는 메세지? / 보낼 주소는 보통 roomId로 하는편인듯 / newMessage.content -> 메세지!
       client
@@ -59,10 +49,10 @@ const ChatDetail = () => {
 
     // return () => client.disconnect();
     // }, [client, memberId]); // <--- ???
-  }, []); // <--- ???
+  }, []);
 
+  // 3. 메세지 보내기 / 보내는 메세지? / 인풋창에 메세지 적고 '버튼'을 누르면 발생하는 이벤트.
   const sendMessage = (msg) => {
-    // 3. 메세지 보내기 / 보내는 메세지? / 인풋창에 메세지 적고 '버튼'을 누르면 발생하는 이벤트.
     client.send(
       `/app/chat/1`, // 룸아이디
       {},
@@ -72,8 +62,7 @@ const ChatDetail = () => {
         content: msg,
       })
     );
-    // 서버는 메세지 받을 대상의 아이디를 받고 이 아이디를 가진 유저에게 메세지를 전달한다.
-    // client.send(`/app/chat/보낼주소`,{헤더(필수 아님)},JSON.stringify(보낼데이터))
+    // 서버는 메세지 받을 대상의 아이디를 받고 이 아이디를 가진 유저에게 메세지를 전달한다. -> ??
   };
 
   const handleInput = useCallback((e) => {
@@ -81,7 +70,6 @@ const ChatDetail = () => {
   }, []);
 
   // 인풋창에 값을 입력하고 전송 버튼을 누르면 handleInput함수가 실행되면서 인풋값을 setMsg에 넣어준다.
-  // 버튼을 누르면 sendMessage함수가 실행되면서 메세지(msg)와 여러값을 보내준다.
 
   return (
     <>
@@ -94,7 +82,7 @@ const ChatDetail = () => {
             type="button"
             onClick={() => {
               sendMessage(msg);
-              setMsg("");
+              // setMsg("");
             }}
           ></input>
         </CDContent>

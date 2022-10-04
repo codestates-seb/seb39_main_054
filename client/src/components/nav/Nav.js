@@ -61,9 +61,9 @@ const Nav = ({ isTheme, setIsTheme }) => {
   };
 
   useEffect(() => {
-    getUserInfo();
-  }, []);
-  
+    if (isLogin) getUserInfo();
+  }, [isLogin]);
+
   return (
     <NavContainer>
       <NavContent>

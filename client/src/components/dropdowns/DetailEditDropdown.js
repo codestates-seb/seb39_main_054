@@ -21,10 +21,13 @@ const DetailEditDropdown = (data) => {
   const { id } = useParams();
 
   const stateClick = async (e) => {
+    const formData = new FormData();
+    formData.append("productStatus", e);
     await axios
-      .patch(`${process.env.REACT_APP_API_URL}/v1/product/${id}`, {
-        status: e,
-      })
+      .post(`${process.env.REACT_APP_API_URL}/v1/product/${id}`, formData ,{
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+     )
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };

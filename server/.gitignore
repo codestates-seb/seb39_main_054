@@ -6,6 +6,7 @@ build/
 !**/src/test/**/build/
 application-oauth.yml
 application.yml
+.DS_Store
 
 ### STS ###
 .apt_generated

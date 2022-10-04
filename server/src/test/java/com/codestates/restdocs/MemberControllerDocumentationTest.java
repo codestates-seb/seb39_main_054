@@ -20,6 +20,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.HttpMethod;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,9 +32,11 @@ import static com.codestates.util.ApiDocumentUtils.getRequestPreProcessor;
 import static com.codestates.util.ApiDocumentUtils.getResponsePreProcessor;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.multipart;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -107,6 +110,8 @@ public class MemberControllerDocumentationTest implements MemberControllerTestHe
     public void patchMemberTest() throws Exception {
         // given
         long memberId = 1L;
+        MockMultipartFile image = new MockMultipartFile("multipartFile", "image.png", "image/png",
+                "<<png data>>".getBytes());
         MemberPatchDto patch = (MemberPatchDto) MemberStubData.MockMember.getRequestBody(HttpMethod.PATCH);
         String content = toJsonContent(patch);
 
@@ -120,7 +125,12 @@ public class MemberControllerDocumentationTest implements MemberControllerTestHe
         given(mapper.memberToMemberResponseDto(Mockito.any(Member.class))).willReturn(responseDto);
 
         // when
-        ResultActions actions = mockMvc.perform(postwithVariableRequestBuilder(getURI(), memberId, content));
+//        ResultActions actions = mockMvc.perform(postwithVariableRequestBuilder(getURI(), memberId, content));
+        ResultActions actions = mockMvc.perform(multipart(getURI(), memberId)
+                        .file(image)
+                        .content(content)
+                .with(csrf())
+        );
 
         // then
         actions.andExpect(status().isOk())
@@ -136,6 +146,9 @@ public class MemberControllerDocumentationTest implements MemberControllerTestHe
                         ),
                         requestFields(
                                 getDefaultMemberPatchRequestDescriptors()
+                        ),
+                        requestParts(
+                                partWithName("multipartFile").description("프로필 이미지")
                         ),
                         responseFields(
                                 getFullResponseDescriptors(

@@ -1,33 +1,36 @@
-import React from "react";
-import "@toast-ui/editor/dist/toastui-editor.css";
-import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
-import { Editor } from "@toast-ui/react-editor";
-import { useRef } from "react";
-import styled from "styled-components";
+import React from 'react'
+import '@toast-ui/editor/dist/toastui-editor.css';
+import '@toast-ui/editor/dist/theme/toastui-editor-dark.css'
+import { Editor } from '@toast-ui/react-editor';
+import { useRef } from 'react';
+import styled from 'styled-components';
 
-const PostEditor = ({ value, editorRef, onChange }) => {
+
+const PostEditor =({value , editorRef, onChange}) => {
   return (
     <Div>
-      <Editor
+  <Editor
         placeholder="입력해주세요"
-        previewStyle="vertical"
+        previewStyle="vertical" 
         height="500px" // 에디터 창 높이
         initialEditType="wysiwyg" // 초기 입력모드 설정(디폴트 markdown)
         initialValue={value}
-        ref={editorRef}
-        onChange={onChange}
+        ref = {editorRef}
+        onChange = {onChange}
         toolbarItems={[
-          ["bold", "italic", "strike"],
-          ["hr", "quote"],
-          ["ul", "ol", "task"],
-          ["table"],
+        
+          ['bold', 'italic', 'strike'],
+          ['hr', 'quote'],
+          ['ul', 'ol', 'task'],
+          ['table']
         ]}
       ></Editor>
-    </Div>
-  );
-};
+      </Div>
+  )
+}
 const Div = styled.div`
-  .ck-editor__editable {
+
+.ck-editor__editable {
     min-height: 42.5rem;
   }
   .ck .ck-editor__main > .ck-editor__editable {
@@ -67,6 +70,7 @@ const Div = styled.div`
   .ProseMirror .placeholder {
     font-size: 1.2rem;
   }
-`;
+`
 
-export default PostEditor;
+
+export default PostEditor

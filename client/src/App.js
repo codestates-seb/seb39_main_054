@@ -23,6 +23,7 @@ import ChatList from "./pages/chat/chatList/ChatList";
 import ChatDetail from "./pages/chat/chatDetail/ChatDetail";
 import ShopPost from "./pages/shop/shopPost/ShopPost";
 import ShopList from "./pages/shop/shopList/ShopList";
+import ShareEdit from "./pages/share/shareEdit/ShareEdit";
 import ShopEdit from "./pages/shop/shopEdit/ShopEdit";
 
 const App = () => {
@@ -59,7 +60,7 @@ const App = () => {
               ></Route>
               <Route path="/share/detail/:id" element={<ShareDetail />}></Route>
               <Route path="/share/post" element={<SharePost />}></Route>
-              <Route path="/share/edit/:id"></Route>
+              <Route path="/share/edit/:id"  element={<ShareEdit />}></Route>
               <Route path="/login" element={<Login></Login>}></Route>
               <Route path="/signup" element={<SignUp></SignUp>}></Route>
               <Route

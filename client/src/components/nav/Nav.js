@@ -7,20 +7,21 @@ import { ReactComponent as Moon } from "../../assets/img/icon/moon.svg";
 import { ReactComponent as Bars } from "../../assets/img/icon/bars.svg";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
-import NavDropdown from "../dropdowns/NavDropdown";
-import NavDropdwonMobile from "../dropdowns/NavDropdwonMobile";
+import NavDropdown from "../dropdowns/nav/NavDropdown";
+import NavDropdwonMobile from "../dropdowns/nav/NavDropdwonMobile";
+import { useSelector } from "react-redux";
 
 const Nav = ({ isTheme, setIsTheme }) => {
   // 화면 크기 (반응형 구현)
   const isMobile = useMediaQuery({ maxWidth: 786 });
+  const isLogin = useSelector((state) => state.loginReducer.isLogin);
 
-  // 로그인 테스트
-  const [isLogin, setIsLogin] = useState(true);
+  // // 로그인 테스트
+  // const [isLogin, setIsLogin] = useState(true);
 
   // 닉네임 클릭 드롭다운
   const [openDropDown, setOpenDropDown] = useState({
     className: "up",
-    display: "none",
   });
 
   // 테마 변경 함수
@@ -35,11 +36,11 @@ const Nav = ({ isTheme, setIsTheme }) => {
   };
 
   // 닉네임 버튼 클릭 (드롭다운)
-  const toggleNickName = () => {
+  const dropdwonHandler = () => {
     if (openDropDown.className === "up") {
-      setOpenDropDown({ className: "down", display: "flex" });
+      setOpenDropDown({ className: "down" });
     } else {
-      setOpenDropDown({ className: "up", display: "flex" });
+      setOpenDropDown({ className: "up" });
     }
   };
 
@@ -81,19 +82,23 @@ const Nav = ({ isTheme, setIsTheme }) => {
                 </>
               ) : (
                 <div>
-                  <div className="profile" onClick={toggleNickName}>
+                  <div className="profile" onClick={dropdwonHandler}>
                     닉네임
                   </div>
-                  <NavDropdown openDropDown={openDropDown}></NavDropdown>
+                  <NavDropdown
+                    openDropDown={openDropDown}
+                    dropdwonHandler={dropdwonHandler}
+                  ></NavDropdown>
                 </div>
               )}
             </>
           ) : (
             <div className="bars">
-              <Bars onClick={toggleNickName}></Bars>
+              <Bars onClick={dropdwonHandler}></Bars>
               <NavDropdwonMobile
                 isLogin={isLogin}
                 openDropDown={openDropDown}
+                dropdwonHandler={dropdwonHandler}
               ></NavDropdwonMobile>
             </div>
           )}

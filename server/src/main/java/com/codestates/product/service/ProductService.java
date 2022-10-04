@@ -230,12 +230,17 @@ public class ProductService{
     /**
      * 제품 상세 조회
      */
-    public Product findProduct(long productId) {
+    public Product findProduct(long productId, Long principalId) {
 
         Optional<Product> optionalProduct = productRepository.findById(productId);
         Product product = optionalProduct.orElseThrow(() -> new CustomException("Product not Found", HttpStatus.NOT_FOUND));
 
         product.setFavoriteCount(product.getFavoriteList().size());
+        product.getFavoriteList().forEach(favorite -> {
+            if (favorite.getMember().getMemberId() == principalId) {
+                product.setFavoriteStatus(true);
+            }
+        });
 
         return product;
     }
@@ -244,15 +249,20 @@ public class ProductService{
     /**
      * 제품 리스트 조회
      */
-    public PageImpl<Product> findProductList(int page, int size, String pcategoryName, Product.ProductStatus status, String keyword) {
+    public PageImpl<Product> findProductList(int page, int size, String pcategoryName, Product.ProductStatus status, String keyword, Long principalId) {
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by("productId").descending());
         PageImpl<Product> productList = productRepository.findByCategoryStatusKeyword(pcategoryName, status, keyword,pageRequest);
 
 
-//        productList.forEach(product -> {
-//            product.setFavoriteCount(product.getFavoriteList().size());
+        productList.forEach(product -> {
+            product.setFavoriteCount(product.getFavoriteList().size());
 //            System.out.println("product.getFavoriteCount() : " + product.getFavoriteCount());
-//        });
+            product.getFavoriteList().forEach(favorite -> {
+                if (favorite.getMember().getMemberId() == principalId) {
+                    product.setFavoriteStatus(true);
+                }
+            });
+        });
 
         return productList;
     }

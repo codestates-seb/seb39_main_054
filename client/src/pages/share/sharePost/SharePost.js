@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState, useEffect} from "react";
 import PostDropdown from "../../../components/dropdowns/PostDropdown";
 import { useNavigate } from "react-router-dom";
-import axios, { Axios } from "axios";
+import axios from "axios";
 import { ReactComponent as Camera } from "../../../assets/img/icon/camera-solid.svg";
 
 const SharePost = () => {

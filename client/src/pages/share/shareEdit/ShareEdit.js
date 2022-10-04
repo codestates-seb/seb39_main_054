@@ -5,7 +5,7 @@ import PostDropdown from "../../../components/dropdowns/PostDropdown";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { ReactComponent as Camera } from "../../../assets/img/icon/camera-solid.svg";
-import PostEditor from "../../../components/editor/PostEditor";
+
 
 const ShareEdit = () => {
   const navigate = useNavigate();
@@ -91,11 +91,6 @@ const ShareEdit = () => {
             <PostDropdown categoryChange={categoryChange} />
           </PageContainer>
           <SubTitle>내용</SubTitle>
-          <PostEditor
-            value= " "
-            editorRef={editorRef}
-            onChange={contentChange}
-          />
           <ImgPost
             id="input-file"
             type="file"

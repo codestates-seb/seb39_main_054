@@ -28,7 +28,6 @@ const SharePost = () => {
   };
   const categoryChange = (el) => {
     setCategory(el);
-    console.log(category)
   };
   const contentChange = (el) => {
     setContent(el)
@@ -36,7 +35,6 @@ const SharePost = () => {
 
   const ImageChange = (el) => {
     setImageSrc(el.target.files[0]);
-    console.log(imageSrc);
   };
   useEffect(() => {}, [imageSrc]);
 
@@ -46,13 +44,12 @@ const SharePost = () => {
 
   const postClick = async () => {
     const formData = new FormData();
-    formData.append("productPostDetailDto.memberId" , memberId);
-    formData.append("productPostDetailDto.title" , title);
-    formData.append("productPostDetailDto.description" , content);
-    formData.append("productPostDetailDto.pcategoryName" , category);
-    formData.append("multipartFileList" , imageSrc);
+    
+    // formData.append("productPostDetailDto.title" , title);
+    // formData.append("productPostDetailDto.description" , content);
+    // formData.append("productPostDetailDto.pcategoryName" , category);
+    // formData.append("multipartFileList" , imageSrc);
     console.log(formData)
-
     // axios
     // .post(`${process.env.REACT_APP_API_URL}/product` , formData ,{
     //   headers: { 'Content-Type': 'multipart/form-data' },

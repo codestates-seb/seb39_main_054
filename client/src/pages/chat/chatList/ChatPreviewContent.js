@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import ChatPreview from "./ChatPreview";
 
 const ChatPreviewContent = ({ chatList }) => {
   return (
     <PreviewContent>
-      {/* {chatList !== null &&
+      {chatList !== null &&
         chatList.map((el) => (
           <ChatPreview
             key={el.id}
@@ -18,7 +19,7 @@ const ChatPreviewContent = ({ chatList }) => {
             lastEditDate={el.lastEditDate}
             // 여기서 필요한거 빼고 지우기.
           />
-        ))} */}
+        ))}
     </PreviewContent>
   );
 };

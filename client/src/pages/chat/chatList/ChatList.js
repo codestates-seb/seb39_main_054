@@ -10,7 +10,7 @@ const ChatList = () => {
 
   const getChatList = async () => {
     await axios
-      .get(`${process.env.REACT_APP_API_URL}/v1/chat/rooms/${id}`)
+      .get(`${process.env.REACT_APP_API_URL}/v1/chat/rooms/1`)
       .then((res) => setChatList(res.data))
       .catch((err) => console.log(err));
   };

@@ -76,6 +76,7 @@ const SignUp = () => {
       .then((res) => {
         successSignup();
         console.log(res);
+        console.log("ok");
       })
       .catch((err) => {
         if (err.message === "Request failed with status code 500") {
@@ -89,7 +90,7 @@ const SignUp = () => {
   //   console.log(data);
   // };
 
-  console.log(errors);
+  // console.log(errors);
 
   return (
     <SignupContainer>

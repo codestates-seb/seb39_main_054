@@ -23,20 +23,18 @@ const MyPageSignOut = () => {
 
   // 모달창의 확인버튼을 눌렀을때의 동작
   const handleModal = () => {
-    setIsOpen(!isOpen);
-    // navigate(`/`);
+    navigate(`/`);
   };
 
   const handleSignOut = async () => {
     await axios
       .patch(
-        `${process.env.REACT_APP_API_URL}/member/${id}`,
-        // `${process.env.REACT_APP_API_URL}/member`,
+        `${process.env.REACT_APP_API_URL}/v1/members/${id}`,
         { memberStatus: "MEMBER_QUIT" },
         { headers: headers }
       )
       .then(() => {
-        handleModal();
+        setIsOpen(!isOpen);
         console.log("ok");
       })
       .catch((error) => console.error(error));

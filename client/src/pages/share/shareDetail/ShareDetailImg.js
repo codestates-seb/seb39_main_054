@@ -2,11 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { ReactComponent as Left } from "../../../assets/img/icon/caret-left.svg";
 import { ReactComponent as Right } from "../../../assets/img/icon/caret-right.svg";
-import Slide from "../../../components/carousel/Slide";
 
-const ShareDetailImg = ({ url }) => {
-  const value = Object.values(url);
-  const TOTAL_SLIDES = value.length - 1;
+const ShareDetailImg = ({ image }) => {
+  const TOTAL_SLIDES = image.length - 1;
   const [currentSlide, setCurrentSlide] = useState(0);
   const slideRef = useRef(null);
 
@@ -15,11 +13,13 @@ const ShareDetailImg = ({ url }) => {
       ? setCurrentSlide(TOTAL_SLIDES)
       : setCurrentSlide(currentSlide - 1);
   };
+
   const onClickRightBtn = () => {
     currentSlide >= TOTAL_SLIDES
       ? setCurrentSlide(0)
       : setCurrentSlide(currentSlide + 1);
   };
+
   useEffect(() => {
     slideRef.current.style.transition = "all 0.5s ease-in-out";
     slideRef.current.style.transform = `translateX(-${currentSlide}00%)`;
@@ -27,23 +27,23 @@ const ShareDetailImg = ({ url }) => {
 
   return (
     <>
-    {!!url && (
-      <>
-      <PictureContainer>
-        <Picture ref={slideRef}>
-          {value.map((values) => (
-            <div>
-              <Img src={values}></Img>
-            </div>
-          ))}
-        </Picture>
-      </PictureContainer>
-      <Btndiv>
-        <LeftBtn onClick={onClickLeftBtn}></LeftBtn>
-        <RightBtn onClick={onClickRightBtn}></RightBtn>
-      </Btndiv>
-    </>
-    )}
+      {!!image && (
+        <>
+          <PictureContainer>
+            <Picture ref={slideRef}>
+              {image.map((el) => (
+                <div>
+                  <Img src={el.imageUrl}></Img>
+                </div>
+              ))}
+            </Picture>
+          </PictureContainer>
+          <Btndiv>
+            <LeftBtn onClick={onClickLeftBtn}></LeftBtn>
+            <RightBtn onClick={onClickRightBtn}></RightBtn>
+          </Btndiv>
+        </>
+      )}
     </>
   );
 };

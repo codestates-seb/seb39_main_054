@@ -247,10 +247,19 @@ public class ProductService{
     /**
      * 유저가 작성한 게시물 조회
      */
-    public Page<Product> findMemberList(int page, int size,long memberId) {
+    public Page<Product> findMemberList(int page, int size,long principalId) {
         PageRequest pageRequest = PageRequest.of(page, size,Sort.by("PRODUCT_ID").descending());
-        Optional<Page<Product>> optionalProductList = productRepository.findByMemberId(memberId,pageRequest);
+        Optional<Page<Product>> optionalProductList = productRepository.findByMemberId(principalId,pageRequest);
         Page<Product> productList = optionalProductList.orElseThrow(() -> new CustomException("Member doesn't write Product", HttpStatus.NOT_FOUND));
+
+        productList.forEach(product -> {
+            product.setFavoriteCount(product.getFavoriteList().size());
+            product.getFavoriteList().forEach(favorite -> {
+                if (favorite.getMember().getMemberId() == principalId) {
+                    product.setFavoriteStatus(true);
+                }
+            });
+        });
 
         return productList;
     }
@@ -263,12 +272,16 @@ public class ProductService{
 
         PageRequest pageRequest = PageRequest.of(page, size,Sort.by("MEMBER_ID").descending());
         Optional<Page<Favorite>> optionalFavoriteList = favoriteRepository.findByMemberId(memberId,pageRequest);
-//        favoriteRepository.findById(memberId);
-//        System.out.println(productList.getTotalElements());
+        Page<Favorite> favoriteList = optionalFavoriteList.orElseThrow(() -> new CustomException("Member doesn't write Product", HttpStatus.NOT_FOUND));
 
-        Page<Favorite> productList = optionalFavoriteList.orElseThrow(() -> new CustomException("Member doesn't write Product", HttpStatus.NOT_FOUND));
+        favoriteList.forEach(favorite -> {
+            favorite.getProduct().setFavoriteCount(favorite.getProduct().getFavoriteList().size());
+                if (favorite.getMember().getMemberId() == memberId) {
+                    favorite.getProduct().setFavoriteStatus(true);
+            };
+        });
 
-        return productList;
+        return favoriteList;
 
         // memberId로 FavoriteRepository에서 productId 반환
         // productId로 ProductRepository에서 객체 반환

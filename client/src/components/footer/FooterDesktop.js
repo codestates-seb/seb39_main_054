@@ -6,7 +6,7 @@ const FooterDesktop = () => {
   return (
     <FooterContainer>
       <FooterContent>
-        <img src={logo} alt="ANBD logo"/>
+        <img src={logo} alt="ANBD logo" />
         <FooterMiddle>
           <div className="footer-team-name">TEAM ANBD</div>
           <div>Email: alsalsdyd@gmail.com</div>
@@ -15,9 +15,7 @@ const FooterDesktop = () => {
         <FooterRight>
           <div className="footer-team-name"></div>
           <div>대표자: 조민우, 염혜지, 이혜진, 정재진, 조진우</div>
-          <div>
-            주소: 서울특별시 서초구 서초대로 396, 강남빌딩 20층 (코드스테이츠)
-          </div>
+          <div>Copyright 2022. ANBD All rights reserved.</div>
         </FooterRight>
       </FooterContent>
     </FooterContainer>
@@ -35,7 +33,7 @@ const FooterContainer = styled.div`
   border-top: 1px solid ${(props) => props.theme.primary};
   font-size: 1.125rem;
 
-  .footer-team-name{
+  .footer-team-name {
     padding: 0.5rem 0;
     height: 2rem;
     font-family: "NotoSansKR-Bold";
@@ -44,7 +42,7 @@ const FooterContainer = styled.div`
 
 const FooterContent = styled.div`
   display: flex;
-  justify-content: left;
+  justify-content: center;
   align-items: center;
   width: 81.25rem;
   height: 100%;
@@ -63,7 +61,7 @@ const FooterMiddle = styled.div`
   flex-direction: column;
   padding: 0 1.5rem;
 
-  div{
+  div {
     padding: 2px;
   }
 `;
@@ -74,7 +72,7 @@ const FooterRight = styled.div`
   flex-direction: column;
   padding: 0 1.5rem;
 
-  div{
+  div {
     padding: 2px;
   }
 `;

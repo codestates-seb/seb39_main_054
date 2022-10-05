@@ -18,7 +18,7 @@ const ShareListContent = () => {
     await axios
       .get(`${process.env.REACT_APP_API_URL}/v1/product`, {
         // 파람스 요청
-        params: { page: 1, size: 8 },
+        params: { page: 1, size: 16 },
       })
       .then((res) => {
         setData(res.data.data);
@@ -29,7 +29,7 @@ const ShareListContent = () => {
   const getFilterData = async () => {
     const params = {
       page: pageNum,
-      size: 8,
+      size: 16,
       ...(filter.categorySelect !== "" &&
         filter.categorySelect !== "전체" && {
           pcategoryName: filter.categorySelect,

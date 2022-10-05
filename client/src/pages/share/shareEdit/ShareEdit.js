@@ -16,6 +16,7 @@ const ShareEdit = () => {
   const [content, setContent] = useState();
   const [category, setCategory] = useState();
   const [imageSrc, setImageSrc] = useState([]);
+
   const { id } = useParams();
 
   // console.log(Object.values(imageSrc))
@@ -27,11 +28,11 @@ const ShareEdit = () => {
         setImageSrc({...imageSrc , ...res.data.pimageList})
       });
   };
-  const url = [];
+  const imgUrl = [];
   for(let i=0;i<Object.keys(imageSrc).length;i++){
-    url.push(imageSrc[i].imageUrl)
+    imgUrl.push(imageSrc[i].imageUrl)
   }
-  console.log(url)
+  console.log(imgUrl)
 
   
   const titleChange = (el) => {
@@ -45,6 +46,22 @@ const ShareEdit = () => {
   };
 
   const EditClick = async () => {
+
+    const formData = new FormData();
+    formData.append("productPostDetailDto.memberId", memberId);
+    formData.append("productPostDetailDto.title", title);
+    formData.append("productPostDetailDto.description", content);
+    formData.append("productPostDetailDto.pcategoryName", category);
+    imgUrl.forEach((url) =>
+    formData.append("multipartFileList" , url))
+    formData.append("imageUrlList")
+
+    await axios
+      .post(`${process.env.REACT_APP_API_URL}/v1/product/${id}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then((res) => navigate(`/share/detail/${res.data.productId}`));
+
     }
   ;
   useEffect(() => {
@@ -75,8 +92,8 @@ const ShareEdit = () => {
             onChange={(e) => contentChange(e.target.value)}
           ></ContentBox>
           <ImgContainer>
-            {url!== 0 &&
-              url.map((value) => (
+            {imgUrl!== 0 &&
+              imgUrl.map((value) => (
                 <Imgbox>{<img src={value}></img>}</Imgbox>
               ))
               }
@@ -184,9 +201,6 @@ const Imgbox = styled.div`
     width: 100%;
     height: 100%;
     border: none;
-    :hover {
-      background-color: red;
-    }
   }
 `;
 const ContentBox = styled.textarea`

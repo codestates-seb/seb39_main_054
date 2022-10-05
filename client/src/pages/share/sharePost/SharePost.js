@@ -79,11 +79,16 @@ const SharePost = () => {
     ]);
   };
 
-
   useEffect(() => {
     if([...imgUrl].length > 6){
       alert("이미지의 최대 갯수는 6개입니다!!")
       setImgUrl(imgUrl.slice(0,6));
+
+      // const currentSrc = [];
+      // for(let i=0;i<6;i++){
+      //   currentSrc.push(imageSrc[i])
+      // }
+      // setImageSrc(currentSrc)
 
     }
   }, [imgUrl]);
@@ -131,6 +136,7 @@ const SharePost = () => {
                 </ImagePostDiv>
                 </>
               ))}
+
           </ImgContainer>
           <BtnDiv>
             <CancelBtn onClick={cancleClick}>취소</CancelBtn>

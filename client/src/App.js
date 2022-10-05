@@ -60,7 +60,7 @@ const App = () => {
               ></Route>
               <Route path="/share/detail/:id" element={<ShareDetail />}></Route>
               <Route path="/share/post" element={<SharePost />}></Route>
-              <Route path="/share/edit/:id"  element={<ShareEdit />}></Route>
+              <Route path="/share/edit/:id" element={<ShareEdit />}></Route>
               <Route path="/login" element={<Login></Login>}></Route>
               <Route path="/signup" element={<SignUp></SignUp>}></Route>
               <Route
@@ -96,7 +96,7 @@ const App = () => {
               ></Route>
               {/* id: 상대방 id query &myid = =dsadsa &otherid*/}
               <Route
-                path="/chat/detail/:chatRoomId"
+                path="/chat/detail/:id"
                 element={<ChatDetail></ChatDetail>}
               ></Route>
             </Routes>

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import MyPageHeader from "../MyPageHeader";
@@ -28,17 +27,14 @@ const MyPageFavorite = () => {
     };
 
     await axios
-      .get(
-        `${
-          process.env.REACT_APP_API_URL
-        }/v1/product/mylist/${id}`,
-        { headers: headers }
-      )
+      .get(`${process.env.REACT_APP_API_URL}/v1/product/mylist/${id}`, {
+        headers: headers,
+      })
       .then((res) => setData(res.data));
   };
 
   useEffect(() => {
-    getData();
+    // getData();
   }, []);
 
   return (

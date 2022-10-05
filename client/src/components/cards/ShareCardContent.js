@@ -15,6 +15,7 @@ const ShareCardContent = ({ data }) => {
             status={el.productStatus}
             image01={el.pimageList[0]}
             favoriteCount={el.favoriteCount}
+            favoriteStatus={el.favoriteStatus}
           />
         ))}
     </CardContent>

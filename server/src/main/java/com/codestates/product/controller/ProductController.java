@@ -39,11 +39,11 @@ public class ProductController {
     private final PcategoryService pcategoryService;
 
     /**
-     * 제품 등록
+     * 제품 등록 // memberId
      */
     @PostMapping
-    public ResponseEntity postProduct(@ModelAttribute @Valid ProductPostDto request,
-                                      @AuthenticationPrincipal PrincipalDetails principalDetails) {
+    public ResponseEntity postProduct(@ModelAttribute @Valid ProductPostDto request) {
+//                                      @AuthenticationPrincipal PrincipalDetails principalDetails
 
         List<String> imageUrlList = new ArrayList<>();
 
@@ -60,12 +60,12 @@ public class ProductController {
     }
 
     /**
-     * 제품 수정
+     * 제품 수정 // memberId
      */
     @PatchMapping("/{product-id}")
     public ResponseEntity patchProduct(@PathVariable("product-id") @Positive long productId,
-                                      @ModelAttribute @Valid ProductPatchDto request,
-                                      @AuthenticationPrincipal PrincipalDetails principalDetails) {
+                                      @ModelAttribute @Valid ProductPatchDto request) {
+//                                      @AuthenticationPrincipal PrincipalDetails principalDetails
 
         System.out.println("request.getFileUrlList() : " + request.getImageUrlList());
 
@@ -85,7 +85,7 @@ public class ProductController {
     }
 
     /**
-     * 제품 삭제
+     * 제품 삭제 // 토큰
      */
     @DeleteMapping("/{product-id}")
     public ResponseEntity deleteProduct(@PathVariable("product-id") @Positive Long productId,
@@ -98,7 +98,7 @@ public class ProductController {
     }
 
     /**
-     * 제품 상세조회
+     * 제품 상세조회 // 토큰
      */
     @GetMapping("/{product-id}")
     public ResponseEntity getProduct(@PathVariable("product-id") @Positive long productId,
@@ -115,7 +115,7 @@ public class ProductController {
     }
 
     /**
-     * 제품 리스트 조회 (feat: 카테고리, 상태, 검색어) -> QueryDsl
+     * 제품 리스트 조회 (feat: 카테고리, 상태, 검색어) -> QueryDsl // 토큰
      */
     @GetMapping
     public ResponseEntity getProductList(@Positive @RequestParam(defaultValue = "1") int page,
@@ -141,7 +141,7 @@ public class ProductController {
     }
 
     /**
-     * 유저가 등록한 리스트
+     * 유저가 등록한 리스트 //토큰
      */
     @GetMapping("/myList/{member-id}")
     public ResponseEntity getMemberProductList(@Positive @RequestParam(defaultValue = "1") int page,
@@ -157,7 +157,7 @@ public class ProductController {
     }
 
     /**
-     * 유저 관심(좋아요) 리스트
+     * 유저 관심(좋아요) 리스트 //토큰
      */
     @GetMapping("/myFavorite/{member-id}")
     public ResponseEntity getMemberProd22ctList(@Positive @RequestParam(defaultValue = "1") int page,
@@ -170,8 +170,7 @@ public class ProductController {
 
         favoriteList.forEach(favorite -> {System.out.println("product.getFavoriteCount()2 : " + favorite.getProduct().getProductId());});
 
-
         return new ResponseEntity<>(
-                new MultiResponseDto<>(mapper.favoriteToProductResponseDtoList(favoriteList), pageFavoriteList),HttpStatus.OK);
+                new MultiResponseDto<>(mapper.favoriteToProductResponseDtoList(favoriteList, memberId), pageFavoriteList),HttpStatus.OK);
     }
 }

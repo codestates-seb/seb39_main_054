@@ -108,7 +108,7 @@ public interface ProductMapper {
     List<ProductResponseDto.DetailResponse> productListToProductResponseDtoDetailResponseList (List<Product> productList);
 
 //    List<ProductResponseDto.DetailResponse> favoriteToProductResponseDtoList(List<Favorite> favoriteList);
-    default List<ProductResponseDto.DetailResponse> favoriteToProductResponseDtoList(List<Favorite> favoriteList) {
+    default List<ProductResponseDto.DetailResponse> favoriteToProductResponseDtoList(List<Favorite> favoriteList, Long memberId) {
 
         List<ProductResponseDto.DetailResponse> response = new ArrayList<>();
 
@@ -120,6 +120,9 @@ public interface ProductMapper {
                                 .description(favorite.getProduct().getDescription())
                                 .productStatus(favorite.getProduct().getProductStatus())
                                 .favoriteCount(favorite.getProduct().getFavoriteCount())
+                                .favoriteStatus(favorite.getProduct().isFavoriteStatus())
+//                                .favoriteCount(favorite.getProduct().getFavoriteList().size())
+//                                .favoriteStatus(favorite.getProduct().isFavoriteStatus())
                                 .pcategory(pcategoryToPcategoryResponseDto(favorite.getProduct().getPcategory()))
                                 .pimageList(pimageListToPimageResponseDtoList(favorite.getProduct().getPimageList()))
                                 .creationDate(favorite.getCreationDate())

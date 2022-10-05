@@ -251,7 +251,6 @@ const AvartarWrapper = styled.div`
   object-fit: contain;
   width: 11.25rem;
   height: 11.25rem;
-  background-color: aliceblue;
   border-radius: 50%;
   @media ${(props) => props.theme.mobile} {
     width: 3.1875rem;

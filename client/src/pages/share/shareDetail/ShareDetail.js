@@ -28,7 +28,7 @@ const ShareDetail = () => {
   const openChatting = async () => {
     await axios
       .post(`${process.env.REACT_APP_API_URL}/v1/chat/room`, {
-        sellerId: data.member.memberId, // 3
+        sellerId: data.member.memberId,
         buyerId: memberId,
         productId: data.productId,
       })

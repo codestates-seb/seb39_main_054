@@ -1,32 +1,69 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import defaultAvatar from "../../../assets/img/avatar/avatar.jpg";
 import { ReactComponent as Xmark } from "../../../assets/img/icon/xmark-solid.svg";
-
 import { useParams } from "react-router-dom";
-import SockJS from "react-stomp";
-// import SockJS from "sockjs-client";
-// import * as Stomp from "@stomp/stompjs";
+import { over } from "stompjs";
+import SockJS from "sockjs-client";
+// import "./ChatDetail.css";
+
+let client = null;
 
 const ChatDetail = () => {
-  const Stomp = require("stompjs");
-  const sock = new SockJS(
-    `${process.env.REACT_APP_API_URL}/gs-guide-websocket`
-  );
-  const client = Stomp.over(sock);
   const memberId = localStorage.getItem("memberid");
   const { id } = useParams(); // 룸아이디
+  const navigate = useNavigate();
+
   const headers = {
     "Content-Type": "application/json",
     Authorization: `${localStorage.getItem("authorization")}`,
   };
-
   const [sellerId, setSellerId] = useState("");
   const [sellerName, setSellerName] = useState("");
-
   const [msg, setMsg] = useState(""); // 보내는 메세지
   const [data, setData] = useState(""); // 받는 메세지
+
+  const connection = () => {
+    let sock = new SockJS(
+      `${process.env.REACT_APP_API_URL}/gs-guide-websocket`
+    );
+    const client = over(sock);
+    // 1. connection이 맺어지면 실행
+    client.connect({}, () => {
+      // 3. 구독 / 받는 메세지? / 보낼 주소는 보통 roomId로 하는편인듯 / newMessage.content -> 메세지!
+      client.subscribe(
+        `/queue/addChatToClient/${id}`, // 룸아이디
+        (chat) => {
+          const newMessage = JSON.parse(chat.body);
+          setData(data.concat(newMessage)); // 그럼 data 배열은 받은 메세지들을 차곡차곡 담게 됨. -> data를 뿌려준다.
+          // setData(newMessage); // 그럼 data 배열은 받은 메세지들을 차곡차곡 담게 됨. -> data를 뿌려준다.
+          console.log(chat);
+        },
+        {}
+      );
+      // .unsubscribe();
+    });
+    // 위의 콜백함수는 클라이언트가 서버로부터 메세지(data)를 전달받을때 실행된다.
+    // 특정 채팅방에서 나가거나 해당 어플리케이션에서 나갔을 경우 상대방이 보낸 메세지를 읽지 않음으로 표시하기 위해 구독을 끊어준다.
+    // 전달하는 메세지 / 전달받는 메세지를 따로 변수에 담아준다. --> 그래야 css 작업할 수 있을듯. 근데 이게 같은 내용 아닌가?
+    // return () => client.disconnect();
+    // }, [client, memberId]); // <--- ???
+  };
+
+  // 2. 메세지 보내기 / 보내는 메세지? / 인풋창에 메세지 적고 '버튼'을 누르면 발생하는 이벤트.
+  const sendMessage = () => {
+    let chatMessage = {
+      chatRoomId: id,
+      memberId: memberId, // 로그인한 회원
+      content: msg,
+    };
+
+    client.send(`/app/chat/${id}`, {}, JSON.stringify(chatMessage));
+    console.log(chatMessage);
+    // setUserData({ ...userData, content: "" });
+  };
 
   const getSellerId = async () => {
     await axios
@@ -37,7 +74,7 @@ const ChatDetail = () => {
       })
       .catch((err) => console.log(err));
   };
-
+  // 왜 요청이 됐다가 안됐다가 하지?
   const getSellerName = async () => {
     await axios
       .get(`${process.env.REACT_APP_API_URL}/v1/members/${sellerId}`, {
@@ -45,47 +82,9 @@ const ChatDetail = () => {
       })
       .then((res) => {
         setSellerName(res.data.memberName);
-        console.log(res.data.memberName);
+        // console.log(res.data.memberName);
       })
       .catch((err) => console.log(err));
-  };
-
-  useEffect(() => {
-    // 1. connection이 맺어지면 실행
-    client.connect({}, () => {
-      console.log("STOMP Connection");
-
-      // 3. 구독 / 받는 메세지? / 보낼 주소는 보통 roomId로 하는편인듯 / newMessage.content -> 메세지!
-      client
-        .subscribe(
-          `/queue/addChatToClient/${id}`, // 룸아이디
-          (chat) => {
-            const newMessage = JSON.parse(chat);
-            setData(data.concat(newMessage)); // 그럼 data 배열은 받은 메세지들을 차곡차곡 담게 됨. -> data를 뿌려준다.
-          },
-          {}
-        )
-        .unsubscribe();
-    });
-    // 위의 콜백함수는 클라이언트가 서버로부터 메세지(data)를 전달받을때 실행된다.
-    // 특정 채팅방에서 나가거나 해당 어플리케이션에서 나갔을 경우 상대방이 보낸 메세지를 읽지 않음으로 표시하기 위해 구독을 끊어준다.
-    // 전달하는 메세지 / 전달받는 메세지를 따로 변수에 담아준다. --> 그래야 css 작업할 수 있을듯. 근데 이게 같은 내용 아닌가?
-
-    // return () => client.disconnect();
-    // }, [client, memberId]); // <--- ???
-  }, []);
-
-  // 2. 메세지 보내기 / 보내는 메세지? / 인풋창에 메세지 적고 '버튼'을 누르면 발생하는 이벤트.
-  const sendMessage = () => {
-    client.send(
-      `/app/chat/${id}`, // 룸아이디
-      {},
-      JSON.stringify({
-        chatRoomId: 2,
-        memberId: memberId,
-        content: msg,
-      })
-    );
   };
 
   const handleInput = (e) => {
@@ -96,25 +95,27 @@ const ChatDetail = () => {
   useEffect(() => {
     getSellerId();
     getSellerName();
+    connection();
   }, []);
 
   return (
     <>
       <CDContainer>
         <h1>채팅</h1>
+        <div>{data}</div>
         <CDContent>
           <ContentTop>
-            <AvatarDiv>
-              <defaultAvatar />
-            </AvatarDiv>
+            <AvatarWrapper src={defaultAvatar}></AvatarWrapper>
             <div className="name">{sellerName}</div>
-            <XmarkDiv>
+            <XmarkWrapper
+              onClick={() => {
+                navigate(`/`);
+              }}
+            >
               <Xmark />
-            </XmarkDiv>
+            </XmarkWrapper>
           </ContentTop>
-          <ContentMiddle>
-            <div>{data}</div>
-          </ContentMiddle>
+          <ContentMiddle></ContentMiddle>
           <ContentBottom>
             <textarea
               value={msg}
@@ -176,29 +177,20 @@ const ContentTop = styled.div`
   }
 `;
 
-const AvatarDiv = styled.div`
+const AvatarWrapper = styled.div`
+  object-fit: contain;
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
-  background-color: red;
+  background-color: ${(props) => props.theme.gray4};
   margin-left: 1rem;
   @media ${(props) => props.theme.mobile} {
     width: 2.625rem;
     height: 2.625rem;
   }
-
-  svg {
-    width: 1.8rem;
-    height: 1.8rem;
-    padding-bottom: 0.05rem;
-    @media ${(props) => props.theme.mobile} {
-      width: 1rem;
-      height: 1rem;
-    }
-  }
 `;
 
-const XmarkDiv = styled.div`
+const XmarkWrapper = styled.div`
   width: 1.3rem;
   height: 1.3rem;
   margin: -0.7rem 0 0 23rem;

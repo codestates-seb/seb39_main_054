@@ -41,3 +41,6 @@
   <img src="https://img.shields.io/badge/aws rds-FF9900?style=for-the-badge&logo=amazonrds&logoColor=white">
   <img src="https://img.shields.io/badge/aws s3-FF9900?style=for-the-badge&logo=amazons3&logoColor=white">
 </div>
+
+<img width="1665" alt="스크린샷 2022-10-06 오전 2 30 38" src="https://user-images.githubusercontent.com/56163157/194124940-b9455869-4083-44bb-95ad-6280a75f027b.png">
+

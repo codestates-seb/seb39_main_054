@@ -4,22 +4,23 @@ import axios from "axios";
 import defaultAvatar from "../../assets/img/avatar/avatar.jpg";
 
 const MyPageHeader = () => {
-  const memberId = localStorage.getItem("memberid");
-
+  const id = localStorage.getItem("memberid");
+  const [myAvatar, setMyAvatar] = useState("");
   const [myNickname, setMyNickname] = useState("");
   const headers = {
     "Content-Type": "application/json",
     Authorization: `${localStorage.getItem("authorization")}`,
   };
 
-  // 데이터 받기
+  // 닉네임 요청
   const getData = async () => {
     await axios
-      .get(`${process.env.REACT_APP_API_URL}/v1/members/${memberId}`, {
+      .get(`${process.env.REACT_APP_API_URL}/v1/members/${id}`, {
         headers: headers,
       })
       .then((res) => {
         setMyNickname(res.data.nickname);
+        setMyAvatar(res.data.imageUrl);
         console.log(res);
       });
   };
@@ -31,7 +32,11 @@ const MyPageHeader = () => {
   return (
     <MHContainer>
       <AvartarContainer>
-        <AvartarWrapper src={defaultAvatar}></AvartarWrapper>
+        {myAvatar ? (
+          <AvartarWrapper src={myAvatar}></AvartarWrapper>
+        ) : (
+          <AvartarWrapper src={defaultAvatar}></AvartarWrapper>
+        )}
         <p>{myNickname}님 반갑습니다.</p>
       </AvartarContainer>
     </MHContainer>
@@ -77,6 +82,7 @@ const AvartarContainer = styled.div`
   }
 `;
 const AvartarWrapper = styled.img`
+  object-fit: contain;
   width: 11.25rem;
   height: 11.25rem;
   background-color: aliceblue;

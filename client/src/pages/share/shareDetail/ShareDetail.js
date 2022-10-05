@@ -28,7 +28,7 @@ const ShareDetail = () => {
       .get(`${process.env.REACT_APP_API_URL}/v1/product/3`)
       .then((res) => {
         setProductData(res.data);
-        console.log(res);
+        // console.log(res);
       });
   };
 
@@ -42,7 +42,8 @@ const ShareDetail = () => {
       })
       .then((res) => {
         navigate(`/chat/detail/${res.data.id}`);
-        console.log(res.data.id); // 2 / 룸아이디인듯
+        console.log(res.data.id); // 룸아이디임
+        console.log(res);
       })
       .catch((err) => console.log(err));
   };
@@ -51,6 +52,8 @@ const ShareDetail = () => {
     getData();
     getProduct();
   }, []);
+
+  // console.log(memberId);
 
   return (
     <>

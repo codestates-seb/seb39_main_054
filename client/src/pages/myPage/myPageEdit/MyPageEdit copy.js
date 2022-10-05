@@ -6,12 +6,11 @@ import MyPageDropdownMobile from "../../../components/dropdowns/MyPageDropdownMo
 import ModalConfirm from "../../../components/ui/modals/ModalConfirm";
 import Validations from "../../register/Validations";
 import axios from "axios";
-import { useParams, Link } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import defaultAvatar from "../../../assets/img/avatar/avatar.jpg";
-import { ReactComponent as Camera } from "../../../assets/img/icon/camera-solid.svg";
 
 const schema = yup.object().shape({
   nickname: yup
@@ -38,10 +37,16 @@ const schema = yup.object().shape({
 const MyPageEdit = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
+  const navigate = useNavigate();
   const isMobile = useMediaQuery({ maxWidth: 786 });
   const [myNickname, setMyNickname] = useState("");
-  const [imageSrc, setImageSrc] = useState([]);
-  const [myAvatar, setMyAvatar] = useState("");
+
+  const [image, setImage] = useState({
+    imageFile: "", // 서버에 보낼 실제 이미지 파일
+    previewURL: defaultAvatar, // 미리 보여줄 이미지의 경로
+  });
+
+  let inputRef;
 
   const categoryChange = (el) => {};
 
@@ -53,28 +58,76 @@ const MyPageEdit = () => {
     resolver: yupResolver(schema),
   });
 
-  const ImageChange = (el) => {
-    setImageSrc(el.target.files);
+  // 새로운 이미지를 올리면 createObjectURL()을 통해 생성한 기존 URL을 폐기
+  const saveImage = (e) => {
+    e.preventDefault();
+    if (e.target.files[0]) {
+      URL.revokeObjectURL(image.previewURL);
+      const previewURL = URL.createObjectURL(e.target.files[0]);
+      setImage(() => ({
+        imageFile: e.target.files[0],
+        previewURL: previewURL,
+      }));
+    }
   };
 
-  const onSubmit = async (data) => {
-    let formData = new FormData();
-    formData.append("multipartFile", imageSrc[0]); // (key-'file', value-실제 이미지 파일)
-    formData.append("nickname", data.nickname);
-    formData.append("password", data.password);
+  // createObjectURL()을 통해 생성한 기존 URL을 폐기
+  const deleteImage = () => {
+    URL.revokeObjectURL(image.previewURL);
+    setImage({
+      imageFile: "",
+      previewURL: defaultAvatar,
+    });
+  };
 
-    await axios
-      .post(`${process.env.REACT_APP_API_URL}/v1/members/${id}`, formData, {
+  // 컴포넌트가 언마운트되면 createObjectURL()을 통해 생성한 기존 URL을 폐기
+  useEffect(() => {
+    return () => {
+      URL.revokeObjectURL(image.previewURL);
+    };
+  }, []);
+
+  const onSubmit = async (data) => {
+    if (image.imageFile) {
+      let formData = new FormData();
+      formData.append("file", image.imageFile); // (key-'file', value-실제 이미지 파일)
+
+      let dataSet = [
+        {
+          nickname: data.nickname,
+          password: data.password,
+        },
+      ];
+      // Blob 생성자는 새로운 Blob 객체를 반환. 생성 시 인수로 array와 options을 받음.
+
+      formData.append(
+        "data",
+        new Blob([JSON.stringify(dataSet)], {
+          type: "application/json",
+        })
+      );
+
+      await axios({
+        method: "POST",
+        // url: `${process.env.REACT_APP_API_URL}/v1/members/${id}`,
+        url: `${process.env.REACT_APP_API_URL}/v1/members/2`,
         headers: { "Content-Type": "multipart/form-data" },
+        data: formData,
       })
-      .then((res) => {
-        setIsOpen(!isOpen);
-        console.log("ok");
-      })
-      .catch((err) => {
-        console.log(err);
-        alert("사진을 등록하세요!");
-      });
+        .then((res) => {
+          setImage({
+            imageFile: "",
+            previewURL: defaultAvatar,
+          });
+          setIsOpen(!isOpen);
+          console.log("ok");
+          console.log(res);
+          console.log(data);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      alert("사진을 등록하세요!");
+    }
   };
 
   // 모달창의 확인버튼을 눌렀을때의 동작
@@ -82,10 +135,11 @@ const MyPageEdit = () => {
     setIsOpen(!isOpen);
   };
 
-  // 헤더에 들어갈 닉네임 요청
+  // 헤더에 들어갈 닉네임 데이터 받기
   const getData = async () => {
     await axios
-      .get(`${process.env.REACT_APP_API_URL}/v1/members/${id}`, {
+      // .get(`${process.env.REACT_APP_API_URL}/v1/members/${id}`, {
+      .get(`${process.env.REACT_APP_API_URL}/v1/members/2`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `${localStorage.getItem("authorization")}`,
@@ -93,7 +147,6 @@ const MyPageEdit = () => {
       })
       .then((res) => {
         setMyNickname(res.data.nickname);
-        setMyAvatar(res.data.imageUrl);
         console.log(res.data.nickname);
       })
       .catch((err) => console.log(err));
@@ -103,31 +156,48 @@ const MyPageEdit = () => {
     getData();
   }, []);
 
+  console.log(id);
+
+  // const onSubmit = async (data) => {
+  //   await axios
+  //     .patch(
+  //       // .post(
+  //       `${process.env.REACT_APP_API_URL}/v1/members/${id}`,
+  //       { nickname: data.nickname, password: data.password },
+  //       { headers: headers }
+  //     )
+  //     .then(() => {
+  //       setIsOpen(!isOpen);
+  //       console.log("ok");
+  //       console.log(data);
+  //     })
+  //     .catch((error) => console.error(error));
+  // };
+
   return (
     <MEContainer>
       <MHContainer>
         <AvartarContainer>
-          {myAvatar ? (
-            <AvartarWrapper src={myAvatar}></AvartarWrapper>
-          ) : (
-            <AvartarWrapper src={defaultAvatar}></AvartarWrapper>
-          )}
-          <ImgPost
-            id="input-file"
-            type="file"
-            accept="image/*"
-            multiple
-            onChange={(e) => {
-              ImageChange(e);
-            }}
-          ></ImgPost>
-          <ImgContainer>
-            <label htmlFor="input-file">
-              <ImgDiv>
-                <Camera />
-              </ImgDiv>
-            </label>
-          </ImgContainer>
+          <AvartarWrapper>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={saveImage}
+              // 클릭할 때 마다 file input의 value를 초기화 하지 않으면 버그가 발생할 수 있다
+              // 사진 등록을 두개 띄우고 첫번째에 사진을 올리고 지우고 두번째에 같은 사진을 올리면 그 값이 남아있음!
+              // onClick={(e) => (e.target.value = null)}
+              ref={(refParam) => (inputRef = refParam)}
+              style={{ display: "none" }}
+            />
+            <div className="img-wrapper">
+              <img src={image.previewURL} />
+            </div>
+            <UploadBtn>
+              <button onClick={() => inputRef.click()}>Preview</button>
+              <button onClick={deleteImage}>Delete</button>
+              {/* <button onClick={onSubmit}>Upload</button> */}
+            </UploadBtn>
+          </AvartarWrapper>
           <p>{myNickname}님 반갑습니다.</p>
         </AvartarContainer>
       </MHContainer>
@@ -248,53 +318,26 @@ const AvartarContainer = styled.div`
   }
 `;
 const AvartarWrapper = styled.div`
-  object-fit: contain;
-  width: 11.25rem;
-  height: 11.25rem;
-  background-color: aliceblue;
-  border-radius: 50%;
-  @media ${(props) => props.theme.mobile} {
+  /* @media ${(props) => props.theme.mobile} {
     width: 3.1875rem;
     height: 3.1875rem;
+  } */
+
+  img {
+    width: 11.25rem;
+    height: 11.25rem;
+    background-color: aliceblue;
+    border-radius: 50%;
   }
 `;
 
-const ImgPost = styled.input`
-  display: none;
-`;
-const ImgDiv = styled.div`
-  cursor: pointer;
+const UploadBtn = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: -3.2rem;
-  margin-left: 8.3rem;
-  width: 3rem;
-  height: 3rem;
-  background-color: ${(props) => props.theme.gray6};
-  border-radius: 50%;
-  color: ${(props) => props.theme.textColor};
-  filter: drop-shadow(0rem 0.15rem 0.15rem ${(props) => props.theme.gray3});
-
-  @media ${(props) => props.theme.mobile} {
-    width: 2.625rem;
-    height: 2.625rem;
+  button {
+    margin: 0 5px;
   }
-
-  svg {
-    width: 1.8rem;
-    height: 1.8rem;
-    padding-bottom: 0.05rem;
-    fill: ${(props) => props.theme.primary};
-    cursor: pointer;
-    @media ${(props) => props.theme.mobile} {
-      width: 1rem;
-      height: 1rem;
-    }
-  }
-`;
-const ImgContainer = styled.div`
-  display: flex;
 `;
 
 const EditContainer = styled.div`

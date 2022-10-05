@@ -8,19 +8,32 @@ import MyPageNav from "../MyPageNav";
 import MyPageDropdownMobile from "../../../components/dropdowns/MyPageDropdownMobile";
 import ShareStateMobile from "../../../components/filters/shareState/ShareStateMobile";
 import ShareCardContent from "../../../components/cards/ShareCardContent";
+import { useSelector } from "react-redux";
 
 const MyPageFavorite = () => {
   const isMobile = useMediaQuery({ maxWidth: 786 });
-  const { id } = useParams();
+  const id = localStorage.getItem("memberid");
   // 데이터
   const [data, setData] = useState(null);
+
+  const filter = useSelector((state) => state.filtersReducer.shareSatusSelect);
 
   const categoryChange = (el) => {};
 
   // 데이터 받기
   const getData = async () => {
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `${localStorage.getItem("authorization")}`,
+    };
+
     await axios
-      .get(`${process.env.REACT_APP_API_URL}/v1/product/mylist/${id}`)
+      .get(
+        `${
+          process.env.REACT_APP_API_URL
+        }/v1/product/mylist/${id}`,
+        { headers: headers }
+      )
       .then((res) => setData(res.data));
   };
 
@@ -42,7 +55,7 @@ const MyPageFavorite = () => {
       </ShareStateContainer>
       <MCContainer>
         <MCContent>
-          <ShareCardContent data={data} number={8}></ShareCardContent>
+          <ShareCardContent data={data}></ShareCardContent>
         </MCContent>
       </MCContainer>
     </MFContainer>

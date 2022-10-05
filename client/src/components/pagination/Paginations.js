@@ -3,15 +3,22 @@ import styled from "styled-components";
 import Pagination from "react-js-pagination";
 import { paginationInfo } from "../../redux/actions/paginationAction";
 import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 const Paginations = () => {
   const dispatch = useDispatch();
   const totalPageInfo = useSelector((state) => state.paginationReducer);
+  const filters = useSelector((state) => state.filtersReducer);
   const [page, setPage] = useState(1);
   const pageChange = (page) => {
     setPage(page);
     dispatch(paginationInfo({ page: page }));
   };
+
+  useEffect(() => {
+    setPage(1);
+    dispatch(paginationInfo({ page: 1 }));
+  }, [filters]);
 
   return (
     <Container>

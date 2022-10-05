@@ -10,12 +10,15 @@ import DetailEditDropdown from "../../../components/dropdowns/DetailEditDropdown
 const ShareDetail = () => {
   const navigate = useNavigate();
   const [data, setData] = useState("");
-
   const { id } = useParams();
 
   const memberId = localStorage.getItem("memberid");
 
   const getData = async () => {
+    // header에 토큰값 기본으로 넣기
+    axios.defaults.headers.common["Authorization"] = `${localStorage.getItem(
+      "authorization"
+    )}`;
     await axios
       .get(`${process.env.REACT_APP_API_URL}/v1/product/${id}`)
       .then((res) => setData(res.data));
@@ -40,8 +43,6 @@ const ShareDetail = () => {
   useEffect(() => {
     getData();
   }, []);
-
-  // console.log(memberId);
 
   return (
     <>

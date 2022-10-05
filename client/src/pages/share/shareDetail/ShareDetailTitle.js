@@ -1,7 +1,29 @@
 import { ReactComponent as Heart } from "../../../assets/img/icon/heart.svg";
 import styled from "styled-components";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const ShareDetailTitle = ({ data }) => {
+  const { id } = useParams();
+
+  // 좋아요 등록
+  const favoriteClick = async () => {
+    // header에 토큰값 기본으로 넣기
+    axios.defaults.headers.common["Authorization"] = `${localStorage.getItem(
+      "authorization"
+    )}`;
+    if (data.favoriteStatus === false) {
+      await axios
+        .post(`${process.env.REACT_APP_API_URL}/v1/favorites/${id}`)
+        .then(() => window.location.reload())
+        .catch(() => alert("로그인을 해주세요!"));
+    } else {
+      await axios
+        .delete(`${process.env.REACT_APP_API_URL}/v1/favorites/${id}`)
+        .then(window.location.reload());
+    }
+  };
+
   return (
     <Div className="profile">
       <Div className="flexboxContainer">
@@ -15,7 +37,10 @@ const ShareDetailTitle = ({ data }) => {
             <Div className="mediumFont">{data.productStatus}</Div>
           </Div>
           <Div className="flexbox">
-            <HeartSvg />
+            <HeartSvg
+              onClick={favoriteClick}
+              favoriteStatus={data.favoriteStatus}
+            />
             <Div className="mediumFont">{data.favoriteCount}</Div>
           </Div>
         </Div>
@@ -73,9 +98,9 @@ const Stateball = styled.div`
       : props.theme.stateRed};
 `;
 const HeartSvg = styled(Heart)`
-  fill: ${(props) => props.theme.bgColor};
-  stroke: ${(props) => props.theme.gray4};
+  fill: ${(props) => (props.favoriteStatus ? "#ED4956" : props.theme.gray4)};
   stroke-width: 3rem;
   width: 30px;
   height: 28px;
+  cursor: pointer;
 `;

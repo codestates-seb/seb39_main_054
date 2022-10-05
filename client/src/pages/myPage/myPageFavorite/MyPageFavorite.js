@@ -7,39 +7,31 @@ import MyPageNav from "../MyPageNav";
 import MyPageDropdownMobile from "../../../components/dropdowns/MyPageDropdownMobile";
 import ShareStateMobile from "../../../components/filters/shareState/ShareStateMobile";
 import ShareCardContent from "../../../components/cards/ShareCardContent";
+import { useSelector } from "react-redux";
 
 const MyPageFavorite = () => {
   const isMobile = useMediaQuery({ maxWidth: 786 });
-  const memberId = localStorage.getItem("memberid");
-
-  const headers = {
-    "Content-Type": "application/json",
-    Authorization: `${localStorage.getItem("authorization")}`,
-  };
-
+  const id = localStorage.getItem("memberid");
   // 데이터
   const [data, setData] = useState(null);
 
+  const filter = useSelector((state) => state.filtersReducer.shareSatusSelect);
+
   const categoryChange = (el) => {};
 
-  // 관심 목록 조회
-  // const getData = async () => {
-  //   await axios
-  //     .get(
-  //       `${process.env.REACT_APP_API_URL}/v1/product/myFavorite/${memberId}`,
-  //       { headers: headers }
-  //     )
-  //     .then((res) => {
-  //       setData(res.data);
-  //       console.log(res);
-  //     });
-  // };
+  // 데이터 받기
+  const getData = async () => {
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `${localStorage.getItem("authorization")}`,
+    };
 
-  // useEffect(() => {
-  //   getData();
-  // }, []);
-
-  // console.log(memberId);
+    await axios
+      .get(`${process.env.REACT_APP_API_URL}/v1/product/mylist/${id}`, {
+        headers: headers,
+      })
+      .then((res) => setData(res.data));
+  };
 
   useEffect(() => {
     // getData();
@@ -59,7 +51,7 @@ const MyPageFavorite = () => {
       </ShareStateContainer>
       <MCContainer>
         <MCContent>
-          {/* <ShareCardContent data={data} number={8}></ShareCardContent> */}
+          <ShareCardContent data={data}></ShareCardContent>
         </MCContent>
       </MCContainer>
     </MFContainer>

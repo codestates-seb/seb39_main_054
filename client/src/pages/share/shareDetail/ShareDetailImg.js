@@ -77,10 +77,12 @@ const LeftBtn = styled(Left)`
   height: 2rem;
   fill: ${(props) => props.theme.textColor};
   margin: 1rem 1rem 0rem;
+  cursor: pointer;
 `;
 const RightBtn = styled(Right)`
   width: 2rem;
   height: 2rem;
   fill: ${(props) => props.theme.textColor};
   margin: 1rem 1rem 0rem;
+  cursor: pointer;
 `;

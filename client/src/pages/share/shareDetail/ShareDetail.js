@@ -61,7 +61,9 @@ const ShareDetail = () => {
         <ShareContainer>
           <Container>
             <Title>{data.title}</Title>
+            {data.member.memberId === Number(memberId) &&
             <DetailEditDropdown data={data} />
+            }
             <ShareDetailImg image={data.pimageList}></ShareDetailImg>
             <ShareDetailTitle data={data}></ShareDetailTitle>
             <div>

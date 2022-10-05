@@ -20,13 +20,20 @@ const MyPageMyPost = () => {
 
   // 데이터 받기
   const getData = async () => {
-    await axios
-      .get(`${process.env.REACT_APP_API_URL}/v1/product/myList/${id}`)
+    const params = {
+      page: 1,
+      size: 8,
+    };
 
-      .then((res) =>
-        // setData(res.data.data)
-        console.log(res)
-      );
+    // header에 토큰값 기본으로 넣기
+    axios.defaults.headers.common["Authorization"] = `${localStorage.getItem(
+      "authorization"
+    )}`;
+    await axios
+      .get(`${process.env.REACT_APP_API_URL}/v1/product/myList/${id}`, {
+        params,
+      })
+      .then((res) => setData(res.data.data));
   };
 
   useEffect(() => {
@@ -47,7 +54,7 @@ const MyPageMyPost = () => {
       </ShareStateContainer>
       <MCContainer>
         <MCContent>
-          <ShareCardContent data={data} number={8}></ShareCardContent>
+          <ShareCardContent data={data}></ShareCardContent>
         </MCContent>
       </MCContainer>
     </MPContainer>

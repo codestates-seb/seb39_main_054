@@ -17,9 +17,7 @@ const FooterMobile = () => {
         <FooterButtom>
           <div className="footer-team-name"></div>
           <div>대표자: 조민우, 염혜지, 이혜진, 정재진, 조진우</div>
-          <div>
-            주소: 서울특별시 서초구 서초대로 396, 강남빌딩 20층 (코드스테이츠)
-          </div>
+          <div>Copyright 2022. ANBD All rights reserved.</div>
         </FooterButtom>
       </FooterContent>
     </FooterContainer>
@@ -49,7 +47,7 @@ const FooterContent = styled.div`
   align-items: center;
   flex-direction: column;
   width: 28.75rem;
-  height: 100%; 
+  height: 100%;
   padding: 2rem 0;
 `;
 

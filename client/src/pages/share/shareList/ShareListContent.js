@@ -1,26 +1,74 @@
 import React, { useEffect, useState } from "react";
-import { useMediaQuery } from "react-responsive";
 import axios from "axios";
 import styled from "styled-components";
 import ShareCardContent from "../../../components/cards/ShareCardContent";
+import { paginationInfo } from "../../../redux/actions/paginationAction";
+import { useSelector, useDispatch } from "react-redux";
 
 const ShareListContent = () => {
   // 데이터
   const [data, setData] = useState(null);
+  const dispatch = useDispatch();
+
+  const filter = useSelector((state) => state.filtersReducer);
+  const pageNum = useSelector((state) => state.paginationReducer.page);
 
   // 데이터 받기
   const getData = async () => {
+    axios.defaults.headers.common["Authorization"] = `${localStorage.getItem(
+      "authorization"
+    )}`;
     await axios
-      .get(`${process.env.REACT_APP_API_URL}/product`)
-      .then((res) => setData(res.data));
+      .get(`${process.env.REACT_APP_API_URL}/v1/product`, {
+        // 파람스 요청
+        params: { page: 1, size: 16 },
+      })
+      .then((res) => {
+        setData(res.data.data);
+        dispatch(paginationInfo(res.data.pageInfo));
+      });
+  };
+
+  const getFilterData = async () => {
+    const params = {
+      page: pageNum,
+      size: 16,
+      ...(filter.categorySelect !== "" &&
+        filter.categorySelect !== "전체" && {
+          pcategoryName: filter.categorySelect,
+        }),
+      ...(filter.searchSelect !== "" && { keyword: filter.searchSelect }),
+      ...(filter.shareSatusSelect !== "" &&
+        filter.shareSatusSelect !== "전체" && {
+          status: filter.shareSatusSelect,
+        }),
+    };
+
+    axios.defaults.headers.common["Authorization"] = `${localStorage.getItem(
+      "authorization"
+    )}`;
+    await axios
+      .get(`${process.env.REACT_APP_API_URL}/v1/product`, {
+        // 파람스 요청
+        params,
+      })
+      .then((res) => {
+        setData(res.data.data);
+        dispatch(paginationInfo(res.data.pageInfo));
+      });
   };
 
   useEffect(() => {
     getData();
   }, []);
+
+  useEffect(() => {
+    getFilterData();
+  }, [filter, pageNum]);
+
   return (
     <Content>
-      <ShareCardContent data={data} number={16}></ShareCardContent>
+      <ShareCardContent data={data}></ShareCardContent>
     </Content>
   );
 };
@@ -34,7 +82,7 @@ const Content = styled.div`
   align-items: center;
   margin: 1.5rem auto;
   width: 72.25rem;
-  
+
   @media ${(props) => props.theme.tabletL} {
     width: 53.5rem;
   }

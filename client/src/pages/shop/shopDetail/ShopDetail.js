@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import DetailEditDropdown from "../../../components/dropdowns/DetailEditDropdown";
+import ShopDetailEditDropdown from "../../../components/dropdowns/ShopDetailEditDropdown";
 import ShopDetailImg from "./ShopDetailImg";
 import ShopDetailTitle from "./ShopDetailTitle";
 import ShopMap from "./ShopMap";
@@ -12,36 +12,14 @@ const ShopDetail = () => {
   const { id } = useParams();
   const url = data.image;
 
-  const [openDropDown, setOpenDropDown] = useState({
-    class: "up",
-    height: "0px",
-    display: "none",
-    first: "수정하기",
-    second: "삭제하기",
-  });
-
   const getData = async () => {
     await axios
-      .get(`${process.env.REACT_APP_API_URL}/shop/${id}`)
-      .then((res) => setData(res.data));
-  };
-
-  const editDrop = () => {
-    if (openDropDown.class === "up") {
-      setOpenDropDown({
-        class: "down",
-        display: "flex",
-        first: "수정하기",
-        second: "삭제하기",
-      });
-    } else {
-      setOpenDropDown({
-        class: "up",
-        display: "none",
-        first: "수정하기",
-        second: "삭제하기",
-      });
-    }
+      // .get(`${process.env.REACT_APP_API_URL}/shop/${id}`)
+      // .then((res) => setData(res.data));
+      .get(`/mock/ShopMockData.json`)
+      .then((res) =>
+        setData(...res.data.shop.filter((el) => el.id === Number(id)))
+      );
   };
 
   useEffect(() => {
@@ -54,10 +32,8 @@ const ShopDetail = () => {
         <ShopContainer>
           <Container>
             <Editdiv>
-              <EditButton onClick={editDrop}>
-                <DetailEditDropdown
-                  openDropDown={openDropDown}
-                ></DetailEditDropdown>
+              <EditButton>
+                <ShopDetailEditDropdown></ShopDetailEditDropdown>
               </EditButton>
             </Editdiv>
             <Imagediv>
@@ -139,7 +115,11 @@ const CreatedPost = styled.div`
   display: flex;
   justify-content: right;
 `;
-const Content = styled.pre``;
+const Content = styled.pre`
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow: auto;
+`;
 
 const MapDiv = styled.div`
   margin-top: 10rem;

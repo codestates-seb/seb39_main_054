@@ -1,26 +1,33 @@
-import { CATEGORY, SEARCH, SHARE_STATUS } from "../actions/filtersAction";
+import {
+  CATEGORY_SELECT,
+  SEARCH_SELECT,
+  SHARE_STATUS_SELECT,
+} from "../actions/filtersAction";
 
 const initialstate = {
-  category: "",
-  search: "",
-  shareSatus: ""
+  categorySelect: "",
+  searchSelect: "",
+  shareSatusSelect: "",
 };
 
 const filtersReducer = (state = initialstate, action) => {
   // 상태 업데이트 로직
   switch (action.type) {
-    case CATEGORY:
+    case CATEGORY_SELECT:
       return {
         ...state,
+        categorySelect: action.payload,
       };
-    case SEARCH:
+    case SEARCH_SELECT:
       return {
         ...state,
+        searchSelect: action.payload,
       };
-    case SHARE_STATUS:
-      return{
+    case SHARE_STATUS_SELECT:
+      return {
         ...state,
-      }
+        shareSatusSelect: action.payload,
+      };
     default:
       return state;
   }

@@ -1,59 +1,72 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useMediaQuery } from "react-responsive";
 import ShareDetailTitle from "./ShareDetailTitle";
 import ShareDetailContent from "./ShareDetailContent";
-import { Link , useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import ShareDetailImg from "./ShareDetailImg";
 import DetailEditDropdown from "../../../components/dropdowns/DetailEditDropdown";
 
 const ShareDetail = () => {
-  const Mobile = useMediaQuery({ maxWidth: 786 })
-  const [data , setData] = useState("")
-  const [detail , setDetail] = useState("") 
+  const navigate = useNavigate();
+  const [data, setData] = useState("");
   const { id } = useParams();
-  const url = data.image
 
+  const memberId = localStorage.getItem("memberid");
 
   const getData = async () => {
+    // header에 토큰값 기본으로 넣기
+    axios.defaults.headers.common["Authorization"] = `${localStorage.getItem(
+      "authorization"
+    )}`;
     await axios
-      .get(`${process.env.REACT_APP_API_URL}/product/${id}`)
-      .then((res) => setData(res.data))
-
-  };
-  const getMember = async () => {
-    await axios
-      .get(`${process.env.REACT_APP_API_URL}/member/${id}`)
-      .then((res) => setDetail(res.data))
-
+      .get(`${process.env.REACT_APP_API_URL}/v1/product/${id}`)
+      .then((res) => setData(res.data));
   };
 
+  // 채팅방 개설, 채팅상세페이지로 이동
+  const openChatting = async () => {
+    await axios
+      .post(`${process.env.REACT_APP_API_URL}/v1/chat/room`, {
+        sellerId: data.member.memberId, // 3
+        buyerId: memberId,
+        productId: data.productId,
+      })
+      .then((res) => {
+        navigate(`/chat/detail/${res.data.id}`);
+        console.log(res.data.id); // 룸아이디임
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  };
 
   useEffect(() => {
     getData();
-    getMember()
-    
   }, []);
-  
+
   return (
     <>
-    {!!data && (
+      {!!data && (
         <ShareContainer>
-        <Container>
-          <Title>{data.title}</Title>
-          <DetailEditDropdown/>
-          <ShareDetailImg url = {url}></ShareDetailImg>
-          <ShareDetailTitle Detail={detail} Data = {data}></ShareDetailTitle>
-          <div><hr></hr></div>
-          <ContentContainer>
-          <ShareDetailContent content = {data}></ShareDetailContent>
-          </ContentContainer>
-          <Buttondiv><Link to={`/chat/detail/:id`}><ChatBtn>채팅하기</ChatBtn></Link></Buttondiv>
-        
-        </Container>
+          <Container>
+            <Title>{data.title}</Title>
+            {data.member.memberId === Number(memberId) && (
+              <DetailEditDropdown data={data} />
+            )}
+            <ShareDetailImg image={data.pimageList}></ShareDetailImg>
+            <ShareDetailTitle data={data}></ShareDetailTitle>
+            <div>
+              <hr></hr>
+            </div>
+            <ContentContainer>
+              <ShareDetailContent content={data}></ShareDetailContent>
+            </ContentContainer>
+            <Buttondiv onClick={() => openChatting()}>
+              <ChatBtn>채팅하기</ChatBtn>
+            </Buttondiv>
+          </Container>
         </ShareContainer>
-    )}
+      )}
     </>
   );
 };
@@ -65,41 +78,38 @@ const ShareContainer = styled.div`
   width: 100%;
   height: 100%;
   justify-content: center;
-
 `;
 const Container = styled.div`
-display: flex;
-flex-direction: column;
-margin-top: 7.5rem;
-width:56.25rem;
-//width: 40rem;
-hr{
+  display: flex;
+  flex-direction: column;
+  margin-top: 7.5rem;
+  width: 56.25rem;
+  //width: 40rem;
+  hr {
     margin: 1rem 0rem;
   }
-`
+`;
 const ContentContainer = styled.div`
-width: 100%;
-word-break:break-all; 
-margin-bottom: 5rem;
-display: flex;
-flex-direction: column;
-`
-
+  width: 100%;
+  word-break: break-all;
+  margin-bottom: 5rem;
+  display: flex;
+  flex-direction: column;
+`;
 
 const Title = styled.div`
-font-size: 3rem;
-`
+  font-size: 3rem;
+`;
 
 const ChatBtn = styled.button`
-width: 8.125rem;
-height: 8.125rem;
-border-radius: 50%;
-background-color:  ${(props) => props.theme.primary};
-font-size: 1.375rem;
-color: white;
-`
+  width: 8.125rem;
+  height: 8.125rem;
+  border-radius: 50%;
+  background-color: ${(props) => props.theme.primary};
+  font-size: 1.375rem;
+  color: white;
+`;
 const Buttondiv = styled.div`
-text-align: right;
-margin: 0rem 0rem 1rem 0rem;
-
-`
+  text-align: right;
+  margin: 0rem 0rem 1rem 0rem;
+`;

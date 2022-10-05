@@ -3,13 +3,25 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as Heart } from "../../assets/img/icon/heart.svg";
 
-const ShareCard = ({ id, title, description, status, image01 }) => {
+const ShareCard = ({
+  id,
+  title,
+  description,
+  status,
+  image01,
+  favoriteCount,
+  favoriteStatus,
+}) => {
   return (
     <Container>
       <Link to={`/share/detail/${id}`}>
         <Content>
           <div className="img-container">
-            <Img src={image01}></Img>
+            {image01 !== undefined ? (
+              <Img src={image01.imageUrl}></Img>
+            ) : (
+              <Img className="image-undefinded"></Img>
+            )}
           </div>
           <div className="text-content">
             <Title>{title}</Title>
@@ -19,9 +31,9 @@ const ShareCard = ({ id, title, description, status, image01 }) => {
                 <div className="circle"></div>
                 {status}
               </ShareState>
-              <Favorite>
-                <Heart />
-                13
+              <Favorite favoriteStatus ={favoriteStatus}>
+                <Heart/>
+                {favoriteCount}
               </Favorite>
             </div>
           </div>
@@ -41,6 +53,7 @@ const Container = styled.div`
 
   @media ${(props) => props.theme.mobile} {
     padding: 0 20px;
+    margin-bottom: 2.5rem;
   }
 
   .share-status {
@@ -85,6 +98,10 @@ const Img = styled.img`
   &:hover {
     transform: scale(1.2);
   }
+
+  .image-undefinded {
+    background-color: ${(props) => props.theme.gray5};
+  }
 `;
 
 const Title = styled.div`
@@ -100,7 +117,7 @@ const Title = styled.div`
   text-overflow: ellipsis;
 
   @media ${(props) => props.theme.mobile} {
-    margin-top: 0;
+    margin-top: 0.3rem;
     margin-bottom: 23px;
     width: 9.25rem;
   }
@@ -156,7 +173,7 @@ const Favorite = styled.div`
   font-size: 13px;
 
   svg {
-    fill: ${(props) => props.theme.gray4};
+    fill: ${(props) => (props.favoriteStatus ? "#ED4956" : props.theme.gray4)};
     width: 14px;
     height: 14px;
     margin-right: 6px;

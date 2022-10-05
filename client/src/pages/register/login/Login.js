@@ -44,9 +44,9 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     await axios
-      .get(`${process.env.REACT_APP_API_URL}/member`, {
-        // memberName: data.id,
-        // password: data.password,
+      .post(`${process.env.REACT_APP_API_URL}/login`, {
+        memberName: data.id,
+        password: data.password,
       })
       .then((res) => {
         let jwtToken = res.headers.authorization;
@@ -55,12 +55,11 @@ const Login = () => {
         localStorage.setItem("memberid", memberid); // (key, value)
         dispatch(loginSuccess(memberid));
         console.log("ok");
-        // navigate(`/`);
+        navigate(`/`);
         console.log(res);
       })
       .catch((err) => {
         if (err.message === "Request failed with status code 500") {
-          // alert("사용자가 없습니다");
           errSignup();
           setIsOpen(!isOpen);
         }

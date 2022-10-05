@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useMediaQuery } from "react-responsive";
 import styled from "styled-components";
-import MyPageHeader from "../MyPageHeader";
 import MyPageNav from "../MyPageNav";
+import MyPageDropdownMobile from "../../../components/dropdowns/MyPageDropdownMobile";
 import ModalConfirm from "../../../components/ui/modals/ModalConfirm";
 import Validations from "../../register/Validations";
 import axios from "axios";
-import { useNavigate, useParams, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import defaultAvatar from "../../../assets/img/avatar/avatar.jpg";
+import { ReactComponent as Camera } from "../../../assets/img/icon/camera-solid.svg";
 
 const schema = yup.object().shape({
   nickname: yup
@@ -35,7 +38,12 @@ const schema = yup.object().shape({
 const MyPageEdit = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
-  const navigate = useNavigate();
+  const isMobile = useMediaQuery({ maxWidth: 786 });
+  const [myNickname, setMyNickname] = useState("");
+  const [imageSrc, setImageSrc] = useState([]);
+  const [myAvatar, setMyAvatar] = useState("");
+
+  const categoryChange = (el) => {};
 
   const {
     register,
@@ -45,38 +53,90 @@ const MyPageEdit = () => {
     resolver: yupResolver(schema),
   });
 
-  const headers = {
-    "Content-Type": "application/json",
-    Authorization: `${localStorage.getItem("authorization")}`,
+  const ImageChange = (el) => {
+    setImageSrc(el.target.files);
+  };
+
+  const onSubmit = async (data) => {
+    let formData = new FormData();
+    formData.append("multipartFile", imageSrc[0]); // (key-'file', value-실제 이미지 파일)
+    formData.append("nickname", data.nickname);
+    formData.append("password", data.password);
+
+    await axios
+      .post(`${process.env.REACT_APP_API_URL}/v1/members/${id}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then((res) => {
+        setIsOpen(!isOpen);
+        console.log("ok");
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("사진을 등록하세요!");
+      });
   };
 
   // 모달창의 확인버튼을 눌렀을때의 동작
   const handleModal = () => {
     setIsOpen(!isOpen);
-    // navigate(`/member`);
   };
 
-  const onSubmit = async (data) => {
+  // 헤더에 들어갈 닉네임 요청
+  const getData = async () => {
     await axios
-      .patch(
-        `${process.env.REACT_APP_API_URL}/member/${id}`,
-        // `${process.env.REACT_APP_API_URL}/member`,
-        { nickname: data.nickname, password: data.password },
-        { headers: headers }
-      )
-      .then(() => {
-        // navigate(`/members/${id}`);
-        navigate(`/`);
-        console.log("ok");
-        console.log(data);
+      .get(`${process.env.REACT_APP_API_URL}/v1/members/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${localStorage.getItem("authorization")}`,
+        },
       })
-      .catch((error) => console.error(error));
+      .then((res) => {
+        setMyNickname(res.data.nickname);
+        setMyAvatar(res.data.imageUrl);
+        console.log(res.data.nickname);
+      })
+      .catch((err) => console.log(err));
   };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <MEContainer>
-      <MyPageHeader />
-      <MyPageNav />
+      <MHContainer>
+        <AvartarContainer>
+          {myAvatar ? (
+            <AvartarWrapper src={myAvatar}></AvartarWrapper>
+          ) : (
+            <AvartarWrapper src={defaultAvatar}></AvartarWrapper>
+          )}
+          <ImgPost
+            id="input-file"
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={(e) => {
+              ImageChange(e);
+            }}
+          ></ImgPost>
+          <ImgContainer>
+            <label htmlFor="input-file">
+              <ImgDiv>
+                <Camera />
+              </ImgDiv>
+            </label>
+          </ImgContainer>
+          <p>{myNickname}님 반갑습니다.</p>
+        </AvartarContainer>
+      </MHContainer>
+      {isMobile && (
+        <MyPageDropdownMobile
+          categoryChange={categoryChange}
+        ></MyPageDropdownMobile>
+      )}
+      {!isMobile && <MyPageNav></MyPageNav>}
       <EditContainer>
         <EditContent>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -84,7 +144,7 @@ const MyPageEdit = () => {
               <label>닉네임</label>
               <input
                 type="text"
-                placeholder="새로운 님네임을 입력해주세요"
+                placeholder="변경할 닉네임을 입력해주세요"
                 {...register("nickname")}
               />
               {errors.nickname && (
@@ -102,7 +162,7 @@ const MyPageEdit = () => {
               </label>
               <input
                 type="password"
-                placeholder="비밀번호를 입력해주세요"
+                placeholder="변경할 비밀번호를 입력해주세요"
                 {...register("password")}
               />
               {errors.password && (
@@ -113,7 +173,7 @@ const MyPageEdit = () => {
               <label>비밀번호 확인</label>
               <input
                 type="password"
-                placeholder="새로운 비밀번호를 다시 입력해주세요"
+                placeholder="변경할 비밀번호를 다시 입력해주세요"
                 {...register("confirmPassword")}
               />
               {errors.confirmPassword && (
@@ -149,6 +209,92 @@ const MEContainer = styled.div`
   align-items: center;
   width: 100vw;
   height: 100%;
+`;
+
+const MHContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+`;
+
+const AvartarContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 79.625rem;
+  height: 18.25rem;
+  margin: 5rem 0 2.3125rem 0;
+  border-radius: 1.25rem;
+  background-color: ${(props) => props.theme.primary};
+
+  @media ${(props) => props.theme.mobile} {
+    width: 24.25rem;
+    height: 6.6875rem;
+    margin: 1.75rem 0 1.3125rem 0;
+  }
+
+  p {
+    color: ${(props) => props.theme.white};
+    font-size: 1.5rem;
+    margin: 1.8rem 0 0 0;
+
+    @media ${(props) => props.theme.mobile} {
+      font-size: 0.875rem;
+      margin: 0.8rem 0 0 0;
+    }
+  }
+`;
+const AvartarWrapper = styled.div`
+  object-fit: contain;
+  width: 11.25rem;
+  height: 11.25rem;
+  background-color: aliceblue;
+  border-radius: 50%;
+  @media ${(props) => props.theme.mobile} {
+    width: 3.1875rem;
+    height: 3.1875rem;
+  }
+`;
+
+const ImgPost = styled.input`
+  display: none;
+`;
+const ImgDiv = styled.div`
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -3.2rem;
+  margin-left: 8.3rem;
+  width: 3rem;
+  height: 3rem;
+  background-color: ${(props) => props.theme.gray6};
+  border-radius: 50%;
+  color: ${(props) => props.theme.textColor};
+  filter: drop-shadow(0rem 0.15rem 0.15rem ${(props) => props.theme.gray3});
+
+  @media ${(props) => props.theme.mobile} {
+    width: 2.625rem;
+    height: 2.625rem;
+  }
+
+  svg {
+    width: 1.8rem;
+    height: 1.8rem;
+    padding-bottom: 0.05rem;
+    fill: ${(props) => props.theme.primary};
+    cursor: pointer;
+    @media ${(props) => props.theme.mobile} {
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+`;
+const ImgContainer = styled.div`
+  display: flex;
 `;
 
 const EditContainer = styled.div`

@@ -66,6 +66,7 @@ const TagBtn = styled.button`
   height: 3.44rem;
   background-color: ${(props) => props.theme.bgColor};
   font-size: 1.2rem;
+  font-family: "NotoSansKR-Medium";
   border: solid 0.1875rem;
   border-color: ${(props) => props.theme.gray5};
   border-radius: 10px;

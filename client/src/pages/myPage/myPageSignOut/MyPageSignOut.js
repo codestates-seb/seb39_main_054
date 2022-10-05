@@ -1,15 +1,20 @@
 import React, { useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import styled from "styled-components";
 import axios from "axios";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import MyPageHeader from "../MyPageHeader";
 import MyPageNav from "../MyPageNav";
+import MyPageDropdownMobile from "../../../components/dropdowns/MyPageDropdownMobile";
 import ModalConfirm from "../../../components/ui/modals/ModalConfirm";
 
 const MyPageSignOut = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
+  const isMobile = useMediaQuery({ maxWidth: 786 });
+
+  const categoryChange = (el) => {};
 
   const headers = {
     "Content-Type": "application/json",
@@ -18,20 +23,18 @@ const MyPageSignOut = () => {
 
   // 모달창의 확인버튼을 눌렀을때의 동작
   const handleModal = () => {
-    setIsOpen(!isOpen);
-    // navigate(`/`);
+    navigate(`/`);
   };
 
   const handleSignOut = async () => {
     await axios
       .patch(
-        `${process.env.REACT_APP_API_URL}/member/${id}`,
-        // `${process.env.REACT_APP_API_URL}/member`,
+        `${process.env.REACT_APP_API_URL}/v1/members/${id}`,
         { memberStatus: "MEMBER_QUIT" },
         { headers: headers }
       )
       .then(() => {
-        handleModal();
+        setIsOpen(!isOpen);
         console.log("ok");
       })
       .catch((error) => console.error(error));
@@ -40,7 +43,12 @@ const MyPageSignOut = () => {
   return (
     <MSContainer>
       <MyPageHeader />
-      <MyPageNav />
+      {isMobile && (
+        <MyPageDropdownMobile
+          categoryChange={categoryChange}
+        ></MyPageDropdownMobile>
+      )}
+      {!isMobile && <MyPageNav></MyPageNav>}
       <SignOutContainer>
         <p>정말로 회원 탈퇴를 하시겠습니까?</p>
         <p className="text-small">

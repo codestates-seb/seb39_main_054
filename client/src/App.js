@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "./redux/actions/logInAction";
+
 import GlobalStyle from "./assets/styles/GlobalStyle";
 import { darkTheme, lightTheme } from "./assets/styles/Theme";
 import Nav from "./components/nav/Nav";
@@ -18,11 +21,21 @@ import MyPageSignOut from "./pages/myPage/myPageSignOut/MyPageSignOut";
 import Footer from "./components/footer";
 import ChatList from "./pages/chat/chatList/ChatList";
 import ChatDetail from "./pages/chat/chatDetail/ChatDetail";
+import ShopPost from "./pages/shop/shopPost/ShopPost";
+import ShopList from "./pages/shop/shopList/ShopList";
+import ShareEdit from "./pages/share/shareEdit/ShareEdit";
+import ShopEdit from "./pages/shop/shopEdit/ShopEdit";
 
 const App = () => {
   // 테마 변경 (lightTheme, darkTheme)
   const [isTheme, setIsTheme] = useState("light");
   const theme = isTheme === "light" ? lightTheme : darkTheme;
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (localStorage.getItem("authorization") !== null) {
+      dispatch(loginSuccess());
+    }
+  }, []);
 
   useEffect(() => {
     if (localStorage.getItem("theme") === "light") {
@@ -47,7 +60,7 @@ const App = () => {
               ></Route>
               <Route path="/share/detail/:id" element={<ShareDetail />}></Route>
               <Route path="/share/post" element={<SharePost />}></Route>
-              <Route path="/share/edit/:id"></Route>
+              <Route path="/share/edit/:id" element={<ShareEdit />}></Route>
               <Route path="/login" element={<Login></Login>}></Route>
               <Route path="/signup" element={<SignUp></SignUp>}></Route>
               <Route
@@ -59,24 +72,26 @@ const App = () => {
                 element={<MyPageMyPost></MyPageMyPost>}
               ></Route>
               <Route
-                path="/mypage/edit"
+                path="/mypage/edit/:id"
                 element={<MyPageEdit></MyPageEdit>}
               ></Route>
               <Route
                 path="/mypage/signout"
                 element={<MyPageSignOut></MyPageSignOut>}
               ></Route>
-              <Route path="/shop/list"></Route>
+              <Route path="/shop/list" element={<ShopList></ShopList>}></Route>
               <Route
                 path="/shop/detail/:id"
                 element={<ShopDetail></ShopDetail>}
               ></Route>
-              <Route path="/shop/post"></Route>
-              <Route path="/shop/edit"></Route>
+              <Route path="/shop/post" element={<ShopPost></ShopPost>}></Route>
+              <Route
+                path="/shop/edit/:id"
+                element={<ShopEdit></ShopEdit>}
+              ></Route>
               {/* id: 로그인 유저 */}
               <Route
-                // path="/chat/list/:id"
-                path="/chat/list"
+                path="/chat/list/:id"
                 element={<ChatList></ChatList>}
               ></Route>
               {/* id: 상대방 id query &myid = =dsadsa &otherid*/}

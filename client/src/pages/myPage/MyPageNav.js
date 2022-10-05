@@ -3,12 +3,14 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
 const MyPageNav = () => {
+  const memberId = localStorage.getItem("memberid");
+
   return (
     <BtnContainer>
       <StyledLink to="/mypage/favorite">관심목록</StyledLink>
       <StyledLink to="/mypage/mypost">내가 쓴 게시글</StyledLink>
-      <StyledLink to="/chat/list/:id">채팅 목록</StyledLink>
-      <StyledLink to="/mypage/edit">회원정보 수정</StyledLink>
+      <StyledLink to={`/chat/list/${memberId}`}>채팅 목록</StyledLink>
+      <StyledLink to={`/mypage/edit/${memberId}`}>회원정보 수정</StyledLink>
       <StyledLink to="/mypage/signout">회원 탈퇴</StyledLink>
     </BtnContainer>
   );

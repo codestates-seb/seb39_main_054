@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 
 const ShareDetailTitle = ({ data }) => {
   const { id } = useParams();
-  console.log(data.favoriteStatus);
 
   // 좋아요 등록
   const favoriteClick = async () => {

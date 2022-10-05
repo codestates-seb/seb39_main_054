@@ -12,7 +12,6 @@ const ShareCard = ({
   favoriteCount,
   favoriteStatus,
 }) => {
-  console.log(favoriteStatus)
   return (
     <Container>
       <Link to={`/share/detail/${id}`}>

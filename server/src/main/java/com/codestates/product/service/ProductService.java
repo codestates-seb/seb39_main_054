@@ -2,6 +2,7 @@ package com.codestates.product.service;
 
 import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
@@ -47,6 +48,7 @@ public class ProductService{
     private final PimageRepository pimageRepository ;
     private final ProductMapper mapper;
     private final FavoriteRepository favoriteRepository;
+    private final AmazonS3Client amazonS3Client;
 
 
     /**
@@ -109,7 +111,8 @@ public class ProductService{
             System.out.println("fileName :" + fileName);
             System.out.println(bucket);
 
-            String url = generateUrl(fileName, HttpMethod.GET);
+            String url = amazonS3Client.getUrl(bucket, fileName).toString();
+//            String url = generateUrl(fileName, HttpMethod.GET);
             pimage.setImageUrl(url);
             imageUrlList.add(url);
 
@@ -124,32 +127,6 @@ public class ProductService{
 
         return pimageList;
     }
-
-    //    List<String> fileUrlList = new ArrayList<>();
-//
-//        multipartFileList.forEach(file -> {
-//            String fileName = createFileName(file.getOriginalFilename());
-//            ObjectMetadata objectMetadata = new ObjectMetadata();
-//            objectMetadata.setContentLength(file.getSize());
-//            objectMetadata.setContentType(file.getContentType());
-//            System.out.println("fileName :" + fileName);
-//            System.out.println(bucket);
-//            String url = generateUrl(fileName, HttpMethod.GET);
-//            fileUrlList.add(url);
-//            settingPimage(url, product);
-//
-//            try(InputStream inputStream = file.getInputStream()) {
-//                amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
-//                        .withCannedAcl(CannedAccessControlList.PublicRead));
-//            } catch(IOException e) {
-//                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 업로드에 실패했습니다.");
-//            }
-//        });
-
-//    private void settingPimage(String url, Product product) {
-//        Pimage pimage = new Pimage();
-//        pimage.setProduct(product);
-//    }
 
     /**
      * 이미지 업데이트

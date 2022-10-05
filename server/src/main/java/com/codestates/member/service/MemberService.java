@@ -2,6 +2,7 @@ package com.codestates.member.service;
 
 import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
@@ -36,6 +37,7 @@ public class MemberService {
     private String bucket;
 
     private final AmazonS3 amazonS3;
+    private final AmazonS3Client amazonS3Client;
 
     public Member createMember(Member member) {
         verifyExistsEmail(member.getMemberName()); //등록된 이메일인지 확인
@@ -74,7 +76,8 @@ public class MemberService {
         log.info("fileName: " + fileName);
         log.info("bucket:" + bucket);
 
-        String url = generateUrl(fileName, HttpMethod.GET);
+        String url = amazonS3Client.getUrl(bucket, fileName).toString();
+//        String url = generateUrl(fileName, HttpMethod.GET);
 
         try(InputStream inputStream = multipartFile.getInputStream()) {
             amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)

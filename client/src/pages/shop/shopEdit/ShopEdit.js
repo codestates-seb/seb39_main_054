@@ -107,7 +107,10 @@ const ShopEdit = () => {
               placeholder="제목을 입력해주세요"
               onChange={(e) => titleChange(e.target.value)}
             ></InputText>
-            <PostDropdown categoryChange={categoryChange} pcategory={shopPost.pcategory} />
+            <PostDropdown
+              categoryChange={categoryChange}
+              pcategory={shopPost.pcategory}
+            />
           </PageContainer>
           <FlexContainer>
             <ImgPost
@@ -141,11 +144,10 @@ const ShopEdit = () => {
             </ColumnContainer>
           </PageContainer>
           <SubTitle>내용</SubTitle>
-          {/* <PostEditor
-            value={shopPost.description ? shopPost.description : " "}
-            editorRef={editorRef}
-            onChange={contentChange}
-          /> */}
+          <ContentBox
+            placeholder="내용을 입력해주세요"
+            onChange={(e) => contentChange(e.target.value)}
+          ></ContentBox>
           <ImgPlusBtn>
             <label htmlFor="input-file">
               <ImgDiv>
@@ -287,5 +289,24 @@ const ImgDiv = styled.div`
     width: 2rem;
     height: 2rem;
     fill: ${(props) => props.theme.textColor};
+  }
+`;
+
+const ContentBox = styled.textarea`
+  height: 42.5rem;
+  width: 100%;
+  border-radius: 15px;
+  border: solid 0.1875rem;
+  border-color: ${(props) => props.theme.gray5};
+  font-size: 1.2rem;
+  background-color: ${(props) => props.theme.bgColor};
+  color: ${(props) => props.theme.textColor};
+  padding: 1rem;
+  resize: none;
+  @media ${(props) => props.theme.mobile} {
+    height: 25rem;
+    ::placeholder {
+      font-size: 1rem;
+    }
   }
 `;

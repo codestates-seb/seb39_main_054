@@ -10,8 +10,10 @@ const ShopListContent = () => {
   // 데이터 받기
   const getData = async () => {
     await axios
-      .get(`${process.env.REACT_APP_API_URL}/shop`)
-      .then((res) => setData(res.data));
+      // .get(`${process.env.REACT_APP_API_URL}/shop`)
+      // .then((res) => setData(res.data));
+      .get(`http://localhost:3000/mock/ShopMockData.json`)
+      .then((res) => setData(res.data.shop));
   };
 
   useEffect(() => {

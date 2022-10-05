@@ -276,10 +276,15 @@ const ImgDiv = styled.div`
   flex-direction: column;
   color: ${(props) => props.theme.textColor};
 
+  @media ${(props) => props.theme.tabletL} {
+    width: 4rem;
+    height: 4rem;
+  }
   @media ${(props) => props.theme.mobile} {
     width: 3rem;
     height: 3rem;
   }
+
 
   svg {
     width: 2rem;
@@ -311,6 +316,14 @@ const Imgbox = styled.button`
     height: 100%;
     border: none;
   }
+  @media ${(props) => props.theme.tabletL} {
+    width: 4rem;
+    height: 4rem;
+  }
+  @media ${(props) => props.theme.mobile} {
+    width: 3rem;
+    height: 3rem;
+  }
 `;
 const ImagePostDiv = styled.div`
   display: flex;
@@ -319,6 +332,13 @@ const ImagePostDiv = styled.div`
   margin-left: 2rem;
   justify-content: center;
   align-items: center;
+  @media ${(props) => props.theme.tabletL} {
+    margin-left: 1.5rem;
+  }
+  @media ${(props) => props.theme.tabletS} {
+    margin-left: 0.2rem;
+  }
+  
 `;
 const ContentBox = styled.textarea`
   height: 42.5rem;

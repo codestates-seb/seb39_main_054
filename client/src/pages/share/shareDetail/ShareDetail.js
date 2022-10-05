@@ -20,6 +20,7 @@ const ShareDetail = () => {
       .get(`${process.env.REACT_APP_API_URL}/v1/product/${id}`)
       .then((res) => setData(res.data));
   };
+  console.log(data)
 
   // 제품 상세 조회
   const getProduct = async () => {
@@ -110,6 +111,7 @@ const ContentContainer = styled.div`
 
 const Title = styled.div`
   font-size: 3rem;
+  margin-bottom: 1rem;
 `;
 
 const ChatBtn = styled.button`
@@ -122,5 +124,5 @@ const ChatBtn = styled.button`
 `;
 const Buttondiv = styled.div`
   text-align: right;
-  margin: 0rem 0rem 1rem 0rem;
+  margin-bottom: 2rem;
 `;

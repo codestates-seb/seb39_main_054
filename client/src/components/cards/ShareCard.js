@@ -10,7 +10,9 @@ const ShareCard = ({
   status,
   image01,
   favoriteCount,
+  favoriteStatus,
 }) => {
+  console.log(favoriteStatus)
   return (
     <Container>
       <Link to={`/share/detail/${id}`}>
@@ -30,8 +32,8 @@ const ShareCard = ({
                 <div className="circle"></div>
                 {status}
               </ShareState>
-              <Favorite>
-                <Heart />
+              <Favorite favoriteStatus ={favoriteStatus}>
+                <Heart/>
                 {favoriteCount}
               </Favorite>
             </div>
@@ -172,7 +174,7 @@ const Favorite = styled.div`
   font-size: 13px;
 
   svg {
-    fill: ${(props) => props.theme.gray4};
+    fill: ${(props) => (props.favoriteStatus ? "#ED4956" : props.theme.gray4)};
     width: 14px;
     height: 14px;
     margin-right: 6px;

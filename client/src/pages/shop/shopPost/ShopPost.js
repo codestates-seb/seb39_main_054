@@ -76,11 +76,9 @@ const ShopPost = () => {
       alert("제목, 내용, 카테고리를 선택해주세요");
     } else {
       await axios
-        // .post(`${process.env.REACT_APP_API_URL}/shop`, shopPost)
-        // .then((res) => navigate(`/shop/detail/${res.data.productId}`))
-        // .catch((err) => console.log(err));
-        .post(`http://localhost:3000/mock/ShopMockData.json`, shopPost)
-        .then((res) => navigate(`/shop/detail/${res.data.productId}`));
+        .post(`${process.env.REACT_APP_API_URL}/shop`, shopPost)
+        .then((res) => navigate(`/shop/detail/${res.data.productId}`))
+        .catch((err) => console.log(err));
     }
   };
 

@@ -16,7 +16,7 @@ const ShopDetail = () => {
     await axios
       // .get(`${process.env.REACT_APP_API_URL}/shop/${id}`)
       // .then((res) => setData(res.data));
-      .get(`http://localhost:3000/mock/ShopMockData.json`)
+      .get(`/mock/ShopMockData.json`)
       .then((res) =>
         setData(...res.data.shop.filter((el) => el.id === Number(id)))
       );

@@ -2,7 +2,7 @@ import { PAGINATION_INFO } from "../actions/paginationAction";
 
 const initialstate = {
   page: 1,
-  size: 8,
+  size: 16,
   totalElements: 0,
   totalPages: 1,
 };

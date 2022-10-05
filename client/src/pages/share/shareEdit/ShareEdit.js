@@ -4,77 +4,46 @@ import { useState, useRef, useEffect } from "react";
 import PostDropdown from "../../../components/dropdowns/PostDropdown";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { ReactComponent as Camera } from "../../../assets/img/icon/camera-solid.svg";
+
 
 
 const ShareEdit = () => {
   const navigate = useNavigate();
-  const [sharePost, setSharePost] = useState({
-    title: "",
-    description: "",
-    status: "",
-    pcategory: "",
-    image: [],
-  });
+
+  const [productData , setProductData] = useState()
+  const memberId = localStorage.getItem("memberid");
+  const [title, setTitle] = useState();
+  const [content, setContent] = useState();
+  const [category, setCategory] = useState();
+  const [imageSrc, setImageSrc] = useState();
+  console.log(productData)
   const { id } = useParams();
-  const [imageSrc, setImageSrc] = useState([]);
 
-  const titleChange = (el) => {
-    setSharePost({ ...sharePost, title: el });
-  };
-  const categoryChange = (el) => {
-    setSharePost({ ...sharePost, pcategory: el });
-  };
-  //내용 연결
-  const editorRef = useRef(null);
-  const contentChange = () => {
-    const content = editorRef.current.getInstance().getMarkdown();
-    setSharePost({ ...sharePost, description: content });
-  };
-  const ImageChange = (el) => {
-    const selectImg = el.target.files;
-    const imgList = [...imageSrc];
-    for (let i = 0; i < selectImg.length; i++) {
-      const imgurl = URL.createObjectURL(selectImg[i]);
-      imgList.push(imgurl);
-    }
-    setImageSrc(imgList);
-    setSharePost({ ...sharePost, image: imgList });
-  };
-  useEffect(() => {
-    if ([...imageSrc].length > 6) {
-      alert("이미지의 최대 갯수는 6개입니다!!");
-      setImageSrc(imageSrc.slice(0, 6));
-    }
-  }, [imageSrc]);
-
-  const EditClick = async () => {
-    if (
-      sharePost.title === "" ||
-      sharePost.description === "" ||
-      sharePost.pcategory === "카테고리"
-    ) {
-      alert("제목, 내용이 비어있으면 안되고 카테고리를 선택해주세요");
-    } else {
-      axios
-        .patch(`${process.env.REACT_APP_API_URL}/product/${id}`, sharePost)
-        .then(console.log(sharePost))
-        .then(alert("수정되었습니다"))
-        .catch((err) => console.log(err));
-    }
-  };
   const getData = async () => {
     await axios
-      .get(`${process.env.REACT_APP_API_URL}/product/${id}`)
-      .then((res) => setSharePost({ ...sharePost, ...res.data }));
+      .get(`${process.env.REACT_APP_API_URL}/v1/product/${id}`)
+      .then((res) => setProductData({ ...productData, ...res.data }));
   };
 
+  const titleChange = (el) => {
+    setTitle(el);
+  };
+  const categoryChange = (el) => {
+    setCategory(el);
+  };
+  const contentChange = (el) => {
+    setContent(el);
+  };
+
+
+
+  const EditClick = async () => {
+    }
+  ;
   useEffect(() => {
     getData();
   }, []);
 
-  useEffect(() => {}, [imageSrc]);
-  const desc = sharePost.description
   return (
     <MainContainer>
       <Title>공유 물품 수정</Title>
@@ -84,28 +53,24 @@ const ShareEdit = () => {
           <PageContainer>
             <InputText
               type="text"
-              defaultValue={sharePost.title}
+              defaultValue={productData.title}
               placeholder="제목을 입력해주세요"
               onChange={(e) => titleChange(e.target.value)}
             ></InputText>
-            <PostDropdown categoryChange={categoryChange} />
+            <PostDropdown categoryChange={categoryChange} pcategory={productData.pcategory.pcategoryName} />
           </PageContainer>
           <SubTitle>내용</SubTitle>
-          <ImgPost
-            id="input-file"
-            type="file"
-            accept="image/*"
-            multiple
-            onChange={(e) => {
-              ImageChange(e);
-            }}
-          ></ImgPost>
-          <ImgContainer>
+          <ContentBox
+            placeholder="내용을 입력해주세요"
+            defaultValue={productData.description}
+            onChange={(e) => contentChange(e.target.value)}
+          ></ContentBox>
+          {/* <ImgContainer>
             {imageSrc.length !== 0 &&
               imageSrc.map((value) => (
                 <Imgbox>{<img src={value}></img>}</Imgbox>
               ))}
-          </ImgContainer>
+          </ImgContainer> */}
           <BtnDiv>
             <Link to={`/share/detail/${id}`}>
               <CancelBtn>취소</CancelBtn>
@@ -186,11 +151,6 @@ const EditBtn = styled.button`
   margin: 2.5rem 2rem;
   font-size: 1.375rem;
 `;
-const ImgPost = styled.input`
-  font-size: 1.375rem;
-  margin: 2rem 0rem 0.5rem 0.5rem;
-  display: none;
-`;
 const ImgContainer = styled.div`
   display: flex;
 `;
@@ -216,3 +176,22 @@ const Imgbox = styled.div`
     }
   }
 `;
+const ContentBox = styled.textarea`
+  height: 42.5rem;
+  width: 100%;
+  border-radius: 15px;
+  border: solid 0.1875rem;
+  border-color: ${(props) => props.theme.gray5};
+  font-size: 1.2rem;
+  background-color: ${(props) => props.theme.bgColor};
+  color: ${(props) => props.theme.textColor};
+  padding: 1rem;
+  resize: none;
+  @media ${(props) => props.theme.mobile} {
+    height: 25rem;
+    ::placeholder {
+      font-size: 1rem;
+    }
+  }
+`;
+

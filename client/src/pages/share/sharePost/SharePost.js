@@ -13,6 +13,7 @@ const SharePost = () => {
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
   const [imageSrc, setImageSrc] = useState([]);
+  const [imgUrl , setImgUrl] = useState("");
 
   const titleChange = (el) => {
     setTitle(el);
@@ -25,7 +26,16 @@ const SharePost = () => {
   };
 
   const ImageChange = (el) => {
-    setImageSrc(el.target.files);
+    
+    const selectImg = el.target.files;
+    const imgList = [...imgUrl];
+    for(let i=0;i<selectImg.length;i++){
+      const imgurl = URL.createObjectURL(selectImg[i])
+      imgList.push(imgurl);
+    }
+    setImgUrl(imgList);
+    setImageSrc(...imageSrc, el.target.files);
+
   };
 
   const cancleClick = () => {
@@ -38,18 +48,29 @@ const SharePost = () => {
     formData.append("productPostDetailDto.title", title);
     formData.append("productPostDetailDto.description", content);
     formData.append("productPostDetailDto.pcategoryName", category);
-    Object.values(imageSrc).forEach((file) => formData.append("multipartFileList" , file))
-    // formData.append("multipartFileList", imageSrc);
-    
-    for (let key of formData.keys()) {
-      console.log(key);
+    // console.log(Object.keys(imageSrc))
+    Object.values(imageSrc).forEach((file) =>
+      formData.append("multipartFileList", file)
+    );
+    if(title.length === 0){
+      alert("제목이 비어있으면 안됩니다")
     }
+    else if(content.length === 0){
+      alert("내용이 비어있으면 안됩니다")
+    }
+    else if(category === "카테고리"){
+      alert("카테고리를 선택하세요")
+    }
+    else if(Object.keys(imageSrc).length === 0){
+      alert("한개 이상의 사진은 필수입니다")
+    }
+    else{
     await axios
-    .post(`${process.env.REACT_APP_API_URL}/v1/product` , formData ,{
-      headers :{'Content-Type': 'multipart/form-data' }
-    })
-    .then((res) => alert("성공"))
-    
+      .post(`${process.env.REACT_APP_API_URL}/v1/product`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then((res) => navigate(`/share/detail/${res.data.productId}`));
+    }
   };
   const deleteClick = (idx) => {
     setImageSrc([
@@ -57,7 +78,15 @@ const SharePost = () => {
       ...imageSrc.slice(idx + 1, imageSrc.length),
     ]);
   };
-  useEffect(() => {}, []);
+
+
+  useEffect(() => {
+    if([...imgUrl].length > 6){
+      alert("이미지의 최대 갯수는 6개입니다!!")
+      setImgUrl(imgUrl.slice(0,6));
+
+    }
+  }, [imgUrl]);
   return (
     <MainContainer>
       <Title>공유 물품 작성</Title>
@@ -92,8 +121,8 @@ const SharePost = () => {
                 <Camera />
               </ImgDiv>
             </label>
-            {/* {imageSrc.length !== 0 &&
-              imageSrc.map((value) => (
+            {imgUrl.length !== 0 &&
+              imgUrl.map((value) => (
                 <>
                 <ImagePostDiv>
                 <Imgbox >
@@ -101,7 +130,7 @@ const SharePost = () => {
                 </Imgbox>
                 </ImagePostDiv>
                 </>
-              ))} */}
+              ))}
           </ImgContainer>
           <BtnDiv>
             <CancelBtn onClick={cancleClick}>취소</CancelBtn>

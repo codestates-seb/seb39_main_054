@@ -21,10 +21,13 @@ const DetailEditDropdown = (data) => {
   const { id } = useParams();
 
   const stateClick = async (e) => {
+    const formData = new FormData();
+    formData.append("productStatus", e);
     await axios
-      .patch(`${process.env.REACT_APP_API_URL}/v1/product/${id}`, {
-        status: e,
-      })
+      .post(`${process.env.REACT_APP_API_URL}/v1/product/${id}`, formData ,{
+        headers: { "Content-Type": "application/json" },
+      }
+     )
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
@@ -32,7 +35,6 @@ const DetailEditDropdown = (data) => {
   const changeMessage = () => {
     alert("변경되었습니다!");
     window.location.reload();
-    console.log("hi");
   };
 
   const editDrop = () => {
@@ -59,14 +61,11 @@ const DetailEditDropdown = (data) => {
     <Editdiv>
       <EditButton>
         <span onClick={editDrop}>...</span>
-        <Ul display={open.display} height={open.height} class={open.class}>
+        <Ul display={open.display} height={open.height} class={open.class}
+        style={{ marginLeft: -150}}>
           <Link
             to={`/share/edit/${id}`}
             state={{
-              // title: data.title,
-              // description: data.description,
-              // pcategory: data.pcategory,
-              // image: data.image,
               data: data,
             }}
           >
@@ -80,7 +79,7 @@ const DetailEditDropdown = (data) => {
           display={open2.display}
           height={open2.height}
           class={open2.class}
-          style={{ marginLeft: -208, marginTop: 150 }}
+          style={{ marginLeft: -330, marginTop: 150 }}
         >
           {stateList.map((el, idx) => (
             <li

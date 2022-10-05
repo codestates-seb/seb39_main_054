@@ -9,6 +9,9 @@ const MainContent = () => {
 
   // 데이터 받기
   const getData = async () => {
+    axios.defaults.headers.common["Authorization"] = `${localStorage.getItem(
+      "authorization"
+    )}`;
     await axios
       .get(`${process.env.REACT_APP_API_URL}/v1/product`, {
         params: { page: 1, size: 8 },

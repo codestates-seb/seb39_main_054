@@ -27,14 +27,17 @@ const MyPageFavorite = () => {
     };
 
     await axios
-      .get(`${process.env.REACT_APP_API_URL}/v1/product/mylist/${id}`, {
+      .get(`${process.env.REACT_APP_API_URL}/v1/product/myList/${id}`, {
         headers: headers,
       })
-      .then((res) => setData(res.data));
+      .then((res) => {
+        console.log(res.data);
+        setData(res.data.data);
+      });
   };
 
   useEffect(() => {
-    // getData();
+    getData();
   }, []);
 
   return (

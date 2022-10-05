@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import MyPageHeader from "../MyPageHeader";

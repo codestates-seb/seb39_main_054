@@ -15,16 +15,25 @@ const ShareEdit = () => {
   const [title, setTitle] = useState();
   const [content, setContent] = useState();
   const [category, setCategory] = useState();
-  const [imageSrc, setImageSrc] = useState();
-  console.log(productData)
+  const [imageSrc, setImageSrc] = useState([]);
   const { id } = useParams();
 
+  // console.log(Object.values(imageSrc))
   const getData = async () => {
     await axios
       .get(`${process.env.REACT_APP_API_URL}/v1/product/${id}`)
-      .then((res) => setProductData({ ...productData, ...res.data }));
+      .then((res) => {
+        setProductData({ ...productData, ...res.data })
+        setImageSrc({...imageSrc , ...res.data.pimageList})
+      });
   };
+  const url = [];
+  for(let i=0;i<Object.keys(imageSrc).length;i++){
+    url.push(imageSrc[i].imageUrl)
+  }
+  console.log(url)
 
+  
   const titleChange = (el) => {
     setTitle(el);
   };
@@ -35,8 +44,6 @@ const ShareEdit = () => {
     setContent(el);
   };
 
-
-
   const EditClick = async () => {
     }
   ;
@@ -45,7 +52,9 @@ const ShareEdit = () => {
   }, []);
 
   return (
-    <MainContainer>
+    <>
+    {!!productData && (
+      <MainContainer>
       <Title>공유 물품 수정</Title>
       <WriteContainer>
         <TextDiv>
@@ -65,12 +74,13 @@ const ShareEdit = () => {
             defaultValue={productData.description}
             onChange={(e) => contentChange(e.target.value)}
           ></ContentBox>
-          {/* <ImgContainer>
-            {imageSrc.length !== 0 &&
-              imageSrc.map((value) => (
+          <ImgContainer>
+            {url!== 0 &&
+              url.map((value) => (
                 <Imgbox>{<img src={value}></img>}</Imgbox>
-              ))}
-          </ImgContainer> */}
+              ))
+              }
+          </ImgContainer>
           <BtnDiv>
             <Link to={`/share/detail/${id}`}>
               <CancelBtn>취소</CancelBtn>
@@ -80,7 +90,10 @@ const ShareEdit = () => {
         </TextDiv>
       </WriteContainer>
     </MainContainer>
+    )}
+    </>
   );
+  
 };
 
 export default ShareEdit;
@@ -163,7 +176,7 @@ const Imgbox = styled.div`
   margin-top: 1rem;
   justify-content: center;
   align-items: center;
-  margin-left: 2rem;
+  margin-right: 2rem;
   :hover {
   }
   img {

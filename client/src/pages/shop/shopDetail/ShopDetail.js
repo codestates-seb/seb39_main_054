@@ -14,8 +14,12 @@ const ShopDetail = () => {
 
   const getData = async () => {
     await axios
-      .get(`${process.env.REACT_APP_API_URL}/shop/${id}`)
-      .then((res) => setData(res.data));
+      // .get(`${process.env.REACT_APP_API_URL}/shop/${id}`)
+      // .then((res) => setData(res.data));
+      .get(`http://localhost:3000/mock/ShopMockData.json`)
+      .then((res) =>
+        setData(...res.data.shop.filter((el) => el.id === Number(id)))
+      );
   };
 
   useEffect(() => {
@@ -111,7 +115,11 @@ const CreatedPost = styled.div`
   display: flex;
   justify-content: right;
 `;
-const Content = styled.pre``;
+const Content = styled.pre`
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow: auto;
+`;
 
 const MapDiv = styled.div`
   margin-top: 10rem;

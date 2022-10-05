@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import PostDropdown from "../../../components/dropdowns/PostDropdown";
@@ -8,7 +8,6 @@ import ShopAddress from "./ShopAddress";
 
 const ShopPost = () => {
   const navigate = useNavigate();
-  const editorRef = useRef(null);
   const [shopPost, setSharePost] = useState({
     productId: 4,
     memberId: 1,
@@ -24,13 +23,6 @@ const ShopPost = () => {
   // 제목 입력
   const titleChange = (el) => {
     setSharePost({ ...shopPost, title: el });
-  };
-
-  // 내용 입력
-  const contentChange = () => {
-    // 마크다운 형식 입력
-    const html = editorRef.current.getInstance().getMarkdown();
-    setSharePost({ ...shopPost, description: html });
   };
 
   // 카테고리 입력
@@ -52,6 +44,11 @@ const ShopPost = () => {
         .replace(/(\-{1,2})$/g, "");
       setSharePost({ ...shopPost, tel: tel });
     }
+  };
+
+  // 내용 입력
+  const descriptionChange = (el) => {
+    setSharePost({ ...shopPost, description: el });
   };
 
   // 주소 입력 모달 여닫기
@@ -79,9 +76,11 @@ const ShopPost = () => {
       alert("제목, 내용, 카테고리를 선택해주세요");
     } else {
       await axios
-        .post(`${process.env.REACT_APP_API_URL}/shop`, shopPost)
-        .then((res) => navigate(`/shop/detail/${res.data.productId}`))
-        .catch((err) => console.log(err));
+        // .post(`${process.env.REACT_APP_API_URL}/shop`, shopPost)
+        // .then((res) => navigate(`/shop/detail/${res.data.productId}`))
+        // .catch((err) => console.log(err));
+        .post(`http://localhost:3000/mock/ShopMockData.json`, shopPost)
+        .then((res) => navigate(`/shop/detail/${res.data.productId}`));
     }
   };
 
@@ -138,11 +137,10 @@ const ShopPost = () => {
             </ColumnContainer>
           </PageContainer>
           <SubTitle>내용</SubTitle>
-          {/* <PostEditor
-            value=" "
-            editorRef={editorRef}
-            onChange={contentChange}
-          /> */}
+          <ContentBox
+            placeholder="내용을 입력해주세요"
+            onChange={(e) => descriptionChange(e.target.value)}
+          ></ContentBox>
           <ImgPlusBtn>
             <label htmlFor="input-file">
               <ImgDiv>
@@ -284,5 +282,24 @@ const ImgDiv = styled.div`
     width: 2rem;
     height: 2rem;
     fill: ${(props) => props.theme.textColor};
+  }
+`;
+
+const ContentBox = styled.textarea`
+  height: 42.5rem;
+  width: 100%;
+  border-radius: 15px;
+  border: solid 0.1875rem;
+  border-color: ${(props) => props.theme.gray5};
+  font-size: 1.2rem;
+  background-color: ${(props) => props.theme.bgColor};
+  color: ${(props) => props.theme.textColor};
+  padding: 1rem;
+  resize: none;
+  @media ${(props) => props.theme.mobile} {
+    height: 25rem;
+    ::placeholder {
+      font-size: 1rem;
+    }
   }
 `;

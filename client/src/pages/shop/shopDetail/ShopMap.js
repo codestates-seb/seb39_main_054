@@ -48,7 +48,7 @@ const ShopMap = ({ data }) => {
 export default ShopMap;
 
 const KakaoMap = styled.div`
-  /* width: 100%; */
-  height: 25rem;
+  width: 100%;
+  height: 100%;
   border-radius: 14px;
 `;

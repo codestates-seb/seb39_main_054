@@ -10,6 +10,7 @@ import { PostBtn } from "../../../components/ui/buttons/buttons";
 const ShopListFilter = () => {
   const navigate = useNavigate();
   const isMobile = useMediaQuery({ maxWidth: 786 });
+  const roles = "ROLE_ADMIN";
 
   const postToggle = () => {
     navigate("/shop/post");
@@ -29,9 +30,13 @@ const ShopListFilter = () => {
             ></CategoryDropdown>
           )}
         </div>
-        {!isMobile && <PostBtn onClick={postToggle}>글작성</PostBtn>}
+        {!isMobile && roles === "ROLE_ADMIN" && (
+          <PostBtn onClick={postToggle}>글작성</PostBtn>
+        )}
       </SearchAndPostContainer>
-      {isMobile && <PostBtn onClick={postToggle}>글작성</PostBtn>}
+      {isMobile && roles === "ROLE_ADMIN" && (
+        <PostBtn onClick={postToggle}>글작성</PostBtn>
+      )}
     </Container>
   );
 };

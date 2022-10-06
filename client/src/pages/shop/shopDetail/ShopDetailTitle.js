@@ -26,6 +26,10 @@ const TitleContainer = styled.div`
   display: flex;
   justify-content: left;
   align-items: center;
+
+  @media ${(props) => props.theme.tabletS} {
+    flex-direction: column;
+  }
 `;
 
 const TitleProfile = styled.div`
@@ -50,18 +54,39 @@ const TitleMiddle = styled.div`
   padding: 0 1.5rem;
   width: 36.25rem;
   flex-grow: 2;
+
+  @media ${(props) => props.theme.tabletL} {
+    width: 36.25rem;
+    padding-top: 1.5rem;
+  }
+
+  @media ${(props) => props.theme.tabletS} {
+    width: 30.25rem;
+  }
+
+  @media ${(props) => props.theme.mobile} {
+    width: 23.75rem;
+  }
 `;
 
 const Title = styled.span`
   font-size: 30px;
   font-family: "NotoSansKR-Medium";
   padding-bottom: 7px;
+
+  @media ${(props) => props.theme.tabletS} {
+    font-size: 18px;
+  }
 `;
 
 const AddressName = styled.div`
   padding-top: 7px;
   font-size: 20px;
   font-family: "NotoSansKR-Medium";
+
+  @media ${(props) => props.theme.tabletS} {
+    font-size: 14px;
+  }
 `;
 
 const Address = styled.span`
@@ -72,6 +97,10 @@ const TitleTel = styled.div`
   padding-top: 2.5rem;
   font-size: 20px;
   flex-grow: 1;
+  @media ${(props) => props.theme.tabletS} {
+    font-size: 14px;
+    padding-top: 1.5rem;
+  }
 `;
 
 const Tel = styled.span`

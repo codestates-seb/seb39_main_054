@@ -33,7 +33,7 @@ const ShopDetail = () => {
           <Container>
             <Editdiv>
               <EditButton>
-                <ShopDetailEditDropdown></ShopDetailEditDropdown>
+                <ShopDetailEditDropdown memberId = {data.memberId}></ShopDetailEditDropdown>
               </EditButton>
             </Editdiv>
             <Imagediv>
@@ -77,6 +77,19 @@ const Container = styled.div`
   flex-direction: column;
   margin: 4.0625rem 0;
   width: 56.25rem;
+  @media ${(props) => props.theme.tabletL} {
+    width: 53.5rem;
+    margin: 2.0625rem 0;
+  }
+
+  @media ${(props) => props.theme.tabletS} {
+    width: 34rem;
+    margin: 1.0625rem 0;
+  }
+
+  @media ${(props) => props.theme.mobile} {
+    width: 23.75rem;
+  }
 `;
 
 const Title = styled.div`
@@ -88,8 +101,6 @@ const Title = styled.div`
 const Imagediv = styled.div`
   display: flex;
   flex-direction: column;
-  /* height: 34.375rem; */
-  /* width: 56.25rem; */
 `;
 
 const EditButton = styled.button`
@@ -114,15 +125,37 @@ const ContentDiv = styled.div`
 const CreatedPost = styled.div`
   display: flex;
   justify-content: right;
+
+  @media ${(props) => props.theme.tabletS} {
+    font-size: 16px;
+  }
 `;
 const Content = styled.pre`
   white-space: pre-wrap;
   word-break: break-all;
   overflow: auto;
+
+  @media ${(props) => props.theme.tabletS} {
+    font-size: 15px;
+  }
 `;
 
 const MapDiv = styled.div`
   margin-top: 10rem;
   margin-bottom: 2.5rem;
   border-radius: 14px;
+  @media ${(props) => props.theme.tabletL} {
+    width: 53.5rem;
+    height: 32.3rem;
+  }
+
+  @media ${(props) => props.theme.tabletS} {
+    width: 34rem;
+    height: 22.3rem;
+  }
+
+  @media ${(props) => props.theme.mobile} {
+    width: 23.75rem;
+    height: 15rem;
+  }
 `;

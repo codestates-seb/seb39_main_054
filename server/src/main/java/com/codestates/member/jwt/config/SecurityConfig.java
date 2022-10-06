@@ -6,7 +6,6 @@ import com.codestates.member.jwt.filter.JwtAuthenticationFilter;
 import com.codestates.member.jwt.filter.JwtAuthorizationFilter;
 import com.codestates.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -42,15 +41,13 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
 //                .antMatchers("/v1/**").hasRole("USER")
-                .antMatchers(HttpMethod.POST,"/v1/questions","/v1/answers")
+                .antMatchers(HttpMethod.POST, "/v1/product")
                 .access("hasRole('ROLE_USER')")
-                .antMatchers(HttpMethod.PATCH,"/v1/questions/**","/v1/answers/**","/v1/members/**")
+                .antMatchers(HttpMethod.PATCH, "/v1/members/**", "/v1/product/**")
                 .access("hasRole('ROLE_USER')")
                 .antMatchers(HttpMethod.GET,"/v1/members/**")
                 .access("hasRole('ROLE_USER')")
-                .antMatchers(HttpMethod.DELETE,"/v1/questions/**","/v1/answers/**")
-                .access("hasRole('ROLE_USER')")
-                .antMatchers(HttpMethod.DELETE,"/v1/questions/**","/v1/answers/**")
+                .antMatchers(HttpMethod.DELETE,"/v1/product/**")
                 .access("hasRole('ROLE_USER')")
                 .anyRequest().permitAll()
                 .and()

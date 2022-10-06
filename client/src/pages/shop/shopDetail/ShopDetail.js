@@ -77,6 +77,17 @@ const Container = styled.div`
   flex-direction: column;
   margin: 4.0625rem 0;
   width: 56.25rem;
+  @media ${(props) => props.theme.tabletL} {
+    width: 53.5rem;
+  }
+
+  @media ${(props) => props.theme.tabletS} {
+    width: 34rem;
+  }
+
+  @media ${(props) => props.theme.mobile} {
+    width: 23.75rem;
+  }
 `;
 
 const Title = styled.div`
@@ -125,4 +136,18 @@ const MapDiv = styled.div`
   margin-top: 10rem;
   margin-bottom: 2.5rem;
   border-radius: 14px;
+  @media ${(props) => props.theme.tabletL} {
+    width: 53.5rem;
+    height: 32.3rem;
+  }
+
+  @media ${(props) => props.theme.tabletS} {
+    width: 34rem;
+    height: 22.3rem;
+  }
+
+  @media ${(props) => props.theme.mobile} {
+    width: 23.75rem;
+    height: 15rem;
+  }
 `;

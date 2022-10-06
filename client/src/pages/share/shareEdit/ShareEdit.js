@@ -15,7 +15,6 @@ const ShareEdit = () => {
   const [title, setTitle] = useState();
   const [content, setContent] = useState();
   const [category, setCategory] = useState();
-  const [imageSrc, setImageSrc] = useState([]);
 
   const { id } = useParams();
 
@@ -25,15 +24,9 @@ const ShareEdit = () => {
       .get(`${process.env.REACT_APP_API_URL}/v1/product/${id}`)
       .then((res) => {
         setProductData({ ...productData, ...res.data })
-        setImageSrc({...imageSrc , ...res.data.pimageList})
       });
   };
   const imgUrl = [];
-  for(let i=0;i<Object.keys(imageSrc).length;i++){
-    imgUrl.push(imageSrc[i].imageUrl)
-  }
-  console.log(imgUrl)
-
   
   const titleChange = (el) => {
     setTitle(el);
@@ -48,20 +41,18 @@ const ShareEdit = () => {
   const EditClick = async () => {
 
     const formData = new FormData();
-    formData.append("productPostDetailDto.memberId", memberId);
-    formData.append("productPostDetailDto.title", title);
-    formData.append("productPostDetailDto.description", content);
-    formData.append("productPostDetailDto.pcategoryName", category);
-    imgUrl.forEach((url) =>
-    formData.append("multipartFileList" , url))
-    formData.append("imageUrlList")
-
+    formData.append("productPatchDetailDto.memberId", memberId);
+    formData.append("productPatchDetailDto.title", title);
+    formData.append("productPatchDetailDto.description", content);
+    formData.append("productPatchDetailDto.pcategoryName", category);
+    for(let i=0;i<imgUrl.length;i++){
+      formData.append("imageUrlList" , imgUrl[i])
+    }
     await axios
-      .post(`${process.env.REACT_APP_API_URL}/v1/product/${id}`, formData, {
+      .patch(`${process.env.REACT_APP_API_URL}/v1/product/${id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
-      .then((res) => navigate(`/share/detail/${res.data.productId}`));
-
+      .then((res) => navigate(`/share/detail/${id}`));
     }
   ;
   useEffect(() => {

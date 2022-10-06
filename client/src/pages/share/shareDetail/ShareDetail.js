@@ -23,7 +23,6 @@ const ShareDetail = () => {
       .get(`${process.env.REACT_APP_API_URL}/v1/product/${id}`)
       .then((res) => setData(res.data));
   };
-  console.log(data)
 
   // 채팅방 개설, 채팅상세페이지로 이동
   const openChatting = async () => {

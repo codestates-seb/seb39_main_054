@@ -21,10 +21,10 @@ const PostDropdown = ({ categoryChange, pcategory }) => {
     }
   };
   const menuClick = () => {
-    console.log(choice);
     categoryChange(choice);
   };
   useEffect(() => {
+    setChoice(choice)
     menuClick();
   }, [choice]);
 
@@ -39,7 +39,7 @@ const PostDropdown = ({ categoryChange, pcategory }) => {
       <div>
         <TagBtn onClick={clickCategoty}>
           {" "}
-          {pcategory ? pcategory : choice}
+          {choice}
           {open.className === "up" ? <DownBtn /> : <UpBtn />}
         </TagBtn>
         <Ul

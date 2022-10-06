@@ -14,8 +14,21 @@ import logo_google from "../../../assets/img/sns/google_symbol.png";
 import logo_naver from "../../../assets/img/sns/naver_symbol.png";
 
 const schema = yup.object().shape({
-  id: yup.string().required("아이디를 입력해주세요."),
-  password: yup.string().required("비밀번호를 입력해주세요."),
+  id: yup
+    .string()
+    .min(2, "최소 2글자 이상 입력해야 합니다.")
+    .max(16, "최대 16글자 까지 입력할 수 있습니다.")
+    .required("아이디를 입력해주세요.")
+    .matches(/^[^ㄱ-ㅎ|ㅏ-ㅣ|가-힣]+$/, "영문으로만 입력할 수 있습니다."),
+  password: yup
+    .string()
+    .min(8, "최소 8글자 이상 입력해야 합니다.")
+    .max(16, "최대 16글자 까지 입력할 수 있습니다.")
+    .required("비밀번호를 입력해주세요.")
+    .matches(
+      /^(?=.*[a-zA-Z])((?=.*\d)(?=.*\W))/,
+      "영문, 숫자, 특수문자가 포함되어야 합니다."
+    ),
 });
 
 const Login = () => {
@@ -29,6 +42,7 @@ const Login = () => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
+    mode: "onChange",
   });
 
   const errSignup = () => {
@@ -67,11 +81,15 @@ const Login = () => {
       });
   };
 
+  const onError = (error) => {
+    console.log(error);
+  };
+
   return (
     <LoginContainer>
       <h1>ANBD</h1>
       <LoginContent>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit, onError)}>
           <div style={{ marginBottom: "4.2rem" }}>
             <label>아이디</label>
             <input

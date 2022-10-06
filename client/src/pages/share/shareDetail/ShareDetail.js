@@ -96,6 +96,7 @@ const ContentContainer = styled.div`
   margin-bottom: 5rem;
   display: flex;
   flex-direction: column;
+  line-height: 1.8rem;
 `;
 
 const Title = styled.div`

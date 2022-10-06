@@ -8,7 +8,6 @@ import MyPageNav from "../MyPageNav";
 import MyPageDropdownMobile from "../../../components/dropdowns/MyPageDropdownMobile";
 // import ShareStateMobile from "../../../components/filters/shareState/ShareStateMobile";
 import ShareCardContent from "../../../components/cards/ShareCardContent";
-import { useSelector } from "react-redux";
 
 const MyPageFavorite = () => {
   const isMobile = useMediaQuery({ maxWidth: 786 });
@@ -26,7 +25,7 @@ const MyPageFavorite = () => {
     };
 
     await axios
-      .get(`${process.env.REACT_APP_API_URL}/v1/product/myList/${id}`, {
+      .get(`${process.env.REACT_APP_API_URL}/v1/product/myFavorite/${id}`, {
         headers: headers,
       })
       .then((res) => {

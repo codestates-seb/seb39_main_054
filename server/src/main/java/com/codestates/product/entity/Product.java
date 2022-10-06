@@ -51,7 +51,7 @@ public class Product extends Auditable {
     @OneToMany (mappedBy = "product", fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE,CascadeType.MERGE,CascadeType.PERSIST}) // 이미지 수정이 안됨.
     private List<Pimage> pimageList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     private List<Favorite> favoriteList;
 
 

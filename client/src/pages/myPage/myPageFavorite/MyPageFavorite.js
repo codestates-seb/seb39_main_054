@@ -71,13 +71,6 @@ const MFContainer = styled.div`
   height: 100%;
 `;
 
-// const ShareStateContainer = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   width: 100%;
-// `;
-
 const MCContainer = styled.div`
   display: flex;
   flex-direction: column;

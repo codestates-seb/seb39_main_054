@@ -46,6 +46,7 @@ const ChatDetail = () => {
     );
     const client = over(sock);
     client.connect({}, onConnected, onError);
+    console.log(client)
   };
 
   const onConnected = () => {

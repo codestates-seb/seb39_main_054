@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../assets/img/logo/ANBD-3.png";
 
@@ -9,8 +10,12 @@ const FooterDesktop = () => {
         <img src={logo} alt="ANBD logo" />
         <FooterMiddle>
           <div className="footer-team-name">TEAM ANBD</div>
-          <div>Email: alsalsdyd@gmail.com</div>
-          <div>tell: 010-1234-xxxx</div>
+          <div>
+            <Link to="https://github.com/codestates-seb/seb39_main_054">
+              Github Link
+            </Link>
+          </div>
+          <div>anbd@gmail.com</div>
         </FooterMiddle>
         <FooterRight>
           <div className="footer-team-name"></div>

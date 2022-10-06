@@ -33,7 +33,9 @@ const ShopDetail = () => {
           <Container>
             <Editdiv>
               <EditButton>
-                <ShopDetailEditDropdown memberId = {data.memberId}></ShopDetailEditDropdown>
+                <ShopDetailEditDropdown
+                  memberId={data.memberId}
+                ></ShopDetailEditDropdown>
               </EditButton>
             </Editdiv>
             <Imagediv>
@@ -84,7 +86,7 @@ const Container = styled.div`
 
   @media ${(props) => props.theme.tabletS} {
     width: 34rem;
-    margin: 1.0625rem 0;
+    margin: 2.0625rem 0;
   }
 
   @media ${(props) => props.theme.mobile} {
@@ -144,6 +146,8 @@ const MapDiv = styled.div`
   margin-top: 10rem;
   margin-bottom: 2.5rem;
   border-radius: 14px;
+  width: 56.25rem;
+  height: 34.3rem;
   @media ${(props) => props.theme.tabletL} {
     width: 53.5rem;
     height: 32.3rem;

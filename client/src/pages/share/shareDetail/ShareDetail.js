@@ -12,6 +12,7 @@ const ShareDetail = () => {
   const navigate = useNavigate();
   const [data, setData] = useState("");
   const [loading, setLoading] = useState(true);
+  const [myAvatar, setMyAvatar] = useState("");
   const { id } = useParams();
 
   const memberId = localStorage.getItem("memberid");
@@ -29,6 +30,7 @@ const ShareDetail = () => {
           setLoading(false);
         }, 500);
         setLoading(true);
+        setMyAvatar(res.data.member.imageUrl);
       });
   };
 
@@ -65,7 +67,10 @@ const ShareDetail = () => {
                 <DetailEditDropdown data={data} />
               )}
               <ShareDetailImg image={data.pimageList}></ShareDetailImg>
-              <ShareDetailTitle data={data}></ShareDetailTitle>
+              <ShareDetailTitle
+                data={data}
+                myAvatar={myAvatar}
+              ></ShareDetailTitle>
               <div>
                 <hr></hr>
               </div>

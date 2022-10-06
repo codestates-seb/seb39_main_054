@@ -82,7 +82,7 @@ const AvartarContainer = styled.div`
   }
 `;
 const AvartarWrapper = styled.img`
-  object-fit: contain;
+  object-fit: cover;
   width: 11.25rem;
   height: 11.25rem;
   background-color: aliceblue;

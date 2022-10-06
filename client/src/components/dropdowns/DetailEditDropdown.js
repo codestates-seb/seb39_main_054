@@ -17,17 +17,30 @@ const DetailEditDropdown = (data) => {
     height: "0px",
     display: "none",
   });
-
+  
+  const navigate = useNavigate();
   const { id } = useParams();
-  const memberId = localStorage.getItem("memberid");
+  const productId = data.data.productId
+  const memberId = localStorage.getItem("memberid")
+  // console.log(data.data.pimageList.length)
+  const url =[]
+  for(let i=0;i<data.data.pimageList.length;i++){
+    url.push(data.data.pimageList[i].imageUrl)
+  }
+
   const stateClick = async (e) => {
     const formData = new FormData();
-    formData.append("productPostDetailDto.memberId", memberId);
-    // formData.append("productPostDetailDto.title", title);
-    formData.append("productStatus", e);
+    formData.append("productPatchDetailDto.memberId", memberId);
+    formData.append("productPatchDetailDto.title",data.data.title);
+    formData.append("productPatchDetailDto.description", data.data.description);
+    formData.append("productPatchDetailDto.pcategoryName", data.data.pcategory.pcategoryName);
+    formData.append("productPatchDetailDto.productStatus", e);
+    for(let i=0;i<url.length;i++){
+      formData.append("imageUrlList" , url[i])
+    }
     await axios
-      .post(`${process.env.REACT_APP_API_URL}/v1/product/${id}`, formData ,{
-        headers: { "Content-Type": "application/json" },
+      .patch(`${process.env.REACT_APP_API_URL}/v1/product/${id}`, formData ,{
+        headers: { "Content-Type": "multipart/form-data"},
       }
      )
       .then((res) => console.log(res))
@@ -35,9 +48,20 @@ const DetailEditDropdown = (data) => {
   };
 
   const changeMessage = () => {
-    alert("변경되었습니다!");
-    window.location.reload();
+    // alert("변경되었습니다!");
+    // window.location.reload();
   };
+  const deletePage = () =>{
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `${localStorage.getItem("authorization")}`,
+    };
+    axios
+    .delete(`${process.env.REACT_APP_API_URL}/v1/product/${productId}`,{
+      headers :  headers
+    })
+    .then(() => navigate(`/`))
+  }
 
   const editDrop = () => {
     if (open.class === "up") {
@@ -71,9 +95,9 @@ const DetailEditDropdown = (data) => {
               data: data,
             }}
           >
-            <li onClick={{ editDrop }}>수정하기</li>
+            <li onClick={editDrop}>수정하기</li>
           </Link>
-          <li onClick={editDrop}>삭제하기</li>
+          <li onClick={deletePage}>삭제하기</li>
           <li onClick={editDrop2}>공유상태 변경</li>
         </Ul>
         <Ul

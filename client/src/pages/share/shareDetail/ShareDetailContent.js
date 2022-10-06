@@ -3,7 +3,7 @@ import styled from "styled-components"
 const ShareDetailContent = ({content})=>{
   return(
     <>
-      <Year>{content.creationDate}</Year>
+      <Year>{content.creationDate.slice(0,10)}</Year>
       <Body>{content.description}</Body>
       </>
 

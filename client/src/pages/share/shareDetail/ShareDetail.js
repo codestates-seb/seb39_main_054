@@ -10,36 +10,27 @@ import DetailEditDropdown from "../../../components/dropdowns/DetailEditDropdown
 const ShareDetail = () => {
   const navigate = useNavigate();
   const [data, setData] = useState("");
-  const [productData, setProductData] = useState("");
   const { id } = useParams();
 
   const memberId = localStorage.getItem("memberid");
 
   const getData = async () => {
+    // header에 토큰값 기본으로 넣기
+    axios.defaults.headers.common["Authorization"] = `${localStorage.getItem(
+      "authorization"
+    )}`;
     await axios
       .get(`${process.env.REACT_APP_API_URL}/v1/product/${id}`)
       .then((res) => setData(res.data));
-  };
-  console.log(data)
-
-  // 제품 상세 조회
-  const getProduct = async () => {
-    await axios
-      // .get(`${process.env.REACT_APP_API_URL}/product/${id}`)
-      .get(`${process.env.REACT_APP_API_URL}/v1/product/3`)
-      .then((res) => {
-        setProductData(res.data);
-        // console.log(res);
-      });
   };
 
   // 채팅방 개설, 채팅상세페이지로 이동
   const openChatting = async () => {
     await axios
       .post(`${process.env.REACT_APP_API_URL}/v1/chat/room`, {
-        sellerId: productData.member.memberId, // 3
+        sellerId: data.member.memberId,
         buyerId: memberId,
-        productId: productData.productId,
+        productId: data.productId,
       })
       .then((res) => {
         navigate(`/chat/detail/${res.data.id}`);
@@ -51,10 +42,7 @@ const ShareDetail = () => {
 
   useEffect(() => {
     getData();
-    getProduct();
   }, []);
-
-  // console.log(memberId);
 
   return (
     <>
@@ -62,9 +50,9 @@ const ShareDetail = () => {
         <ShareContainer>
           <Container>
             <Title>{data.title}</Title>
-            {data.member.memberId === Number(memberId) &&
-            <DetailEditDropdown data={data} />
-            }
+            {data.member.memberId === Number(memberId) && (
+              <DetailEditDropdown data={data} />
+            )}
             <ShareDetailImg image={data.pimageList}></ShareDetailImg>
             <ShareDetailTitle data={data}></ShareDetailTitle>
             <div>

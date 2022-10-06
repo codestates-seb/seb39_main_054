@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import Paginations from "../../../components/pagination/Paginations";
 import axios from "axios";
 import MyPageHeader from "../MyPageHeader";
 import MyPageNav from "../MyPageNav";
 import MyPageDropdownMobile from "../../../components/dropdowns/MyPageDropdownMobile";
-import ShareStateMobile from "../../../components/filters/shareState/ShareStateMobile";
 import ShareCardContent from "../../../components/cards/ShareCardContent";
 
 const MyPageMyPost = () => {
@@ -49,13 +48,11 @@ const MyPageMyPost = () => {
         ></MyPageDropdownMobile>
       )}
       {!isMobile && <MyPageNav></MyPageNav>}
-      <ShareStateContainer>
-        <ShareStateMobile />
-      </ShareStateContainer>
       <MCContainer>
         <MCContent>
           <ShareCardContent data={data}></ShareCardContent>
         </MCContent>
+        <Paginations />
       </MCContainer>
     </MPContainer>
   );
@@ -71,19 +68,13 @@ const MPContainer = styled.div`
   height: 100%;
 `;
 
-const ShareStateContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-`;
-
 const MCContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
+  margin: 2.7rem 0 1rem 0;
 `;
 
 const MCContent = styled.div`

@@ -11,9 +11,9 @@ const FooterDesktop = () => {
         <FooterMiddle>
           <div className="footer-team-name">TEAM ANBD</div>
           <div>
-            <Link to="https://github.com/codestates-seb/seb39_main_054">
+            <a href="https://github.com/codestates-seb/seb39_main_054">
               Github Link
-            </Link>
+            </a>
           </div>
           <div>anbd@gmail.com</div>
         </FooterMiddle>

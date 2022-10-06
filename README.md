@@ -17,4 +17,4 @@
 |Front-end|Front-end|Front-end|Back-end|Back-end|
 
 ## ✏️ 사용스택
-<img width="1651" alt="스크린샷 2022-10-06 오전 2 36 47" src="https://user-images.githubusercontent.com/56163157/194125298-bba2de31-f056-47ff-be49-01049f45c028.png">
+<img width="1600" alt="스크린샷 2022-10-07 오전 2 52 42" src="https://user-images.githubusercontent.com/56163157/194384251-d04aa070-8289-42aa-9d25-33807a7a0cec.png">

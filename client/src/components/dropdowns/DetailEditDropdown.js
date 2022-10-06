@@ -48,8 +48,8 @@ const DetailEditDropdown = (data) => {
   };
 
   const changeMessage = () => {
-    // alert("변경되었습니다!");
-    // window.location.reload();
+    alert("상태가 변경되었습니다!");
+    window.location.reload();
   };
   const deletePage = () =>{
     const headers = {

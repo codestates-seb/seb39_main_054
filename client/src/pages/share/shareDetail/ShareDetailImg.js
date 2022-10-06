@@ -51,9 +51,22 @@ export default ShareDetailImg;
 
 const PictureContainer = styled.div`
   position: relative;
-  //width: 100%;
   height: 34.3rem;
   overflow: hidden;
+  @media ${(props) => props.theme.tabletL} {
+    width: 53.5rem;
+    height: 32.3rem;
+  }
+
+  @media ${(props) => props.theme.tabletS} {
+    width: 34rem;
+    height: 22.3rem;
+  }
+
+  @media ${(props) => props.theme.mobile} {
+    width: 23.75rem;
+    height: 15rem;
+  }
 `;
 const Picture = styled.div`
   display: flex;
@@ -65,8 +78,19 @@ const Img = styled.img`
   object-fit: contain;
   width: 56.25rem;
   border-radius: 15px;
-  //width: 40rem;
   height: 100%;
+
+  @media ${(props) => props.theme.tabletL} {
+    width: 53.5rem;
+  }
+
+  @media ${(props) => props.theme.tabletS} {
+    width: 34rem;
+  }
+
+  @media ${(props) => props.theme.mobile} {
+    width: 23.75rem;
+  }
 `;
 const Btndiv = styled.div`
   display: flex;

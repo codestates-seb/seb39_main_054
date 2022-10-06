@@ -20,4 +20,8 @@ font-size: 1.25rem;
 const Body = styled.div`
 font-size: 1.25rem;
 margin: 0.5rem 0rem;
+
+@media ${(props) => props.theme.tabletS} {
+    font-size: 15px;
+  }
 `

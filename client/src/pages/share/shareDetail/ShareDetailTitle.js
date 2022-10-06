@@ -28,7 +28,9 @@ const ShareDetailTitle = ({ data }) => {
     <Div className="profile">
       <Div className="flexboxContainer">
         <Div className="flexbox">
-          <Div className="profileimg"></Div>
+          <Div className="profileimg">
+            <img src={data.member}></img>
+          </Div>
           <Div className="middle">{data.member.nickname}</Div>
         </Div>
         <Div className="flexbox">

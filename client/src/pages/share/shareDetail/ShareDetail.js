@@ -6,10 +6,12 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import ShareDetailImg from "./ShareDetailImg";
 import DetailEditDropdown from "../../../components/dropdowns/DetailEditDropdown";
+import DataLoading from "../../../components/loading/DataLoading";
 
 const ShareDetail = () => {
   const navigate = useNavigate();
   const [data, setData] = useState("");
+  const [loading, setLoading] = useState(true);
   const { id } = useParams();
 
   const memberId = localStorage.getItem("memberid");
@@ -21,7 +23,13 @@ const ShareDetail = () => {
     )}`;
     await axios
       .get(`${process.env.REACT_APP_API_URL}/v1/product/${id}`)
-      .then((res) => setData(res.data));
+      .then((res) => {
+        setData(res.data);
+        setTimeout(() => {
+          setLoading(false);
+        }, 500);
+        setLoading(true);
+      });
   };
 
   // 채팅방 개설, 채팅상세페이지로 이동
@@ -46,26 +54,30 @@ const ShareDetail = () => {
 
   return (
     <>
-      {!!data && (
-        <ShareContainer>
-          <Container>
-            <Title>{data.title}</Title>
-            {data.member.memberId === Number(memberId) && (
-              <DetailEditDropdown data={data} />
-            )}
-            <ShareDetailImg image={data.pimageList}></ShareDetailImg>
-            <ShareDetailTitle data={data}></ShareDetailTitle>
-            <div>
-              <hr></hr>
-            </div>
-            <ContentContainer>
-              <ShareDetailContent content={data}></ShareDetailContent>
-            </ContentContainer>
-            <Buttondiv onClick={() => openChatting()}>
-              <ChatBtn>채팅하기</ChatBtn>
-            </Buttondiv>
-          </Container>
-        </ShareContainer>
+      {loading ? (
+        <DataLoading></DataLoading>
+      ) : (
+        !!data && (
+          <ShareContainer>
+            <Container>
+              <Title>{data.title}</Title>
+              {data.member.memberId === Number(memberId) && (
+                <DetailEditDropdown data={data} />
+              )}
+              <ShareDetailImg image={data.pimageList}></ShareDetailImg>
+              <ShareDetailTitle data={data}></ShareDetailTitle>
+              <div>
+                <hr></hr>
+              </div>
+              <ContentContainer>
+                <ShareDetailContent content={data}></ShareDetailContent>
+              </ContentContainer>
+              <Buttondiv onClick={() => openChatting()}>
+                <ChatBtn>채팅하기</ChatBtn>
+              </Buttondiv>
+            </Container>
+          </ShareContainer>
+        )
       )}
     </>
   );

@@ -15,6 +15,7 @@ const SharePost = () => {
   const [imageSrc, setImageSrc] = useState([]);
   const [imgUrl , setImgUrl] = useState("");
 
+  
   const titleChange = (el) => {
     setTitle(el);
   };
@@ -79,11 +80,12 @@ const SharePost = () => {
     ]);
   };
 
-
   useEffect(() => {
     if([...imgUrl].length > 6){
       alert("이미지의 최대 갯수는 6개입니다!!")
-      setImgUrl(imgUrl.slice(0,6));
+      setImgUrl([])
+      setImageSrc([])
+      
 
     }
   }, [imgUrl]);
@@ -122,15 +124,16 @@ const SharePost = () => {
               </ImgDiv>
             </label>
             {imgUrl.length !== 0 &&
-              imgUrl.map((value) => (
+              imgUrl.map((value , index) => (
                 <>
                 <ImagePostDiv>
                 <Imgbox >
-                {<img src={value}></img>} 
+                {<img src={value} key = {index}></img>} 
                 </Imgbox>
                 </ImagePostDiv>
                 </>
               ))}
+
           </ImgContainer>
           <BtnDiv>
             <CancelBtn onClick={cancleClick}>취소</CancelBtn>
@@ -270,10 +273,15 @@ const ImgDiv = styled.div`
   flex-direction: column;
   color: ${(props) => props.theme.textColor};
 
+  @media ${(props) => props.theme.tabletL} {
+    width: 4rem;
+    height: 4rem;
+  }
   @media ${(props) => props.theme.mobile} {
     width: 3rem;
     height: 3rem;
   }
+
 
   svg {
     width: 2rem;
@@ -294,6 +302,7 @@ const Imgbox = styled.button`
   height: 5rem;
   border-radius: 15px;
   border: solid 0.1875rem;
+  background-color: ${(props) => props.theme.gray6};
   border-color: ${(props) => props.theme.gray5};
   justify-content: center;
   align-items: center;
@@ -305,6 +314,14 @@ const Imgbox = styled.button`
     height: 100%;
     border: none;
   }
+  @media ${(props) => props.theme.tabletL} {
+    width: 4rem;
+    height: 4rem;
+  }
+  @media ${(props) => props.theme.mobile} {
+    width: 3rem;
+    height: 3rem;
+  }
 `;
 const ImagePostDiv = styled.div`
   display: flex;
@@ -313,6 +330,13 @@ const ImagePostDiv = styled.div`
   margin-left: 2rem;
   justify-content: center;
   align-items: center;
+  @media ${(props) => props.theme.tabletL} {
+    margin-left: 1.5rem;
+  }
+  @media ${(props) => props.theme.tabletS} {
+    margin-left: 0.2rem;
+  }
+  
 `;
 const ContentBox = styled.textarea`
   height: 42.5rem;

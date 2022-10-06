@@ -6,7 +6,7 @@ import { ReactComponent as Sun } from "../../assets/img/icon/sun.svg";
 import { ReactComponent as Moon } from "../../assets/img/icon/moon.svg";
 import { ReactComponent as Bars } from "../../assets/img/icon/bars.svg";
 import { useMediaQuery } from "react-responsive";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import NavDropdown from "../dropdowns/nav/NavDropdown";
 import NavDropdwonMobile from "../dropdowns/nav/NavDropdwonMobile";
 import { useSelector } from "react-redux";
@@ -73,12 +73,12 @@ const Nav = ({ isTheme, setIsTheme }) => {
           </Link>
           {!isMobile && (
             <>
-              <Link to="/share/list">
+              <NavLink to="/share/list">
                 <div>공유장터</div>
-              </Link>
-              <Link to="/shop/list">
+              </NavLink>
+              <NavLink to="/shop/list">
                 <div>레저용품 판매점</div>
-              </Link>
+              </NavLink>
             </>
           )}
         </NavLeft>
@@ -93,12 +93,12 @@ const Nav = ({ isTheme, setIsTheme }) => {
               {!isLogin ? (
                 <>
                   {" "}
-                  <Link to="/login">
+                  <NavLink to="/login">
                     <div>로그인</div>
-                  </Link>
-                  <Link to="/signup">
+                  </NavLink>
+                  <NavLink to="/signup">
                     <div>회원가입</div>
-                  </Link>
+                  </NavLink>
                 </>
               ) : (
                 <div>

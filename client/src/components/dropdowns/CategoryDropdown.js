@@ -1,10 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { categorySelect } from "../../redux/actions/filtersAction";
 import { ReactComponent as Down } from "../../assets/img/icon/caret-down.svg";
 import { ReactComponent as Up } from "../../assets/img/icon/caret-up.svg";
 
 const CategoryDropdown = ({ categoryChange }) => {
+  const dispatch = useDispatch();
   const category = ["전체", "캠핑", "낚시", "등산", "스포츠", "기타"];
   const [choice, setChoice] = useState("전체");
   const [open, setOpen] = useState({
@@ -25,6 +28,7 @@ const CategoryDropdown = ({ categoryChange }) => {
   };
   useEffect(() => {
     menuClick();
+    dispatch(categorySelect(choice));
   }, [choice]);
 
   return (

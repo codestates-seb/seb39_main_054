@@ -2,18 +2,26 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import ShopCardContent from "../../../components/cards/ShopCardContent";
+import DataLoading from "../../../components/loading/DataLoading";
 
 const ShopListContent = () => {
   // 데이터
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   // 데이터 받기
   const getData = async () => {
     await axios
       // .get(`${process.env.REACT_APP_API_URL}/shop`)
       // .then((res) => setData(res.data));
-      .get(`http://localhost:3000/mock/ShopMockData.json`)
-      .then((res) => setData(res.data.shop));
+      .get(`/mock/ShopMockData.json`)
+      .then((res) => {
+        setData(res.data.shop);
+        setTimeout(() => {
+          setLoading(false);
+        }, 500);
+        setLoading(true);
+      });
   };
 
   useEffect(() => {
@@ -21,7 +29,11 @@ const ShopListContent = () => {
   }, []);
   return (
     <Content>
-      <ShopCardContent data={data}></ShopCardContent>
+      {loading ? (
+        <DataLoading></DataLoading>
+      ) : (
+        <ShopCardContent data={data}></ShopCardContent>
+      )}
     </Content>
   );
 };

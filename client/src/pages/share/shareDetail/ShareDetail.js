@@ -6,10 +6,13 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import ShareDetailImg from "./ShareDetailImg";
 import DetailEditDropdown from "../../../components/dropdowns/DetailEditDropdown";
+import DataLoading from "../../../components/loading/DataLoading";
 
 const ShareDetail = () => {
   const navigate = useNavigate();
   const [data, setData] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [myAvatar, setMyAvatar] = useState("");
   const { id } = useParams();
 
   const memberId = localStorage.getItem("memberid");
@@ -21,14 +24,21 @@ const ShareDetail = () => {
     )}`;
     await axios
       .get(`${process.env.REACT_APP_API_URL}/v1/product/${id}`)
-      .then((res) => setData(res.data));
+      .then((res) => {
+        setData(res.data);
+        setTimeout(() => {
+          setLoading(false);
+        }, 500);
+        setLoading(true);
+        setMyAvatar(res.data.member.imageUrl);
+      });
   };
 
   // 채팅방 개설, 채팅상세페이지로 이동
   const openChatting = async () => {
     await axios
       .post(`${process.env.REACT_APP_API_URL}/v1/chat/room`, {
-        sellerId: data.member.memberId, // 3
+        sellerId: data.member.memberId,
         buyerId: memberId,
         productId: data.productId,
       })
@@ -46,26 +56,33 @@ const ShareDetail = () => {
 
   return (
     <>
-      {!!data && (
-        <ShareContainer>
-          <Container>
-            <Title>{data.title}</Title>
-            {data.member.memberId === Number(memberId) && (
-              <DetailEditDropdown data={data} />
-            )}
-            <ShareDetailImg image={data.pimageList}></ShareDetailImg>
-            <ShareDetailTitle data={data}></ShareDetailTitle>
-            <div>
-              <hr></hr>
-            </div>
-            <ContentContainer>
-              <ShareDetailContent content={data}></ShareDetailContent>
-            </ContentContainer>
-            <Buttondiv onClick={() => openChatting()}>
-              <ChatBtn>채팅하기</ChatBtn>
-            </Buttondiv>
-          </Container>
-        </ShareContainer>
+      {loading ? (
+        <DataLoading></DataLoading>
+      ) : (
+        !!data && (
+          <ShareContainer>
+            <Container>
+              <Title>{data.title}</Title>
+              {data.member.memberId === Number(memberId) && (
+                <DetailEditDropdown data={data} />
+              )}
+              <ShareDetailImg image={data.pimageList}></ShareDetailImg>
+              <ShareDetailTitle
+                data={data}
+                myAvatar={myAvatar}
+              ></ShareDetailTitle>
+              <div>
+                <hr></hr>
+              </div>
+              <ContentContainer>
+                <ShareDetailContent content={data}></ShareDetailContent>
+              </ContentContainer>
+              <Buttondiv onClick={() => openChatting()}>
+                <ChatBtn>채팅하기</ChatBtn>
+              </Buttondiv>
+            </Container>
+          </ShareContainer>
+        )
       )}
     </>
   );
@@ -95,10 +112,12 @@ const ContentContainer = styled.div`
   margin-bottom: 5rem;
   display: flex;
   flex-direction: column;
+  line-height: 1.8rem;
 `;
 
 const Title = styled.div`
   font-size: 3rem;
+  margin-bottom: 1rem;
 `;
 
 const ChatBtn = styled.button`
@@ -111,5 +130,5 @@ const ChatBtn = styled.button`
 `;
 const Buttondiv = styled.div`
   text-align: right;
-  margin: 0rem 0rem 1rem 0rem;
+  margin-bottom: 2rem;
 `;

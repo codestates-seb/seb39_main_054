@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
-const ShopDetailEditDropdown = () => {
+const ShopDetailEditDropdown = ({ memberId }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [open, setOpen] = useState({
@@ -23,11 +23,12 @@ const ShopDetailEditDropdown = () => {
     await axios.delete(`${process.env.REACT_APP_API_URL}/shop/${id}`);
     navigate("/shop/list");
   };
-
   return (
     <Editdiv>
       <EditButton>
-        <span onClick={editDrop}>...</span>
+        {memberId === localStorage.getItem("memberid") && (
+          <span onClick={editDrop}>...</span>
+        )}
         <Ul display={open.display} height={open.height} class={open.class}>
           <Link to={`/shop/edit/${id}`}>
             <li onClick={editDrop}>수정하기</li>

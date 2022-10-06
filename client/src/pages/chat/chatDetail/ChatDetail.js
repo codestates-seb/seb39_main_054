@@ -1,32 +1,66 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import defaultAvatar from "../../../assets/img/avatar/avatar.jpg";
 import { ReactComponent as Xmark } from "../../../assets/img/icon/xmark-solid.svg";
-
 import { useParams } from "react-router-dom";
-import SockJS from "react-stomp";
-// import SockJS from "sockjs-client";
-// import * as Stomp from "@stomp/stompjs";
+import { over } from "stompjs";
+import SockJS from "sockjs-client";
+
+let client = null;
 
 const ChatDetail = () => {
-  const Stomp = require("stompjs");
-  const sock = new SockJS(
-    `${process.env.REACT_APP_API_URL}/gs-guide-websocket`
-  );
-  const client = Stomp.over(sock);
   const memberId = localStorage.getItem("memberid");
   const { id } = useParams(); // 룸아이디
+  const navigate = useNavigate();
+
   const headers = {
     "Content-Type": "application/json",
     Authorization: `${localStorage.getItem("authorization")}`,
   };
-
   const [sellerId, setSellerId] = useState("");
   const [sellerName, setSellerName] = useState("");
-
   const [msg, setMsg] = useState(""); // 보내는 메세지
   const [data, setData] = useState(""); // 받는 메세지
+
+  // const connection = () => {
+  //   let sock = new SockJS(
+  //     `${process.env.REACT_APP_API_URL}/gs-guide-websocket`
+  //   );
+  //   const client = over(sock);
+
+  //   client.connect({}, () => {
+
+  //     client.subscribe(
+  //       `/queue/addChatToClient/${id}`, // 룸아이디
+  //       (chat) => {
+  //         const newMessage = JSON.parse(chat.body);
+  //         setData(data.concat(newMessage));
+  //         console.log(chat);
+  //       },
+  //       {}
+  //     );
+  //     // .unsubscribe();
+  //   });
+  //   // 위의 콜백함수는 클라이언트가 서버로부터 메세지(data)를 전달받을때 실행된다.
+  //   // 특정 채팅방에서 나가거나 해당 어플리케이션에서 나갔을 경우 상대방이 보낸 메세지를 읽지 않음으로 표시하기 위해 구독을 끊어준다.
+  //   // 전달하는 메세지 / 전달받는 메세지를 따로 변수에 담아준다. --> 그래야 css 작업할 수 있을듯. 근데 이게 같은 내용 아닌가?
+  //   // return () => client.disconnect();
+  //   // }, [client, memberId]); // <--- ???
+  // };
+
+  // const sendMessage = () => {
+  //   let chatMessage = {
+  //     chatRoomId: id,
+  //     memberId: memberId, // 로그인한 회원
+  //     content: msg,
+  //   };
+
+  //   client.send(`/app/chat/${id}`, {}, JSON.stringify(chatMessage));
+  //   console.log(chatMessage);
+  //   // setUserData({ ...userData, content: "" });
+  // };
 
   const getSellerId = async () => {
     await axios
@@ -45,76 +79,41 @@ const ChatDetail = () => {
       })
       .then((res) => {
         setSellerName(res.data.memberName);
-        console.log(res.data.memberName);
+        // console.log(res.data.memberName);
       })
       .catch((err) => console.log(err));
-  };
-
-  useEffect(() => {
-    // 1. connection이 맺어지면 실행
-    client.connect({}, () => {
-      console.log("STOMP Connection");
-
-      // 3. 구독 / 받는 메세지? / 보낼 주소는 보통 roomId로 하는편인듯 / newMessage.content -> 메세지!
-      client
-        .subscribe(
-          `/queue/addChatToClient/${id}`, // 룸아이디
-          (chat) => {
-            const newMessage = JSON.parse(chat);
-            setData(data.concat(newMessage)); // 그럼 data 배열은 받은 메세지들을 차곡차곡 담게 됨. -> data를 뿌려준다.
-          },
-          {}
-        )
-        .unsubscribe();
-    });
-    // 위의 콜백함수는 클라이언트가 서버로부터 메세지(data)를 전달받을때 실행된다.
-    // 특정 채팅방에서 나가거나 해당 어플리케이션에서 나갔을 경우 상대방이 보낸 메세지를 읽지 않음으로 표시하기 위해 구독을 끊어준다.
-    // 전달하는 메세지 / 전달받는 메세지를 따로 변수에 담아준다. --> 그래야 css 작업할 수 있을듯. 근데 이게 같은 내용 아닌가?
-
-    // return () => client.disconnect();
-    // }, [client, memberId]); // <--- ???
-  }, []);
-
-  // 2. 메세지 보내기 / 보내는 메세지? / 인풋창에 메세지 적고 '버튼'을 누르면 발생하는 이벤트.
-  const sendMessage = () => {
-    client.send(
-      `/app/chat/${id}`, // 룸아이디
-      {},
-      JSON.stringify({
-        chatRoomId: 2,
-        memberId: memberId,
-        content: msg,
-      })
-    );
   };
 
   const handleInput = (e) => {
     setMsg(e.target.value);
   };
-  // 인풋창에 값을 입력하고 전송 버튼을 누르면 handleInput함수가 실행되면서 인풋값을 setMsg에 넣어준다.
 
   useEffect(() => {
     getSellerId();
     getSellerName();
+    // connection();
   }, []);
 
   return (
     <>
       <CDContainer>
         <h1>채팅</h1>
+        <div>{data}</div>
         <CDContent>
           <ContentTop>
-            <AvatarDiv>
-              <defaultAvatar />
-            </AvatarDiv>
-            <div className="name">{sellerName}</div>
-            <XmarkDiv>
+            <AvatarAndNameWrapper>
+              <img src={defaultAvatar} className="avatar"></img>
+              <div className="name">{sellerName}</div>
+            </AvatarAndNameWrapper>
+            <XmarkWrapper
+              onClick={() => {
+                navigate(`/`);
+              }}
+            >
               <Xmark />
-            </XmarkDiv>
+            </XmarkWrapper>
           </ContentTop>
-          <ContentMiddle>
-            <div>{data}</div>
-          </ContentMiddle>
+          <ContentMiddle></ContentMiddle>
           <ContentBottom>
             <textarea
               value={msg}
@@ -122,10 +121,10 @@ const ChatDetail = () => {
               placeholder="메세지를 입력하세요"
             />
             <button
-              onClick={() => {
-                sendMessage(msg);
-                setMsg("");
-              }}
+            // onClick={() => {
+            //   sendMessage(msg);
+            //   setMsg("");
+            // }}
             >
               전송
             </button>
@@ -151,6 +150,10 @@ const CDContainer = styled.div`
     margin: 3.8rem auto;
     font-size: 2.5rem;
     font-family: "NotoSansKR-Medium";
+    @media ${(props) => props.theme.mobile} {
+      margin: 3.6rem 0 3.1rem 0;
+      font-size: 1.5rem;
+    }
   }
 `;
 
@@ -158,10 +161,16 @@ const CDContent = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto 8.875rem auto;
+  @media ${(props) => props.theme.mobile} {
+    /* width: 22.5625rem;
+    height: 33.5625rem; */
+    margin: 0 auto 8.875rem auto;
+  }
 `;
 
 const ContentTop = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
   width: 36.5rem;
   height: 4.5625rem;
@@ -169,39 +178,50 @@ const ContentTop = styled.div`
   border: 0.31rem solid ${(props) => props.theme.gray4};
   border-radius: 1.25rem;
   background-color: ${(props) => props.theme.bgColor};
-  .name {
-    margin: 0.2rem 0 0 1.4rem;
-    font-size: 1.5rem;
-    font-family: "NotoSansKR-Bold";
+  @media ${(props) => props.theme.mobile} {
+    width: 22.25rem;
+    height: 4.5625rem;
+    margin-bottom: 1.375rem;
+    border: 0.1875rem solid ${(props) => props.theme.gray4};
   }
 `;
 
-const AvatarDiv = styled.div`
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  background-color: red;
-  margin-left: 1rem;
-  @media ${(props) => props.theme.mobile} {
-    width: 2.625rem;
-    height: 2.625rem;
-  }
-
-  svg {
-    width: 1.8rem;
-    height: 1.8rem;
-    padding-bottom: 0.05rem;
+const AvatarAndNameWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .avatar {
+    object-fit: contain;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background-color: ${(props) => props.theme.gray4};
+    margin-left: 1rem;
     @media ${(props) => props.theme.mobile} {
-      width: 1rem;
-      height: 1rem;
+      width: 2.625rem;
+      height: 2.625rem;
+    }
+  }
+  .name {
+    font-size: 1.5rem;
+    font-family: "NotoSansKR-Bold";
+    margin-left: 1.8rem;
+    @media ${(props) => props.theme.mobile} {
+      font-size: 1.3rem;
+      margin-left: 1.3rem;
     }
   }
 `;
 
-const XmarkDiv = styled.div`
+const XmarkWrapper = styled.div`
   width: 1.3rem;
   height: 1.3rem;
-  margin: -0.7rem 0 0 23rem;
+  margin: -0.7rem 1rem 0 0rem;
+  @media ${(props) => props.theme.mobile} {
+    width: 0.9rem;
+    height: 0.9rem;
+    margin: -0.4rem 0.9rem 0 0rem;
+  }
 `;
 
 const ContentMiddle = styled.div`
@@ -211,6 +231,12 @@ const ContentMiddle = styled.div`
   border: 0.31rem solid ${(props) => props.theme.gray4};
   border-radius: 1.25rem;
   background-color: ${(props) => props.theme.bgColor};
+  @media ${(props) => props.theme.mobile} {
+    width: 22.25rem;
+    height: 21.6875rem;
+    margin-bottom: 1.375rem;
+    border: 0.1875rem solid ${(props) => props.theme.gray4};
+  }
 `;
 const ContentBottom = styled.div`
   width: 36.5rem;
@@ -220,6 +246,12 @@ const ContentBottom = styled.div`
   border-radius: 1.25rem;
   background-color: ${(props) => props.theme.bgColor};
   display: flex;
+  @media ${(props) => props.theme.mobile} {
+    width: 22.25rem;
+    height: 4.5625rem;
+    margin-bottom: 1.375rem;
+    border: 0.1875rem solid ${(props) => props.theme.gray4};
+  }
 
   textarea {
     border: none;
@@ -230,6 +262,11 @@ const ContentBottom = styled.div`
     color: ${(props) => props.theme.textColor};
     font-size: 1.25rem;
     font-family: "NotoSansKR-Bold";
+    @media ${(props) => props.theme.mobile} {
+      width: 15rem;
+      height: 2.4rem;
+      font-size: 1rem;
+    }
     :focus {
       outline: none;
     }
@@ -242,6 +279,15 @@ const ContentBottom = styled.div`
     font-family: "NotoSansKR-Bold";
     margin: 4.78rem 0 0.8rem 0;
     background-color: ${(props) => props.theme.primary};
-    color: ${(props) => props.theme.bgColor};
+    color: ${(props) => props.theme.white};
+    @media ${(props) => props.theme.mobile} {
+      width: 4.375rem;
+      height: 2.125rem;
+      font-size: 1rem;
+      margin: 1.49rem 0.4rem 0.8rem 0;
+    }
+    :hover {
+      filter: drop-shadow(0rem 0.2rem 0.2rem ${(props) => props.theme.gray4});
+    }
   }
 `;

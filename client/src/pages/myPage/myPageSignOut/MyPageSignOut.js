@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import styled from "styled-components";
 import axios from "axios";
-import { useNavigate, Link, useParams } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import MyPageHeader from "../MyPageHeader";
 import MyPageNav from "../MyPageNav";
 import MyPageDropdownMobile from "../../../components/dropdowns/MyPageDropdownMobile";
@@ -10,7 +10,7 @@ import ModalConfirm from "../../../components/ui/modals/ModalConfirm";
 
 const MyPageSignOut = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { id } = useParams();
+  const id = localStorage.getItem("memberid");
   const navigate = useNavigate();
   const isMobile = useMediaQuery({ maxWidth: 786 });
 
@@ -27,14 +27,14 @@ const MyPageSignOut = () => {
   };
 
   const handleSignOut = async () => {
-    await axios
-      .patch(
+    await axios // formdata로 바꾸기.
+      .post(
         `${process.env.REACT_APP_API_URL}/v1/members/${id}`,
         { memberStatus: "MEMBER_QUIT" },
         { headers: headers }
       )
       .then(() => {
-        setIsOpen(!isOpen);
+        // setIsOpen(!isOpen);
         console.log("ok");
       })
       .catch((error) => console.error(error));

@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import styled from "styled-components";
+import Paginations from "../../../components/pagination/Paginations";
 import axios from "axios";
 import MyPageHeader from "../MyPageHeader";
 import MyPageNav from "../MyPageNav";
 import MyPageDropdownMobile from "../../../components/dropdowns/MyPageDropdownMobile";
-import ShareStateMobile from "../../../components/filters/shareState/ShareStateMobile";
+// import ShareStateMobile from "../../../components/filters/shareState/ShareStateMobile";
 import ShareCardContent from "../../../components/cards/ShareCardContent";
-import { useSelector } from "react-redux";
+import ListDataEmpty from "../../../components/loading/DataEmpty";
 
 const MyPageFavorite = () => {
   const isMobile = useMediaQuery({ maxWidth: 786 });
   const id = localStorage.getItem("memberid");
   // 데이터
   const [data, setData] = useState(null);
-
-  const filter = useSelector((state) => state.filtersReducer.shareSatusSelect);
 
   const categoryChange = (el) => {};
 
@@ -27,14 +26,17 @@ const MyPageFavorite = () => {
     };
 
     await axios
-      .get(`${process.env.REACT_APP_API_URL}/v1/product/mylist/${id}`, {
+      .get(`${process.env.REACT_APP_API_URL}/v1/product/myFavorite/${id}`, {
         headers: headers,
       })
-      .then((res) => setData(res.data));
+      .then((res) => {
+        console.log(res.data);
+        setData(res.data.data);
+      });
   };
 
   useEffect(() => {
-    // getData();
+    getData();
   }, []);
 
   return (
@@ -46,13 +48,17 @@ const MyPageFavorite = () => {
         ></MyPageDropdownMobile>
       )}
       {!isMobile && <MyPageNav></MyPageNav>}
-      <ShareStateContainer>
+      {/* <ShareStateContainer>
         <ShareStateMobile />
-      </ShareStateContainer>
+      </ShareStateContainer> */}
       <MCContainer>
         <MCContent>
+          {data !== null && data.length === 0 && (
+            <ListDataEmpty></ListDataEmpty>
+          )}
           <ShareCardContent data={data}></ShareCardContent>
         </MCContent>
+        <Paginations />
       </MCContainer>
     </MFContainer>
   );
@@ -68,19 +74,13 @@ const MFContainer = styled.div`
   height: 100%;
 `;
 
-const ShareStateContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-`;
-
 const MCContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
+  margin: 2.7rem 0 1rem 0;
 `;
 
 const MCContent = styled.div`

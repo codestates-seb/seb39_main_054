@@ -105,8 +105,10 @@ const ChatDetail = () => {
         <div>{data}</div>
         <CDContent>
           <ContentTop>
-            <AvatarWrapper src={defaultAvatar}></AvatarWrapper>
-            <div className="name">{sellerName}</div>
+            <AvatarAndNameWrapper>
+              <img src={defaultAvatar} className="avatar"></img>
+              <div className="name">{sellerName}</div>
+            </AvatarAndNameWrapper>
             <XmarkWrapper
               onClick={() => {
                 navigate(`/`);
@@ -152,6 +154,10 @@ const CDContainer = styled.div`
     margin: 3.8rem auto;
     font-size: 2.5rem;
     font-family: "NotoSansKR-Medium";
+    @media ${(props) => props.theme.mobile} {
+      margin: 3.6rem 0 3.1rem 0;
+      font-size: 1.5rem;
+    }
   }
 `;
 
@@ -159,10 +165,16 @@ const CDContent = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto 8.875rem auto;
+  @media ${(props) => props.theme.mobile} {
+    /* width: 22.5625rem;
+    height: 33.5625rem; */
+    margin: 0 auto 8.875rem auto;
+  }
 `;
 
 const ContentTop = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
   width: 36.5rem;
   height: 4.5625rem;
@@ -170,30 +182,53 @@ const ContentTop = styled.div`
   border: 0.31rem solid ${(props) => props.theme.gray4};
   border-radius: 1.25rem;
   background-color: ${(props) => props.theme.bgColor};
-  .name {
-    margin: 0.2rem 0 0 1.4rem;
-    font-size: 1.5rem;
-    font-family: "NotoSansKR-Bold";
+  @media ${(props) => props.theme.mobile} {
+    width: 22.25rem;
+    height: 4.5625rem;
+    margin-bottom: 1.375rem;
+    border: 0.1875rem solid ${(props) => props.theme.gray4};
   }
 `;
 
-const AvatarWrapper = styled.div`
-  object-fit: contain;
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  background-color: ${(props) => props.theme.gray4};
-  margin-left: 1rem;
-  @media ${(props) => props.theme.mobile} {
-    width: 2.625rem;
-    height: 2.625rem;
+const AvatarAndNameWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .avatar {
+    object-fit: contain;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background-color: ${(props) => props.theme.gray4};
+    margin-left: 1rem;
+    @media ${(props) => props.theme.mobile} {
+      width: 2.625rem;
+      height: 2.625rem;
+    }
+  }
+  .name {
+    font-size: 1.5rem;
+    font-family: "NotoSansKR-Bold";
+    margin-left: 1.8rem;
+    @media ${(props) => props.theme.mobile} {
+      font-size: 1.3rem;
+      margin-left: 1.3rem;
+    }
   }
 `;
 
 const XmarkWrapper = styled.div`
   width: 1.3rem;
   height: 1.3rem;
-  margin: -0.7rem 0 0 23rem;
+  margin: -0.7rem 1rem 0 0rem;
+  @media ${(props) => props.theme.mobile} {
+    width: 0.9rem;
+    height: 0.9rem;
+    margin: -0.4rem 0.9rem 0 0rem;
+  }
+  /* img {
+    background-color: ${(props) => props.theme.textColor};
+  } */
 `;
 
 const ContentMiddle = styled.div`
@@ -203,6 +238,12 @@ const ContentMiddle = styled.div`
   border: 0.31rem solid ${(props) => props.theme.gray4};
   border-radius: 1.25rem;
   background-color: ${(props) => props.theme.bgColor};
+  @media ${(props) => props.theme.mobile} {
+    width: 22.25rem;
+    height: 21.6875rem;
+    margin-bottom: 1.375rem;
+    border: 0.1875rem solid ${(props) => props.theme.gray4};
+  }
 `;
 const ContentBottom = styled.div`
   width: 36.5rem;
@@ -212,6 +253,12 @@ const ContentBottom = styled.div`
   border-radius: 1.25rem;
   background-color: ${(props) => props.theme.bgColor};
   display: flex;
+  @media ${(props) => props.theme.mobile} {
+    width: 22.25rem;
+    height: 4.5625rem;
+    margin-bottom: 1.375rem;
+    border: 0.1875rem solid ${(props) => props.theme.gray4};
+  }
 
   textarea {
     border: none;
@@ -222,6 +269,11 @@ const ContentBottom = styled.div`
     color: ${(props) => props.theme.textColor};
     font-size: 1.25rem;
     font-family: "NotoSansKR-Bold";
+    @media ${(props) => props.theme.mobile} {
+      width: 15rem;
+      height: 2.4rem;
+      font-size: 1rem;
+    }
     :focus {
       outline: none;
     }
@@ -234,6 +286,15 @@ const ContentBottom = styled.div`
     font-family: "NotoSansKR-Bold";
     margin: 4.78rem 0 0.8rem 0;
     background-color: ${(props) => props.theme.primary};
-    color: ${(props) => props.theme.bgColor};
+    color: ${(props) => props.theme.white};
+    @media ${(props) => props.theme.mobile} {
+      width: 4.375rem;
+      height: 2.125rem;
+      font-size: 1rem;
+      margin: 1.49rem 0.4rem 0.8rem 0;
+    }
+    :hover {
+      filter: drop-shadow(0rem 0.2rem 0.2rem ${(props) => props.theme.gray4});
+    }
   }
 `;

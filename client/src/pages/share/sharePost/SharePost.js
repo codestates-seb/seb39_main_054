@@ -15,6 +15,7 @@ const SharePost = () => {
   const [imageSrc, setImageSrc] = useState([]);
   const [imgUrl , setImgUrl] = useState("");
 
+  
   const titleChange = (el) => {
     setTitle(el);
   };
@@ -82,13 +83,9 @@ const SharePost = () => {
   useEffect(() => {
     if([...imgUrl].length > 6){
       alert("이미지의 최대 갯수는 6개입니다!!")
-      setImgUrl(imgUrl.slice(0,6));
-
-      // const currentSrc = [];
-      // for(let i=0;i<6;i++){
-      //   currentSrc.push(imageSrc[i])
-      // }
-      // setImageSrc(currentSrc)
+      setImgUrl([])
+      setImageSrc([])
+      
 
     }
   }, [imgUrl]);
@@ -127,11 +124,11 @@ const SharePost = () => {
               </ImgDiv>
             </label>
             {imgUrl.length !== 0 &&
-              imgUrl.map((value) => (
+              imgUrl.map((value , index) => (
                 <>
                 <ImagePostDiv>
                 <Imgbox >
-                {<img src={value}></img>} 
+                {<img src={value} key = {index}></img>} 
                 </Imgbox>
                 </ImagePostDiv>
                 </>
@@ -305,6 +302,7 @@ const Imgbox = styled.button`
   height: 5rem;
   border-radius: 15px;
   border: solid 0.1875rem;
+  background-color: ${(props) => props.theme.gray6};
   border-color: ${(props) => props.theme.gray5};
   justify-content: center;
   align-items: center;

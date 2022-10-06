@@ -19,9 +19,11 @@ const DetailEditDropdown = (data) => {
   });
 
   const { id } = useParams();
-
+  const memberId = localStorage.getItem("memberid");
   const stateClick = async (e) => {
     const formData = new FormData();
+    formData.append("productPostDetailDto.memberId", memberId);
+    // formData.append("productPostDetailDto.title", title);
     formData.append("productStatus", e);
     await axios
       .post(`${process.env.REACT_APP_API_URL}/v1/product/${id}`, formData ,{

@@ -247,8 +247,8 @@ const AvartarContainer = styled.div`
     }
   }
 `;
-const AvartarWrapper = styled.div`
-  object-fit: contain;
+const AvartarWrapper = styled.img`
+  object-fit: cover;
   width: 11.25rem;
   height: 11.25rem;
   border-radius: 50%;

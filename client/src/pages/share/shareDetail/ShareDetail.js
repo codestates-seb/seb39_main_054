@@ -10,6 +10,7 @@ import DetailEditDropdown from "../../../components/dropdowns/DetailEditDropdown
 const ShareDetail = () => {
   const navigate = useNavigate();
   const [data, setData] = useState("");
+  const [myAvatar, setMyAvatar] = useState("");
   const { id } = useParams();
 
   const memberId = localStorage.getItem("memberid");
@@ -21,7 +22,10 @@ const ShareDetail = () => {
     )}`;
     await axios
       .get(`${process.env.REACT_APP_API_URL}/v1/product/${id}`)
-      .then((res) => setData(res.data));
+      .then((res) => {
+        setData(res.data);
+        setMyAvatar(res.data.member.imageUrl);
+      });
   };
 
   // 채팅방 개설, 채팅상세페이지로 이동
@@ -54,7 +58,10 @@ const ShareDetail = () => {
               <DetailEditDropdown data={data} />
             )}
             <ShareDetailImg image={data.pimageList}></ShareDetailImg>
-            <ShareDetailTitle data={data}></ShareDetailTitle>
+            <ShareDetailTitle
+              data={data}
+              myAvatar={myAvatar}
+            ></ShareDetailTitle>
             <div>
               <hr></hr>
             </div>

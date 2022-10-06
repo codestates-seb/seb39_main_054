@@ -86,12 +86,6 @@ const SignUp = () => {
       });
   };
 
-  // const onSubmit = (data) => {
-  //   console.log(data);
-  // };
-
-  // console.log(errors);
-
   return (
     <SignupContainer>
       <h1>회원가입</h1>

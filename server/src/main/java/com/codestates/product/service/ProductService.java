@@ -100,7 +100,6 @@ public class ProductService{
      */
     public List<Pimage> uploadImage(List<MultipartFile> multipartFileList, List<String> imageUrlList) {
 
-
         List<Pimage> pimageList = multipartFileList.stream().map(file -> {
             Pimage pimage = new Pimage();
             String fileName = createFileName(file.getOriginalFilename());
@@ -133,12 +132,8 @@ public class ProductService{
      */
     public List<String> updateImage(long productId, List<String> updatedImageUrl) {
 
-        updatedImageUrl.stream().forEach(image -> System.out.println("image00 : " + image)); // request
-
         Optional<List<Pimage>> optionalPimageList = pimageRepository.findByProductId(productId);
         List<Pimage> legacyPimageList = optionalPimageList.orElseThrow(() -> new CustomException("Image not found", HttpStatus.NOT_FOUND));
-
-        legacyPimageList.stream().forEach(image -> System.out.println("image11 : " + image.getImageUrl())); // 기존 이미지 Url
 
         legacyPimageList.stream()
                 .forEach(image -> image.setLastEditDate(LocalDateTime.now()));
@@ -147,25 +142,14 @@ public class ProductService{
                 .filter(image -> !updatedImageUrl.contains(image.getImageUrl()))
                 .collect(Collectors.toList());
 
-        deleteImageList.stream().forEach(image -> System.out.println("image21 : " + image.getProduct().getProductId()));
-        deleteImageList.stream().forEach(image -> System.out.println("image22 : " + image.getPimageId()));
-        deleteImageList.stream().forEach(image -> System.out.println("image23 : " + image.getImageUrl())); // 지울거
-
-
         deleteImageList.stream()
                 .forEach(deleteimage -> pimageRepository.deleteById(deleteimage.getPimageId()));
 
         List<Pimage> modifiedPimageList = pimageRepository.findByProductId(productId).get();
 
-        modifiedPimageList.stream().forEach(image -> System.out.println("image31 : " + image.getImageUrl()));
-
-
         List<String> modifiedImageUrlList = modifiedPimageList.stream()
                 .map(image -> image.getImageUrl())
                 .collect(Collectors.toList());
-
-        modifiedImageUrlList.stream().forEach(image -> System.out.println("image41 : " + image));
-
 
         return modifiedImageUrlList;
     }
@@ -207,7 +191,7 @@ public class ProductService{
     /**
      * 제품 상세 조회
      */
-    public Product findProduct(long productId, Long principalId) {
+    public Product findProduct(long productId, long principalId) {
 
         Optional<Product> optionalProduct = productRepository.findById(productId);
         Product product = optionalProduct.orElseThrow(() -> new CustomException("Product not Found", HttpStatus.NOT_FOUND));
@@ -226,7 +210,7 @@ public class ProductService{
     /**
      * 제품 리스트 조회
      */
-    public PageImpl<Product> findProductList(int page, int size, String pcategoryName, Product.ProductStatus status, String keyword, Long principalId) {
+    public PageImpl<Product> findProductList(int page, int size, String pcategoryName, Product.ProductStatus status, String keyword, long principalId) {
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by("productId").descending());
         PageImpl<Product> productList = productRepository.findByCategoryStatusKeyword(pcategoryName, status, keyword,pageRequest);
 
@@ -267,7 +251,6 @@ public class ProductService{
     /**
      * 유저 관심목록 게시물 조회
      */
-//    public Page<Product> findFavoriteList(int page, int size,long memberId) {
     public Page<Favorite> findFavoriteList(int page, int size,long memberId) {
 
         PageRequest pageRequest = PageRequest.of(page, size,Sort.by("MEMBER_ID").descending());
@@ -283,7 +266,5 @@ public class ProductService{
 
         return favoriteList;
 
-        // memberId로 FavoriteRepository에서 productId 반환
-        // productId로 ProductRepository에서 객체 반환
     }
 }

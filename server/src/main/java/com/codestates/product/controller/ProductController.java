@@ -98,24 +98,25 @@ public class ProductController {
     }
 
     /**
-     * 제품 상세조회 // 토큰
+     * 제품 상세조회 // 토큰 option
      */
     @GetMapping("/{product-id}")
     public ResponseEntity getProduct(@PathVariable("product-id") @Positive long productId,
                                      @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
-        Long memberId = null;
-        if (principalDetails != null) {
-            memberId = principalDetails.getMember().getMemberId();
-        }
+        Long memberId = principalDetails != null ? principalDetails.getMember().getMemberId() : 0L;
+
+        System.out.println("memberId : " + memberId);
         Product product = productService.findProduct(productId, memberId);
+        System.out.println("memberId : " + product.getProductId());
+
         ProductResponseDto.DetailResponse productDetailResponseDto = mapper.productToProductDetailResponseDto(product);
 
         return new ResponseEntity<>(productDetailResponseDto, HttpStatus.OK);
     }
 
     /**
-     * 제품 리스트 조회 (feat: 카테고리, 상태, 검색어) -> QueryDsl // 토큰
+     * 제품 리스트 조회 (feat: 카테고리, 상태, 검색어) -> QueryDsl // 토큰 option
      */
     @GetMapping
     public ResponseEntity getProductList(@Positive @RequestParam(defaultValue = "1") int page,
@@ -124,10 +125,9 @@ public class ProductController {
                                          @RequestParam @Nullable Product.ProductStatus status,
                                          @RequestParam @Nullable String keyword,
                                          @AuthenticationPrincipal PrincipalDetails principalDetails) {
-        Long memberId = null;
-        if (principalDetails != null) {
-            memberId = principalDetails.getMember().getMemberId();
-        }
+
+        Long memberId = principalDetails != null ? principalDetails.getMember().getMemberId() : 0L;
+
 
         PageImpl<Product> pageProductList = productService.findProductList(page - 1, size,pcategoryName,status,keyword, memberId);
         List<Product> productList = pageProductList.getContent();

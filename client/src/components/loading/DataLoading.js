@@ -14,7 +14,7 @@ export default DataLoading;
 
 const Background = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: 500px;
   top: 0;
   left: 0;
   display: flex;

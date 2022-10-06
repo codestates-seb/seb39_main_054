@@ -17,12 +17,20 @@ const ShareDetailTitle = ({ data, myAvatar }) => {
     if (data.favoriteStatus === false) {
       await axios
         .post(`${process.env.REACT_APP_API_URL}/v1/favorites/${id}`)
-        .then(() => window.location.reload())
+        .then(() => {
+          setTimeout(() => {
+            window.location.reload();
+          }, 300);
+        })
         .catch(() => alert("로그인을 해주세요!"));
     } else {
       await axios
         .delete(`${process.env.REACT_APP_API_URL}/v1/favorites/${id}`)
-        .then(window.location.reload());
+        .then(() => {
+          setTimeout(() => {
+            window.location.reload();
+          }, 300);
+        });
     }
   };
 

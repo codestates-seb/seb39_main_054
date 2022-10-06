@@ -8,6 +8,7 @@ import MyPageNav from "../MyPageNav";
 import MyPageDropdownMobile from "../../../components/dropdowns/MyPageDropdownMobile";
 // import ShareStateMobile from "../../../components/filters/shareState/ShareStateMobile";
 import ShareCardContent from "../../../components/cards/ShareCardContent";
+import ListDataEmpty from "../../../components/loading/DataEmpty";
 
 const MyPageFavorite = () => {
   const isMobile = useMediaQuery({ maxWidth: 786 });
@@ -52,6 +53,9 @@ const MyPageFavorite = () => {
       </ShareStateContainer> */}
       <MCContainer>
         <MCContent>
+          {data !== null && data.length === 0 && (
+            <ListDataEmpty></ListDataEmpty>
+          )}
           <ShareCardContent data={data}></ShareCardContent>
         </MCContent>
         <Paginations />

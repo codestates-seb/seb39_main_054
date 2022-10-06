@@ -7,6 +7,7 @@ import MyPageHeader from "../MyPageHeader";
 import MyPageNav from "../MyPageNav";
 import MyPageDropdownMobile from "../../../components/dropdowns/MyPageDropdownMobile";
 import ShareCardContent from "../../../components/cards/ShareCardContent";
+import ListDataEmpty from "../../../components/loading/DataEmpty";
 
 const MyPageMyPost = () => {
   const isMobile = useMediaQuery({ maxWidth: 786 });
@@ -50,6 +51,9 @@ const MyPageMyPost = () => {
       {!isMobile && <MyPageNav></MyPageNav>}
       <MCContainer>
         <MCContent>
+          {data !== null && data.length === 0 && (
+            <ListDataEmpty></ListDataEmpty>
+          )}
           <ShareCardContent data={data}></ShareCardContent>
         </MCContent>
         <Paginations />

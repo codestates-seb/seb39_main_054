@@ -7,10 +7,12 @@ import Category from "../../../components/filters/category/Category";
 import Search from "../../../components/filters/search/Search";
 import ShareState from "../../../components/filters/shareState/ShareState";
 import { PostBtn } from "../../../components/ui/buttons/buttons";
+import { useSelector } from "react-redux";
 
 const ShareListFilter = () => {
   const navigate = useNavigate();
   const isMobile = useMediaQuery({ maxWidth: 786 });
+  const isLogin = useSelector((state) => state.loginReducer.isLogin);
 
   const postToggle = () => {
     navigate("/share/post");
@@ -30,10 +32,10 @@ const ShareListFilter = () => {
             ></CategoryDropdown>
           )}
         </div>
-        {!isMobile && <PostBtn onClick={postToggle}>글작성</PostBtn>}
+        {!isMobile && isLogin && <PostBtn onClick={postToggle}>글작성</PostBtn>}
       </SearchAndPostContainer>
       <ShareState></ShareState>
-      {isMobile && <PostBtn onClick={postToggle}>글작성</PostBtn>}
+      {isMobile && isLogin && <PostBtn onClick={postToggle}>글작성</PostBtn>}
     </Container>
   );
 };

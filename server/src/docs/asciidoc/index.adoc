@@ -1,0 +1,118 @@
+= 공유장터 서비스 아나바다 애플리케이션
+:sectnums:
+:toc: left
+:toclevels: 4
+:toc-title: Table of Contents
+:source-highlighter: prettify
+
+Jeong Jaejin <sojournre@gmail.com>
+
+v1.0.0, 2022.09.16
+
+'''
+== MemberController
+=== 회원가입
+.curl-request
+include::{snippets}/post-member/curl-request.adoc[]
+
+.http-request
+include::{snippets}/post-member/http-request.adoc[]
+
+.request-fields
+include::{snippets}/post-member/request-fields.adoc[]
+
+.http-response
+include::{snippets}/post-member/http-response.adoc[]
+
+.response-fields
+include::{snippets}/post-member/response-fields.adoc[]
+
+=== 회원 정보 수정
+.curl-request
+include::{snippets}/patch-member/curl-request.adoc[]
+
+.http-request
+include::{snippets}/patch-member/http-request.adoc[]
+
+.request-fields
+include::{snippets}/patch-member/request-fields.adoc[]
+
+.request-parts
+include::{snippets}/patch-member/request-parts.adoc[]
+
+.http-response
+include::{snippets}/patch-member/http-response.adoc[]
+
+.response-fields
+include::{snippets}/patch-member/response-fields.adoc[]
+
+=== 특정 회원 정보 조회
+.curl-request
+include::{snippets}/get-member/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-member/http-request.adoc[]
+
+.request-fields
+//include::{snippets}/get-member/request-fields.adoc[]
+
+.http-response
+include::{snippets}/get-member/http-response.adoc[]
+
+.response-fields
+include::{snippets}/get-member/response-fields.adoc[]
+
+=== 회원 로그인
+.curl-request
+include::{snippets}/post-login/curl-request.adoc[]
+
+.http-request
+include::{snippets}/post-login/http-request.adoc[]
+
+.request-fields
+include::{snippets}/post-login/request-fields.adoc[]
+
+.http-response
+include::{snippets}/post-login/http-response.adoc[]
+
+.response-fields
+//include::{snippets}/post-login/response-fields.adoc[]
+
+.response-headers
+include::{snippets}/post-login/response-headers.adoc[]
+
+== FavoriteController
+=== 관심 등록
+.curl-request
+include::{snippets}/post-favorite/curl-request.adoc[]
+
+.http-request
+include::{snippets}/post-favorite/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/post-favorite/path-parameters.adoc[]
+
+.request-headers
+include::{snippets}/post-favorite/request-headers.adoc[]
+
+//.request-fields
+//include::{snippets}/post-favorite/request-fields.adoc[]
+
+.http-response
+include::{snippets}/post-favorite/http-response.adoc[]
+
+.response-fields
+include::{snippets}/post-favorite/response-fields.adoc[]
+
+=== 관심 취소
+.curl-request
+include::{snippets}/delete-favorite/curl-request.adoc[]
+
+.http-request
+include::{snippets}/delete-favorite/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/delete-favorite/path-parameters.adoc[]
+
+.http-response
+include::{snippets}/delete-favorite/http-response.adoc[]

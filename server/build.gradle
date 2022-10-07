@@ -1,0 +1,133 @@
+buildscript {
+	ext {
+		queryDslVersion = "5.0.0"
+	}
+}
+
+plugins {
+	id 'org.springframework.boot' version '2.7.1'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'org.asciidoctor.jvm.convert' version '3.3.2'
+	id 'java'
+	id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10'
+}
+
+group = 'com.codestates'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+	asciidoctorExtensions
+}
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	set('snippetsDir', file("build/generated-snippets"))
+}
+
+dependencies {
+	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+
+	// (5)
+	asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'com.h2database:h2'
+	implementation 'mysql:mysql-connector-java'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'com.auth0:java-jwt:3.19.2'
+	implementation 'com.google.code.gson:gson'
+	implementation 'org.mapstruct:mapstruct:1.5.1.Final'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.1.Final'
+	implementation 'com.amazonaws:aws-java-sdk-s3:1.12.281'
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	implementation 'org.webjars:webjars-locator-core'
+	implementation 'org.webjars:sockjs-client:1.0.2'
+	implementation 'org.webjars:stomp-websocket:2.3.3'
+	implementation 'org.webjars:bootstrap:3.3.7'
+	implementation 'org.webjars:jquery:3.1.1-1'
+	implementation group: 'io.awspring.cloud', name: 'spring-cloud-starter-aws-parameter-store-config'
+}
+
+// TODO 09/30 build 시 테스트 문제로 rest docs 관련 전부 주석처리
+tasks.named('test') {
+	outputs.dir snippetsDir
+	useJUnitPlatform()
+}
+
+// (7)
+tasks.named('asciidoctor') {
+	configurations "asciidoctorExtensions"
+	inputs.dir snippetsDir
+	dependsOn test
+}
+
+// (8)
+task copyDocument(type: Copy) {
+	dependsOn asciidoctor            // (8-1)
+	from file("${asciidoctor.outputDir}")   // (8-2)
+	into file("src/main/resources/static/docs")   // (8-3)
+}
+
+build {
+	dependsOn copyDocument  // (9)
+}
+
+// (10)
+bootJar {
+	dependsOn copyDocument    // (10-1)
+	from ("${asciidoctor.outputDir}") {  // (10-2)
+		into 'static/docs'     // (10-3)
+	}
+}
+
+/*
+ * queryDSL 설정 추가
+ */
+// querydsl에서 사용할 경로 설정
+def querydslDir = "$buildDir/generated/querydsl"
+// JPA 사용 여부와 사용할 경로를 설정
+querydsl {
+	jpa = true
+	querydslSourcesDir = querydslDir
+}
+// build 시 사용할 sourceSet 추가
+sourceSets {
+	main.java.srcDir querydslDir
+}
+// querydsl 컴파일시 사용할 옵션 설정
+compileQuerydsl{
+	options.annotationProcessorPath = configurations.querydsl
+}
+// querydsl 이 compileClassPath 를 상속하도록 설정
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+	querydsl.extendsFrom compileClasspath
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "io.awspring.cloud:spring-cloud-aws-dependencies:2.3.3"
+	}
+}

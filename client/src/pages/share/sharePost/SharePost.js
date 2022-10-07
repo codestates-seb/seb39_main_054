@@ -4,6 +4,7 @@ import PostDropdown from "../../../components/dropdowns/PostDropdown";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ReactComponent as Camera } from "../../../assets/img/icon/camera-solid.svg";
+import Modal from "../../../components/ui/modals/ModalConfirm";
 
 const SharePost = () => {
   const navigate = useNavigate();
@@ -70,7 +71,9 @@ const SharePost = () => {
       .post(`${process.env.REACT_APP_API_URL}/v1/product`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
-      .then((res) => navigate(`/share/detail/${res.data.productId}`));
+      .then((res) => {
+        alert("등록되었습니다!")
+        navigate(`/share/detail/${res.data.productId}`)});
     }
   };
   const deleteClick = (idx) => {
@@ -169,11 +172,10 @@ const Title = styled.div`
 `;
 const WriteContainer = styled.div`
   width: 66.25rem;
-
   display: flex;
   background-color: ${(props) => props.theme.gray6};
   flex-direction: column;
-  /* margin: 0rem 26.875rem 5rem; */
+  margin-bottom: 6rem;
   border-radius: 15px;
 
   @media ${(props) => props.theme.tabletL} {

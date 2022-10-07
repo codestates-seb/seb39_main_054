@@ -68,34 +68,51 @@ const ShareDetailTitle = ({ data, myAvatar }) => {
 export default ShareDetailTitle;
 
 const Div = styled.div`
+  .profile {
+    display: flex;
+    justify-content: space-between;
+
+  }
   .flexboxContainer {
     display: flex;
     justify-content: space-between;
     margin: 2rem 0rem 1rem 0rem;
+    @media ${(props) => props.theme.mobile} {
+    flex-direction: column;
   }
-  .profile {
-    display: flex;
-    justify-content: space-between;
   }
   .middle {
     font-size: 1.875rem;
     display: flex;
     align-items: center;
     margin: 0rem 0rem 0rem 1.5rem;
+    @media ${(props) => props.theme.mobile} {
+    font-size: 1.5rem;
+    }
+    
   }
   .flexbox {
     display: flex;
     align-items: center;
+    @media ${(props) => props.theme.mobile} {
+    justify-content: center;
+  }
+    
   }
   .flexbox1 {
     display: flex;
     align-items: center;
     margin: 0rem 4rem;
+    @media ${(props) => props.theme.mobile} {
+    margin-left: -0.5rem;
+  }
+    
   }
   .mediumFont {
     font-size: 1.375rem;
     margin: 0rem 0rem 0rem 0.5rem;
-  }
+}
+
 `;
 
 const AvartarWrapper = styled.img`
@@ -117,6 +134,10 @@ const Stateball = styled.div`
       : props.status === "대여중"
       ? props.theme.stateBlue
       : props.theme.stateRed};
+   @media ${(props) => props.theme.mobile} {
+    width: 1.3rem;
+    height: 1.3rem;
+    }
 `;
 const HeartSvg = styled(Heart)`
   fill: ${(props) => (props.favoriteStatus ? "#ED4956" : props.theme.gray4)};

@@ -32,7 +32,7 @@ const ShopListContent = () => {
       {loading ? (
         <DataLoading></DataLoading>
       ) : (
-        <ShopCardContent data={data}></ShopCardContent>
+        data !== null && <ShopCardContent data={data}></ShopCardContent>
       )}
     </Content>
   );

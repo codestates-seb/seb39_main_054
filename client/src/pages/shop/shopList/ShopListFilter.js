@@ -10,7 +10,7 @@ import { PostBtn } from "../../../components/ui/buttons/buttons";
 const ShopListFilter = () => {
   const navigate = useNavigate();
   const isMobile = useMediaQuery({ maxWidth: 786 });
-  const roles = "ROLE_ADMIN";
+  const roles = "ROLE_USER";
 
   const postToggle = () => {
     navigate("/shop/post");

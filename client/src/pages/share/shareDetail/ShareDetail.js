@@ -130,6 +130,10 @@ const ContentContainer = styled.div`
 const Title = styled.div`
   font-size: 3rem;
   margin-bottom: 1rem;
+  @media ${(props) => props.theme.mobile} {
+    font-size: 2rem;
+  }
+
 `;
 
 const ChatBtn = styled.button`

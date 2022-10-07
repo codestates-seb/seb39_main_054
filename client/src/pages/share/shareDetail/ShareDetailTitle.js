@@ -53,15 +53,19 @@ const ShareDetailTitle = ({ data }) => {
 export default ShareDetailTitle;
 
 const Div = styled.div`
+  .profile {
+    display: flex;
+    justify-content: space-between;
+    @media ${(props) => props.theme.tabletS} {
+    flex-direction: column;
+  }
+  }
   .flexboxContainer {
     display: flex;
     justify-content: space-between;
     margin: 2rem 0rem 1rem 0rem;
   }
-  .profile {
-    display: flex;
-    justify-content: space-between;
-  }
+
   .profileimg {
     width: 5.31rem;
     height: 5.31rem;

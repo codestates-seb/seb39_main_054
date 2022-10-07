@@ -84,11 +84,23 @@ const Container = styled.div`
   flex-direction: column;
   margin-top: 7.5rem;
   width: 56.25rem;
-  //width: 40rem;
   hr {
     margin: 1rem 0rem;
   }
-`;
+  @media ${(props) => props.theme.tabletL} {
+    width: 53.5rem;
+    margin: 2.0625rem 0;
+  }
+
+  @media ${(props) => props.theme.tabletS} {
+    width: 34rem;
+    margin: 1.0625rem 0;
+  }
+
+  @media ${(props) => props.theme.mobile} {
+    width: 23.75rem;
+  }
+  `
 const ContentContainer = styled.div`
   width: 100%;
   word-break: break-all;

@@ -9,8 +9,12 @@ const FooterMobile = () => {
         <FooterTop>
           <FooterTopContent>
             <div className="footer-team-name">TEAM ANBD</div>
-            <div>Email: alsalsdyd@gmail.com</div>
-            <div>tell: 010-1234-xxxx</div>
+            <div>
+              <a href="https://github.com/codestates-seb/seb39_main_054">
+                Github Link
+              </a>
+            </div>
+            <div>anbd@gmail.com</div>
           </FooterTopContent>
           <img src={logo} alt="ANBD logo" />
         </FooterTop>

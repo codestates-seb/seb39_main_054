@@ -60,7 +60,9 @@ const DetailEditDropdown = (data) => {
     .delete(`${process.env.REACT_APP_API_URL}/v1/product/${productId}`,{
       headers :  headers
     })
-    .then(() => navigate(`/`))
+    .then(() => {
+      alert("삭제되었습니다!")
+      navigate(`/`)})
   }
 
   const editDrop = () => {
@@ -90,11 +92,7 @@ const DetailEditDropdown = (data) => {
         <Ul display={open.display} height={open.height} class={open.class}
         style={{ marginLeft: -150}}>
           <Link
-            to={`/share/edit/${id}`}
-            state={{
-              data: data,
-            }}
-          >
+            to={`/share/edit/${id}`}>
             <li onClick={editDrop}>수정하기</li>
           </Link>
           <li onClick={deletePage}>삭제하기</li>

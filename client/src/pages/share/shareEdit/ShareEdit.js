@@ -13,7 +13,7 @@ const ShareEdit = () => {
   const [title, setTitle] = useState();
   const [content, setContent] = useState();
   const [category, setCategory] = useState();
-
+  const [imgurl , setImgUrl] = useState([])
   const { id } = useParams();
 
   // console.log(Object.values(imageSrc))
@@ -22,9 +22,9 @@ const ShareEdit = () => {
       .get(`${process.env.REACT_APP_API_URL}/v1/product/${id}`)
       .then((res) => {
         setProductData({ ...productData, ...res.data });
+        setImgUrl({...imgurl , ...res.data.pimageList})
       });
   };
- 
 
   const titleChange = (el) => {
     setTitle(el);
@@ -35,10 +35,11 @@ const ShareEdit = () => {
   const contentChange = (el) => {
     setContent(el);
   }; 
-  const imgUrl = [];
-  for(let i=0;i<productData.pimageList.length;i++){
-    imgUrl.push(productData.pimageList[i].imageUrl)
+  const urlList = [];
+  for(let i=0;i< Object.values(imgurl).length;i++){
+    urlList.push(imgurl[i].imageUrl)
   }
+
 
   const EditClick = async () => {
     const formData = new FormData();
@@ -46,8 +47,8 @@ const ShareEdit = () => {
     formData.append("productPatchDetailDto.title", title);
     formData.append("productPatchDetailDto.description", content);
     formData.append("productPatchDetailDto.pcategoryName", category);
-    for (let i = 0; i < imgUrl.length; i++) {
-      formData.append("imageUrlList", imgUrl[i]);
+    for (let i = 0; i < urlList.length; i++) {
+      formData.append("imageUrlList", urlList[i]);
     }
     await axios
       .patch(`${process.env.REACT_APP_API_URL}/v1/product/${id}`, formData, {
@@ -63,7 +64,7 @@ const ShareEdit = () => {
 
   return (
     <>
-      {!!productData && (
+      {!!(productData && imgurl) && (
         <MainContainer>
           <Title>공유 물품 수정</Title>
           <WriteContainer>
@@ -88,8 +89,8 @@ const ShareEdit = () => {
                 onChange={(e) => contentChange(e.target.value)}
               ></ContentBox>
               <ImgContainer>
-                {imgUrl !== 0 &&
-                  imgUrl.map((value) => (
+                {urlList !== 0 &&
+                  urlList.map((value) => (
                     <Imgbox>{<img src={value}></img>}</Imgbox>
                   ))}
               </ImgContainer>

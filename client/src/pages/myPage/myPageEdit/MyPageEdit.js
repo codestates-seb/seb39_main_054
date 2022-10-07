@@ -51,6 +51,7 @@ const MyPageEdit = () => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
+    mode: "onChange",
   });
 
   const ImageChange = (el) => {
@@ -75,6 +76,10 @@ const MyPageEdit = () => {
         console.log(err);
         alert("사진을 등록하세요!");
       });
+  };
+
+  const onError = (error) => {
+    console.log(error);
   };
 
   // 모달창의 확인버튼을 눌렀을때의 동작
@@ -139,7 +144,7 @@ const MyPageEdit = () => {
       {!isMobile && <MyPageNav></MyPageNav>}
       <EditContainer>
         <EditContent>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit, onError)}>
             <div style={{ marginBottom: "1.6875rem" }}>
               <label>닉네임</label>
               <input
@@ -247,8 +252,8 @@ const AvartarContainer = styled.div`
     }
   }
 `;
-const AvartarWrapper = styled.div`
-  object-fit: contain;
+const AvartarWrapper = styled.img`
+  object-fit: cover;
   width: 11.25rem;
   height: 11.25rem;
   border-radius: 50%;

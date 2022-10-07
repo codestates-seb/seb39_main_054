@@ -48,6 +48,7 @@ const SignUp = () => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
+    mode: "onChange",
   });
 
   const duplicateCheck = () => {
@@ -86,17 +87,15 @@ const SignUp = () => {
       });
   };
 
-  // const onSubmit = (data) => {
-  //   console.log(data);
-  // };
-
-  // console.log(errors);
+  const onError = (error) => {
+    console.log(error);
+  };
 
   return (
     <SignupContainer>
       <h1>회원가입</h1>
       <SignupContent>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit, onError)}>
           <div style={{ marginBottom: "1.05rem" }}>
             <label>아이디</label>
             <input

@@ -17,7 +17,7 @@ text-align: right;
 margin: 0.8rem 0rem;
 font-size: 1.25rem;
 `
-const Body = styled.div`
+const Body = styled.pre`
 font-size: 1.25rem;
 margin: 0.5rem 0rem;
 

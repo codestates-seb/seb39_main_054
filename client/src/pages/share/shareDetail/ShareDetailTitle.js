@@ -1,9 +1,11 @@
+import React, { useState } from "react";
 import { ReactComponent as Heart } from "../../../assets/img/icon/heart.svg";
 import styled from "styled-components";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import defaultAvatar from "../../../assets/img/avatar/avatar.jpg";
 
-const ShareDetailTitle = ({ data }) => {
+const ShareDetailTitle = ({ data, myAvatar }) => {
   const { id } = useParams();
 
   // 좋아요 등록
@@ -15,12 +17,20 @@ const ShareDetailTitle = ({ data }) => {
     if (data.favoriteStatus === false) {
       await axios
         .post(`${process.env.REACT_APP_API_URL}/v1/favorites/${id}`)
-        .then(() => window.location.reload())
+        .then(() => {
+          setTimeout(() => {
+            window.location.reload();
+          }, 300);
+        })
         .catch(() => alert("로그인을 해주세요!"));
     } else {
       await axios
         .delete(`${process.env.REACT_APP_API_URL}/v1/favorites/${id}`)
-        .then(window.location.reload());
+        .then(() => {
+          setTimeout(() => {
+            window.location.reload();
+          }, 300);
+        });
     }
   };
 
@@ -29,7 +39,12 @@ const ShareDetailTitle = ({ data }) => {
       <Div className="flexboxContainer">
         <Div className="flexbox">
           <Div className="profileimg">
-            <img src={data.member}></img>
+            {" "}
+            {myAvatar ? (
+              <AvartarWrapper src={myAvatar}></AvartarWrapper>
+            ) : (
+              <AvartarWrapper src={defaultAvatar}></AvartarWrapper>
+            )}
           </Div>
           <Div className="middle">{data.member.nickname}</Div>
         </Div>
@@ -65,13 +80,6 @@ const Div = styled.div`
     justify-content: space-between;
     margin: 2rem 0rem 1rem 0rem;
   }
-
-  .profileimg {
-    width: 5.31rem;
-    height: 5.31rem;
-    background-color: #bdbdbd;
-    border-radius: 50%;
-  }
   .middle {
     font-size: 1.875rem;
     display: flex;
@@ -92,6 +100,16 @@ const Div = styled.div`
     margin: 0rem 0rem 0rem 0.5rem;
   }
 `;
+
+const AvartarWrapper = styled.img`
+  border-radius: 50%;
+  object-fit: cover;
+  width: 5.31rem;
+  height: 5.31rem;
+  background-color: aliceblue;
+  border-radius: 50%;
+`;
+
 const Stateball = styled.div`
   width: 1.75rem;
   height: 1.75rem;

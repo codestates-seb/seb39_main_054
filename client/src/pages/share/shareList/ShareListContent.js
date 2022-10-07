@@ -4,10 +4,13 @@ import styled from "styled-components";
 import ShareCardContent from "../../../components/cards/ShareCardContent";
 import { paginationInfo } from "../../../redux/actions/paginationAction";
 import { useSelector, useDispatch } from "react-redux";
+import ListDataEmpty from "../../../components/loading/DataEmpty";
+import DataLoading from "../../../components/loading/DataLoading";
 
 const ShareListContent = () => {
   // 데이터
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
   const filter = useSelector((state) => state.filtersReducer);
@@ -55,6 +58,10 @@ const ShareListContent = () => {
       .then((res) => {
         setData(res.data.data);
         dispatch(paginationInfo(res.data.pageInfo));
+        setTimeout(() => {
+          setLoading(false);
+        }, 500);
+        setLoading(true);
       });
   };
 
@@ -68,7 +75,17 @@ const ShareListContent = () => {
 
   return (
     <Content>
-      <ShareCardContent data={data}></ShareCardContent>
+      {loading ? (
+        <DataLoading></DataLoading>
+      ) : (
+        <>
+          {" "}
+          {data !== null && data.length === 0 && (
+            <ListDataEmpty></ListDataEmpty>
+          )}
+          <ShareCardContent data={data}></ShareCardContent>
+        </>
+      )}
     </Content>
   );
 };

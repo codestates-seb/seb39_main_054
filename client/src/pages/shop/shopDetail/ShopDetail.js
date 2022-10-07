@@ -3,12 +3,14 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import ShopDetailEditDropdown from "../../../components/dropdowns/ShopDetailEditDropdown";
+import DataLoading from "../../../components/loading/DataLoading";
 import ShopDetailImg from "./ShopDetailImg";
 import ShopDetailTitle from "./ShopDetailTitle";
 import ShopMap from "./ShopMap";
 
 const ShopDetail = () => {
   const [data, setData] = useState("");
+  const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const url = data.image;
 
@@ -17,9 +19,13 @@ const ShopDetail = () => {
       // .get(`${process.env.REACT_APP_API_URL}/shop/${id}`)
       // .then((res) => setData(res.data));
       .get(`/mock/ShopMockData.json`)
-      .then((res) =>
-        setData(...res.data.shop.filter((el) => el.id === Number(id)))
-      );
+      .then((res) => {
+        setData(...res.data.shop.filter((el) => el.id === Number(id)));
+        setTimeout(() => {
+          setLoading(false);
+        }, 500);
+        setLoading(true);
+      });
   };
 
   useEffect(() => {
@@ -28,32 +34,38 @@ const ShopDetail = () => {
 
   return (
     <>
-      {!!data && (
-        <ShopContainer>
-          <Container>
-            <Editdiv>
-              <EditButton>
-                <ShopDetailEditDropdown memberId = {data.memberId}></ShopDetailEditDropdown>
-              </EditButton>
-            </Editdiv>
-            <Imagediv>
-              <ShopDetailImg url={url}></ShopDetailImg>
-            </Imagediv>
-            <Title>
-              <ShopDetailTitle data={data}></ShopDetailTitle>
-            </Title>
-            <div>
-              <hr></hr>
-            </div>
-            <ContentDiv>
-              <CreatedPost>2022.09.16</CreatedPost>
-              <Content>{data.description}</Content>
-            </ContentDiv>
-            <MapDiv>
-              <ShopMap data={data}></ShopMap>
-            </MapDiv>
-          </Container>
-        </ShopContainer>
+      {loading ? (
+        <DataLoading></DataLoading>
+      ) : (
+        !!data && (
+          <ShopContainer>
+            <Container>
+              <Editdiv>
+                <EditButton>
+                  <ShopDetailEditDropdown
+                    memberId={data.memberId}
+                  ></ShopDetailEditDropdown>
+                </EditButton>
+              </Editdiv>
+              <Imagediv>
+                <ShopDetailImg url={url}></ShopDetailImg>
+              </Imagediv>
+              <Title>
+                <ShopDetailTitle data={data}></ShopDetailTitle>
+              </Title>
+              <div>
+                <hr></hr>
+              </div>
+              <ContentDiv>
+                <CreatedPost>2022.09.16</CreatedPost>
+                <Content>{data.description}</Content>
+              </ContentDiv>
+              <MapDiv>
+                <ShopMap data={data}></ShopMap>
+              </MapDiv>
+            </Container>
+          </ShopContainer>
+        )
       )}
     </>
   );
@@ -84,7 +96,7 @@ const Container = styled.div`
 
   @media ${(props) => props.theme.tabletS} {
     width: 34rem;
-    margin: 1.0625rem 0;
+    margin: 2.0625rem 0;
   }
 
   @media ${(props) => props.theme.mobile} {
@@ -144,6 +156,8 @@ const MapDiv = styled.div`
   margin-top: 10rem;
   margin-bottom: 2.5rem;
   border-radius: 14px;
+  width: 56.25rem;
+  height: 34.3rem;
   @media ${(props) => props.theme.tabletL} {
     width: 53.5rem;
     height: 32.3rem;

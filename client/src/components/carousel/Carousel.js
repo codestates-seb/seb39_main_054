@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import slide1 from "../../assets/img/carouselImg/camping.jpeg";
-import slide2 from "../../assets/img/carouselImg/fishing.jpg";
-import slide3 from "../../assets/img/carouselImg/mountain.jpg";
+import slide1 from "../../assets/img/carouselImg/main1.png";
+import slide2 from "../../assets/img/carouselImg/main2.png";
+import slide3 from "../../assets/img/carouselImg/main3.png";
 import { ReactComponent as Left } from "../../assets/img/icon/caret-left.svg";
 import { ReactComponent as Right } from "../../assets/img/icon/caret-right.svg";
 import { ReactComponent as Pause } from "../../assets/img/icon/pause.svg";

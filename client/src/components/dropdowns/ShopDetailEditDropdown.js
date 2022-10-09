@@ -20,13 +20,13 @@ const ShopDetailEditDropdown = ({ memberId }) => {
   };
 
   const deleteHandelr = async () => {
-    await axios.delete(`${process.env.REACT_APP_API_URL}/shop/${id}`);
+    await axios.delete(`${process.env.REACT_APP_API_URL}/v1/store/${id}`);
     navigate("/shop/list");
   };
   return (
     <Editdiv>
       <EditButton>
-        {memberId === localStorage.getItem("memberid") && (
+        {String(memberId) === localStorage.getItem("memberid") && (
           <span onClick={editDrop}>...</span>
         )}
         <Ul display={open.display} height={open.height} class={open.class}>

@@ -40,7 +40,7 @@ const ShopDetail = () => {
               <Editdiv>
                 <EditButton>
                   <ShopDetailEditDropdown
-                    memberId={data.memberId}
+                    memberId={data.member.memberId}
                   ></ShopDetailEditDropdown>
                 </EditButton>
               </Editdiv>

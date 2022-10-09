@@ -1,6 +1,5 @@
 package com.codestates.scategory.repository;
 
-import com.codestates.pcategory.entity.Pcategory;
 import com.codestates.scategory.entity.Scategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

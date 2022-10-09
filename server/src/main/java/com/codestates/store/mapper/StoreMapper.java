@@ -3,8 +3,6 @@ package com.codestates.store.mapper;
 import com.codestates.member.dto.MemberResponseDto;
 import com.codestates.member.entity.Member;
 import com.codestates.member.mapper.MemberMapper;
-import com.codestates.pcategory.dto.PcategoryResonseDto;
-import com.codestates.pcategory.entity.Pcategory;
 import com.codestates.scategory.dto.ScategoryResonseDto;
 import com.codestates.scategory.entity.Scategory;
 import com.codestates.scategory.service.ScategoryService;

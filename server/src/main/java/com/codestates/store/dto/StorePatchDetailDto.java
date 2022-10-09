@@ -1,6 +1,5 @@
 package com.codestates.store.dto;
 
-import com.codestates.product.entity.Product;
 import lombok.Getter;
 import lombok.Setter;
 

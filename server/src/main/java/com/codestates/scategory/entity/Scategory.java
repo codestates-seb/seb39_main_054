@@ -1,7 +1,6 @@
 package com.codestates.scategory.entity;
 
 import com.codestates.audit.Auditable;
-import com.codestates.product.entity.Product;
 import com.codestates.store.entity.Store;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

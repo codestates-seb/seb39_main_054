@@ -1,8 +1,6 @@
 package com.codestates.scategory.service;
 
 import com.codestates.exception.CustomException;
-import com.codestates.pcategory.entity.Pcategory;
-import com.codestates.pcategory.repository.PcategoryRepository;
 import com.codestates.scategory.entity.Scategory;
 import com.codestates.scategory.repository.ScategoryRepository;
 import lombok.RequiredArgsConstructor;

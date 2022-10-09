@@ -1,11 +1,7 @@
 package com.codestates.store.entity;
 
 import com.codestates.audit.Auditable;
-import com.codestates.favorite.entity.Favorite;
 import com.codestates.member.entity.Member;
-import com.codestates.pcategory.entity.Pcategory;
-import com.codestates.pimage.entity.Pimage;
-import com.codestates.product.entity.Product;
 import com.codestates.scategory.entity.Scategory;
 import com.codestates.simage.entity.Simage;
 import lombok.*;

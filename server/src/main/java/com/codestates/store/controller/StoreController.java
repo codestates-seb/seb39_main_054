@@ -1,9 +1,6 @@
 package com.codestates.store.controller;
 
 import com.codestates.member.jwt.oauth.PrincipalDetails;
-import com.codestates.product.dto.ProductPatchDto;
-import com.codestates.product.dto.ProductResponseDto;
-import com.codestates.product.entity.Product;
 import com.codestates.response.MultiResponseDto;
 import com.codestates.scategory.service.ScategoryService;
 import com.codestates.simage.entity.Simage;

@@ -2,9 +2,6 @@ package com.codestates.store.dto;
 
 
 import com.codestates.member.dto.MemberResponseDto;
-import com.codestates.pcategory.dto.PcategoryResonseDto;
-import com.codestates.pimage.dto.PimageResponseDto;
-import com.codestates.product.entity.Product;
 import com.codestates.scategory.dto.ScategoryResonseDto;
 import com.codestates.simage.dto.SimageResponseDto;
 import lombok.Builder;

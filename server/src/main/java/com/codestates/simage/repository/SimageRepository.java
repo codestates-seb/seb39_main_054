@@ -1,6 +1,5 @@
 package com.codestates.simage.repository;
 
-import com.codestates.pimage.entity.Pimage;
 import com.codestates.simage.entity.Simage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

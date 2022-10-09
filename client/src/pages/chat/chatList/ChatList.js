@@ -85,11 +85,12 @@ const CLContent = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  width: 36.5rem;
+  overflow: auto;
+  width: 37.5rem;
   height: 35.25rem;
   margin: 0 auto 8.875rem auto;
   @media ${(props) => props.theme.mobile} {
-    width: 21.75rem;
+    width: 23.75rem;
     height: 28rem;
     margin: 0 auto 8.875rem auto;
   }
@@ -101,6 +102,8 @@ const ChatPreviewContent = styled.div`
   justify-content: space-between;
   width: 36.5rem;
   height: 6.5625rem;
+  margin: 1rem 0;
+  padding: 0.5rem 0;
   background-color: ${(props) => props.theme.bgColor};
   border: 0.1875rem solid ${(props) => props.theme.gray4};
   border-radius: 0.9375rem;

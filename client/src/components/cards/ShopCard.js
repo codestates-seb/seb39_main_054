@@ -2,13 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const ShopCard = ({ id, title, address, tel, pcategory, image01 }) => {
+const ShopCard = ({ id, title, address, tel, scategory, image01 }) => {
   return (
     <Container>
       <Link to={`/shop/detail/${id}`}>
         <Content>
           <div className="img-container">
-            <Img src={image01}></Img>
+            <Img src={image01[0].imageUrl}></Img>
           </div>
           <div className="text-content">
             <Title>{title}</Title>
@@ -21,7 +21,7 @@ const ShopCard = ({ id, title, address, tel, pcategory, image01 }) => {
               <div className="tel">전화번호</div>
               <div className="tel-text">{tel}</div>
             </Tel>
-            <Category>{pcategory}</Category>
+            <Category>{scategory}</Category>
           </div>
         </Content>
       </Link>

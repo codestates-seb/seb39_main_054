@@ -47,8 +47,8 @@ const PostDropdown = ({ categoryChange, pcategory }) => {
           height={open.height}
           className={open.className}
         >
-          {category.map((el) => (
-            <li
+          {category.map((el,idx) => (
+            <li key={idx}
               onClick={() => {
                 menuClick();
                 setChoice(el);

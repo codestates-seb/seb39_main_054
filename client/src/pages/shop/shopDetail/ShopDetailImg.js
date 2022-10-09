@@ -3,9 +3,8 @@ import styled from "styled-components";
 import { ReactComponent as Left } from "../../../assets/img/icon/caret-left.svg";
 import { ReactComponent as Right } from "../../../assets/img/icon/caret-right.svg";
 
-const ShopDetailImg = ({ url }) => {
-  const value = Object.values(url);
-  const TOTAL_SLIDES = value.length - 1;
+const ShopDetailImg = ({ image }) => {
+  const TOTAL_SLIDES = image.length - 1;
   const [currentSlide, setCurrentSlide] = useState(0);
   const slideRef = useRef(null);
 
@@ -30,9 +29,9 @@ const ShopDetailImg = ({ url }) => {
     <>
       <PictureContainer>
         <Picture ref={slideRef}>
-          {value.map((values) => (
+          {image.map((el) => (
             <div>
-              <Img src={values}></Img>
+              <Img src={el.imageUrl}></Img>
             </div>
           ))}
         </Picture>

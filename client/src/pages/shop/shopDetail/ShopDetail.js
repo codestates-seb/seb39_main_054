@@ -12,15 +12,12 @@ const ShopDetail = () => {
   const [data, setData] = useState("");
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
-  const url = data.image;
 
   const getData = async () => {
     await axios
-      // .get(`${process.env.REACT_APP_API_URL}/shop/${id}`)
-      // .then((res) => setData(res.data));
-      .get(`/mock/ShopMockData.json`)
+      .get(`${process.env.REACT_APP_API_URL}/v1/store/${id}`)
       .then((res) => {
-        setData(...res.data.shop.filter((el) => el.id === Number(id)));
+        setData(res.data);
         setTimeout(() => {
           setLoading(false);
         }, 500);
@@ -43,12 +40,12 @@ const ShopDetail = () => {
               <Editdiv>
                 <EditButton>
                   <ShopDetailEditDropdown
-                    memberId={data.memberId}
+                    memberId={data.member.memberId}
                   ></ShopDetailEditDropdown>
                 </EditButton>
               </Editdiv>
               <Imagediv>
-                <ShopDetailImg url={url}></ShopDetailImg>
+                <ShopDetailImg image={data.simageList}></ShopDetailImg>
               </Imagediv>
               <Title>
                 <ShopDetailTitle data={data}></ShopDetailTitle>
@@ -57,7 +54,7 @@ const ShopDetail = () => {
                 <hr></hr>
               </div>
               <ContentDiv>
-                <CreatedPost>2022.09.16</CreatedPost>
+                <CreatedPost>{data.creationDate.slice(0, 10)}</CreatedPost>
                 <Content>{data.description}</Content>
               </ContentDiv>
               <MapDiv>

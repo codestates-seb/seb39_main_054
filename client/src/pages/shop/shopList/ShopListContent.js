@@ -12,11 +12,10 @@ const ShopListContent = () => {
   // 데이터 받기
   const getData = async () => {
     await axios
-      // .get(`${process.env.REACT_APP_API_URL}/shop`)
-      // .then((res) => setData(res.data));
-      .get(`/mock/ShopMockData.json`)
+      .get(`${process.env.REACT_APP_API_URL}/v1/store`)
       .then((res) => {
-        setData(res.data.shop);
+        console.log(res.data.data)
+        setData(res.data.data);
         setTimeout(() => {
           setLoading(false);
         }, 500);
@@ -32,7 +31,7 @@ const ShopListContent = () => {
       {loading ? (
         <DataLoading></DataLoading>
       ) : (
-        <ShopCardContent data={data}></ShopCardContent>
+        data !== null && <ShopCardContent data={data}></ShopCardContent>
       )}
     </Content>
   );

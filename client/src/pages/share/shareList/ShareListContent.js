@@ -83,7 +83,7 @@ const ShareListContent = () => {
           {data !== null && data.length === 0 && (
             <ListDataEmpty></ListDataEmpty>
           )}
-          <ShareCardContent data={data}></ShareCardContent>
+          {data !== null && <ShareCardContent data={data}></ShareCardContent>}
         </>
       )}
     </Content>

@@ -9,13 +9,13 @@ const ShopCardContent = ({ data }) => {
         data
           .map((el) => (
             <ShopCard
-              key={el.productId}
-              id={el.productId}
+              key={el.storeId}
+              id={el.storeId}
               title={el.title}
               address={el.address}
-              tel={el.tel}
-              pcategory={el.pcategory}
-              image01={el.image[0]}
+              tel={el.phoneNumber}
+              scategory={el.scategory.scategoryName}
+              image01={el.simageList}
             />
           ))
           .slice(0, 8)}

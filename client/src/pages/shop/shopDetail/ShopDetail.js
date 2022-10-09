@@ -54,7 +54,7 @@ const ShopDetail = () => {
                 <hr></hr>
               </div>
               <ContentDiv>
-                <CreatedPost>2022.09.16</CreatedPost>
+                <CreatedPost>{data.creationDate.slice(0, 10)}</CreatedPost>
                 <Content>{data.description}</Content>
               </ContentDiv>
               <MapDiv>

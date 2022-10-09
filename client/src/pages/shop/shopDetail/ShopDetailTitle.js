@@ -5,7 +5,7 @@ const ShopDetailTitle = ({ data }) => {
   return (
     <TitleContainer>
       <TitleProfile>
-        <TitleImage src={data.image[0]} />
+        <TitleImage src={data.simageList[0].imageUrl} />
       </TitleProfile>
       <TitleMiddle>
         <Title>{data.title}</Title>
@@ -14,7 +14,7 @@ const ShopDetailTitle = ({ data }) => {
         </AddressName>
       </TitleMiddle>
       <TitleTel>
-        전화번호 <Tel>{data.tel}</Tel>
+        전화번호 <Tel>{data.phoneNumber}</Tel>
       </TitleTel>
     </TitleContainer>
   );

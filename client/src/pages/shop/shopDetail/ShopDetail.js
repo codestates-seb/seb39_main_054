@@ -12,15 +12,12 @@ const ShopDetail = () => {
   const [data, setData] = useState("");
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
-  const url = data.image;
 
   const getData = async () => {
     await axios
-      // .get(`${process.env.REACT_APP_API_URL}/shop/${id}`)
-      // .then((res) => setData(res.data));
-      .get(`/mock/ShopMockData.json`)
+      .get(`${process.env.REACT_APP_API_URL}/v1/store/${id}`)
       .then((res) => {
-        setData(...res.data.shop.filter((el) => el.id === Number(id)));
+        setData(res.data);
         setTimeout(() => {
           setLoading(false);
         }, 500);
@@ -48,7 +45,7 @@ const ShopDetail = () => {
                 </EditButton>
               </Editdiv>
               <Imagediv>
-                <ShopDetailImg url={url}></ShopDetailImg>
+                <ShopDetailImg image={data.simageList}></ShopDetailImg>
               </Imagediv>
               <Title>
                 <ShopDetailTitle data={data}></ShopDetailTitle>

@@ -8,6 +8,7 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.codestates.exception.CustomException;
 import com.codestates.member.entity.Member;
+import com.codestates.member.repository.MemberRepository;
 import com.codestates.member.service.MemberService;
 
 import com.codestates.simage.entity.Simage;
@@ -47,6 +48,8 @@ public class StoreService {
     private final SimageRepository simageRepository ;
     private final StoreMapper mapper;
     private final AmazonS3Client amazonS3Client;
+    private final MemberRepository memberRepository;
+
 
 
     /**
@@ -58,18 +61,18 @@ public class StoreService {
             simage.setStore(store);
         });
         Member member = memberService.findVerifiedMember(memberId);
+        findVerifiedAdmin(memberId);
         store.setMember(member);
         return storeRepository.save(store);
     }
 
     /**
-     * 제품 수정
+     * 매장 수정
      */
     public Store updateStore(Store store, Long memberId) {
 
         Store certifiedStore = verifyStore(store.getStoreId());
-        memberService.findVerifiedMember(memberId);
-        verifyMemberStore(memberId, certifiedStore);
+        findVerifiedAdmin(memberId);
 
         Optional.ofNullable(store.getTitle()).ifPresent(certifiedStore::setTitle);
         Optional.ofNullable(store.getDescription()).ifPresent(certifiedStore::setDescription);
@@ -78,17 +81,9 @@ public class StoreService {
         return storeRepository.save(certifiedStore);
     }
 
-    // 제품 등록 여부 확인
+    // 매장 등록 여부 확인
     public Store verifyStore(Long storeId) {
         return storeRepository.findById(storeId).orElseThrow(() -> new CustomException("Store not Found", HttpStatus.NOT_FOUND));
-    }
-
-    // 제품 등록한 멤버가 맞는지 확인
-    private void verifyMemberStore(Long memberId, Store certifiedStore) {
-        memberService.findVerifiedMember(memberId);
-        if (!certifiedStore.getMember().getMemberId().equals(memberId)) {
-            throw new CustomException("You are not the member of this store", HttpStatus.FORBIDDEN);
-        }
     }
 
     /**
@@ -173,16 +168,16 @@ public class StoreService {
     }
 
     /**
-     * 제품 삭제
+     * 매장 삭제
      */
     public void deleteQuestion(long storeId,long memberId) {
         Store certifiedStore  = verifyStore(storeId);
-        verifyMemberStore(memberId,certifiedStore);
+        findVerifiedAdmin(memberId);
         storeRepository.delete(certifiedStore);
     }
 
     /**
-     * 제품 상세 조회
+     * 매장 상세 조회
      */
     public Store findStore(long storeId, long principalId) {
 
@@ -194,7 +189,7 @@ public class StoreService {
 
 
     /**
-     * 제품 리스트 조회
+     * 매장 리스트 조회
      */
     public PageImpl<Store> findStoreList(int page, int size, String scategoryName, String keyword, long principalId) {
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by("storeId").descending());
@@ -203,16 +198,26 @@ public class StoreService {
 
         return storeList;
     }
+//
+//    /**
+//     * 유저가 작성한 게시물 조회
+//     */
+//    public Page<Store> findMemberList(int page, int size,long principalId) {
+//        PageRequest pageRequest = PageRequest.of(page, size,Sort.by("STORE_ID").descending());
+//        Optional<Page<Store>> optionalStoreList = storeRepository.findByMemberId(principalId,pageRequest);
+//        Page<Store> storeList = optionalStoreList.orElseThrow(() -> new CustomException("Member doesn't write Store", HttpStatus.NOT_FOUND));
+//
+//        return storeList;
+//    }
 
     /**
-     * 유저가 작성한 게시물 조회
+     * 작성자가 ADMIN 계정인지 확인
      */
-    public Page<Store> findMemberList(int page, int size,long principalId) {
-        PageRequest pageRequest = PageRequest.of(page, size,Sort.by("STORE_ID").descending());
-        Optional<Page<Store>> optionalStoreList = storeRepository.findByMemberId(principalId,pageRequest);
-        Page<Store> storeList = optionalStoreList.orElseThrow(() -> new CustomException("Member doesn't write Store", HttpStatus.NOT_FOUND));
+    public void findVerifiedAdmin(long memberId) {
 
-        return storeList;
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
+        Member member = optionalMember.orElseThrow(() -> new CustomException("Member not Found", HttpStatus.NOT_FOUND)); // Todo: 9/30일 조진우 수정함.
+        if (!member.getRoles().equals("ROLE_ADMIN")) throw new CustomException("You are not ROLE_ADMIN", HttpStatus.FORBIDDEN);
     }
 
 }

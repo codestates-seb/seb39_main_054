@@ -1,94 +1,58 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import defaultAvatar from "../../../assets/img/avatar/avatar.jpg";
 
 const ChatList = () => {
-  // const { id } = useParams();
-  // const [chatList, setChatList] = useState("");
+  const { id } = useParams();
+  const [chatList, setChatList] = useState("");
+  const navigate = useNavigate();
 
-  // const getChatList = async () => {
-  //   await axios
-  //     .get(`${process.env.REACT_APP_API_URL}/v1/chat/rooms/${id}`)
-  //     .then((res) => {
-  //       setChatList(res.data);
-  //       console.log(res);
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
+  const getChatList = async () => {
+    await axios
+      .get(`${process.env.REACT_APP_API_URL}/v1/chat/rooms/${id}`)
+      .then((res) => {
+        setChatList(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
 
-  // useEffect(() => {
-  //   getChatList();
-  // }, []);
+  useEffect(() => {
+    getChatList();
+  }, []);
 
   return (
     <CLContainer>
       <h1>채팅</h1>
       <CLContent>
-        {/* <ChatPreviewContent chatList={chatList} /> */}
-        <ChatPreviewContent
-          style={{
-            backgroundColor: "#62BF53",
-          }}
-        >
-          <AvatarAndContentWrapper>
-            <Avatar src={defaultAvatar} />
-            <Content
-              style={{
-                color: "white",
-              }}
+        {chatList.length !== 0 &&
+          chatList.map((el) => (
+            <ChatPreviewContent
+              onClick={() => navigate(`/chat/detail/${el.id}`)}
             >
-              <div className="name">sojournre</div>
-              <div className="text">카메라 한달 대여 가능한가요?</div>
-            </Content>
-          </AvatarAndContentWrapper>
-          <Time
-            style={{
-              color: "white",
-            }}
-          >
-            2 minutes ago
-          </Time>
-        </ChatPreviewContent>
-        <ChatPreviewContent>
-          <AvatarAndContentWrapper>
-            <Avatar src={defaultAvatar} />
-            <Content>
-              <div className="name">sojournre</div>
-              <div className="text">카메라 한달 대여 가능한가요?</div>
-            </Content>
-          </AvatarAndContentWrapper>
-          <Time>5 minutes ago</Time>
-        </ChatPreviewContent>
-        <ChatPreviewContent>
-          <AvatarAndContentWrapper>
-            <Avatar src={defaultAvatar} />
-            <Content>
-              <div className="name">sojournre</div>
-              <div className="text">카메라 한달 대여 가능한가요?</div>
-            </Content>
-          </AvatarAndContentWrapper>
-          <Time>2 hours ago</Time>
-        </ChatPreviewContent>
-        <ChatPreviewContent>
-          <AvatarAndContentWrapper>
-            <Avatar src={defaultAvatar} />
-            <Content>
-              <div className="name">sojournre</div>
-              <div className="text">카메라 한달 대여 가능한가요?</div>
-            </Content>
-          </AvatarAndContentWrapper>
-          <Time>16 hours ago</Time>
-        </ChatPreviewContent>
-        <ChatPreviewContent>
-          <AvatarAndContentWrapper>
-            <Avatar src={defaultAvatar} />
-            <Content>
-              <div className="name">sojournre</div>
-              <div className="text">카메라 한달 대여 가능한가요?</div>
-            </Content>
-          </AvatarAndContentWrapper>
-          <Time>2 days ago</Time>
-        </ChatPreviewContent>
+              <AvatarAndContentWrapper>
+                <Avatar src={defaultAvatar} />
+                <Content
+                  style={{
+                    color: "white",
+                  }}
+                >
+                  {/* 나랑 대화한 사람에 대한 정보가 없음 */}
+                  <div className="name">{el.id}</div>
+                  {/* 대화내용을 알 수 없음 */}
+                  <div className="text">대화내용을 못가져옴</div>
+                </Content>
+              </AvatarAndContentWrapper>
+              <Time
+                style={{
+                  color: "white",
+                }}
+              >
+                2 days ago
+              </Time>
+            </ChatPreviewContent>
+          ))}
       </CLContent>
     </CLContainer>
   );

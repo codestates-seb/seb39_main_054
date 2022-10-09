@@ -20,7 +20,7 @@ import MyPageEdit from "./pages/myPage/myPageEdit/MyPageEdit";
 import MyPageSignOut from "./pages/myPage/myPageSignOut/MyPageSignOut";
 import Footer from "./components/footer";
 import ChatList from "./pages/chat/chatList/ChatList";
-import ChatDetail from "./pages/chat/chatDetail/ChatDetail";
+import ChatDetail from "./pages/chat/chatDetail/ChatDetail2";
 import ShopPost from "./pages/shop/shopPost/ShopPost";
 import ShopList from "./pages/shop/shopList/ShopList";
 import ShareEdit from "./pages/share/shareEdit/ShareEdit";

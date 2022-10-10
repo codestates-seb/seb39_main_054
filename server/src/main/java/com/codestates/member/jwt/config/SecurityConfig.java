@@ -41,7 +41,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
 //                .antMatchers("/v1/**").hasRole("USER")
-                .antMatchers(HttpMethod.POST,"/v1/product", "/v1/members/**")
+                .antMatchers(HttpMethod.POST,"/v1/product")
                 .access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
                 .antMatchers(HttpMethod.PATCH,"/v1/product/**","/v1/members/**")
                 .access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")

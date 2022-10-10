@@ -217,7 +217,6 @@ public class ProductService{
 
         productList.forEach(product -> {
             product.setFavoriteCount(product.getFavoriteList().size());
-//            System.out.println("product.getFavoriteCount() : " + product.getFavoriteCount());
             product.getFavoriteList().forEach(favorite -> {
                 if (favorite.getMember().getMemberId() == principalId) {
                     product.setFavoriteStatus(true);
@@ -265,6 +264,5 @@ public class ProductService{
         });
 
         return favoriteList;
-
     }
 }

@@ -95,13 +95,13 @@ public class ProductService{
         }
     }
 
-    // ADMIN이 맞는지 확인
-    private void verifyAdmin(Long memberId, Product certifiedProduct) {
-        memberService.findVerifiedMember(memberId);
-        if (!certifiedProduct.getMember().getMemberId().equals(memberId)) {
-            throw new CustomException("You are not the member of this product", HttpStatus.FORBIDDEN);
-        }
-    }
+//    // ADMIN이 맞는지 확인
+//    private void verifyAdmin(Long memberId, Product certifiedProduct) {
+//        memberService.findVerifiedMember(memberId);
+//        if (!certifiedProduct.getMember().getMemberId().equals(memberId)) {
+//            throw new CustomException("You are not the member of this product", HttpStatus.FORBIDDEN);
+//        }
+//    }
 
     /**
      * AWS 이미지 등록

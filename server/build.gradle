@@ -28,13 +28,13 @@ repositories {
 }
 
 ext {
-	set('snippetsDir', file("build/libs"))
+	set('snippetsDir', file("build/generated-snippets"))
 }
 
 dependencies {
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 
-	// (5)
+	// (5
 	asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'

@@ -39,18 +39,18 @@ public class ProductController {
     private final PcategoryService pcategoryService;
 
     /**
-     * 제품 등록 // memberId
+     * 제품 등록 // 토큰
      */
     @PostMapping
-    public ResponseEntity postProduct(@ModelAttribute @Valid ProductPostDto request) {
-//                                      @AuthenticationPrincipal PrincipalDetails principalDetails
+    public ResponseEntity postProduct(@ModelAttribute @Valid ProductPostDto request,
+                                      @AuthenticationPrincipal PrincipalDetails principalDetails) {
+
 
         List<String> imageUrlList = new ArrayList<>();
 
-
-        Long memberId = request.getProductPostDetailDto().getMemberId();
+//        Long memberId = request.getProductPostDetailDto().getMemberId();
+        Long memberId = principalDetails.getMember().getMemberId(); //
         Product product = mapper.postDetailDtoToProduct(request.getProductPostDetailDto(), pcategoryService);
-//      Long memberId = principalDetails.getMember().getMemberId(); // Todo: 9/27 배포 전, Security config 수정해야하고 PrincipalDetails로 수정 필요함
 
         List<Pimage> pimageList = productService.uploadImage(request.getMultipartFileList(), imageUrlList);
         Product productPost = productService.createProduct(product, memberId, pimageList);
@@ -60,18 +60,17 @@ public class ProductController {
     }
 
     /**
-     * 제품 수정 // memberId
+     * 제품 수정 // 토큰
      */
     @PatchMapping("/{product-id}")
     public ResponseEntity patchProduct(@PathVariable("product-id") @Positive long productId,
-                                      @ModelAttribute @Valid ProductPatchDto request) {
+                                      @ModelAttribute @Valid ProductPatchDto request,
+                                       @AuthenticationPrincipal PrincipalDetails principalDetails) {
 //                                      @AuthenticationPrincipal PrincipalDetails principalDetails
-
-        System.out.println("request.getFileUrlList() : " + request.getImageUrlList());
 
         request.getProductPatchDetailDto().setProductId(productId);
         Long memberId = request.getProductPatchDetailDto().getMemberId();
-        //      Long memberId = principalDetails.getMember().getMemberId(); // Todo: 9/27 배포 전, Security config 수정해야하고 PrincipalDetails로 수정 필요함
+        //      Long memberId = principalDetails.getMember().getMemberId(); //
 
         Product product = mapper.patchDetailDtoToProduct(request.getProductPatchDetailDto(), pcategoryService);
         Product productPatch = productService.updateProduct(product, memberId);
@@ -106,9 +105,7 @@ public class ProductController {
 
         Long memberId = principalDetails != null ? principalDetails.getMember().getMemberId() : 0L;
 
-        System.out.println("memberId : " + memberId);
         Product product = productService.findProduct(productId, memberId);
-        System.out.println("memberId : " + product.getProductId());
 
         ProductResponseDto.DetailResponse productDetailResponseDto = mapper.productToProductDetailResponseDto(product);
 
@@ -131,10 +128,6 @@ public class ProductController {
 
         PageImpl<Product> pageProductList = productService.findProductList(page - 1, size,pcategoryName,status,keyword, memberId);
         List<Product> productList = pageProductList.getContent();
-
-        productList.forEach(product -> {System.out.println("product.getFavoriteCount()2 : " + product.getProductId());});
-        productList.forEach(product -> {System.out.println("product.getFavoriteCount()2 : " + product.getFavoriteCount());});
-
 
         return new ResponseEntity<>(
                 new MultiResponseDto<>(mapper.productToProductResponseDtoList(productList), pageProductList),HttpStatus.OK);
@@ -167,8 +160,6 @@ public class ProductController {
         Long memberId = principalDetails.getMember().getMemberId();
         Page<Favorite> pageFavoriteList = productService.findFavoriteList(page - 1, size, memberId);
         List<Favorite> favoriteList = pageFavoriteList.getContent();
-
-        favoriteList.forEach(favorite -> {System.out.println("product.getFavoriteCount()2 : " + favorite.getProduct().getProductId());});
 
         return new ResponseEntity<>(
                 new MultiResponseDto<>(mapper.favoriteToProductResponseDtoList(favoriteList, memberId), pageFavoriteList),HttpStatus.OK);

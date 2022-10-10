@@ -1,6 +1,5 @@
 package com.codestates.member.service;
 
-import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
@@ -61,6 +60,8 @@ public class MemberService {
                 .ifPresent(password -> findMember.setPassword(bCryptPasswordEncoder.encode(password)));
         Optional.ofNullable(member.getImageUrl())
                 .ifPresent(findMember::setImageUrl);
+        Optional.ofNullable(member.getMemberStatus())
+                .ifPresent(findMember::setMemberStatus);
 
 //        findMember.setLast_edit_date(LocalDateTime.now());
 

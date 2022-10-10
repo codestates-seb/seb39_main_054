@@ -40,14 +40,16 @@ public class StoreController {
      * 매장 등록 // memberId
      */
     @PostMapping
-    public ResponseEntity postStore(@ModelAttribute @Valid StorePostDto request) {
+    public ResponseEntity postStore(@ModelAttribute @Valid StorePostDto request,
+                                    @AuthenticationPrincipal PrincipalDetails principalDetails) {
 //                                      @AuthenticationPrincipal PrincipalDetails principalDetails
 
         List<String> imageUrlList = new ArrayList<>();
 
-        Long memberId = request.getStorePostDetailDto().getMemberId();
+//        Long memberId = request.getStorePostDetailDto().getMemberId();
+        Long memberId = principalDetails.getMember().getMemberId(); // Todo: 9/27 배포 전, Security config 수정해야하고 PrincipalDetails로 수정 필요함
+
         Store store = mapper.postDetailDtoToStore(request.getStorePostDetailDto(), scategoryService);
-//      Long memberId = principalDetails.getMember().getMemberId(); // Todo: 9/27 배포 전, Security config 수정해야하고 PrincipalDetails로 수정 필요함
 
         List<Simage> simageList = storeService.uploadImage(request.getMultipartFileList(), imageUrlList);
         Store storePost = storeService.createStore(store, memberId, simageList);
@@ -61,12 +63,13 @@ public class StoreController {
      */
     @PatchMapping("/{store-id}")
     public ResponseEntity patchProduct(@PathVariable("store-id") @Positive long storeId,
-                                       @ModelAttribute @Valid StorePatchDto request) {
+                                       @ModelAttribute @Valid StorePatchDto request,
+                                       @AuthenticationPrincipal PrincipalDetails principalDetails) {
 //                                      @AuthenticationPrincipal PrincipalDetails principalDetails
 
         request.getStorePatchDetailDto().setStoreId(storeId);
-        Long memberId = request.getStorePatchDetailDto().getMemberId();
-        //      Long memberId = principalDetails.getMember().getMemberId(); // Todo: 9/27 배포 전, Security config 수정해야하고 PrincipalDetails로 수정 필요함
+//        Long memberId = request.getStorePatchDetailDto().getMemberId();
+        Long memberId = principalDetails.getMember().getMemberId(); // Todo: 9/27 배포 전, Security config 수정해야하고 PrincipalDetails로 수정 필요함
 
         Store store = mapper.patchDetailDtoToStore(request.getStorePatchDetailDto(), scategoryService);
         Store storePatch = storeService.updateStore(store, memberId);

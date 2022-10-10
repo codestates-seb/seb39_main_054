@@ -1,0 +1,118 @@
+{
+  "shop": [
+    {
+      "id": 1,
+      "productId": 1,
+      "memberId": 1,
+      "title": "고릴라 캠핑",
+      "description": "다가오는 캠핑의 계절!\n고릴라캠핑이 서울양평점에 오픈합니다.\n\n고릴라캠핑 양평점 많이 사랑해 주세요.\n저희 고릴라캠핑 서울양평점은 100m거리에 한강공원(양화지구)에 위치하고 있어서, 가족나들이와 데이트하기에도 좋습니다.\n\n캠퍼들의 즐거운 캠핑을 위해 저렴한 가격에 좋은 제품을 공급할 수 있도록 언제나 노력하고 있습니다.\n요즘 인기 많은 감성 캠핑용품, 차박텐트, 차박도킹텐트, 루프박스, 루프탑텐트, 가족텐트, 돔텐트, 리빙쉘텐트, 백패킹텐트. 캠핑테이블, 캠핑의자, 캠핑LED랜턴, 코펠등 전문가 캠핑러부터 초보 캠핑러까지 행복한 캠핑준비를 하실 수 있도록 고객리즈에 맞춰 다양한 캠핑용품이 준비되어 있습니다.\n\n또한, 중고캠핑용품을 매입, 판매, 대여 합니다.\n고객님과 함께한 소중한 캠핑용품은 고릴라캠핑이 매입하고, 요즘 인기 많은 제품으로 판매, 대여해서 즐거운 캠핑을 떠나보세요.\n\n캠핑의 계절! 고릴라캠핑 서울양평점으로 구경오세요~",
+      "pcategory": "캠핑",
+      "image": [
+        "https://ldb-phinf.pstatic.net/20210406_97/161768423715935zme_JPEG/O_DEkeDUqwIdoYxWspK6jIpL.jpg",
+        "https://ldb-phinf.pstatic.net/20210406_42/1617684215703iwhl1_JPEG/6mv8tkuUxd6mEVm2rl_ePjj9.jpg",
+        "https://ldb-phinf.pstatic.net/20210406_203/16176842156666JT3I_JPEG/WQG_23_XAfw_NuY0FU3CdQP2.jpg"
+      ],
+      "address": "서울 영등포구 양평로28아길 10 고릴라캠핑 서울양평점",
+      "tel": "0507-1421-0521"
+    },
+    {
+      "id": 2,
+      "productId": 2,
+      "memberId": 1,
+      "title": "캠핑고래 김포점",
+      "description": "김포 최대 캠핑용품 할인 매장입니다.\n언제든지 방문 하셔서 편하게 구경하세요",
+      "pcategory": "캠핑",
+      "image": [
+        "https://ldb-phinf.pstatic.net/20201022_29/1603319464506zNmF1_JPEG/isqER5sHDym1IOrdchQVaZ_d.jpg",
+        "https://ldb-phinf.pstatic.net/20201022_216/1603319532597bLaxa_JPEG/-y4PuAIBvAoxvm4WUqRF1I4Z.jpg",
+        "https://ldb-phinf.pstatic.net/20201022_5/1603319756586FobXy_JPEG/GJBXvKGhDF83ePnbbc5s01rO.jpg"
+      ],
+      "address": "경기 김포시 김포한강11로255번길 101",
+      "tel": "0507-1320-0437"
+    },
+    {
+      "memberId": 1,
+      "productId": 3,
+      "title": "에프마켓 김포",
+      "description": "서울 경기권 대형낚시용품점 에프마켓 김포점입니다\n국내외 다양한 낚시용품들이 한자리에!\n낚시인들에게 필요한 모든상품들이 있습니다.\n연중무휴/주말영업\nOpen : 10:00\nClose : 20:00\n온라인 쇼핑몰 https://smartstore.naver.com/fishing_co\n ",
+      "pcategory": "낚시",
+      "image": [
+        "https://ldb-phinf.pstatic.net/20210918_77/163189517958625XYU_PNG/7wEYc_A5AehC-fYLtwR1XGXF.png"
+      ],
+      "address": "경기 김포시 고촌읍 김포대로 479 에프마켓 김포",
+      "tel": "031-982-1712",
+      "id": 3
+    },
+    {
+      "memberId": 1,
+      "productId": 4,
+      "title": "낚시뱅크",
+      "description": "일산 신평IC 부근에 위치한 낚시뱅크입니다.\n\n낚시인들의 즐거운 낚시생활을 위해 노력하는 낚시뱅크입니다.\n\n나노피싱, 판야레져 등 민물낚시와 바다낚시에 필요한 모든 상품을 구비중입니다.",
+      "pcategory": "낚시",
+      "image": [
+        "https://ldb-phinf.pstatic.net/20190115_71/1547553179932vVYt0_JPEG/ToA21OJ_Y7D92lrD6QNSzU5S.JPG.jpg"
+      ],
+      "address": "경기 고양시 일산동구 장항로 38",
+      "tel": "031-932-8375",
+      "id": 4
+    },
+    {
+      "memberId": 1,
+      "productId": 5,
+      "title": "홀라인",
+      "description": "아웃도어 라이프 스타일의 다양한 장비와 의류를 선보이는 홍대 홀라인 플래그쉽 스토어 입니다.\n\n백패킹,캠핑,트레킹 등 아웃도어 장비, 의류, 소품등 유니크한 제품들을 만나 보실수 있습니다.\n\n헬리녹스,아크테릭스,파타고니아,첨스,폴러등의 세계 유명브랜드들이 있으며\n장비에서 의류까지 새로운것을 원하는 분들께 유니크한 제품들을 셀렉하여 소개해 드립니다.",
+      "pcategory": "등산",
+      "image": [
+        "https://ldb-phinf.pstatic.net/20180830_262/1535603901309TWdeG_JPEG/voTSQg96NqYqesEDVpRiTZ0n.jpg",
+        "https://ldb-phinf.pstatic.net/20180830_125/1535603901330jYY1G_JPEG/JE8CoV1NT0fkZRqq9brROZyl.jpg",
+        "https://ldb-phinf.pstatic.net/20180830_163/15356039032295Bh1u_JPEG/lyI_PF-xFpVJ62glHEugh_Uv.jpg"
+      ],
+      "address": "서울 마포구 독막로15길 7",
+      "tel": "02-337-3907",
+      "id": 5
+    },
+    {
+      "memberId": 1,
+      "productId": 6,
+      "title": "CAYL",
+      "description": "The Lowest Mountain은 기존의 cayl의 오프라인 매장입니다.\n\n클라이밍 용품 및 백패킹 장비 등 아웃도어 용품을 판매하며, 그 외에 캐주얼 의류를 판매하고 있습니다.",
+      "pcategory": "등산",
+      "image": [
+        "https://ldb-phinf.pstatic.net/20210216_203/1613440872747Qy33h_JPEG/R4NXGwp9m1_sz4KVhDKSvPjR.jpeg.jpg"
+      ],
+      "address": "서울 마포구 독막로15길 7",
+      "tel": "0507-1405-0446",
+      "id": 6
+    },
+    {
+      "memberId": 1,
+      "productId": 7,
+      "title": "엔비스포츠",
+      "description": "SINCE 2001- 20년 전통 일산 최대 규모 '엔비스포츠'\n\n자전거 사업을 시작하며 한결같이 들었던 생각은 고민없이 믿고 구매할 수 있는 매장이 되었으면 좋겠다는 것과\n쉽게 들려 서비스 받을 수 있는 친근한 공간이었으면 한다는 것이었습니다.\n가격이 공개되지 않아 선택이 고민스러울 고객을 위해 엔비스포츠는 모든 자전거와 용품의 가격을 가감없이 공개해 판매하고 있습니다.\n\n고객님의 성원으로 일산 최대 자전거매장이 되었습니다.\n이런 고마운 분들에 힘입어 엔비스포츠가 규모를 확장해 일산 최대 규모 자전거 매장으로 거듭날 수 있었으며,\n자전거 전문 쇼핑몰인 엔비바이크도 운영하게 되었습니다.\n\n초심을 잃지 않겠습니다.\n앞으로 20년도 처음 먹었던 마음 잃지 않고\n철저한 A/S, 만족스러운 가격, 편리한 쇼핑으로 고객님의 즐거운 라이딩을 돕겠습니다.\n감사합니다.",
+      "pcategory": "스포츠",
+      "image": [
+        "https://ldb-phinf.pstatic.net/20190425_300/1556186966661eXeK4_JPEG/zKevqeLzCgW1WhUOEcgyI_Nh.jpeg.jpg",
+        "https://ldb-phinf.pstatic.net/20190425_100/1556186934694sazBQ_JPEG/Ao0WDWOtjCFE_fBSVVjL6zIq.JPG.jpg",
+        "https://ldb-phinf.pstatic.net/20190425_293/1556186966840X2ogs_JPEG/hXlkcD5jL3hfC1apXJbRqK72.jpeg.jpg"
+      ],
+      "address": "경기 고양시 일산동구 장항로 313-4",
+      "tel": "031-902-0856",
+      "id": 7
+    },
+    {
+      "memberId": 1,
+      "productId": 8,
+      "title": "야구와사람들 일산본점",
+      "description": "야구와사람들 www.ya09.com 의 14개 매장중 일산본점 매장으로 60평규모의 넓은 매장에 500여종의 국내외 브랜드 글러브와 다양한 용품들을 직접 만나실 수 있는 오프라인 매장입니다.\n\n사이트에 있는 왠만한 제품들은 모두 매장에 구비하고 있습니다.",
+      "pcategory": "스포츠",
+      "image": [
+        "https://ldb-phinf.pstatic.net/20200726_224/1595768736821qAk4j_JPEG/oK27dT9Px_ZCGLNUJS17lKfl.jpeg.jpg",
+        "https://ldb-phinf.pstatic.net/20150831_219/14410135007290GD8A_JPEG/13283420_2.jpg",
+        "https://ldb-phinf.pstatic.net/20150831_231/1441013501405Q7dzu_JPEG/13283420_5.jpg"
+      ],
+      "address": "경기 고양시 일산동구 중앙로1275번길 86-1 중앙 하이츠빌",
+      "tel": "031-918-4909",
+      "id": 8
+    }
+  ]
+}

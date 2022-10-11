@@ -11,4 +11,5 @@ public class MessagePostDto {
     private long chatRoomId;
     private long memberId;
     private String content;
+    private String nickname;
 }

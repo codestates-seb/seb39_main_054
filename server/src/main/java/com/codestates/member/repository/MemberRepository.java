@@ -10,6 +10,8 @@ import java.util.Optional;
 public interface MemberRepository extends JpaRepository<Member, Long> {
     Member findByMemberName(String memberName);
 
+    Member findByNickname(String nickname);
+
     Optional<Member> findByProviderAndProviderId(String provider, String providerId);
 
     int countAllByNicknameStartsWith(String nickname);

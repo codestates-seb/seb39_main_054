@@ -4,11 +4,13 @@ import com.codestates.member.dto.MemberPatchDto;
 import com.codestates.member.dto.MemberPostDto;
 import com.codestates.member.dto.MemberResponseDto;
 import com.codestates.member.entity.Member;
+import com.codestates.member.jwt.oauth.PrincipalDetails;
 import com.codestates.member.mapper.MemberMapper;
 import com.codestates.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +39,7 @@ public class MemberController {
         return new ResponseEntity(memberResponseDto, HttpStatus.CREATED);
     }
 
+    //회원 정보 수정
     @PostMapping("/{member-id}")
     public ResponseEntity patchMember(@PathVariable("member-id") @Positive long memberId,@Valid MemberPatchDto memberPatchDto) {
 
@@ -61,5 +64,16 @@ public class MemberController {
         MemberResponseDto memberResponseDto = mapper.memberToMemberResponseDto(member);
 
         return new ResponseEntity(memberResponseDto, HttpStatus.OK);
+    }
+
+    // 회원 탈퇴
+    @PostMapping("/withdraw")
+    public ResponseEntity withdrawMember(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+        long memberId = principalDetails.getMember().getMemberId();
+
+        Member member = memberService.withdraw(memberId);
+        MemberResponseDto memberResponseDto = mapper.memberToMemberResponseDto(member);
+
+        return new ResponseEntity<>(memberResponseDto, HttpStatus.OK);
     }
 }

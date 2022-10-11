@@ -33,24 +33,14 @@ const ChatList = () => {
             >
               <AvatarAndContentWrapper>
                 <Avatar src={defaultAvatar} />
-                <Content
-                  style={{
-                    color: "white",
-                  }}
-                >
+                <Content>
                   {/* 나랑 대화한 사람에 대한 정보가 없음 */}
                   <div className="name">{el.id}</div>
                   {/* 대화내용을 알 수 없음 */}
                   <div className="text">대화내용을 못가져옴</div>
                 </Content>
               </AvatarAndContentWrapper>
-              <Time
-                style={{
-                  color: "white",
-                }}
-              >
-                2 days ago
-              </Time>
+              <Time>2 days ago</Time>
             </ChatPreviewContent>
           ))}
       </CLContent>
@@ -83,7 +73,6 @@ const CLContainer = styled.div`
 const CLContent = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
   overflow: auto;
   width: 37.5rem;
@@ -140,7 +129,6 @@ const Avatar = styled.img`
   }
 `;
 const Content = styled.div`
-  color: ${(props) => props.theme.textColor};
   margin-left: 2.06rem;
   @media ${(props) => props.theme.mobile} {
     margin-left: 0.6875rem;
@@ -163,7 +151,6 @@ const Content = styled.div`
   }
 `;
 const Time = styled.div`
-  color: ${(props) => props.theme.gray3};
   font-size: 0.875rem;
   margin: 0.9rem 0.9rem 0 0;
   @media ${(props) => props.theme.mobile} {

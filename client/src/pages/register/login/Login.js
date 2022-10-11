@@ -65,8 +65,10 @@ const Login = () => {
       .then((res) => {
         let jwtToken = res.headers.authorization;
         const memberid = res.headers.memberid;
+        const userRoles = res.headers.roles;
         localStorage.setItem("authorization", jwtToken);
         localStorage.setItem("memberid", memberid); // (key, value)
+        localStorage.setItem("roles", userRoles); // (key, value)
         dispatch(loginSuccess(memberid));
         console.log("ok");
         navigate(`/`);

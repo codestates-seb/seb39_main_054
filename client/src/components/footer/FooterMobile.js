@@ -36,11 +36,13 @@ const FooterContainer = styled.div`
   justify-content: center;
   width: 100%;
   border-top: 1px solid ${(props) => props.theme.primary};
-  font-size: 1.125rem;
+  font-size: 0.9rem;
+  line-height: 1.1rem;
 
   .footer-team-name {
     padding: 0.5rem 0;
     height: 2rem;
+    font-size: 1rem;
     font-family: "NotoSansKR-Bold";
   }
 `;

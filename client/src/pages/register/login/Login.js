@@ -126,7 +126,7 @@ const Login = () => {
           >
             <img
               className="logo-image"
-              style={{ width: "2.1rem" }}
+              style={{ width: "2rem" }}
               src={logo_kakao}
               alt="logo_kakao"
             ></img>
@@ -137,7 +137,7 @@ const Login = () => {
           >
             <img
               className="logo-image"
-              style={{ width: "2rem" }}
+              style={{ width: "1.8rem" }}
               src={logo_google}
               alt="logo_google"
             ></img>
@@ -148,7 +148,7 @@ const Login = () => {
           >
             <img
               className="logo-image"
-              style={{ width: "2.5rem" }}
+              style={{ width: "2.75rem" }}
               src={logo_naver}
               alt="logo_naver"
             ></img>
@@ -247,6 +247,7 @@ const LoginContent = styled.div`
   }
 
   .social-button {
+    padding-top: 0.3rem;
     width: 3.75rem;
     height: 3.75rem;
     border-radius: 50%;

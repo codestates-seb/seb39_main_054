@@ -95,6 +95,7 @@ const ChatDetail = () => {
 
   return (
     <CDContainer>
+      <h1>채팅</h1>
       <CDContent>
         <ContentTop>
           <AvatarAndNameWrapper>
@@ -150,7 +151,6 @@ const CDContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 3.6rem 0 3.1rem 0;
 
   h1 {
     text-align: center;
@@ -168,12 +168,10 @@ const CDContainer = styled.div`
 const CDContent = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 auto 8.875rem auto;
+  margin: 0 auto 8rem auto;
 
   @media ${(props) => props.theme.mobile} {
-    width: 22.5625rem;
-    height: 33.5625rem;
-    margin: 0 auto 8.875rem auto;
+    margin: 0 auto 5rem auto;
   }
 `;
 
@@ -254,7 +252,7 @@ const ContentMiddle = styled.div`
   background-color: ${(props) => props.theme.bgColor};
   overflow: auto;
   font-family: "NotoSansKR-Medium";
-  font-size: 20px;
+  font-size: 1.25rem;
   padding: 1rem;
 
   li {
@@ -272,19 +270,26 @@ const ContentMiddle = styled.div`
 
   .login-user-me {
     display: flex;
-    flex-direction: row-reverse;
-    /* background-color: ${(props) => props.theme.primary}; */
-    padding: 8px 8px;
-    margin: 8px 0;
+    float: right;
+    width: 16rem;
+    /* flex-direction: row-reverse; */
+    background-color: ${(props) => props.theme.primary};
+    color: ${(props) => props.theme.white};
+    padding: 10px;
+    margin: 0.5rem 0 0.5rem 3rem;
     border-radius: 15px;
+    line-height: 1.6rem;
   }
 
-  .login-user-me {
+  .login-user-you {
     display: flex;
-    /* background-color: ${(props) => props.theme.primary}; */
-    padding: 8px 8px;
+    float: left;
+    width: 16rem;
+    background-color: ${(props) => props.theme.gray4};
+    padding: 10px;
     margin: 8px 0;
     border-radius: 15px;
+    line-height: 1.6rem;
   }
 
   @media ${(props) => props.theme.mobile} {

@@ -60,7 +60,7 @@ const CLContainer = styled.div`
 
   h1 {
     text-align: center;
-    margin: 3.8rem auto;
+    margin: 3.8rem auto 3.3rem auto;
     font-size: 2.5rem;
     font-family: "NotoSansKR-Medium";
     @media ${(props) => props.theme.mobile} {
@@ -76,12 +76,12 @@ const CLContent = styled.div`
   align-items: center;
   overflow: auto;
   width: 37.5rem;
-  height: 35.25rem;
-  margin: 0 auto 8.875rem auto;
+  height: 35.8rem;
+  margin: 0 auto 8rem auto;
   @media ${(props) => props.theme.mobile} {
     width: 23.75rem;
     height: 28rem;
-    margin: 0 auto 8.875rem auto;
+    margin: 0 auto 7rem auto;
   }
 `;
 
@@ -90,8 +90,7 @@ const ChatPreviewContent = styled.div`
   flex-direction: row;
   justify-content: space-between;
   width: 36.5rem;
-  height: 6.5625rem;
-  margin: 1rem 0;
+  margin: 0.4rem 0;
   padding: 0.5rem 0;
   background-color: ${(props) => props.theme.bgColor};
   border: 0.1875rem solid ${(props) => props.theme.gray4};
@@ -152,9 +151,13 @@ const Content = styled.div`
 `;
 const Time = styled.div`
   font-size: 0.875rem;
-  margin: 0.9rem 0.9rem 0 0;
+  margin: 0.6rem 1.2rem 0 0;
+  color: ${(props) => props.theme.gray3};
+  font-family: "NotoSansKR-Medium";
   @media ${(props) => props.theme.mobile} {
     font-size: 0.75rem;
-    margin: 0.6rem 0.6rem 0 0;
+    margin: 0.2rem 0.7rem 0 0;
+    color: ${(props) => props.theme.gray3};
+    font-family: "NotoSansKR-Medium";
   }
 `;

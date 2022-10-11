@@ -76,7 +76,8 @@ const Picture = styled.div`
 `;
 const Img = styled.img`
   object-fit: contain;
-  width: 56.25rem;
+  /* object-fit: cover; */
+  width: 52rem;
   border-radius: 15px;
   height: 100%;
 
@@ -89,6 +90,7 @@ const Img = styled.img`
   }
 
   @media ${(props) => props.theme.mobile} {
+    object-fit: contain;
     width: 23.75rem;
   }
 `;
@@ -97,16 +99,18 @@ const Btndiv = styled.div`
   justify-content: center;
 `;
 const LeftBtn = styled(Left)`
-  width: 2rem;
-  height: 2rem;
+  width: 1.4rem;
+  height: 1.4rem;
   fill: ${(props) => props.theme.textColor};
   margin: 1rem 1rem 0rem;
+  margin-top: 0.8rem;
   cursor: pointer;
 `;
 const RightBtn = styled(Right)`
-  width: 2rem;
-  height: 2rem;
+  width: 1.4rem;
+  height: 1.4rem;
   fill: ${(props) => props.theme.textColor};
   margin: 1rem 1rem 0rem;
+  margin-top: 0.8rem;
   cursor: pointer;
 `;

@@ -42,7 +42,6 @@ const MyPageMyPost = () => {
 
   return (
     <MPContainer>
-      <MyPageHeader />
       {isMobile && (
         <MyPageDropdownMobile
           categoryChange={categoryChange}

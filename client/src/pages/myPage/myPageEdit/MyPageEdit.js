@@ -149,6 +149,7 @@ const MyPageEdit = () => {
               <label>닉네임</label>
               <input
                 type="text"
+                defaultValue={myNickname}
                 placeholder="변경할 닉네임을 입력해주세요"
                 {...register("nickname")}
               />

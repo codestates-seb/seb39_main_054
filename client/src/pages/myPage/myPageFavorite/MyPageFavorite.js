@@ -41,7 +41,6 @@ const MyPageFavorite = () => {
 
   return (
     <MFContainer>
-      <MyPageHeader />
       {isMobile && (
         <MyPageDropdownMobile
           categoryChange={categoryChange}

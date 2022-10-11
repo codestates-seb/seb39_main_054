@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "./redux/actions/logInAction";
-
 import GlobalStyle from "./assets/styles/GlobalStyle";
 import { darkTheme, lightTheme } from "./assets/styles/Theme";
 import Nav from "./components/nav/Nav";
@@ -14,13 +13,14 @@ import SignUp from "./pages/register/signUp/SignUp";
 import ShareList from "./pages/share/shareList/ShareList";
 import SharePost from "./pages/share/sharePost/SharePost";
 import ShopDetail from "./pages/shop/shopDetail/ShopDetail";
-import MyPageFavorite from "./pages/myPage/myPageFavorite/MyPageFavorite";
-import MyPageMyPost from "./pages/myPage/myPageMyPost/MyPageMyPost";
+import MyPageIndex from "./pages/myPage/MyPageIndex";
+// import MyPageFavorite from "./pages/myPage/myPageFavorite/MyPageFavorite";
+// import MyPageMyPost from "./pages/myPage/myPageMyPost/MyPageMyPost";
+// import MyPageSignOut from "./pages/myPage/myPageSignOut/MyPageSignOut";
 import MyPageEdit from "./pages/myPage/myPageEdit/MyPageEdit";
-import MyPageSignOut from "./pages/myPage/myPageSignOut/MyPageSignOut";
 import Footer from "./components/footer";
 import ChatList from "./pages/chat/chatList/ChatList";
-import ChatDetail from "./pages/chat/chatDetail/ChatDetail2";
+import ChatDetail from "./pages/chat/chatDetail/ChatDetail";
 import ShopPost from "./pages/shop/shopPost/ShopPost";
 import ShopList from "./pages/shop/shopList/ShopList";
 import ShareEdit from "./pages/share/shareEdit/ShareEdit";
@@ -65,11 +65,11 @@ const App = () => {
               <Route path="/signup" element={<SignUp></SignUp>}></Route>
               <Route
                 path="/mypage/favorite"
-                element={<MyPageFavorite></MyPageFavorite>}
+                element={<MyPageIndex></MyPageIndex>}
               ></Route>
               <Route
                 path="/mypage/mypost"
-                element={<MyPageMyPost></MyPageMyPost>}
+                element={<MyPageIndex></MyPageIndex>}
               ></Route>
               <Route
                 path="/mypage/edit/:id"
@@ -77,7 +77,7 @@ const App = () => {
               ></Route>
               <Route
                 path="/mypage/signout"
-                element={<MyPageSignOut></MyPageSignOut>}
+                element={<MyPageIndex></MyPageIndex>}
               ></Route>
               <Route path="/shop/list" element={<ShopList></ShopList>}></Route>
               <Route

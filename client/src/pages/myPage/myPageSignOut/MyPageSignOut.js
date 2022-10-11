@@ -89,16 +89,27 @@ const SignOutContainer = styled.div`
   align-items: center;
   width: 100%;
   margin: 7rem 0 7rem 0;
+  @media ${(props) => props.theme.mobile} {
+    width: 24.25rem;
+    margin: 3rem 0;
+  }
 
   p {
     color: ${(props) => props.theme.textColor};
     font-size: 1.8rem;
     font-family: "NotoSansKR-Medium";
+    @media ${(props) => props.theme.mobile} {
+      font-size: 1.5rem;
+    }
   }
   .text-small {
     margin-top: 0.8rem;
     font-size: 1rem;
     font-family: "NotoSansKR-DemiLight";
+    @media ${(props) => props.theme.mobile} {
+      margin-top: 0.7rem;
+      font-size: 0.9rem;
+    }
   }
 `;
 
@@ -107,7 +118,9 @@ const Btns = styled.div`
   justify-content: space-between;
   margin: 3rem auto;
   width: 12rem;
-
+  @media ${(props) => props.theme.mobile} {
+    width: 11rem;
+  }
   .btn-cancel {
     background-color: ${(props) => props.theme.gray4};
     color: ${(props) => props.theme.white};
@@ -118,6 +131,11 @@ const Btns = styled.div`
     font-family: "NotoSansKR-Medium";
     :hover {
       filter: drop-shadow(0rem 0.25rem 0.25rem ${(props) => props.theme.gray5});
+    }
+    @media ${(props) => props.theme.mobile} {
+      font-size: 1rem;
+      width: 5rem;
+      height: 2.687rem;
     }
   }
 
@@ -131,6 +149,11 @@ const Btns = styled.div`
     font-family: "NotoSansKR-Medium";
     :hover {
       filter: drop-shadow(0rem 0.25rem 0.25rem ${(props) => props.theme.gray5});
+    }
+    @media ${(props) => props.theme.mobile} {
+      font-size: 1rem;
+      width: 5rem;
+      height: 2.687rem;
     }
   }
 `;

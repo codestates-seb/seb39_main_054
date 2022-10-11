@@ -5,7 +5,9 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.codestates.exception.BusinessLogicException;
 import com.codestates.exception.CustomException;
+import com.codestates.exception.ExceptionCode;
 import com.codestates.member.entity.Member;
 import com.codestates.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +41,8 @@ public class MemberService {
     private final AmazonS3Client amazonS3Client;
 
     public Member createMember(Member member) {
-        verifyExistsEmail(member.getMemberName()); //등록된 이메일인지 확인
+        verifyExistsMemberName(member.getMemberName()); //등록된 이메일인지 확인
+        verifyExistsNickname(member.getNickname());
 
         member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
         member.setRoles("ROLE_USER");
@@ -109,11 +112,18 @@ public class MemberService {
         }
     }
 
-    private void verifyExistsEmail(String memberName) {
+    private void verifyExistsMemberName(String memberName) {
         Member member = memberRepository.findByMemberName(memberName);
 
         if (member != null) {
-            throw new IllegalStateException();
+            throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
+        }
+    }
+    private void verifyExistsNickname(String nickname) {
+        Member member = memberRepository.findByNickname(nickname);
+
+        if (member != null) {
+            throw new BusinessLogicException(ExceptionCode.MEMBER_NICKNAME_EXISTS);
         }
     }
 
@@ -121,5 +131,18 @@ public class MemberService {
         Optional<Member> optionalMember = memberRepository.findById(memberId);
         Member member = optionalMember.orElseThrow(() -> new CustomException("Member not Found", HttpStatus.NOT_FOUND)); // Todo: 9/30일 조진우 수정함.
         return member;
+    }
+
+    public Member withdraw(long memberId) {
+        Member findMember = findVerifiedMember(memberId);
+
+        findMember.setNickname("탈퇴회원");
+        findMember.setPassword("");
+        findMember.setMemberStatus(Member.MemberStatus.MEMBER_QUIT);
+
+        // TODO S3 업로드된 프로필 이미지 삭제
+//        findMember.setImageUrl("");
+
+        return memberRepository.save(findMember);
     }
 }

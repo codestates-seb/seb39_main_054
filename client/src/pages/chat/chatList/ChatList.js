@@ -83,7 +83,6 @@ const CLContainer = styled.div`
 const CLContent = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
   overflow: auto;
   width: 37.5rem;

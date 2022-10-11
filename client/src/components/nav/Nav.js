@@ -73,12 +73,12 @@ const Nav = ({ isTheme, setIsTheme }) => {
           </Link>
           {!isMobile && (
             <>
-              <NavLink to="/share/list">
+              <StyledNavLink to="/share/list">
                 <div>공유장터</div>
-              </NavLink>
-              <NavLink to="/shop/list">
+              </StyledNavLink>
+              <StyledNavLink to="/shop/list">
                 <div>레저용품 판매점</div>
-              </NavLink>
+              </StyledNavLink>
             </>
           )}
         </NavLeft>
@@ -93,12 +93,12 @@ const Nav = ({ isTheme, setIsTheme }) => {
               {!isLogin ? (
                 <>
                   {" "}
-                  <NavLink to="/login">
+                  <StyledNavLink to="/login">
                     <div>로그인</div>
-                  </NavLink>
-                  <NavLink to="/signup">
+                  </StyledNavLink>
+                  <StyledNavLink to="/signup">
                     <div>회원가입</div>
-                  </NavLink>
+                  </StyledNavLink>
                 </>
               ) : (
                 <div>
@@ -194,5 +194,11 @@ const NavRight = styled.div`
       height: 2rem;
       fill: ${(props) => props.theme.textColor};
     }
+  }
+`;
+
+const StyledNavLink = styled(NavLink)`
+  &.active {
+    color: ${(props) => props.theme.primary};
   }
 `;

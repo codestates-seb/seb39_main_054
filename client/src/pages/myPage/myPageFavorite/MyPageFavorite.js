@@ -133,5 +133,7 @@ const MCContent = styled.div`
 
   @media ${(props) => props.theme.mobile} {
     width: 26.75rem;
+    margin: 1rem auto;
+    margin-top: -1.6rem;
   }
 `;

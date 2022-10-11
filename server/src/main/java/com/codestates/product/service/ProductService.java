@@ -72,7 +72,7 @@ public class ProductService{
 
         Product certifiedProduct = verifyProduct(product.getProductId());
         memberService.findVerifiedMember(memberId);
-        verifyMemberProduct(memberId, certifiedProduct);
+        verifyAuthority(memberId, certifiedProduct);
 
         Optional.ofNullable(product.getTitle()).ifPresent(certifiedProduct::setTitle);
         Optional.ofNullable(product.getDescription()).ifPresent(certifiedProduct::setDescription);
@@ -87,13 +87,21 @@ public class ProductService{
         return productRepository.findById(productId).orElseThrow(() -> new CustomException("Product not Found", HttpStatus.NOT_FOUND));
     }
 
-    // 제품 등록한 멤버가 맞는지 확인
-    private void verifyMemberProduct(Long memberId, Product certifiedProduct) {
-        memberService.findVerifiedMember(memberId);
-        if (!certifiedProduct.getMember().getMemberId().equals(memberId)) {
-            throw new CustomException("You are not the member of this product", HttpStatus.FORBIDDEN);
+    // 제품 등록한 멤버 && ADMIN이 맞는지 확인
+    private void verifyAuthority(Long memberId, Product certifiedProduct) {
+        Member member = memberService.findVerifiedMember(memberId);
+        if (!certifiedProduct.getMember().getMemberId().equals(memberId) && !member.getRoles().equals("ROLE_ADMIN")) {
+            throw new CustomException("You are not the member of this product Or You are not ADMIN", HttpStatus.FORBIDDEN);
         }
     }
+
+//    // ADMIN이 맞는지 확인
+//    private void verifyAdmin(Long memberId, Product certifiedProduct) {
+//        memberService.findVerifiedMember(memberId);
+//        if (!certifiedProduct.getMember().getMemberId().equals(memberId)) {
+//            throw new CustomException("You are not the member of this product", HttpStatus.FORBIDDEN);
+//        }
+//    }
 
     /**
      * AWS 이미지 등록
@@ -184,7 +192,7 @@ public class ProductService{
      */
     public void deleteQuestion(long productId,long memberId) {
         Product certifiedProduct  = verifyProduct(productId);
-        verifyMemberProduct(memberId,certifiedProduct);
+        verifyAuthority(memberId,certifiedProduct);
         productRepository.delete(certifiedProduct);
     }
 
@@ -217,7 +225,6 @@ public class ProductService{
 
         productList.forEach(product -> {
             product.setFavoriteCount(product.getFavoriteList().size());
-//            System.out.println("product.getFavoriteCount() : " + product.getFavoriteCount());
             product.getFavoriteList().forEach(favorite -> {
                 if (favorite.getMember().getMemberId() == principalId) {
                     product.setFavoriteStatus(true);
@@ -265,6 +272,5 @@ public class ProductService{
         });
 
         return favoriteList;
-
     }
 }

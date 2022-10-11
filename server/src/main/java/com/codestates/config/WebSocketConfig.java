@@ -17,7 +17,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/gs-guide-websocket")
-                .setAllowedOrigins("chrome-extension://ggnhohnkfcpcanfekomdkjffnfcjnjam", "http://localhost:3000", "https://ahnabada.shop") // 크롬 apic websocket test extension 주소
+                .setAllowedOrigins("chrome-extension://ggnhohnkfcpcanfekomdkjffnfcjnjam", "http://localhost:3000", "https://ahnabada.shop", "https://d1chxyssw587bm.cloudfront.net") // 크롬 apic websocket test extension 주소
                 .withSockJS();
     }
 }

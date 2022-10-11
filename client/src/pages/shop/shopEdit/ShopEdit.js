@@ -16,7 +16,7 @@ const ShopEdit = () => {
   const [category, setCategory] = useState("");
   const [address, setAddress] = useState("");
   const [tel, setTel] = useState("");
-  // const [imageSrc, setImageSrc] = useState([]);
+  const [imageSrc, setImageSrc] = useState([]);
   const [imgUrl, setImgUrl] = useState("");
 
   const [isOpen, setIsOpen] = useState(false);
@@ -81,6 +81,17 @@ const ShopEdit = () => {
     urlList.push(imgUrl[i].imageUrl);
   }
 
+  const ImageChange = (el) => {
+    const selectImg = el.target.files;
+    const imgList = [...imgUrl];
+    for (let i = 0; i < selectImg.length; i++) {
+      const imgurl = URL.createObjectURL(selectImg[i]);
+      imgList.push(imgurl);
+    }
+    setImgUrl(imgList);
+    setImageSrc(...imageSrc, el.target.files);
+  };
+
   // 데이터 서버 업로드
   const postClick = async () => {
     const formData = new FormData();
@@ -116,8 +127,8 @@ const ShopEdit = () => {
         .then((res) => {
           alert("수정되었습니다!");
           navigate(`/shop/detail/${id}`);
-        })
-        .catch((err) => console.log(err));
+        });
+      // .catch((err) => console.log(err));
     }
   };
 
@@ -187,13 +198,30 @@ const ShopEdit = () => {
                 value={content}
                 onChange={(e) => descriptionChange(e.target.value)}
               ></ContentBox>
-              <ImgPlusBtn>
-                <label htmlFor="input-file">
+              <ImgPost
+                id="input-file2"
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={(e) => {
+                  ImageChange(e);
+                }}
+              ></ImgPost>
+              <ImgContainer>
+                <label htmlFor="input-file2">
                   <ImgDiv>
                     <Camera />
                   </ImgDiv>
                 </label>
-              </ImgPlusBtn>
+                {imgUrl.length !== 0 &&
+                  imgUrl.map((value, index) => (
+                    <>
+                      <ImagePostDiv>
+                        <Imgbox>{<img src={value} key={index}></img>}</Imgbox>
+                      </ImagePostDiv>
+                    </>
+                  ))}
+              </ImgContainer>
               <BtnDiv>
                 <CancelBtn onClick={cancleClick}>취소</CancelBtn>
                 <PostBtn onClick={postClick}>수정</PostBtn>
@@ -225,6 +253,10 @@ const MainContainer = styled.div`
 const PageContainer = styled.div`
   display: flex;
   justify-content: space-between;
+
+  @media ${(props) => props.theme.tabletL} {
+    flex-direction: column;
+  }
 `;
 
 const FlexContainer = styled.div`
@@ -240,6 +272,10 @@ const Title = styled.div`
   font-size: 2.5rem;
   text-align: center;
   margin-bottom: 5rem;
+
+  @media ${(props) => props.theme.mobile} {
+    font-size: 1.5rem;
+  }
 `;
 
 const WriteContainer = styled.div`
@@ -248,6 +284,18 @@ const WriteContainer = styled.div`
   background-color: ${(props) => props.theme.gray6};
   flex-direction: column;
   border-radius: 15px;
+
+  @media ${(props) => props.theme.tabletL} {
+    width: 50rem;
+  }
+
+  @media ${(props) => props.theme.tabletS} {
+    width: 40rem;
+  }
+
+  @media ${(props) => props.theme.mobile} {
+    width: 25rem;
+  }
 `;
 
 const SubTitle = styled.div`
@@ -258,8 +306,8 @@ const SubTitle = styled.div`
 const TextDiv = styled.div`
   margin: 5.3125rem;
 
-  .toastui-editor-toolbar {
-    box-sizing: border-box;
+  @media ${(props) => props.theme.mobile} {
+    margin: 2rem;
   }
 `;
 
@@ -273,6 +321,16 @@ const InputText = styled.input`
   border-radius: 10px;
   border: solid 0.1875rem;
   border-color: ${(props) => props.theme.gray5};
+
+  @media ${(props) => props.theme.tabletL} {
+    width: 100%;
+  }
+  @media ${(props) => props.theme.mobile} {
+    height: 2.5rem;
+    ::placeholder {
+      font-size: 1rem;
+    }
+  }
 `;
 
 const BtnDiv = styled.div`
@@ -290,6 +348,12 @@ const CancelBtn = styled.button`
   border-radius: 10px;
   margin: 2.5rem 2rem;
   font-size: 1.375rem;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 5rem;
+    height: 2rem;
+    font-size: 1rem;
+  }
 `;
 
 const PostBtn = styled.button`
@@ -300,6 +364,12 @@ const PostBtn = styled.button`
   color: White;
   margin: 2.5rem 2rem;
   font-size: 1.375rem;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 5rem;
+    height: 2rem;
+    font-size: 1rem;
+  }
 `;
 
 const ImgPost = styled.input`
@@ -308,28 +378,85 @@ const ImgPost = styled.input`
   display: none;
 `;
 
-const ImgPlusBtn = styled.button`
+const ImgDiv = styled.div`
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
   width: 5rem;
   height: 5rem;
   background-color: ${(props) => props.theme.gray6};
   border-radius: 15px;
   border: solid 0.1875rem;
   border-color: ${(props) => props.theme.gray5};
-  margin-top: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ImgDiv = styled.div`
   display: flex;
   flex-direction: column;
   color: ${(props) => props.theme.textColor};
+
+  @media ${(props) => props.theme.tabletL} {
+    width: 4rem;
+    height: 4rem;
+  }
+  @media ${(props) => props.theme.mobile} {
+    width: 3rem;
+    height: 3rem;
+  }
 
   svg {
     width: 2rem;
     height: 2rem;
     fill: ${(props) => props.theme.textColor};
+    cursor: pointer;
+    @media ${(props) => props.theme.mobile} {
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+`;
+
+const ImgContainer = styled.div`
+  display: flex;
+`;
+
+const Imgbox = styled.button`
+  width: 5rem;
+  height: 5rem;
+  border-radius: 15px;
+  border: solid 0.1875rem;
+  background-color: ${(props) => props.theme.gray6};
+  border-color: ${(props) => props.theme.gray5};
+  justify-content: center;
+  align-items: center;
+  :hover {
+  }
+  img {
+    border-radius: 15px;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  @media ${(props) => props.theme.tabletL} {
+    width: 4rem;
+    height: 4rem;
+  }
+  @media ${(props) => props.theme.mobile} {
+    width: 3rem;
+    height: 3rem;
+  }
+`;
+
+const ImagePostDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+  margin-left: 2rem;
+  justify-content: center;
+  align-items: center;
+  @media ${(props) => props.theme.tabletL} {
+    margin-left: 1.5rem;
+  }
+  @media ${(props) => props.theme.tabletS} {
+    margin-left: 0.2rem;
   }
 `;
 

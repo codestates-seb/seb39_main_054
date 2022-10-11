@@ -69,8 +69,8 @@ public class ProductController {
 //                                      @AuthenticationPrincipal PrincipalDetails principalDetails
 
         request.getProductPatchDetailDto().setProductId(productId);
-        Long memberId = request.getProductPatchDetailDto().getMemberId();
-        //      Long memberId = principalDetails.getMember().getMemberId(); //
+//        Long memberId = request.getProductPatchDetailDto().getMemberId();
+        Long memberId = principalDetails.getMember().getMemberId(); //
 
         Product product = mapper.patchDetailDtoToProduct(request.getProductPatchDetailDto(), pcategoryService);
         Product productPatch = productService.updateProduct(product, memberId);

@@ -42,7 +42,6 @@ const MyPageSignOut = () => {
 
   return (
     <MSContainer>
-      <MyPageHeader />
       {isMobile && (
         <MyPageDropdownMobile
           categoryChange={categoryChange}

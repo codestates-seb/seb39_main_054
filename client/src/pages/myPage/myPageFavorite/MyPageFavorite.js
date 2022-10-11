@@ -3,63 +3,95 @@ import { useMediaQuery } from "react-responsive";
 import styled from "styled-components";
 import Paginations from "../../../components/pagination/Paginations";
 import axios from "axios";
-import MyPageHeader from "../MyPageHeader";
+import { paginationInfo } from "../../../redux/actions/paginationAction";
+import { useSelector, useDispatch } from "react-redux";
 import MyPageNav from "../MyPageNav";
 import MyPageDropdownMobile from "../../../components/dropdowns/MyPageDropdownMobile";
-// import ShareStateMobile from "../../../components/filters/shareState/ShareStateMobile";
 import ShareCardContent from "../../../components/cards/ShareCardContent";
 import ListDataEmpty from "../../../components/loading/DataEmpty";
+import DataLoading from "../../../components/loading/DataLoading";
 
 const MyPageFavorite = () => {
   const isMobile = useMediaQuery({ maxWidth: 786 });
   const id = localStorage.getItem("memberid");
+  const dispatch = useDispatch();
+  const pageNum = useSelector((state) => state.paginationReducer.page);
+  const categoryChange = (el) => {};
+  const [loading, setLoading] = useState(true);
   // 데이터
   const [data, setData] = useState(null);
 
-  const categoryChange = (el) => {};
-
   // 데이터 받기
   const getData = async () => {
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `${localStorage.getItem("authorization")}`,
-    };
-
+    axios.defaults.headers.common["Authorization"] = `${localStorage.getItem(
+      "authorization"
+    )}`;
     await axios
       .get(`${process.env.REACT_APP_API_URL}/v1/product/myFavorite/${id}`, {
-        headers: headers,
+        params: { page: pageNum, size: 8 },
+      })
+      .then((res) => setData(res.data.data));
+  };
+
+  const getFilterData = async () => {
+    const params = {
+      page: pageNum,
+      size: 8,
+    };
+
+    axios.defaults.headers.common["Authorization"] = `${localStorage.getItem(
+      "authorization"
+    )}`;
+    await axios
+      .get(`${process.env.REACT_APP_API_URL}/v1/product/myFavorite/${id}`, {
+        // 파람스 요청
+        params,
       })
       .then((res) => {
-        console.log(res.data);
         setData(res.data.data);
+        dispatch(paginationInfo(res.data.pageInfo));
+        setTimeout(() => {
+          setLoading(false);
+        }, 500);
+        setLoading(true);
       });
   };
 
+  console.log(pageNum);
+
   useEffect(() => {
+    // if (pageNum === 1) {
     getData();
+    // }
   }, []);
+
+  useEffect(() => {
+    getFilterData();
+  }, [pageNum]);
 
   return (
     <MFContainer>
-      <MyPageHeader />
-      {isMobile && (
-        <MyPageDropdownMobile
-          categoryChange={categoryChange}
-        ></MyPageDropdownMobile>
-      )}
-      {!isMobile && <MyPageNav></MyPageNav>}
-      {/* <ShareStateContainer>
-        <ShareStateMobile />
-      </ShareStateContainer> */}
-      <MCContainer>
-        <MCContent>
-          {data !== null && data.length === 0 && (
-            <ListDataEmpty></ListDataEmpty>
+      {loading ? (
+        <DataLoading></DataLoading>
+      ) : (
+        <>
+          {isMobile && (
+            <MyPageDropdownMobile
+              categoryChange={categoryChange}
+            ></MyPageDropdownMobile>
           )}
-          <ShareCardContent data={data}></ShareCardContent>
-        </MCContent>
-        <Paginations />
-      </MCContainer>
+          {!isMobile && <MyPageNav></MyPageNav>}
+          <MCContainer>
+            <MCContent>
+              {data !== null && data.length === 0 && (
+                <ListDataEmpty></ListDataEmpty>
+              )}
+              <ShareCardContent data={data}></ShareCardContent>
+            </MCContent>
+            <Paginations />
+          </MCContainer>
+        </>
+      )}
     </MFContainer>
   );
 };

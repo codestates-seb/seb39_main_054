@@ -140,7 +140,7 @@ public class MemberService {
         findMember.setPassword("");
         findMember.setMemberStatus(Member.MemberStatus.MEMBER_QUIT);
 
-        // TODO S3 업로드된 프로필 이미지 삭제
+        // TODO 10/11 S3 업로드된 프로필 이미지 삭제
 //        findMember.setImageUrl("");
 
         return memberRepository.save(findMember);

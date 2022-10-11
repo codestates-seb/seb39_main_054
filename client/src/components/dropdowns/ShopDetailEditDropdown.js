@@ -4,9 +4,10 @@ import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
-const ShopDetailEditDropdown = ({ memberId }) => {
+const ShopDetailEditDropdown = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const roles = localStorage.getItem("roles");
   const [open, setOpen] = useState({
     class: "up",
   });
@@ -26,7 +27,7 @@ const ShopDetailEditDropdown = ({ memberId }) => {
   return (
     <Editdiv>
       <EditButton>
-        {String(memberId) === localStorage.getItem("memberid") && (
+        {roles === "ROLE_ADMIN" && (
           <span onClick={editDrop}>...</span>
         )}
         <Ul display={open.display} height={open.height} class={open.class}>

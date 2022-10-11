@@ -7,7 +7,6 @@ import MyPageMyPost from "./myPageMyPost/MyPageMyPost";
 
 const MyPageIndex = () => {
   const pathname = useLocation().pathname;
-  console.log(pathname);
   return (
     <>
       <MyPageHeader></MyPageHeader>

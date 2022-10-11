@@ -70,21 +70,18 @@ const Login = () => {
         localStorage.setItem("memberid", memberid); // (key, value)
         localStorage.setItem("roles", userRoles); // (key, value)
         dispatch(loginSuccess(memberid));
-        console.log("ok");
         navigate(`/`);
-        console.log(res);
       })
       .catch((err) => {
         if (err.message === "Request failed with status code 500") {
           errSignup();
           setIsOpen(!isOpen);
         }
-        console.log(err);
       });
   };
 
   const onError = (error) => {
-    console.log(error);
+    // console.log(error);
   };
 
   return (

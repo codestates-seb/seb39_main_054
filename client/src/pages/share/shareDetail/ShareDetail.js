@@ -44,10 +44,8 @@ const ShareDetail = () => {
       })
       .then((res) => {
         navigate(`/chat/detail/${res.data.id}`);
-        console.log(res.data.id); // 룸아이디임
-        console.log(res);
       })
-      .catch((err) => console.log(err));
+      // .catch((err) => console.log(err));
   };
 
   useEffect(() => {

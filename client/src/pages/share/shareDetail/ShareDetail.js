@@ -126,6 +126,12 @@ const ContentContainer = styled.div`
 const Title = styled.div`
   font-size: 2.5rem;
   margin-bottom: 1rem;
+<<<<<<< HEAD
+  @media ${(props) => props.theme.mobile} {
+    font-size: 2rem;
+  }
+
+=======
   line-height: 3.2rem;
 
   @media ${(props) => props.theme.mobile} {
@@ -134,6 +140,7 @@ const Title = styled.div`
     line-height: 2.2rem;
     font-family: "NotoSansKR-Medium";
   }
+>>>>>>> dbe0fc8b597098f37096732082d1fc83e1cf6615
 `;
 
 const ChatBtn = styled.button`

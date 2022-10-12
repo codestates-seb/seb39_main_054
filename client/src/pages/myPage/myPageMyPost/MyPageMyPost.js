@@ -44,7 +44,7 @@ const MyPageMyPost = () => {
       "authorization"
     )}`;
     await axios
-      .get(`${process.env.REACT_APP_API_URL}/v1/product/myFavorite/${id}`, {
+      .get(`${process.env.REACT_APP_API_URL}/v1/product/myList/${id}`, {
         // 파람스 요청
         params,
       })

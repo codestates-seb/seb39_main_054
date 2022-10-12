@@ -70,21 +70,42 @@ const Login = () => {
         localStorage.setItem("memberid", memberid); // (key, value)
         localStorage.setItem("roles", userRoles); // (key, value)
         dispatch(loginSuccess(memberid));
-        console.log("ok");
         navigate(`/`);
-        console.log(res);
       })
       .catch((err) => {
         if (err.message === "Request failed with status code 500") {
           errSignup();
           setIsOpen(!isOpen);
         }
-        console.log(err);
+      });
+  };
+
+  const guestLogin = async () => {
+    await axios
+      .post(`${process.env.REACT_APP_API_URL}/login`, {
+        memberName: "guest",
+        password: "guest@1234",
+      })
+      .then((res) => {
+        let jwtToken = res.headers.authorization;
+        const memberid = res.headers.memberid;
+        const userRoles = res.headers.roles;
+        localStorage.setItem("authorization", jwtToken);
+        localStorage.setItem("memberid", memberid); // (key, value)
+        localStorage.setItem("roles", userRoles); // (key, value)
+        dispatch(loginSuccess(memberid));
+        navigate(`/`);
+      })
+      .catch((err) => {
+        if (err.message === "Request failed with status code 500") {
+          errSignup();
+          setIsOpen(!isOpen);
+        }
       });
   };
 
   const onError = (error) => {
-    console.log(error);
+    // console.log(error);
   };
 
   return (
@@ -118,6 +139,9 @@ const Login = () => {
             children={"사용자가 없습니다"}
           />
         </form>
+        <button onClick={guestLogin} className="guest-login">
+          게스트 로그인
+        </button>
         <p className="divider">
           <span>소셜 로그인</span>
         </p>
@@ -228,12 +252,25 @@ const LoginContent = styled.div`
     }
   }
 
+  .guest-login{
+    background-color: ${(props) => props.theme.primary};
+    margin: 1.5rem 0;
+    font-size: 1.1rem;
+    color: ${(props) => props.theme.white};
+    width: 28.125rem;
+    height: 2.75rem;
+    border-radius: 0.625rem;
+    :hover {
+      filter: drop-shadow(0rem 0.25rem 0.25rem ${(props) => props.theme.gray5});
+    }
+  }
+
   .divider {
     width: 100%;
     text-align: center;
     border-bottom: 0.1875rem solid ${(props) => props.theme.primary};
     line-height: 0.1rem;
-    margin: 4.6875rem 0;
+    margin: 3rem 0;
 
     span {
       font-size: 1rem;

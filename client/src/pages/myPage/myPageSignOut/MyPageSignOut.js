@@ -35,7 +35,6 @@ const MyPageSignOut = () => {
       )
       .then(() => {
         setIsOpen(!isOpen);
-        console.log("ok");
       })
       .catch((error) => console.error(error));
   };

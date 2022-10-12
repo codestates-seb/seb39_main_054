@@ -70,16 +70,14 @@ const MyPageEdit = () => {
       })
       .then((res) => {
         setIsOpen(!isOpen);
-        console.log("ok");
       })
       .catch((err) => {
-        console.log(err);
         alert("사진을 등록하세요!");
       });
   };
 
   const onError = (error) => {
-    console.log(error);
+    // console.log(error);
   };
 
   // 모달창의 확인버튼을 눌렀을때의 동작
@@ -99,7 +97,6 @@ const MyPageEdit = () => {
       .then((res) => {
         setMyNickname(res.data.nickname);
         setMyAvatar(res.data.imageUrl);
-        console.log(res.data.nickname);
       })
       .catch((err) => console.log(err));
   };

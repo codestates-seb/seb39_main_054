@@ -54,7 +54,6 @@ const MyPageDropdownMobile = ({ categoryChange }) => {
     for (let j = 0; j < 5; j++) {
       if (location.pathname === link[j]) setChoice(category[j]);
     }
-    console.log("d");
   }, []);
 
   return (

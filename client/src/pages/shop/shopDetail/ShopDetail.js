@@ -39,9 +39,7 @@ const ShopDetail = () => {
             <Container>
               <Editdiv>
                 <EditButton>
-                  <ShopDetailEditDropdown
-                    memberId={data.member.memberId}
-                  ></ShopDetailEditDropdown>
+                  <ShopDetailEditDropdown></ShopDetailEditDropdown>
                 </EditButton>
               </Editdiv>
               <Imagediv>

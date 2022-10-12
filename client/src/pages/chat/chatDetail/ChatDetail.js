@@ -8,6 +8,7 @@ import { ReactComponent as Xmark } from "../../../assets/img/icon/xmark-solid.sv
 import * as StompJs from "@stomp/stompjs";
 import * as SockJS from "sockjs-client";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const ChatDetail = () => {
   const { id } = useParams();
@@ -16,20 +17,33 @@ const ChatDetail = () => {
   const client = useRef({});
   const [chatMessages, setChatMessages] = useState([]);
   const [message, setMessage] = useState("");
+  const [nickname, setNickName] = useState("");
   const memberId = localStorage.getItem("memberid");
 
   useEffect(() => {
     connect();
+    getUserData();
 
     return () => disconnect();
   }, []);
+
+  const getUserData = async () => {
+    axios.defaults.headers.common["Authorization"] = `${localStorage.getItem(
+      "authorization"
+    )}`;
+    await axios
+      .get(`${process.env.REACT_APP_API_URL}/v1/members/${memberId}`)
+      .then((res) => {
+        setNickName(res.data.nickname);
+      });
+  };
 
   const connect = () => {
     client.current = new StompJs.Client({
       webSocketFactory: () =>
         new SockJS(`${process.env.REACT_APP_API_URL}/gs-guide-websocket`), // proxy를 통한 접속
       debug: function (str) {
-        console.log(str);
+        // console.log(str);
       },
       reconnectDelay: 5000,
       heartbeatIncoming: 4000,
@@ -72,6 +86,7 @@ const ChatDetail = () => {
         chatRoomId: ROOM_SEQ,
         memberId: memberId,
         content: message,
+        nickname: nickname,
       }),
     });
 
@@ -107,7 +122,7 @@ const ChatDetail = () => {
                       : "login-user-you"
                   }
                 >
-                  {el.memberId}: {el.content}
+                  {el.nickname}: {el.content}
                 </li>
               ))}
             </ul>

@@ -104,7 +104,7 @@ const ShopPost = () => {
       await axios
         .post(`${process.env.REACT_APP_API_URL}/v1/store`, formData)
         .then((res) => navigate(`/shop/detail/${res.data.storeId}`))
-        .catch((err) => console.log(err));
+        // .catch((err) => console.log(err));
     }
   };
 
@@ -224,6 +224,10 @@ const MainContainer = styled.div`
 const PageContainer = styled.div`
   display: flex;
   justify-content: space-between;
+
+  @media ${(props) => props.theme.tabletL} {
+    flex-direction: column;
+  }
 `;
 
 const FlexContainer = styled.div`
@@ -239,6 +243,10 @@ const Title = styled.div`
   font-size: 2.5rem;
   text-align: center;
   margin-bottom: 5rem;
+
+  @media ${(props) => props.theme.mobile} {
+    font-size: 1.5rem;
+  }
 `;
 
 const WriteContainer = styled.div`
@@ -247,6 +255,18 @@ const WriteContainer = styled.div`
   background-color: ${(props) => props.theme.gray6};
   flex-direction: column;
   border-radius: 15px;
+
+  @media ${(props) => props.theme.tabletL} {
+    width: 50rem;
+  }
+
+  @media ${(props) => props.theme.tabletS} {
+    width: 40rem;
+  }
+
+  @media ${(props) => props.theme.mobile} {
+    width: 25rem;
+  }
 `;
 
 const SubTitle = styled.div`
@@ -257,8 +277,8 @@ const SubTitle = styled.div`
 const TextDiv = styled.div`
   margin: 5.3125rem;
 
-  .toastui-editor-toolbar {
-    box-sizing: border-box;
+  @media ${(props) => props.theme.mobile} {
+    margin: 2rem;
   }
 `;
 
@@ -272,6 +292,16 @@ const InputText = styled.input`
   border-radius: 10px;
   border: solid 0.1875rem;
   border-color: ${(props) => props.theme.gray5};
+
+  @media ${(props) => props.theme.tabletL} {
+    width: 100%;
+  }
+  @media ${(props) => props.theme.mobile} {
+    height: 2.5rem;
+    ::placeholder {
+      font-size: 1rem;
+    }
+  }
 `;
 
 const BtnDiv = styled.div`

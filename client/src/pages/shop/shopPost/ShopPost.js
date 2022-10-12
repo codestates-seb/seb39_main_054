@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import PostDropdown from "../../../components/dropdowns/PostDropdown";
@@ -8,31 +8,30 @@ import ShopAddress from "./ShopAddress";
 
 const ShopPost = () => {
   const navigate = useNavigate();
-  const [shopPost, setSharePost] = useState({
-    productId: 4,
-    memberId: 1,
-    title: "",
-    description: "",
-    pcategory: "",
-    image: [],
-    address: "",
-    tel: "",
-  });
+  const memberId = localStorage.getItem("memberid");
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [category, setCategory] = useState("");
+  const [address, setAddress] = useState("");
+  const [tel, setTel] = useState("");
+  const [imageSrc, setImageSrc] = useState([]);
+  const [imgUrl, setImgUrl] = useState("");
+
   const [isOpen, setIsOpen] = useState(false);
 
   // 제목 입력
   const titleChange = (el) => {
-    setSharePost({ ...shopPost, title: el });
+    setTitle(el);
   };
 
   // 카테고리 입력
   const categoryChange = (el) => {
-    setSharePost({ ...shopPost, pcategory: el });
+    setCategory(el);
   };
 
   // 주소 입력
   const addressChange = (el) => {
-    setSharePost({ ...shopPost, address: el });
+    setAddress(el);
   };
 
   // 전화번호 입력
@@ -42,13 +41,13 @@ const ShopPost = () => {
         .replace(/[^0-9]/g, "")
         .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3")
         .replace(/(\-{1,2})$/g, "");
-      setSharePost({ ...shopPost, tel: tel });
+      setTel(tel);
     }
   };
 
   // 내용 입력
   const descriptionChange = (el) => {
-    setSharePost({ ...shopPost, description: el });
+    setContent(el);
   };
 
   // 주소 입력 모달 여닫기
@@ -61,28 +60,61 @@ const ShopPost = () => {
     navigate(`/shop/list`);
   };
 
-  // const addImages = (e) => {
-  //   const imageLists = e.target.files;
-  //   // const img
-  // }
+  const ImageChange = (el) => {
+    const selectImg = el.target.files;
+    const imgList = [...imgUrl];
+    for (let i = 0; i < selectImg.length; i++) {
+      const imgurl = URL.createObjectURL(selectImg[i]);
+      imgList.push(imgurl);
+    }
+    setImgUrl(imgList);
+    setImageSrc(...imageSrc, el.target.files);
+  };
 
   // 데이터 서버 업로드
   const postClick = async () => {
-    if (
-      shopPost.title === "" ||
-      shopPost.description === "" ||
-      shopPost.pcategory === "카테고리"
-    ) {
-      alert("제목, 내용, 카테고리를 선택해주세요");
+    const formData = new FormData();
+    formData.append("storePostDetailDto.memberId", memberId);
+    formData.append("storePostDetailDto.title", title);
+    formData.append("storePostDetailDto.description", content);
+    formData.append("storePostDetailDto.address", address);
+    formData.append("storePostDetailDto.phoneNumber", tel);
+    formData.append("storePostDetailDto.scategoryName", category);
+
+    Object.values(imageSrc).forEach((file) =>
+      formData.append("multipartFileList", file)
+    );
+
+    if (title.length === 0) {
+      alert("제목이 비어있으면 안됩니다");
+    } else if (content.length === 0) {
+      alert("내용이 비어있으면 안됩니다");
+    } else if (category === "카테고리") {
+      alert("카테고리를 선택하세요");
+    } else if (address === "") {
+      alert("주소를 입력하세요");
+    } else if (tel === "") {
+      alert("전화번호를 입력하세요");
+    } else if (Object.keys(imageSrc).length === 0) {
+      alert("한개 이상의 사진은 필수입니다");
     } else {
+      axios.defaults.headers.common["Authorization"] = `${localStorage.getItem(
+        "authorization"
+      )}`;
       await axios
-        .post(`${process.env.REACT_APP_API_URL}/shop`, shopPost)
-        .then((res) => navigate(`/shop/detail/${res.data.productId}`))
+        .post(`${process.env.REACT_APP_API_URL}/v1/store`, formData)
+        .then((res) => navigate(`/shop/detail/${res.data.storeId}`))
         .catch((err) => console.log(err));
     }
   };
 
-  useEffect(() => {}, [shopPost.pcategory]);
+  useEffect(() => {
+    if ([...imgUrl].length > 6) {
+      alert("이미지의 최대 갯수는 6개입니다!!");
+      setImgUrl([]);
+      setImageSrc([]);
+    }
+  }, [imgUrl]);
 
   return (
     <MainContainer>
@@ -117,7 +149,7 @@ const ShopPost = () => {
               <InputText
                 type="text"
                 placeholder="주소를 입력해주세요"
-                value={shopPost.address}
+                value={address}
                 onClick={addressIsOpen}
                 onChange={addressChange}
               ></InputText>
@@ -127,7 +159,7 @@ const ShopPost = () => {
               <InputText
                 type="text"
                 placeholder="전화번호를 입력해주세요"
-                value={shopPost.tel}
+                value={tel}
                 onChange={(e) => telChange(e.target.value)}
                 width="20rem"
                 maxlength="13"
@@ -139,13 +171,30 @@ const ShopPost = () => {
             placeholder="내용을 입력해주세요"
             onChange={(e) => descriptionChange(e.target.value)}
           ></ContentBox>
-          <ImgPlusBtn>
-            <label htmlFor="input-file">
+          <ImgPost
+            id="input-file2"
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={(e) => {
+              ImageChange(e);
+            }}
+          ></ImgPost>
+          <ImgContainer>
+            <label htmlFor="input-file2">
               <ImgDiv>
                 <Camera />
               </ImgDiv>
             </label>
-          </ImgPlusBtn>
+            {imgUrl.length !== 0 &&
+              imgUrl.map((value, index) => (
+                <>
+                  <ImagePostDiv>
+                    <Imgbox>{<img src={value} key={index}></img>}</Imgbox>
+                  </ImagePostDiv>
+                </>
+              ))}
+          </ImgContainer>
           <BtnDiv>
             <CancelBtn onClick={cancleClick}>취소</CancelBtn>
             <PostBtn onClick={postClick}>등록</PostBtn>
@@ -240,6 +289,12 @@ const CancelBtn = styled.button`
   border-radius: 10px;
   margin: 2.5rem 2rem;
   font-size: 1.375rem;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 5rem;
+    height: 2rem;
+    font-size: 1rem;
+  }
 `;
 
 const PostBtn = styled.button`
@@ -250,6 +305,12 @@ const PostBtn = styled.button`
   color: White;
   margin: 2.5rem 2rem;
   font-size: 1.375rem;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 5rem;
+    height: 2rem;
+    font-size: 1rem;
+  }
 `;
 
 const ImgPost = styled.input`
@@ -258,28 +319,85 @@ const ImgPost = styled.input`
   display: none;
 `;
 
-const ImgPlusBtn = styled.button`
+const ImgDiv = styled.div`
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
   width: 5rem;
   height: 5rem;
   background-color: ${(props) => props.theme.gray6};
   border-radius: 15px;
   border: solid 0.1875rem;
   border-color: ${(props) => props.theme.gray5};
-  margin-top: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ImgDiv = styled.div`
   display: flex;
   flex-direction: column;
   color: ${(props) => props.theme.textColor};
+
+  @media ${(props) => props.theme.tabletL} {
+    width: 4rem;
+    height: 4rem;
+  }
+  @media ${(props) => props.theme.mobile} {
+    width: 3rem;
+    height: 3rem;
+  }
 
   svg {
     width: 2rem;
     height: 2rem;
     fill: ${(props) => props.theme.textColor};
+    cursor: pointer;
+    @media ${(props) => props.theme.mobile} {
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+`;
+
+const ImgContainer = styled.div`
+  display: flex;
+`;
+
+const Imgbox = styled.button`
+  width: 5rem;
+  height: 5rem;
+  border-radius: 15px;
+  border: solid 0.1875rem;
+  background-color: ${(props) => props.theme.gray6};
+  border-color: ${(props) => props.theme.gray5};
+  justify-content: center;
+  align-items: center;
+  :hover {
+  }
+  img {
+    border-radius: 15px;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  @media ${(props) => props.theme.tabletL} {
+    width: 4rem;
+    height: 4rem;
+  }
+  @media ${(props) => props.theme.mobile} {
+    width: 3rem;
+    height: 3rem;
+  }
+`;
+
+const ImagePostDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+  margin-left: 2rem;
+  justify-content: center;
+  align-items: center;
+  @media ${(props) => props.theme.tabletL} {
+    margin-left: 1.5rem;
+  }
+  @media ${(props) => props.theme.tabletS} {
+    margin-left: 0.2rem;
   }
 `;
 

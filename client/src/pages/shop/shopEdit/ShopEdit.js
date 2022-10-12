@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import PostDropdown from "../../../components/dropdowns/PostDropdown";
@@ -9,37 +9,45 @@ import ShopAddress from "../shopPost/ShopAddress";
 const ShopEdit = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const editorRef = useRef(null);
-  const [shopPost, setSharePost] = useState({
-    title: "",
-    description: "",
-    pcategory: "",
-    image: [],
-    address: "",
-    tel: "",
-  });
+  const memberId = localStorage.getItem("memberid");
+  const [storeData, setStoreData] = useState();
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [category, setCategory] = useState("");
+  const [address, setAddress] = useState("");
+  const [tel, setTel] = useState("");
+  // const [imageSrc, setImageSrc] = useState([]);
+  const [imgUrl, setImgUrl] = useState("");
+
   const [isOpen, setIsOpen] = useState(false);
+
+  // 초기 데이터 가져오기
+  const getData = async () => {
+    await axios
+      .get(`${process.env.REACT_APP_API_URL}/v1/store/${id}`)
+      .then((res) => {
+        setStoreData(res.data);
+        setTitle(res.data.title);
+        setAddress(res.data.address);
+        setTel(res.data.phoneNumber);
+        setContent(res.data.description);
+        setImgUrl(res.data.simageList);
+      });
+  };
 
   // 제목 입력
   const titleChange = (el) => {
-    setSharePost({ ...shopPost, title: el });
-  };
-
-  // 내용 입력
-  const contentChange = () => {
-    // 마크다운 형식 입력
-    const html = editorRef.current.getInstance().getMarkdown();
-    setSharePost({ ...shopPost, description: html });
+    setTitle(el);
   };
 
   // 카테고리 입력
   const categoryChange = (el) => {
-    setSharePost({ ...shopPost, pcategory: el });
+    setCategory(el);
   };
 
   // 주소 입력
   const addressChange = (el) => {
-    setSharePost({ ...shopPost, address: el });
+    setAddress(el);
   };
 
   // 전화번호 입력
@@ -49,8 +57,13 @@ const ShopEdit = () => {
         .replace(/[^0-9]/g, "")
         .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3")
         .replace(/(\-{1,2})$/g, "");
-      setSharePost({ ...shopPost, tel: tel });
+      setTel(tel);
     }
+  };
+
+  // 내용 입력
+  const descriptionChange = (el) => {
+    setContent(el);
   };
 
   // 주소 입력 모달 여닫기
@@ -63,26 +76,49 @@ const ShopEdit = () => {
     navigate(`/shop/list`);
   };
 
-  // const addImages = (e) => {
-  //   const imageLists = e.target.files;
-  //   // const img
-  // }
+  const urlList = [];
+  for (let i = 0; i < Object.values(imgUrl).length; i++) {
+    urlList.push(imgUrl[i].imageUrl);
+  }
 
   // 데이터 서버 업로드
-  const postClick = () => {
-    axios
-      .patch(`${process.env.REACT_APP_API_URL}/shop/${id}`, shopPost)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-  };
+  const postClick = async () => {
+    const formData = new FormData();
+    formData.append("storePatchDetailDto.memberId", memberId);
+    formData.append("storePatchDetailDto.title", title);
+    formData.append("storePatchDetailDto.description", content);
+    formData.append("storePatchDetailDto.address", address);
+    formData.append("storePatchDetailDto.phoneNumber", tel);
+    formData.append("storePatchDetailDto.scategoryName", category);
 
-  useEffect(() => {}, [shopPost.pcategory]);
+    for (let i = 0; i < urlList.length; i++) {
+      formData.append("imageUrlList", urlList[i]);
+    }
 
-  // 초기 데이터 가져오기
-  const getData = async () => {
-    await axios
-      .get(`${process.env.REACT_APP_API_URL}/shop/${id}`)
-      .then((res) => setSharePost({ ...shopPost, ...res.data }));
+    if (title.length === 0) {
+      alert("제목이 비어있으면 안됩니다");
+    } else if (content.length === 0) {
+      alert("내용이 비어있으면 안됩니다");
+    } else if (category === "카테고리") {
+      alert("카테고리를 선택하세요");
+    } else if (address === "") {
+      alert("주소를 입력하세요");
+    } else if (tel === "") {
+      alert("전화번호를 입력하세요");
+    } else {
+      axios.defaults.headers.common["Authorization"] = `${localStorage.getItem(
+        "authorization"
+      )}`;
+      await axios
+        .patch(`${process.env.REACT_APP_API_URL}/v1/store/${id}`, formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        })
+        .then((res) => {
+          alert("수정되었습니다!");
+          navigate(`/shop/detail/${id}`);
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   useEffect(() => {
@@ -90,78 +126,83 @@ const ShopEdit = () => {
   }, []);
 
   return (
-    <MainContainer>
-      <ShopAddress
-        addressChange={addressChange}
-        isOpen={isOpen}
-        addressIsOpen={addressIsOpen}
-      ></ShopAddress>
-      <Title>레저용품 판매점 등록</Title>
-      <WriteContainer>
-        <TextDiv>
-          <SubTitle>제목</SubTitle>
-          <PageContainer>
-            <InputText
-              type="text"
-              defaultValue={shopPost.title}
-              placeholder="제목을 입력해주세요"
-              onChange={(e) => titleChange(e.target.value)}
-            ></InputText>
-            <PostDropdown
-              categoryChange={categoryChange}
-              pcategory={shopPost.pcategory}
-            />
-          </PageContainer>
-          <FlexContainer>
-            <ImgPost
-              id="input-file"
-              type="file"
-              accept="image/*"
-              multiple
-            ></ImgPost>
-          </FlexContainer>
-          <PageContainer>
-            <ColumnContainer>
-              <SubTitle>주소</SubTitle>
-              <InputText
-                type="text"
-                placeholder="주소를 입력해주세요"
-                value={shopPost.address}
-                onClick={addressIsOpen}
-                onChange={addressChange}
-              ></InputText>
-            </ColumnContainer>
-            <ColumnContainer>
-              <SubTitle>전화번호</SubTitle>
-              <InputText
-                type="text"
-                placeholder="전화번호를 입력해주세요"
-                value={shopPost.tel}
-                onChange={(e) => telChange(e.target.value)}
-                width="20rem"
-                maxlength="13"
-              ></InputText>
-            </ColumnContainer>
-          </PageContainer>
-          <SubTitle>내용</SubTitle>
-          <ContentBox
-            placeholder="내용을 입력해주세요"
-            onChange={(e) => contentChange(e.target.value)}
-          ></ContentBox>
-          <ImgPlusBtn>
-            <label htmlFor="input-file">
-              <ImgDiv>
-                <Camera />
-              </ImgDiv>
-            </label>
-          </ImgPlusBtn>
-          <BtnDiv>
-            <CancelBtn onClick={cancleClick}>취소</CancelBtn>
-            <PostBtn onClick={postClick}>수정</PostBtn>
-          </BtnDiv>
-        </TextDiv>
-      </WriteContainer>
-    </MainContainer>
+    <>
+      {!!storeData && imgUrl && (
+        <MainContainer>
+          <ShopAddress
+            addressChange={addressChange}
+            isOpen={isOpen}
+            addressIsOpen={addressIsOpen}
+          ></ShopAddress>
+          <Title>레저용품 판매점 등록</Title>
+          <WriteContainer>
+            <TextDiv>
+              <SubTitle>제목</SubTitle>
+              <PageContainer>
+                <InputText
+                  type="text"
+                  defaultValue={storeData.title}
+                  placeholder="제목을 입력해주세요"
+                  onChange={(e) => titleChange(e.target.value)}
+                ></InputText>
+                <PostDropdown
+                  categoryChange={categoryChange}
+                  pcategory={storeData.scategory.scategoryName}
+                />
+              </PageContainer>
+              <FlexContainer>
+                <ImgPost
+                  id="input-file"
+                  type="file"
+                  accept="image/*"
+                  multiple
+                ></ImgPost>
+              </FlexContainer>
+              <PageContainer>
+                <ColumnContainer>
+                  <SubTitle>주소</SubTitle>
+                  <InputText
+                    type="text"
+                    placeholder="주소를 입력해주세요"
+                    value={address}
+                    onClick={addressIsOpen}
+                    onChange={addressChange}
+                  ></InputText>
+                </ColumnContainer>
+                <ColumnContainer>
+                  <SubTitle>전화번호</SubTitle>
+                  <InputText
+                    type="text"
+                    placeholder="전화번호를 입력해주세요"
+                    value={tel}
+                    onChange={(e) => telChange(e.target.value)}
+                    width="20rem"
+                    maxlength="13"
+                  ></InputText>
+                </ColumnContainer>
+              </PageContainer>
+              <SubTitle>내용</SubTitle>
+              <ContentBox
+                placeholder="내용을 입력해주세요"
+                value={content}
+                onChange={(e) => descriptionChange(e.target.value)}
+              ></ContentBox>
+              <ImgPlusBtn>
+                <label htmlFor="input-file">
+                  <ImgDiv>
+                    <Camera />
+                  </ImgDiv>
+                </label>
+              </ImgPlusBtn>
+              <BtnDiv>
+                <CancelBtn onClick={cancleClick}>취소</CancelBtn>
+                <PostBtn onClick={postClick}>수정</PostBtn>
+              </BtnDiv>
+            </TextDiv>
+          </WriteContainer>
+        </MainContainer>
+      )}
+    </>
   );
 };
 export default ShopEdit;

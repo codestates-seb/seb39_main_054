@@ -45,8 +45,8 @@ const DetailEditDropdown = (data) => {
       .patch(`${process.env.REACT_APP_API_URL}/v1/product/${id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      // .then((res) => console.log(res))
+      // .catch((err) => console.log(err));
   };
 
   const changeMessage = () => {

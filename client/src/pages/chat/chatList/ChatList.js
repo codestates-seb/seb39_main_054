@@ -15,7 +15,7 @@ const ChatList = () => {
       .then((res) => {
         setChatList(res.data);
       })
-      .catch((err) => console.log(err));
+      // .catch((err) => console.log(err));
   };
 
   useEffect(() => {

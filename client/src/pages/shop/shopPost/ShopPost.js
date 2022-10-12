@@ -104,7 +104,7 @@ const ShopPost = () => {
       await axios
         .post(`${process.env.REACT_APP_API_URL}/v1/store`, formData)
         .then((res) => navigate(`/shop/detail/${res.data.storeId}`))
-        .catch((err) => console.log(err));
+        // .catch((err) => console.log(err));
     }
   };
 

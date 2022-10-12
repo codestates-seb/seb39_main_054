@@ -44,10 +44,8 @@ const ShareDetail = () => {
       })
       .then((res) => {
         navigate(`/chat/detail/${res.data.id}`);
-        console.log(res.data.id); // 룸아이디임
-        console.log(res);
       })
-      .catch((err) => console.log(err));
+      // .catch((err) => console.log(err));
   };
 
   useEffect(() => {
@@ -128,6 +126,12 @@ const ContentContainer = styled.div`
 const Title = styled.div`
   font-size: 2.5rem;
   margin-bottom: 1rem;
+<<<<<<< HEAD
+  @media ${(props) => props.theme.mobile} {
+    font-size: 2rem;
+  }
+
+=======
   line-height: 3.2rem;
 
   @media ${(props) => props.theme.mobile} {
@@ -136,6 +140,7 @@ const Title = styled.div`
     line-height: 2.2rem;
     font-family: "NotoSansKR-Medium";
   }
+>>>>>>> dbe0fc8b597098f37096732082d1fc83e1cf6615
 `;
 
 const ChatBtn = styled.button`

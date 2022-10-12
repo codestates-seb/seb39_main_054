@@ -76,19 +76,16 @@ const SignUp = () => {
       })
       .then((res) => {
         successSignup();
-        console.log(res);
-        console.log("ok");
       })
       .catch((err) => {
         if (err.message === "Request failed with status code 500") {
           duplicateCheck();
         }
-        console.log(err);
       });
   };
 
   const onError = (error) => {
-    console.log(error);
+    // console.log(error);
   };
 
   return (

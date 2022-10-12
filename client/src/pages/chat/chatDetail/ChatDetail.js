@@ -256,7 +256,7 @@ const ContentMiddle = styled.div`
   .login-user-me {
     display: flex;
     float: right;
-    width: 16rem;
+    width: 17rem;
     /* flex-direction: row-reverse; */
     background-color: ${(props) => props.theme.primary};
     color: ${(props) => props.theme.white};
@@ -264,17 +264,23 @@ const ContentMiddle = styled.div`
     margin: 0.5rem 0 0.5rem 3rem;
     border-radius: 15px;
     line-height: 1.6rem;
+    @media ${(props) => props.theme.mobile} {
+      width: 14rem;
+    }
   }
 
   .login-user-you {
     display: flex;
     float: left;
-    width: 16rem;
+    width: 17rem;
     background-color: ${(props) => props.theme.gray4};
     padding: 10px;
     margin: 8px 0;
     border-radius: 15px;
     line-height: 1.6rem;
+    @media ${(props) => props.theme.mobile} {
+      width: 14rem;
+    }
   }
 
   @media ${(props) => props.theme.mobile} {
@@ -282,7 +288,7 @@ const ContentMiddle = styled.div`
     height: 21.6875rem;
     margin-bottom: 1.375rem;
     border: 0.1875rem solid ${(props) => props.theme.gray4};
-    font-size: 16px;
+    font-size: 15.5px;
   }
 `;
 const ContentBottom = styled.div`

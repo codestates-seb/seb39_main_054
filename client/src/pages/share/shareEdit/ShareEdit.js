@@ -22,6 +22,8 @@ const ShareEdit = () => {
       .get(`${process.env.REACT_APP_API_URL}/v1/product/${id}`)
       .then((res) => {
         setProductData({ ...productData, ...res.data });
+        setTitle(res.data.title);
+        setContent(res.data.description);
         setImgUrl({...imgurl , ...res.data.pimageList})
       });
   };

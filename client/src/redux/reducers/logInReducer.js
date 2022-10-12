@@ -1,7 +1,7 @@
 import { LOGIN_INFO, LOGOUT } from "../actions/logInAction";
 
 const initialstate = {
-  isLogin: false
+  isLogin: false,
 };
 
 const loginReducer = (state = initialstate, action) => {
@@ -11,12 +11,12 @@ const loginReducer = (state = initialstate, action) => {
       return {
         ...state,
         isLogin: true,
-        ...action.payload // res?
+        ...action.payload, // res?
       };
     case LOGOUT:
       return {
         ...state,
-        isLogin: false
+        isLogin: false,
       };
     default:
       return state;

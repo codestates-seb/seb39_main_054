@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../redux/actions/logInAction";
@@ -25,9 +25,9 @@ const NavDropdown = ({ openDropDown, dropdwonHandler }) => {
   return (
     <Ul className={openDropDown.className}>
       {dropwDownContent.map((el, idx) => (
-        <Link to={el[1]} key={idx} onClick={dropdwonHandler}>
+        <StyledNavLink to={el[1]} key={idx} onClick={dropdwonHandler}>
           <li>{el[0]}</li>
-        </Link>
+        </StyledNavLink>
       ))}
       <li
         onClick={() => {
@@ -70,5 +70,11 @@ const Ul = styled.ul`
     &:hover {
       color: ${(props) => props.theme.primary};
     }
+  }
+`;
+
+const StyledNavLink = styled(NavLink)`
+  &.active {
+    color: ${(props) => props.theme.primary};
   }
 `;

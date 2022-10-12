@@ -70,16 +70,14 @@ const MyPageEdit = () => {
       })
       .then((res) => {
         setIsOpen(!isOpen);
-        console.log("ok");
       })
       .catch((err) => {
-        console.log(err);
         alert("사진을 등록하세요!");
       });
   };
 
   const onError = (error) => {
-    console.log(error);
+    // console.log(error);
   };
 
   // 모달창의 확인버튼을 눌렀을때의 동작
@@ -99,7 +97,6 @@ const MyPageEdit = () => {
       .then((res) => {
         setMyNickname(res.data.nickname);
         setMyAvatar(res.data.imageUrl);
-        console.log(res.data.nickname);
       })
       .catch((err) => console.log(err));
   };
@@ -149,6 +146,7 @@ const MyPageEdit = () => {
               <label>닉네임</label>
               <input
                 type="text"
+                defaultValue={myNickname}
                 placeholder="변경할 닉네임을 입력해주세요"
                 {...register("nickname")}
               />
@@ -281,8 +279,8 @@ const ImgDiv = styled.div`
   filter: drop-shadow(0rem 0.15rem 0.15rem ${(props) => props.theme.gray3});
 
   @media ${(props) => props.theme.mobile} {
-    width: 2.625rem;
-    height: 2.625rem;
+    width: 2.2rem;
+    height: 2.2rem;
   }
 
   svg {
@@ -292,8 +290,8 @@ const ImgDiv = styled.div`
     fill: ${(props) => props.theme.primary};
     cursor: pointer;
     @media ${(props) => props.theme.mobile} {
-      width: 1rem;
-      height: 1rem;
+      width: 1.3rem;
+      height: 1.3rem;
     }
   }
 `;
@@ -318,10 +316,20 @@ const EditContent = styled.div`
   width: 31.25rem;
   height: 40.625rem;
   margin: 1rem auto 5rem auto;
+  @media ${(props) => props.theme.mobile} {
+    width: 24.25rem;
+    height: 26rem;
+    margin: 0.2rem auto 4rem auto;
+  }
 
   label {
     font-size: 1.5rem;
     padding: 0 0 0 0.625rem;
+    @media ${(props) => props.theme.mobile} {
+      font-size: 1.1rem;
+      padding: 0 0 0 0.625rem;
+      font-family: "NotoSansKR-Medium";
+    }
 
     .text-wrapper {
       display: flex;
@@ -333,6 +341,12 @@ const EditContent = styled.div`
       font-size: 1rem;
       padding: 0 0 0 0.4rem;
       margin-top: 0.3rem;
+      @media ${(props) => props.theme.mobile} {
+        font-size: 0.9rem;
+        margin-top: 0.13rem;
+        padding: 0 0 0 0.3rem;
+        font-family: "NotoSansKR-Regular";
+      }
     }
   }
 
@@ -347,6 +361,7 @@ const EditContent = styled.div`
     padding-left: 1.25rem;
     margin-top: 0.6875rem;
     margin-bottom: ${(props) => props.mb};
+
     ::placeholder,
     ::-webkit-input-placeholder {
       color: ${(props) => props.theme.gray4};
@@ -356,6 +371,13 @@ const EditContent = styled.div`
       border-color: ${(props) => props.theme.primary};
       outline: none;
     }
+
+    @media ${(props) => props.theme.mobile} {
+      width: 22.125rem;
+      height: 3.125rem;
+      font-size: 1.05rem;
+      margin-top: 0.6875rem;
+    }
   }
 `;
 
@@ -364,6 +386,11 @@ const Btns = styled.div`
   justify-content: space-between;
   margin: auto;
   width: 21.875rem;
+
+  @media ${(props) => props.theme.mobile} {
+    width: 13.5rem;
+    margin-top: -2rem;
+  }
 
   .btn-cancel {
     background-color: ${(props) => props.theme.gray4};
@@ -375,6 +402,11 @@ const Btns = styled.div`
     font-family: "NotoSansKR-Medium";
     :hover {
       filter: drop-shadow(0rem 0.25rem 0.25rem ${(props) => props.theme.gray5});
+    }
+    @media ${(props) => props.theme.mobile} {
+      font-size: 1rem;
+      width: 6rem;
+      height: 2.687rem;
     }
   }
 
@@ -388,6 +420,11 @@ const Btns = styled.div`
     font-family: "NotoSansKR-Medium";
     :hover {
       filter: drop-shadow(0rem 0.25rem 0.25rem ${(props) => props.theme.gray5});
+    }
+    @media ${(props) => props.theme.mobile} {
+      font-size: 1rem;
+      width: 6rem;
+      height: 2.687rem;
     }
   }
 `;

@@ -21,7 +21,6 @@ const MyPageHeader = () => {
       .then((res) => {
         setMyNickname(res.data.nickname);
         setMyAvatar(res.data.imageUrl);
-        console.log(res);
       });
   };
 

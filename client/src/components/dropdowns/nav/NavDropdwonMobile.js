@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { logout } from "../../../redux/actions/logInAction";
 
@@ -24,27 +24,27 @@ const NavDropdwonMobile = ({ isLogin, openDropDown, dropdwonHandler }) => {
 
   return (
     <Container isLogin={isLogin} openDropDown={openDropDown}>
-      <Link to="/share/list" onClick={dropdwonHandler}>
+      <StyledNavLink to="/share/list" onClick={dropdwonHandler}>
         <li>공유장터</li>
-      </Link>
-      <Link to="/shop/list" onClick={dropdwonHandler}>
+      </StyledNavLink>
+      <StyledNavLink to="/shop/list" onClick={dropdwonHandler}>
         <li>레저용품 판매점</li>
-      </Link>
+      </StyledNavLink>
       {!isLogin ? (
         <>
-          <Link to="/login" onClick={dropdwonHandler}>
+          <StyledNavLink to="/login" onClick={dropdwonHandler}>
             <li>로그인</li>
-          </Link>
-          <Link to="/signup" onClick={dropdwonHandler}>
+          </StyledNavLink>
+          <StyledNavLink to="/signup" onClick={dropdwonHandler}>
             <li>회원가입</li>
-          </Link>
+          </StyledNavLink>
         </>
       ) : (
         <>
           {dropwDownContent.map((el, idx) => (
-            <Link to={el[1]} key={idx} onClick={dropdwonHandler}>
+            <StyledNavLink to={el[1]} key={idx} onClick={dropdwonHandler}>
               <li>{el[0]}</li>
-            </Link>
+            </StyledNavLink>
           ))}
           <li
             onClick={() => {
@@ -95,5 +95,11 @@ const Container = styled.ul`
     &:hover {
       color: ${(props) => props.theme.primary};
     }
+  }
+`;
+
+const StyledNavLink = styled(NavLink)`
+  &.active {
+    color: ${(props) => props.theme.primary};
   }
 `;

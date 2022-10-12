@@ -5,6 +5,7 @@ import { ReactComponent as Down } from "../../assets/img/icon/caret-down.svg";
 import { ReactComponent as Up } from "../../assets/img/icon/caret-up.svg";
 
 const MyPageDropdownMobile = ({ categoryChange }) => {
+  const memberId = localStorage.getItem("memberid");
   const [choice, setChoice] = useState("관심 목록");
   const [open, setOpen] = useState({
     className: "up",
@@ -24,8 +25,8 @@ const MyPageDropdownMobile = ({ categoryChange }) => {
   const link = [
     "/mypage/favorite",
     "/mypage/mypost",
-    "/chat/list:id",
-    "/mypage/edit",
+    `/chat/list/${memberId}`,
+    `/mypage/edit/${memberId}`,
     "/mypage/signout",
   ];
 
@@ -53,7 +54,6 @@ const MyPageDropdownMobile = ({ categoryChange }) => {
     for (let j = 0; j < 5; j++) {
       if (location.pathname === link[j]) setChoice(category[j]);
     }
-    console.log("d");
   }, []);
 
   return (

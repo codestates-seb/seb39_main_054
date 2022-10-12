@@ -44,10 +44,8 @@ const ShareDetail = () => {
       })
       .then((res) => {
         navigate(`/chat/detail/${res.data.id}`);
-        console.log(res.data.id); // 룸아이디임
-        console.log(res);
       })
-      .catch((err) => console.log(err));
+      // .catch((err) => console.log(err));
   };
 
   useEffect(() => {
@@ -71,9 +69,6 @@ const ShareDetail = () => {
                 data={data}
                 myAvatar={myAvatar}
               ></ShareDetailTitle>
-              <div>
-                <hr></hr>
-              </div>
               <ContentContainer>
                 <ShareDetailContent content={data}></ShareDetailContent>
               </ContentContainer>
@@ -100,7 +95,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 7.5rem;
-  width: 56.25rem;
+  width: 52rem;
+
   hr {
     margin: 1rem 0rem;
   }
@@ -117,23 +113,34 @@ const Container = styled.div`
   @media ${(props) => props.theme.mobile} {
     width: 23.75rem;
   }
-  `
+`;
 const ContentContainer = styled.div`
   width: 100%;
   word-break: break-all;
-  margin-bottom: 5rem;
+  margin-bottom: 3rem;
   display: flex;
   flex-direction: column;
   line-height: 1.8rem;
 `;
 
 const Title = styled.div`
-  font-size: 3rem;
+  font-size: 2.5rem;
   margin-bottom: 1rem;
+<<<<<<< HEAD
   @media ${(props) => props.theme.mobile} {
     font-size: 2rem;
   }
 
+=======
+  line-height: 3.2rem;
+
+  @media ${(props) => props.theme.mobile} {
+    margin-top: 2rem;
+    font-size: 1.6875rem;
+    line-height: 2.2rem;
+    font-family: "NotoSansKR-Medium";
+  }
+>>>>>>> dbe0fc8b597098f37096732082d1fc83e1cf6615
 `;
 
 const ChatBtn = styled.button`
@@ -141,10 +148,17 @@ const ChatBtn = styled.button`
   height: 8.125rem;
   border-radius: 50%;
   background-color: ${(props) => props.theme.primary};
-  font-size: 1.375rem;
-  color: white;
+  font-size: 1.25rem;
+  font-family: "NotoSansKR-Medium";
+  color: ${(props) => props.theme.white};
+  padding-top: 0.3rem;
+  @media ${(props) => props.theme.mobile} {
+    width: 4.9rem;
+    height: 4.9rem;
+    font-size: 1rem;
+  }
 `;
 const Buttondiv = styled.div`
   text-align: right;
-  margin-bottom: 2rem;
+  margin: 4.4rem 0;
 `;

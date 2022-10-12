@@ -57,7 +57,6 @@ const MyPageFavorite = () => {
       });
   };
 
-  console.log(pageNum);
 
   useEffect(() => {
     // if (pageNum === 1) {

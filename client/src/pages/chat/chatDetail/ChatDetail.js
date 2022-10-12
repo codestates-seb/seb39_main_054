@@ -43,7 +43,7 @@ const ChatDetail = () => {
       webSocketFactory: () =>
         new SockJS(`${process.env.REACT_APP_API_URL}/gs-guide-websocket`), // proxy를 통한 접속
       debug: function (str) {
-        console.log(str);
+        // console.log(str);
       },
       reconnectDelay: 5000,
       heartbeatIncoming: 4000,

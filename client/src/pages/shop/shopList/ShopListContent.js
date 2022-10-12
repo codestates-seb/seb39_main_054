@@ -20,7 +20,7 @@ const ShopListContent = () => {
   const getData = async () => {
     await axios
       .get(`${process.env.REACT_APP_API_URL}/v1/store`, {
-        params: { page: 1, size: 16 },
+        params: { page: 1, size: 8 },
       })
       .then((res) => {
         setData(res.data.data);
@@ -34,7 +34,7 @@ const ShopListContent = () => {
   const getFilterData = async () => {
     const params = {
       page: pageNum,
-      size: 16,
+      size: 8,
       ...(filter.categorySelect !== "" &&
         filter.categorySelect !== "전체" && {
           scategoryName: filter.categorySelect,

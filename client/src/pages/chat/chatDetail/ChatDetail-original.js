@@ -69,7 +69,7 @@ const ChatDetail = () => {
         setSellerId(res.data.sellerId);
         // console.log(res.data.sellerId);
       })
-      .catch((err) => console.log(err));
+      // .catch((err) => console.log(err));
   };
 
   const getSellerName = async () => {
@@ -81,7 +81,7 @@ const ChatDetail = () => {
         setSellerName(res.data.memberName);
         // console.log(res.data.memberName);
       })
-      .catch((err) => console.log(err));
+      // .catch((err) => console.log(err));
   };
 
   const handleInput = (e) => {
